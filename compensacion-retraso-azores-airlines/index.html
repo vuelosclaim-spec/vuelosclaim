@@ -68,7 +68,7 @@ h1 { font: 800 clamp(2rem, 4.4vw, 3.3rem)/1.04 var(--f-display); letter-spacing:
 .facts span { color: var(--muted); font-size: 0.95rem; }
 
 /* Calculator */
-.calc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 18px; box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(16, 24, 40, 0.35); }
+.calc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; display: grid; gap: 26px; box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(16, 24, 40, 0.35); }
 .calc h2 { font: 700 1.2rem/1.2 var(--f-display); margin: 0; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field { display: grid; gap: 6px; position: relative; min-width: 0; }
@@ -81,12 +81,13 @@ input[type="text"]:focus, select:focus { border-color: var(--focus); outline: no
 .opt-code { font: 700 0.85rem/1 var(--f-mono); background: var(--navy); color: var(--navy-ink); padding: 5px 6px; border-radius: 4px; min-width: 44px; text-align: center; }
 .opt-txt { display: grid; min-width: 0; }
 .opt-txt small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; min-width: 0; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chips label { position: relative; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 12px; min-width: 0; }
+.chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; }
+.chips label { position: relative; display: flex; }
 .chips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.chips span { display: inline-block; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.92rem; background: var(--paper); cursor: pointer; }
-.chips input:checked + span { background: var(--sign); color: var(--sign-ink); border-color: var(--sign); font-weight: 700; }
+.chips span { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 46px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 0.93rem; line-height: 1.25; background: var(--surface); cursor: pointer; transition: border-color .15s, background .15s; }
+.chips label:hover span { border-color: var(--muted); }
+.chips input:checked + span { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); font-weight: 600; }
 .chips input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 /* Result: a ticket stub */
@@ -179,6 +180,12 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 .care h3 { margin: 0 0 8px; font-size: 0.98rem; }
 .care ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .care .tip { margin: 8px 0 0; color: var(--muted); }
+@media (max-width: 480px) {
+  .calc { padding: 20px; gap: 22px; }
+  .chips { grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 8px; }
+  .chips span { padding: 10px 8px; font-size: 0.88rem; }
+  .calc fieldset:last-of-type .chips { grid-template-columns: 1fr 1fr; }
+}
 </style>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('js',new Date());gtag('config','G-6JRCZVTNDG');</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JRCZVTNDG"></script>
@@ -205,7 +212,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 </div>
 <div class="field"><label for="airline">Aerolínea</label><select id="airline" name="airline"><option value="">No lo sé / no aparece</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines" selected>Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic">Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Otra aerolínea europea</option><option value="otra-no-ue">Otra aerolínea no europea</option></select></div>
 <fieldset><legend>Qué pasó</legend><div class="chips"><label><input type="radio" name="what" value="delay" checked><span>Retraso</span></label><label><input type="radio" name="what" value="cancel"><span>Cancelación</span></label><label><input type="radio" name="what" value="denied"><span>Overbooking</span></label></div></fieldset>
-<fieldset id="grp-delay"><legend>Retraso al llegar al destino</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Menos de 3 h</span></label><label><input type="radio" name="delay" value="3to4"><span>De 3 a 4 h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Más de 4 h</span></label></div></fieldset>
+<fieldset id="grp-delay"><legend>Retraso al llegar al destino</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Menos de 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>De 3 a 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Más de 4&nbsp;h</span></label></div></fieldset>
 <fieldset id="grp-notice" hidden><legend>Te avisaron con</legend><div class="chips"><label><input type="radio" name="notice" value="lt7" checked><span>Menos de 7 días</span></label><label><input type="radio" name="notice" value="7to14"><span>7 a 14 días</span></label><label><input type="radio" name="notice" value="gt14"><span>Más de 14 días</span></label></div></fieldset>
 <fieldset><legend>Motivo que te dieron</legend><div class="chips"><label><input type="radio" name="cause" value="unknown" checked><span>No me lo dijeron</span></label><label><input type="radio" name="cause" value="tech"><span>Problema técnico</span></label><label><input type="radio" name="cause" value="strike"><span>Huelga de la aerolínea</span></label><label><input type="radio" name="cause" value="extra"><span>Tiempo, controladores o seguridad</span></label></div></fieldset>
 <div class="result" id="result" data-state="empty" aria-live="polite">
