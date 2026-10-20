@@ -174,6 +174,11 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 .top nav a.lang:hover { background: var(--sign); color: var(--sign-ink); text-decoration: none; border-color: var(--sign); }
 .facts.facts-wide li { grid-template-columns: 132px 1fr; }
 .facts.facts-wide b { font-size: 1.05rem; }
+
+.care { margin: 14px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; font-size: 0.92rem; }
+.care h3 { margin: 0 0 8px; font-size: 0.98rem; }
+.care ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.care .tip { margin: 8px 0 0; color: var(--muted); }
 </style>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('js',new Date());gtag('config','G-6JRCZVTNDG');</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JRCZVTNDG"></script>
@@ -214,6 +219,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   </div>
   <div class="ticket-stub"><div class="amount" data-amount>—</div><div class="stub-label">por pasajero</div></div>
  </div>
+ <div class="care" data-care hidden></div>
  <div class="cta" data-cta>
   <a class="btn btn-sign" href="https://airhelp.tpx.gr/Ow8vczQM" rel="sponsored nofollow noopener" target="_blank">Reclámalo sin coste por adelantado</a>
   <small>Lo gestiona una empresa de reclamaciones y solo cobra si ganas.</small>
@@ -499,7 +505,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     syncVisibility();
     var dep = byCode[form.querySelector("#from").dataset.code];
     var arr = byCode[form.querySelector("#to").dataset.code];
-    if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; return; }
+    if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; return; }
     var slug = val("airline");
     var al = AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
     var r = compute({ dep: dep, arr: arr, airline: al, what: val("what"), delay: val("delay"), notice: val("notice"), cause: val("cause") });
@@ -513,11 +519,47 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       : T.none;
     var ul = out.querySelector("[data-lines]"); ul.innerHTML = "";
     r.lines.concat(r.notes).forEach(function (t, i) { var li = document.createElement("li"); li.textContent = t; if (i >= r.lines.length) li.className = "note"; ul.appendChild(li); });
+    care(r.dist || 0, val("what"));
     out.querySelector("[data-cta]").hidden = !r.amount;
     var alName = (form.querySelector("#airline").selectedOptions[0] || {}).textContent || "";
     last = { r: r, dep: dep, arr: arr, what: val("what"), delay: val("delay"), notice: val("notice"),
       airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
     letter();
+  }
+
+  // ---------- Right to care (art. 6, 8, 9 Reg. 261/2004) ----------
+  function care(dist, what) {
+    var box = out.querySelector("[data-care]"); if (!box) return;
+    var en = LANG === "en", h = dist <= 1500 ? 2 : dist <= 3500 ? 3 : 4, items;
+    if (what === "delay") {
+      items = en ? [
+        "Meals and drinks if your flight leaves " + h + "+ hours late (for this distance).",
+        "A hotel and transfers if the new departure is the next day.",
+        "Delayed 5+ hours? You can give up the trip and get a full refund (but then there's no delay compensation)."
+      ] : [
+        "Comida y bebida si el vuelo sale con " + h + " h o más de retraso (para esta distancia).",
+        "Hotel y traslados si la salida se pasa al día siguiente.",
+        "¿Más de 5 h de retraso? Puedes renunciar al viaje y pedir el reembolso completo (pero entonces no hay compensación por retraso)."
+      ];
+    } else {
+      items = en ? [
+        "Your choice of a full refund within 7 days or a new flight.",
+        "Meals and drinks while you wait for the new flight.",
+        "A hotel and transfers if you have to stay overnight."
+      ] : [
+        "A tu elección: reembolso completo en 7 días o un vuelo alternativo.",
+        "Comida y bebida mientras esperas el vuelo alternativo.",
+        "Hotel y traslados si tienes que pasar la noche."
+      ];
+    }
+    var head = en ? "On top of that, while you wait you're owed:" : "Además, mientras esperas te deben:";
+    var tip = en ? "Didn't get it and paid yourself? Keep the receipts: the airline must pay you back, even if the cause was extraordinary."
+      : "¿No te lo dieron y lo pagaste tú? Guarda los tickets: la aerolínea tiene que devolvértelo, aunque la causa sea extraordinaria.";
+    box.innerHTML = "<h3></h3><ul></ul><p class=\"tip\"></p>";
+    box.querySelector("h3").textContent = head;
+    items.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; box.querySelector("ul").appendChild(li); });
+    box.querySelector(".tip").textContent = tip;
+    box.hidden = false;
   }
 
   // ---------- Claim letter (runs only in the browser) ----------
