@@ -225,6 +225,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   <small>Handled by a flight claims company that only charges if you win.</small>
   <button type="button" class="btn btn-ghost" id="letter-open" aria-expanded="false" aria-controls="letter">I'd rather claim myself for free: write my letter</button>
  </div>
+ <div class="care" data-where hidden></div>
  <div class="letter" id="letter" hidden>
   <p class="letter-lead">Fill in your details and we'll prepare the letter. Everything stays in your browser: we store nothing.</p>
   <div class="row2">
@@ -269,7 +270,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 <footer class="foot"><div class="wrap"><p>VuelosClaim is an indicative calculator based on <a href="https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm" rel="noopener">Regulation (EC) 261/2004</a> and its UK version (UK261). It is not legal advice.</p><p>Some links are affiliate links: if you use a service through them, we earn a commission at no cost to you. This never changes the calculator's result.</p><p>Amounts and rules last reviewed: 7 October 2026.</p><nav><a href="/en/flight-strikes-spain-europe/">Flight strikes</a><a href="/en/flight-compensation-companies-compared/">AirHelp vs Flightright</a><a href="/en/flight-cancelled-what-to-do/">Flight cancelled</a><a href="/en/denied-boarding-overbooking-compensation/">Overbooking</a><a href="/en/extraordinary-circumstances-flight-delay/">Extraordinary circumstances</a><a href="/en/uk-airports-to-spain-flight-delay-compensation/">UK airports to Spain</a><a href="/en/about/">About us and sources</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/privacy/">Privacy</a></nav></div></footer>
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "VuelosClaim", "item": "https://vuelosclaim.eu/en/"}, {"@type": "ListItem", "position": 2, "name": "Zaragoza airport flight delay compensation", "item": "https://vuelosclaim.eu/en/zaragoza-airport-flight-delay/"}]}</script>
-<script>window.CTT={"lang": "en", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": "ryanair", "eu": "yes", "uk": false}, {"slug": "vueling", "eu": "yes", "uk": false}, {"slug": "iberia", "eu": "yes", "uk": false}, {"slug": "iberia-express", "eu": "yes", "uk": false}, {"slug": "air-europa", "eu": "yes", "uk": false}, {"slug": "volotea", "eu": "yes", "uk": false}, {"slug": "binter", "eu": "yes", "uk": false}, {"slug": "air-nostrum", "eu": "yes", "uk": false}, {"slug": "easyjet", "eu": "mixed", "uk": true}, {"slug": "tui", "eu": "mixed", "uk": true}, {"slug": "wizz-air", "eu": "mixed", "uk": true}, {"slug": "transavia", "eu": "yes", "uk": false}, {"slug": "lufthansa", "eu": "yes", "uk": false}, {"slug": "air-france", "eu": "yes", "uk": false}, {"slug": "klm", "eu": "yes", "uk": false}, {"slug": "tap", "eu": "yes", "uk": false}, {"slug": "ita-airways", "eu": "yes", "uk": false}, {"slug": "norwegian", "eu": "yes", "uk": false}, {"slug": "british-airways", "eu": "no", "uk": true}, {"slug": "jet2", "eu": "no", "uk": true}, {"slug": "turkish-airlines", "eu": "no", "uk": false}, {"slug": "emirates", "eu": "no", "uk": false}]};</script>
+<script>window.CTT={"lang": "en", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": "ryanair", "eu": "yes", "uk": false, "name": "Ryanair", "claim": "https://eu261expenseclaim.ryanair.com/", "note": "Ryanair says it aims to decide within 10 days and recommends claiming directly, without a claims company.", "adr": "AviationADR"}, {"slug": "vueling", "eu": "yes", "uk": false, "name": "Vueling", "claim": "https://www.vueling.com/es/atencion-al-cliente/asistentes/compensacion", "note": "You can also ask for it through Vueling's chat.", "adr": null}, {"slug": "iberia", "eu": "yes", "uk": false, "name": "Iberia", "claim": "https://www.iberia.com/es/reclamaciones-justificantes/", "note": null, "adr": null}, {"slug": "iberia-express", "eu": "yes", "uk": false, "name": "Iberia Express", "claim": "https://www.iberiaexpress.com/", "note": "Claim through the customer service section of its website.", "adr": null}, {"slug": "air-europa", "eu": "yes", "uk": false, "name": "Air Europa", "claim": "https://customerservice.aireuropa.com/complaints/es/es/complaints-compliments/claims-form", "note": null, "adr": null}, {"slug": "volotea", "eu": "yes", "uk": false, "name": "Volotea", "claim": "https://www.volotea.com/en/contact/", "note": "Claim through its help centre (complaint form).", "adr": null}, {"slug": "binter", "eu": "yes", "uk": false, "name": "Binter", "claim": "https://www.binter.com/es", "note": "Claim through the customer service section of its website.", "adr": null}, {"slug": "air-nostrum", "eu": "yes", "uk": false, "name": "Air Nostrum", "claim": "https://www.iberia.com/es/reclamaciones-justificantes/", "note": "Air Nostrum flies as Iberia Regional, so you claim through Iberia.", "adr": null}, {"slug": "easyjet", "eu": "mixed", "uk": true, "name": "easyJet", "claim": "https://www.easyjet.com/claim/en/eu261", "note": null, "adr": "AviationADR"}, {"slug": "tui", "eu": "mixed", "uk": true, "name": "TUI", "claim": "https://www.tui.co.uk/destinations/contact-us/flight-delays", "note": "The form is only for flights operated by TUI Airways (flight numbers starting TOM, BY or OR).", "adr": "AviationADR"}, {"slug": "wizz-air", "eu": "mixed", "uk": true, "name": "Wizz Air", "claim": "https://www.wizzair.com/en-gb/information-and-services/compliments-and-complaints", "note": "Wizz Air replies within 30 days. If you claim through a company, it deducts a €50 admin fee.", "adr": "AviationADR"}, {"slug": "transavia", "eu": "yes", "uk": false, "name": "Transavia", "claim": "https://www.transavia.com/help/en-eu/contact-complaints/contact/submit-claim", "note": null, "adr": null}, {"slug": "lufthansa", "eu": "yes", "uk": false, "name": "Lufthansa", "claim": "https://www.lufthansa.com/us/en/fast-compensation", "note": null, "adr": "söp (Schlichtung Reise & Verkehr)"}, {"slug": "air-france", "eu": "yes", "uk": false, "name": "Air France", "claim": "https://wwws.airfrance.es/en/information/legal/remboursement", "note": null, "adr": "AviationADR"}, {"slug": "klm", "eu": "yes", "uk": false, "name": "KLM", "claim": "https://www.klm.com/information/refund-compensation/compensation", "note": null, "adr": "AviationADR"}, {"slug": "tap", "eu": "yes", "uk": false, "name": "TAP Air Portugal", "claim": "https://www.flytap.com/en-gb/help/delays-cancellations", "note": null, "adr": "AviationADR"}, {"slug": "ita-airways", "eu": "yes", "uk": false, "name": "ITA Airways", "claim": "https://www.ita-airways.com/us/en/support/flight-disruptions", "note": null, "adr": null}, {"slug": "norwegian", "eu": "yes", "uk": false, "name": "Norwegian", "claim": "https://www.norwegian.com/en/travel-info/delayed-and-cancelled-flights/delayed-flights/", "note": null, "adr": null}, {"slug": "british-airways", "eu": "no", "uk": true, "name": "British Airways", "claim": "https://www.britishairways.com/content/information/delayed-or-cancelled-flights", "note": null, "adr": "CEDR"}, {"slug": "jet2", "eu": "no", "uk": true, "name": "Jet2", "claim": "https://www.jet2.com/en/Delays-and-cancellations", "note": null, "adr": "CAA"}, {"slug": "turkish-airlines", "eu": "no", "uk": false, "name": "Turkish Airlines", "claim": "https://www.turkishairlines.com/en-int/legal-notice/other-regulations/", "note": "Only flights departing the EU or UK are covered.", "adr": "AviationADR"}, {"slug": "emirates", "eu": "no", "uk": false, "name": "Emirates", "claim": "https://www.emirates.com/english/before-you-fly/travel/rules-and-notices/", "note": "Only flights departing the EU or UK are covered.", "adr": null}]};</script>
 <script>(function () {
   "use strict";
   var cfg = window.CTT || {};
@@ -506,7 +507,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     syncVisibility();
     var dep = byCode[form.querySelector("#from").dataset.code];
     var arr = byCode[form.querySelector("#to").dataset.code];
-    if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; return; }
+    if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; var wb = out.querySelector("[data-where]"); if (wb) wb.hidden = true; return; }
     var slug = val("airline");
     var al = AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
     var r = compute({ dep: dep, arr: arr, airline: al, what: val("what"), delay: val("delay"), notice: val("notice"), cause: val("cause") });
@@ -521,6 +522,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     var ul = out.querySelector("[data-lines]"); ul.innerHTML = "";
     r.lines.concat(r.notes).forEach(function (t, i) { var li = document.createElement("li"); li.textContent = t; if (i >= r.lines.length) li.className = "note"; ul.appendChild(li); });
     care(r.dist || 0, val("what"));
+    where(al, r, dep);
     out.querySelector("[data-cta]").hidden = !r.amount;
     var alName = (form.querySelector("#airline").selectedOptions[0] || {}).textContent || "";
     last = { r: r, dep: dep, arr: arr, what: val("what"), delay: val("delay"), notice: val("notice"),
@@ -561,6 +563,30 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     items.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; box.querySelector("ul").appendChild(li); });
     box.querySelector(".tip").textContent = tip;
     box.hidden = false;
+  }
+
+  // ---------- Where to claim (official airline channel + escalation) ----------
+  function where(al, r, dep) {
+    var box = out.querySelector("[data-where]"); if (!box) return;
+    var en = LANG === "en", h = "", name = al && al.name;
+    if (name && al.claim) {
+      h += "<p><strong>" + (en ? "Claim from " + name + " for free: " : "Reclama gratis a " + name + ": ") + "</strong>" +
+        '<a href="' + al.claim + '" rel="noopener nofollow" target="_blank">' + (en ? "official claim page" : "página oficial de reclamación") + "</a>.</p>";
+      if (al.note) h += "<p>" + al.note.replace(/</g, "&lt;") + "</p>";
+    }
+    var esc;
+    if (r.regime === "UK") {
+      var adr = al && al.adr;
+      esc = en ? "If they refuse or don't reply in 8 weeks: " + (adr && adr !== "CAA" ? adr + " (the airline's free dispute scheme)" : "the CAA's free complaints service (PACT)") + "."
+        : "Si lo rechazan o no contestan en 8 semanas: " + (adr && adr !== "CAA" ? adr + " (mediación gratuita)" : "el servicio de reclamaciones de la CAA, gratuito") + ".";
+    } else if (dep && dep[3] === "ES") {
+      esc = en ? "If they refuse or don't reply in 8 weeks: AESA, Spain's aviation authority (free)." : "Si lo rechazan o no contestan en 8 semanas: AESA, gratis.";
+    } else {
+      esc = en ? "If they refuse or don't reply in 8 weeks: the aviation authority of the departure country (free)." : "Si lo rechazan o no contestan en 8 semanas: el organismo de aviación del país de salida, gratis.";
+    }
+    h += "<p class=\"tip\">" + esc + "</p>";
+    box.innerHTML = "<h3>" + (en ? "Where to claim" : "Dónde reclamar") + "</h3>" + h;
+    box.hidden = !r.amount;
   }
 
   // ---------- Claim letter (runs only in the browser) ----------
