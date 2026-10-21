@@ -1,0 +1,43 @@
+name: Validar
+
+# Se ejecuta en cada PR y en cada cambio de main. No publica nada:
+# GitHub Pages publica la carpeta docs/ de main cuando se fusiona un PR.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generar la web desde fuente/
+        run: python3 fuente/build.py
+
+      - name: docs/ coincide con el código fuente
+        run: |
+          if [ -n "$(git status --porcelain -- docs)" ]; then
+            echo "docs/ no coincide con lo que genera fuente/build.py. Ejecuta 'python3 fuente/build.py' y sube el resultado:"
+            git status --porcelain -- docs | head -50
+            exit 1
+          fi
+
+      - name: Motor de reglas de la calculadora
+        run: node fuente/tests/test_reglas.js
+
+      - name: Enlaces, SEO y datos
+        run: python3 fuente/tests/test_sitio.py docs
