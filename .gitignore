@@ -1,0 +1,4 @@
+__pycache__/
+fuente/preview/
+node_modules/
+*.zip
