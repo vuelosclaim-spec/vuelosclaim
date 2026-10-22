@@ -83,7 +83,7 @@ input[type="text"]:focus, select:focus { border-color: var(--focus); outline: no
 .opt-txt small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 12px; min-width: 0; }
 .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; }
-.chips label { position: relative; display: flex; }
+.chips label { position: relative; display: flex; min-width: 0; }
 .chips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .chips span { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 46px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 0.93rem; line-height: 1.25; background: var(--surface); cursor: pointer; transition: border-color .15s, background .15s; }
 .chips label:hover span { border-color: var(--muted); }
@@ -102,8 +102,10 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 12px; min-width
 .stub-label { font: 600 0.68rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 6px; }
 .why { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.92rem; }
 .why .note { color: var(--muted); }
-.result[data-state="yes"] .amount { color: var(--ok); }
-.result[data-state="maybe"] .amount { color: var(--warn); }
+.why .missing { color: var(--warn); font-weight: 600; list-style: "? "; }
+.chips-wide { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.result[data-state="posible"] .amount { color: var(--ok); }
+.result[data-state="insuficiente"] .amount { color: var(--warn); }
 .result[data-state="no"] .amount { color: var(--no); }
 .result[data-state="empty"] .ticket, .result[data-state="error"] .ticket { display: none; }
 .result .empty-msg, .result .error-msg { display: none; color: var(--muted); font-size: 0.95rem; margin: 0; }
@@ -183,8 +185,8 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 @media (max-width: 480px) {
   .calc { padding: 20px; gap: 22px; }
   .chips { grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 8px; }
-  .chips span { padding: 10px 8px; font-size: 0.88rem; }
-  .calc fieldset:last-of-type .chips { grid-template-columns: 1fr 1fr; }
+  .chips span { padding: 10px 6px; font-size: 0.88rem; hyphens: auto; overflow-wrap: anywhere; }
+  .chips-wide { grid-template-columns: 1fr 1fr; }
 }
 </style>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('js',new Date());gtag('config','G-6JRCZVTNDG');</script>
@@ -212,9 +214,16 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 </div>
 <div class="field"><label for="airline">Airline</label><select id="airline" name="airline"><option value="">Not sure / not listed</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic">Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic" selected>airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Another European airline</option><option value="otra-no-ue">Another non-European airline</option></select></div>
 <fieldset><legend>What happened</legend><div class="chips"><label><input type="radio" name="what" value="delay" checked><span>Delay</span></label><label><input type="radio" name="what" value="cancel"><span>Cancellation</span></label><label><input type="radio" name="what" value="denied"><span>Overbooking</span></label></div></fieldset>
-<fieldset id="grp-delay"><legend>Delay on arrival</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Under 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>3 to 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Over 4&nbsp;h</span></label></div></fieldset>
-<fieldset id="grp-notice" hidden><legend>You were told</legend><div class="chips"><label><input type="radio" name="notice" value="lt7" checked><span>Under 7 days ahead</span></label><label><input type="radio" name="notice" value="7to14"><span>7 to 14 days ahead</span></label><label><input type="radio" name="notice" value="gt14"><span>Over 14 days ahead</span></label></div></fieldset>
-<fieldset><legend>Reason given</legend><div class="chips"><label><input type="radio" name="cause" value="unknown" checked><span>None given</span></label><label><input type="radio" name="cause" value="tech"><span>Technical problem</span></label><label><input type="radio" name="cause" value="strike"><span>Airline staff strike</span></label><label><input type="radio" name="cause" value="extra"><span>Weather, ATC or security</span></label></div></fieldset>
+<fieldset id="grp-delay"><legend>Delay at your final destination</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Under 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>3&nbsp;h to 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Over 4&nbsp;h</span></label><label><input type="radio" name="delay" value="unknown"><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-notice" hidden><legend>You were told about the cancellation</legend><div class="chips"><label><input type="radio" name="notice" value="gt14"><span>14 days or more ahead</span></label><label><input type="radio" name="notice" value="7to14"><span>7 to 13 days ahead</span></label><label><input type="radio" name="notice" value="lt7"><span>Under 7 days ahead</span></label><label><input type="radio" name="notice" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-reroute" hidden><legend>Were you offered an alternative flight?</legend><div class="chips"><label><input type="radio" name="reroute" value="yes"><span>Yes</span></label><label><input type="radio" name="reroute" value="no"><span>No</span></label><label><input type="radio" name="reroute" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-rdep" hidden><legend>Compared with the original, the alternative left…</legend><div class="chips chips-wide"><label><input type="radio" name="rdep" value="le1"><span>Up to 1&nbsp;h earlier, or later</span></label><label><input type="radio" name="rdep" value="1to2"><span>1 to 2&nbsp;h earlier</span></label><label><input type="radio" name="rdep" value="gt2"><span>Over 2&nbsp;h earlier</span></label><label><input type="radio" name="rdep" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-rarr" hidden><legend>…and arrived</legend><div class="chips chips-wide"><label><input type="radio" name="rarr" value="lt2"><span>Under 2&nbsp;h later</span></label><label><input type="radio" name="rarr" value="2to4"><span>2 to 4&nbsp;h later</span></label><label><input type="radio" name="rarr" value="ge4"><span>4&nbsp;h or more later</span></label><label><input type="radio" name="rarr" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-accepted" hidden><legend>Did you accept the alternative flight?</legend><div class="chips"><label><input type="radio" name="accepted" value="yes"><span>Yes</span></label><label><input type="radio" name="accepted" value="no"><span>No, I took a refund</span></label></div></fieldset>
+<fieldset id="grp-denied" hidden><legend>Did you give up your seat?</legend><div class="chips"><label><input type="radio" name="denied" value="invol"><span>No, I was refused</span></label><label><input type="radio" name="denied" value="vol"><span>Yes, voluntarily</span></label><label><input type="radio" name="denied" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-checkin" hidden><legend>Did you check in and get to the gate on time?</legend><div class="chips"><label><input type="radio" name="checkin" value="yes"><span>Yes</span></label><label><input type="radio" name="checkin" value="no"><span>No</span></label><label><input type="radio" name="checkin" value="unknown" checked><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-dreason" hidden><legend>Reason for refusing you</legend><div class="chips chips-wide"><label><input type="radio" name="dreason" value="overbooking"><span>Overbooking or another airline reason</span></label><label><input type="radio" name="dreason" value="reasonable"><span>Health, safety or documents</span></label><label><input type="radio" name="dreason" value="unknown" checked><span>Not explained</span></label></div></fieldset>
+<div class="field" id="grp-cause"><label for="cause">Reason the airline gave</label><select id="cause" name="cause"><option value="unknown">None given</option><option value="tech">Technical fault</option><option value="crew">Crew shortage or illness</option><option value="strike_own">Airline staff strike</option><option value="strike_ext">Air traffic control or airport strike</option><option value="atc">Air traffic control restriction</option><option value="weather">Bad weather</option><option value="security">Security (threat, airspace closure)</option><option value="bird">Bird strike or object on the runway</option><option value="knock">Earlier flight by the same aircraft was late</option></select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">Choose where you flew from and to.</p>
  <p class="error-msg">The airport list could not load. Please refresh the page.</p>
@@ -312,66 +321,156 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   };
   var T = {
     es: {
-      notCovered: "El vuelo no sale de un aeropuerto europeo y no lo opera una aerolínea europea, así que el reglamento europeo no lo cubre.",
-      maybeCarrier: "Como el vuelo llega a Europa desde fuera, solo está cubierto si lo operó una aerolínea europea. Lo pone en la tarjeta de embarque o en la reserva.",
-      ukRegime: "El vuelo sale del Reino Unido: se aplica la norma británica (UK261), que paga en libras.",
-      ukArrival: "El vuelo llega al Reino Unido con una aerolínea británica o europea: se aplica la norma británica (UK261).",
+      regEU: "El vuelo sale de la UE, el EEE (Noruega, Islandia, Liechtenstein) o Suiza: se aplica el Reglamento (CE) 261/2004, sea cual sea la aerolínea.",
+      reg3EU: "El vuelo llega a la UE desde fuera y lo operó una aerolínea europea: se aplica el Reglamento (CE) 261/2004.",
+      reg3EUuk: "El vuelo llega a la UE desde fuera con una aerolínea británica: el reglamento europeo no lo cubre, pero sí la norma británica UK261 (en libras).",
+      regUK: "El vuelo sale del Reino Unido: se aplica la norma británica UK261, en libras, sea cual sea la aerolínea.",
+      regUKin: "El vuelo llega al Reino Unido desde fuera con una aerolínea británica o europea: se aplica UK261, en libras.",
+      notIn: "El vuelo llega desde fuera de Europa con una aerolínea no europea ni británica: ni el reglamento europeo ni UK261 lo cubren.",
+      not3: "El vuelo ni sale ni llega a la UE, el EEE, Suiza o el Reino Unido: estas normas no lo cubren, aunque la aerolínea sea europea.",
+      carrierUnknown: "El vuelo llega desde fuera de Europa: solo está cubierto si lo operó una aerolínea europea (o británica, si llega al Reino Unido o a la UE con UK261).",
+      mCarrier: "qué aerolínea operó el vuelo (aparece en la tarjeta de embarque; puede no ser la que te vendió el billete)",
+      mixed: "Esta aerolínea tiene filiales europeas y británicas. Si el vuelo lo operó la británica, se aplica UK261 en libras en lugar del reglamento europeo.",
+      operating: "Cuenta la aerolínea que operó el vuelo, no la que te vendió el billete.",
+      alsoUK: "Al llegar al Reino Unido con una aerolínea británica o europea, también puede aplicarse UK261. Solo se cobra una vez.",
       alsoEU: "Al llegar a la UE con una aerolínea europea, también puede aplicarse el reglamento europeo (en euros). Solo se cobra una vez.",
-      bands: ["hasta 1.500 km", "más de 1.500 km dentro de Europa", "entre 1.500 y 3.500 km", "más de 3.500 km"],
-      dist: function (d, band, base) { return "Distancia: " + d + " km (" + band + ") → base de " + base + " por pasajero."; },
-      lt3: "Con menos de 3 horas de retraso en la llegada no hay compensación económica.",
-      lt3note: "Aun así, a partir de 2 horas (vuelos cortos) la aerolínea te debe comida, bebida y comunicación.",
-      half: function (m) { return "En vuelos de más de 3.500 km con un retraso de entre 3 y 4 horas, la compensación se reduce a la mitad: " + m + "."; },
-      full: "Llegaste con 3 horas o más de retraso: corresponde la compensación completa.",
-      gt14: "Si te avisaron de la cancelación con 14 días o más de antelación, no hay compensación.",
+      special: "Jersey, Guernsey, la isla de Man, Gibraltar, Svalbard y el norte de Chipre tienen un régimen propio a estos efectos: no podemos confirmar qué norma se aplica.",
+      mSpecial: "qué norma de derechos de los pasajeros aplica en ese territorio (pregúntalo a la aerolínea o a la autoridad de aviación local)",
+      bands: ["hasta 1.500 km", "más de 1.500 km dentro de la UE", "entre 1.500 y 3.500 km", "más de 3.500 km"],
+      dist: function (d, band, base) { return "Distancia: " + d + " km (" + band + ") → hasta " + base + " por pasajero."; },
+      lt3: "Llegaste al destino final con menos de 3 horas de retraso: no hay compensación económica.",
+      lt3note: "Aun así, según la distancia, a partir de 2, 3 o 4 horas de retraso en la salida la aerolínea te debe comida y bebida.",
+      mDelay: "con cuánto retraso llegaste al destino final",
+      full: "Llegaste al destino final con 3 horas o más de retraso: por regla general corresponde compensación (TJUE, Sturgeon, C-402/07).",
+      half: function (m) { return "En vuelos de más de 3.500 km fuera de la UE con un retraso de 3 a 4 horas, la compensación se reduce a la mitad: " + m + " (art. 7.2)."; },
+      arrival: "El retraso se mide en el destino final, cuando se abren las puertas del avión (TJUE, C-452/13).",
+      gt14: "Te avisaron de la cancelación con 14 días o más de antelación: no hay compensación (art. 5.1.c.i).",
       gt14note: "Sí tienes derecho a elegir entre el reembolso del billete o un vuelo alternativo.",
-      cancel: "Cancelación avisada con menos de 14 días: corresponde compensación.",
-      n7to14: "Salvo que te ofrecieran un vuelo alternativo que saliera como mucho 2 horas antes y llegara como mucho 4 horas después del original.",
-      nlt7: "Salvo que te ofrecieran un vuelo alternativo que saliera como mucho 1 hora antes y llegara como mucho 2 horas después del original.",
-      denied: "Te denegaron el embarque sin que cedieras tu plaza voluntariamente (por ejemplo, por overbooking): corresponde compensación.",
-      extra: "La aerolínea alega una circunstancia extraordinaria (meteorología, huelga de controladores, seguridad). Si lo demuestra, no tiene que pagar.",
-      extraNote: "Tiene que probarlo ella. Muchas veces alegan mal tiempo cuando la causa real fue otra: una empresa de reclamaciones lo comprueba gratis.",
-      strike: "Las huelgas del personal de la propia aerolínea no la libran de pagar (Tribunal de Justicia de la UE, 2021).",
-      tech: "Los problemas técnicos del avión, por regla general, no la libran de pagar.",
-      yes: function (m) { return "Te corresponden " + m + " por pasajero"; },
-      maybe: function (m) { return "Podrían corresponderte " + m + " por pasajero"; },
-      none: "Con estos datos no te corresponde compensación",
+      mNotice: "con cuántos días de antelación te avisaron de la cancelación",
+      n7to14: "Aviso de entre 7 y 13 días: la aerolínea solo se libra si te ofreció un vuelo alternativo que saliera como mucho 2 horas antes y llegara menos de 4 horas después que el original (art. 5.1.c.ii).",
+      nlt7: "Aviso de menos de 7 días: la aerolínea solo se libra si te ofreció un vuelo alternativo que saliera como mucho 1 hora antes y llegara menos de 2 horas después que el original (art. 5.1.c.iii).",
+      rerouteNo: "No te ofrecieron un vuelo alternativo: esa excepción no se aplica.",
+      mReroute: "si te ofrecieron un vuelo alternativo",
+      mRerouteTimes: "a qué hora salía y llegaba el vuelo alternativo comparado con el original",
+      exempt: "El vuelo alternativo que te ofrecieron cumple esos márgenes: no hay compensación.",
+      exemptNote: "Mantienes el derecho al reembolso o al vuelo alternativo, y a la asistencia mientras esperas.",
+      notExempt: "El vuelo alternativo que te ofrecieron no cumple esos márgenes: la excepción no se aplica.",
+      accepted: "Aceptaste el vuelo alternativo: eso no te quita la compensación.",
+      rejected: "Rechazaste el vuelo alternativo: puedes pedir el reembolso del billete además de la compensación.",
+      reduced: function (m) { return "Como el vuelo alternativo llegó con poco retraso, la aerolínea puede reducir la compensación a la mitad: " + m + " (art. 7.2)."; },
+      reduceMaybe: function (m) { return "Si el vuelo alternativo llegó como mucho 3 horas después del original, la aerolínea puede reducirla a la mitad: " + m + " (art. 7.2)."; },
+      vol: "Cediste tu plaza voluntariamente: no hay compensación fija. Te corresponde lo que pactaste con la aerolínea, más el reembolso o un vuelo alternativo (art. 4.1).",
+      mVol: "si cediste la plaza voluntariamente o te la negaron contra tu voluntad",
+      checkinNo: "Para tener derecho hay que presentarse a facturación y embarque a tiempo (art. 3.2). Si llegaste tarde, no hay compensación.",
+      mCheckin: "si te presentaste a tiempo a facturación y embarque, con la documentación en regla",
+      reasonable: "Si te negaron el embarque por motivos razonables (salud, seguridad o documentación de viaje incorrecta), no hay compensación (art. 2.j).",
+      overbook: "Te negaron el embarque contra tu voluntad por overbooking u otro motivo operativo: corresponde compensación (art. 4.3).",
+      reasonUnknown: "No te explicaron el motivo: la denegación da derecho a compensación salvo motivos razonables de salud, seguridad o documentación (TJUE, C-321/11).",
+      deniedNoExtra: "En la denegación de embarque la aerolínea no puede alegar circunstancias extraordinarias (TJUE, C-22/11).",
+      c: {
+        unknown: "No te dieron un motivo. La aerolínea solo se libra si demuestra una circunstancia extraordinaria que no pudo evitar con medidas razonables (art. 5.3).",
+        tech: "Las averías del avión detectadas en el mantenimiento o en la operación normal no eximen de pagar (TJUE, C-549/07). Solo un defecto oculto de fabricación reconocido por el fabricante o las autoridades podría hacerlo (C-257/14).",
+        crew: "La falta de tripulación o la enfermedad repentina de un tripulante no es una circunstancia extraordinaria (TJUE, C-156/22 a C-158/22).",
+        strike_own: "La huelga del personal de la propia aerolínea no la exime de pagar (TJUE, C-28/20).",
+        strike_ext: "Una huelga ajena a la aerolínea (controladores aéreos, personal del aeropuerto o de otros servicios) se considera normalmente circunstancia extraordinaria.",
+        weather: "Una meteorología incompatible con la seguridad del vuelo puede ser circunstancia extraordinaria.",
+        atc: "Una restricción del control del tráfico aéreo no exime por sí sola: la aerolínea debe identificar la causa de fondo y demostrar que era extraordinaria, y solo descuenta el retraso que se deba a ella (TJUE, C-108/26, 2026).",
+        security: "Los riesgos para la seguridad (amenazas, cierre del espacio aéreo, inestabilidad política) son circunstancias extraordinarias.",
+        bird: "El choque con un ave o un objeto en la pista se considera circunstancia extraordinaria (TJUE, C-315/15 y C-501/17).",
+        knock: "Si el retraso viene de un vuelo anterior del mismo avión, solo exime si en ese vuelo hubo una circunstancia extraordinaria y fue la causa directa de tu retraso (TJUE, C-74/19; Tribunal General, T-656/24).",
+        extra: "La aerolínea alega una circunstancia extraordinaria. Si la demuestra, no tiene que pagar."
+      },
+      strikeOwnNote: "Excepción: que las reivindicaciones de la huelga solo pudieran atenderlas las autoridades públicas.",
+      mAtc: "qué provocó la restricción de control aéreo (pídeselo por escrito a la aerolínea)",
+      mKnock: "qué causó el retraso del vuelo anterior (pídeselo por escrito a la aerolínea)",
+      extraNote: function (m) { return "La aerolínea tiene que demostrarlo y probar que tomó todas las medidas razonables. Si no lo consigue (por ejemplo, otros vuelos salieron con normalidad), podrían corresponderte " + m + " por pasajero."; },
+      hPos: function (m) { return "Posible derecho a compensación: hasta " + m + " por pasajero"; },
+      hNo: "No parece corresponder compensación",
+      hIns: "Información insuficiente para determinarlo",
+      insAmt: function (m) { return "Si los datos que faltan te son favorables, podrían corresponderte hasta " + m + " por pasajero."; },
+      missing: "Falta saber: ",
       copied: "Carta copiada. Pégala en el formulario o el correo de la aerolínea.",
       selected: "Texto seleccionado: cópialo con Ctrl+C o mantén pulsado.",
       downloaded: "Carta descargada.", dlFail: "No se ha podido descargar. Usa el botón de copiar.",
       file: "reclamacion-vuelo.txt"
     },
     en: {
-      notCovered: "The flight does not depart from a European airport and is not operated by a European airline, so EU261 does not cover it.",
-      maybeCarrier: "Because the flight arrives in Europe from outside, it is only covered if a European airline operated it. Check your boarding pass or booking.",
-      ukRegime: "The flight departs from the UK, so the UK rules (UK261) apply and pay in pounds.",
-      ukArrival: "The flight arrives in the UK with a UK or EU airline, so the UK rules (UK261) apply.",
-      alsoEU: "Arriving in the EU with an EU airline, EU261 (in euros) may also apply. You can only be paid once.",
-      bands: ["up to 1,500 km", "over 1,500 km within Europe", "1,500 to 3,500 km", "over 3,500 km"],
-      dist: function (d, band, base) { return "Distance: " + d + " km (" + band + ") → base of " + base + " per passenger."; },
-      lt3: "With an arrival delay of less than 3 hours there is no cash compensation.",
-      lt3note: "Even so, from 2 hours (short flights) the airline owes you food, drinks and a way to communicate.",
-      half: function (m) { return "On flights over 3,500 km with a 3 to 4 hour delay, compensation is halved: " + m + "."; },
-      full: "You arrived 3 or more hours late: full compensation applies.",
-      gt14: "If you were told about the cancellation 14 or more days in advance, there is no compensation.",
+      regEU: "The flight departs from the EU, the EEA (Norway, Iceland, Liechtenstein) or Switzerland, so Regulation (EC) 261/2004 applies whatever the airline.",
+      reg3EU: "The flight arrives in the EU from outside and was operated by a European airline, so Regulation (EC) 261/2004 applies.",
+      reg3EUuk: "The flight arrives in the EU from outside with a UK airline: EU261 does not cover it, but the UK rules (UK261, in pounds) do.",
+      regUK: "The flight departs from the UK, so the UK rules (UK261) apply, in pounds, whatever the airline.",
+      regUKin: "The flight arrives in the UK from outside with a UK or European airline, so UK261 applies, in pounds.",
+      notIn: "The flight arrives from outside Europe with a non-European, non-UK airline, so neither EU261 nor UK261 covers it.",
+      not3: "The flight neither departs from nor arrives in the EU, EEA, Switzerland or the UK, so these rules do not cover it, even with a European airline.",
+      carrierUnknown: "The flight arrives from outside Europe, so it is only covered if a European airline operated it (or a UK airline, under UK261).",
+      mCarrier: "which airline operated the flight (it's on the boarding pass; it may not be the one that sold you the ticket)",
+      mixed: "This airline has both European and UK companies. If the UK company operated the flight, UK261 applies in pounds instead of EU261.",
+      operating: "What counts is the airline that operated the flight, not the one that sold the ticket.",
+      alsoUK: "Arriving in the UK with a UK or European airline, UK261 may also apply. You can only be paid once.",
+      alsoEU: "Arriving in the EU with a European airline, EU261 (in euros) may also apply. You can only be paid once.",
+      special: "Jersey, Guernsey, the Isle of Man, Gibraltar, Svalbard and northern Cyprus have their own rules for this, so we cannot confirm which regime applies.",
+      mSpecial: "which passenger rights rules apply in that territory (ask the airline or the local aviation authority)",
+      bands: ["up to 1,500 km", "over 1,500 km within the EU", "1,500 to 3,500 km", "over 3,500 km"],
+      dist: function (d, band, base) { return "Distance: " + d + " km (" + band + ") → up to " + base + " per passenger."; },
+      lt3: "You reached your final destination less than 3 hours late, so there is no cash compensation.",
+      lt3note: "Even so, depending on the distance, from 2, 3 or 4 hours' departure delay the airline owes you food and drinks.",
+      mDelay: "how late you arrived at your final destination",
+      full: "You reached your final destination 3 or more hours late, so compensation is generally due (CJEU, Sturgeon, C-402/07).",
+      half: function (m) { return "On flights over 3,500 km outside the EU with a 3 to 4 hour delay, compensation is halved: " + m + " (Art. 7(2))."; },
+      arrival: "The delay is measured at your final destination, when the aircraft doors open (CJEU, C-452/13).",
+      gt14: "You were told about the cancellation 14 or more days in advance, so there is no compensation (Art. 5(1)(c)(i)).",
       gt14note: "You can still choose between a refund or an alternative flight.",
-      cancel: "Cancellation notified less than 14 days ahead: compensation applies.",
-      n7to14: "Unless you were offered an alternative flight leaving no more than 2 hours earlier and arriving no more than 4 hours later than the original.",
-      nlt7: "Unless you were offered an alternative flight leaving no more than 1 hour earlier and arriving no more than 2 hours later than the original.",
-      denied: "You were denied boarding against your will (for example, overbooking): compensation applies.",
-      extra: "The airline claims extraordinary circumstances (weather, air traffic control strike, security). If it can prove it, it does not have to pay.",
-      extraNote: "The burden of proof is on the airline. Airlines often blame the weather when the real cause was different; a claims company checks this for free.",
-      strike: "Strikes by the airline's own staff do not exempt it from paying (Court of Justice of the EU, 2021).",
-      tech: "Technical problems with the aircraft generally do not exempt the airline from paying.",
-      yes: function (m) { return "You are owed " + m + " per passenger"; },
-      maybe: function (m) { return "You could be owed " + m + " per passenger"; },
-      none: "Based on these details, no compensation is due",
+      mNotice: "how many days before departure you were told about the cancellation",
+      n7to14: "Notice of 7 to 13 days: the airline is only exempt if it offered you an alternative flight leaving no more than 2 hours earlier and arriving less than 4 hours later than the original (Art. 5(1)(c)(ii)).",
+      nlt7: "Notice of less than 7 days: the airline is only exempt if it offered you an alternative flight leaving no more than 1 hour earlier and arriving less than 2 hours later than the original (Art. 5(1)(c)(iii)).",
+      rerouteNo: "You were not offered an alternative flight, so that exemption does not apply.",
+      mReroute: "whether you were offered an alternative flight",
+      mRerouteTimes: "when the alternative flight left and arrived compared with the original",
+      exempt: "The alternative flight you were offered is within those limits, so there is no compensation.",
+      exemptNote: "You keep the right to a refund or the alternative flight, and to care while you wait.",
+      notExempt: "The alternative flight you were offered is outside those limits, so the exemption does not apply.",
+      accepted: "You accepted the alternative flight: that does not cancel your compensation.",
+      rejected: "You turned down the alternative flight: you can claim a refund of the ticket as well as compensation.",
+      reduced: function (m) { return "Because the alternative flight arrived only a little late, the airline may halve the compensation: " + m + " (Art. 7(2))."; },
+      reduceMaybe: function (m) { return "If the alternative flight arrived no more than 3 hours after the original, the airline may halve it: " + m + " (Art. 7(2))."; },
+      vol: "You gave up your seat voluntarily, so there is no fixed compensation. You are owed what you agreed with the airline, plus a refund or an alternative flight (Art. 4(1)).",
+      mVol: "whether you gave up your seat voluntarily or were denied boarding against your will",
+      checkinNo: "To qualify you must have checked in and turned up for boarding on time (Art. 3(2)). If you were late, there is no compensation.",
+      mCheckin: "whether you checked in and turned up for boarding on time, with valid travel documents",
+      reasonable: "If you were denied boarding for reasonable grounds (health, safety, security or invalid travel documents), there is no compensation (Art. 2(j)).",
+      overbook: "You were denied boarding against your will because of overbooking or another operational reason, so compensation applies (Art. 4(3)).",
+      reasonUnknown: "No reason was given: denied boarding gives a right to compensation unless there were reasonable grounds of health, safety, security or documents (CJEU, C-321/11).",
+      deniedNoExtra: "For denied boarding the airline cannot rely on extraordinary circumstances (CJEU, C-22/11).",
+      c: {
+        unknown: "No reason was given. The airline is only exempt if it proves extraordinary circumstances it could not have avoided with reasonable measures (Art. 5(3)).",
+        tech: "Technical faults found during maintenance or normal operation do not exempt the airline (CJEU, C-549/07). Only a hidden manufacturing defect confirmed by the manufacturer or the authorities might (C-257/14).",
+        crew: "Crew shortages or a crew member's sudden illness are not extraordinary circumstances (CJEU, C-156/22 to C-158/22).",
+        strike_own: "A strike by the airline's own staff does not exempt it from paying (CJEU, C-28/20).",
+        strike_ext: "A strike outside the airline (air traffic controllers, airport or other service staff) is normally an extraordinary circumstance.",
+        weather: "Weather that makes flying unsafe can be an extraordinary circumstance.",
+        atc: "An air traffic control restriction is not an exemption in itself: the airline must identify the underlying cause and prove it was extraordinary, and can only discount the delay it caused (CJEU, C-108/26, 2026).",
+        security: "Security risks (threats, airspace closures, political instability) are extraordinary circumstances.",
+        bird: "A bird strike or an object on the runway is an extraordinary circumstance (CJEU, C-315/15 and C-501/17).",
+        knock: "If the delay came from an earlier flight by the same aircraft, it only exempts the airline if that flight was hit by an extraordinary circumstance that directly caused your delay (CJEU, C-74/19; General Court, T-656/24).",
+        extra: "The airline claims extraordinary circumstances. If it proves them, it does not have to pay."
+      },
+      strikeOwnNote: "Exception: if the strikers' demands could only be met by the public authorities.",
+      mAtc: "what caused the air traffic control restriction (ask the airline in writing)",
+      mKnock: "what caused the earlier flight's delay (ask the airline in writing)",
+      extraNote: function (m) { return "The airline has to prove it and show it took all reasonable measures. If it can't (for example, other flights left normally), you could be owed " + m + " per passenger."; },
+      hPos: function (m) { return "Possible right to compensation: up to " + m + " per passenger"; },
+      hNo: "Compensation does not appear to be due",
+      hIns: "Not enough information to decide",
+      insAmt: function (m) { return "If the missing details go your way, you could be owed up to " + m + " per passenger."; },
+      missing: "Still needed: ",
       copied: "Letter copied. Paste it into the airline's claim form or email.",
       selected: "Text selected: copy it with Ctrl+C or a long press.",
       downloaded: "Letter downloaded.", dlFail: "Download failed. Use the copy button instead.",
       file: "flight-claim.txt"
     }
-  }[LANG];
+  };
+  var TT = T; // both languages, for tests
+  T = T[LANG];
   var airports = [], byCode = {};
 
   function norm(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
@@ -388,58 +487,141 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     if (LANG === "en") return (cur === "GBP" ? "£" : "€") + fmt(n);
     return fmt(n) + (cur === "GBP" ? " £" : " €");
   }
-  var UK = { GB: 1, GG: 1, JE: 1, IM: 1 };
+  var UK = { GB: 1, GG: 1, JE: 1, IM: 1 };           // used by the airport search (home results)
+  var SPECIAL_C = { GG: 1, JE: 1, IM: 1, GI: 1 };    // Crown Dependencies and Gibraltar: own regimes
+  var SPECIAL_A = { LYR: 1, ECN: 1 };                // Svalbard (outside the EEA Agreement), Ercan (northern Cyprus)
+  function special(a) { return !!(SPECIAL_C[a[3]] || SPECIAL_A[a[0]]); }
 
-  // ---------- Rule engine: EU261 (Reglamento CE 261/2004) and UK261 ----------
-  function compute(o) {
-    var r = { amount: 0, verdict: "no", lines: [], notes: [], cur: "EUR", regime: "EU" };
+  // ---------- Rule engine: EU261 (Regulation (EC) 261/2004) and UK261 ----------
+  // Three results: "posible" (possible right to compensation), "no" (does not appear to be due),
+  // "insuficiente" (not enough information). `amount` is the potential amount, never a promise.
+  // Inputs: dep, arr (airport tuples), airline {eu: yes|no|mixed|unknown, uk: bool}, what: delay|cancel|denied,
+  // delay: lt3|3to4|gt4|unknown or delayMin (minutes late at final destination),
+  // notice: gt14|7to14|lt7|unknown or noticeDays, reroute: yes|no|unknown, rdep: le1|1to2|gt2|unknown or
+  // rerouteDepEarlyMin (minutes the alternative left before the original; 0 or less = same time or later),
+  // rarr: lt2|2to4|ge4|unknown or rerouteArrLateMin, accepted: yes|no|unknown,
+  // denied: invol|vol|unknown, checkin: yes|no|unknown, dreason: overbooking|reasonable|unknown,
+  // cause: unknown|tech|crew|strike_own|strike_ext|weather|atc|security|bird|knock, distKm (optional override).
+  var RANK = { posible: 0, insuficiente: 1, no: 2 };
+  function compute(o, lang) {
+    var t = lang ? TT[lang] : T;
+    var r = { verdict: "posible", amount: 0, potential: 0, cur: "EUR", regime: null, covered: false, intra: false,
+      lines: [], notes: [], missing: [], dist: 0 };
+    var st = "posible";
+    function worse(s) { if (RANK[s] > RANK[st]) st = s; }
+    function miss(m) { if (r.missing.indexOf(m) < 0) r.missing.push(m); }
     var dep = o.dep, arr = o.arr;
-    var dist = km(dep, arr);
-    r.dist = dist;
-    var al = o.airline || {};
-    var carrier = al.eu || "unknown";
-    var ukCarrier = !!al.uk;
-    var intra = false, covered = false;
+    r.dist = typeof o.distKm === "number" ? o.distKm : km(dep, arr);
 
-    if (UK[dep[3]]) {
-      covered = true; r.regime = "UK"; r.cur = "GBP";
-      r.lines.push(T.ukRegime);
-      if (arr[6] === 1 && carrier === "yes") r.notes.push(T.alsoEU);
-    } else if (dep[6] === 1) {
-      covered = true; intra = arr[6] === 1;
-    } else if (arr[6] === 1) {
-      if (carrier === "yes") { covered = true; }
-      else if (carrier === "mixed" || carrier === "unknown") { covered = true; r.notes.push(T.maybeCarrier); r.verdict = "maybe"; }
-    } else if (UK[arr[3]] && (ukCarrier || carrier === "yes")) {
-      covered = true; r.regime = "UK"; r.cur = "GBP"; r.lines.push(T.ukArrival);
-    }
-    if (!covered) { r.lines.push(T.notCovered); return r; }
+    // 1. Territorial scope (the operating carrier, not the airline's nationality, decides inbound flights only)
+    var al = o.airline || {}, eu = al.eu || "unknown", ukc = !!al.uk;
+    var dEU = dep[6] === 1 && !special(dep), aEU = arr[6] === 1 && !special(arr);
+    var dUK = dep[3] === "GB", aUK = arr[3] === "GB";
+    var euOrUk = (eu === "yes" || eu === "mixed" || ukc) ? true : eu === "unknown" ? null : false;
+    if (special(dep) || (!dEU && !dUK && special(arr))) {
+      var sp = special(dep) ? dep : arr; r.regime = SPECIAL_C[sp[3]] && sp[3] !== "GI" ? "UK" : "EU"; r.covered = null;
+      r.lines.push(t.special); miss(t.mSpecial); worse("insuficiente");
+    } else if (dEU) {
+      r.regime = "EU"; r.covered = true; r.intra = aEU; r.lines.push(t.regEU);
+      if (aUK && euOrUk === true) r.notes.push(t.alsoUK);
+    } else if (dUK) {
+      r.regime = "UK"; r.covered = true; r.intra = aUK; r.lines.push(t.regUK);
+      if (aEU && (eu === "yes" || eu === "mixed")) r.notes.push(t.alsoEU);
+    } else if (aEU) {
+      if (eu === "yes" || eu === "mixed") { r.regime = "EU"; r.covered = true; r.lines.push(t.reg3EU); if (eu === "mixed") r.notes.push(t.mixed); }
+      else if (ukc) { r.regime = "UK"; r.covered = true; r.lines.push(t.reg3EUuk); }
+      else if (eu === "no") { r.lines.push(t.notIn); r.verdict = "no"; return r; }
+      else { r.regime = "EU"; r.covered = null; r.lines.push(t.carrierUnknown); miss(t.mCarrier); worse("insuficiente"); }
+      r.notes.push(t.operating);
+    } else if (aUK) {
+      if (euOrUk === true) { r.regime = "UK"; r.covered = true; r.lines.push(t.regUKin); }
+      else if (euOrUk === false) { r.lines.push(t.notIn); r.verdict = "no"; return r; }
+      else { r.regime = "UK"; r.covered = null; r.lines.push(t.carrierUnknown); miss(t.mCarrier); worse("insuficiente"); }
+      r.notes.push(t.operating);
+    } else { r.lines.push(t.not3); r.verdict = "no"; return r; }
+    if (r.regime === "UK") r.cur = "GBP";
 
+    // 2. Amount by great-circle distance to the final destination (Art. 7(1))
     var tiers = r.regime === "UK" ? [220, 350, 520] : [250, 400, 600];
-    var base = dist <= 1500 ? tiers[0] : (intra || dist <= 3500) ? tiers[1] : tiers[2];
-    var band = dist <= 1500 ? T.bands[0] : intra ? T.bands[1] : dist <= 3500 ? T.bands[2] : T.bands[3];
-    r.lines.push(T.dist(fmt(dist), band, money(base, r.cur)));
-    var amount = base;
+    var d = r.dist, tier = d <= 1500 ? 0 : (r.intra || d <= 3500) ? 1 : 2;
+    var base = tiers[tier], amount = base;
+    var band = tier === 0 ? t.bands[0] : r.intra && d > 3500 ? t.bands[1] : tier === 1 ? t.bands[2] : t.bands[3];
+    r.lines.push(t.dist(fmt(d), band, money(base, r.cur)));
 
+    // 3. What happened
+    var useCause = true;
     if (o.what === "delay") {
-      if (o.delay === "lt3") { r.lines.push(T.lt3); r.notes.push(T.lt3note); r.amount = 0; r.verdict = "no"; return r; }
-      if (o.delay === "3to4" && base === tiers[2]) { amount = base / 2; r.lines.push(T.half(money(amount, r.cur))); }
-      else r.lines.push(T.full);
+      var dl = typeof o.delayMin === "number" ? (o.delayMin < 180 ? "lt3" : o.delayMin <= 240 ? "3to4" : "gt4") : (o.delay || "unknown");
+      if (dl === "lt3") { r.lines.push(t.lt3); r.notes.push(t.lt3note); r.verdict = "no"; return r; }
+      if (dl === "unknown") { miss(t.mDelay); worse("insuficiente"); }
+      else if (dl === "3to4" && tier === 2) { amount = base / 2; r.lines.push(t.half(money(amount, r.cur))); }
+      else r.lines.push(t.full);
+      r.notes.push(t.arrival);
     } else if (o.what === "cancel") {
-      if (o.notice === "gt14") { r.lines.push(T.gt14); r.notes.push(T.gt14note); r.amount = 0; r.verdict = "no"; return r; }
-      r.lines.push(T.cancel);
-      r.notes.push(o.notice === "7to14" ? T.n7to14 : T.nlt7);
+      var nd = typeof o.noticeDays === "number" ? (o.noticeDays >= 14 ? "gt14" : o.noticeDays >= 7 ? "7to14" : "lt7") : (o.notice || "unknown");
+      if (nd === "gt14") { r.lines.push(t.gt14); r.notes.push(t.gt14note); r.verdict = "no"; return r; }
+      if (nd === "unknown") { miss(t.mNotice); worse("insuficiente"); }
+      else {
+        r.lines.push(nd === "7to14" ? t.n7to14 : t.nlt7);
+        var rr = o.reroute || "unknown";
+        if (rr === "no") r.lines.push(t.rerouteNo);
+        else if (rr === "unknown") { miss(t.mReroute); worse("insuficiente"); }
+        else {
+          var early = typeof o.rerouteDepEarlyMin === "number" ? o.rerouteDepEarlyMin
+            : { le1: 60, "1to2": 120, gt2: 121 }[o.rdep];
+          var late = typeof o.rerouteArrLateMin === "number" ? o.rerouteArrLateMin
+            : { lt2: 119, "2to4": 239, ge4: 240 }[o.rarr];
+          var lim = nd === "7to14" ? [120, 240] : [60, 120];
+          // With chips, "2to4" is 120–239 min: below 240 (exempt for 7–13 days), at least 120 (not exempt for <7 days).
+          if (typeof o.rerouteArrLateMin !== "number" && o.rarr === "2to4") late = nd === "7to14" ? 239 : 120;
+          if (typeof o.rerouteDepEarlyMin !== "number" && o.rdep === "1to2") early = nd === "7to14" ? 120 : 61;
+          var depOk = early === undefined ? null : early <= lim[0];
+          var arrOk = late === undefined ? null : late < lim[1];
+          if (depOk === false || arrOk === false) r.lines.push(t.notExempt);
+          else if (depOk && arrOk) { r.lines.push(t.exempt); r.notes.push(t.exemptNote); r.verdict = "no"; return r; }
+          else { miss(t.mRerouteTimes); worse("insuficiente"); }
+          if (o.accepted === "yes") r.notes.push(t.accepted);
+          else if (o.accepted === "no") r.notes.push(t.rejected);
+          // Art. 7(2): halved if the re-routed arrival is within 2 / 3 / 4 h depending on the distance band
+          var cap = [120, 180, 240][tier];
+          if (typeof o.rerouteArrLateMin === "number") {
+            if (o.rerouteArrLateMin <= cap) { amount = base / 2; r.lines.push(t.reduced(money(amount, r.cur))); }
+          } else if (o.rarr === "lt2" || (o.rarr === "2to4" && tier === 2)) { amount = base / 2; r.lines.push(t.reduced(money(amount, r.cur))); }
+          else if (o.rarr === "2to4" && tier === 1) r.notes.push(t.reduceMaybe(money(base / 2, r.cur)));
+        }
+      }
     } else if (o.what === "denied") {
-      r.lines.push(T.denied);
+      useCause = false;
+      var dv = o.denied || "unknown";
+      if (dv === "vol") { r.lines.push(t.vol); r.verdict = "no"; return r; }
+      if (dv === "unknown") { miss(t.mVol); worse("insuficiente"); }
+      if (o.dreason === "reasonable") { r.lines.push(t.reasonable); r.verdict = "no"; return r; }
+      if (o.checkin === "no") { r.lines.push(t.checkinNo); r.verdict = "no"; return r; }
+      if (o.checkin !== "yes") { miss(t.mCheckin); worse("insuficiente"); }
+      r.lines.push(o.dreason === "overbooking" ? t.overbook : t.reasonUnknown);
+      r.notes.push(t.deniedNoExtra);
     }
-    if (o.cause === "extra") { r.lines.push(T.extra); r.notes.push(T.extraNote); r.amount = amount; r.verdict = "maybe"; return r; }
-    if (o.cause === "strike") r.lines.push(T.strike);
-    if (o.cause === "tech") r.lines.push(T.tech);
-    r.amount = amount;
-    if (r.verdict !== "maybe") r.verdict = "yes";
+
+    // 4. Cause (Art. 5(3) and case law); does not apply to denied boarding
+    if (useCause) {
+      var c = { strike: "strike_own", extra: "extra" }[o.cause] || o.cause || "unknown";
+      if (!t.c[c]) c = "unknown";
+      r.lines.push(t.c[c]);
+      if (c === "strike_own") r.notes.push(t.strikeOwnNote);
+      if (c === "atc") { miss(t.mAtc); worse("insuficiente"); }
+      if (c === "knock") { miss(t.mKnock); worse("insuficiente"); }
+      if (c === "strike_ext" || c === "weather" || c === "security" || c === "bird" || c === "extra") {
+        r.potential = amount; r.notes.push(t.extraNote(money(amount, r.cur)));
+        r.verdict = "no"; return r;
+      }
+    }
+    r.verdict = st;
+    r.amount = amount; r.potential = amount;
+    if (st === "insuficiente") r.notes.unshift(t.insAmt(money(amount, r.cur)));
     return r;
   }
   window.CTT_compute = compute; // exposed for tests
+  window.CTT_strings = TT;
 
   // ---------- Autocomplete ----------
   function search(q) {
@@ -501,11 +683,25 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 
   // ---------- Form wiring ----------
   var form, out;
-  function val(name) { var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('[name="' + name + '"]'); return el ? el.value : ""; }
+  var AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa";
+  function val(name) { var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('select[name="' + name + '"]'); return el ? el.value : ""; }
+  function show(id, on) { var el = form.querySelector("#" + id); if (el) el.hidden = !on; }
   function syncVisibility() {
-    var what = val("what");
-    form.querySelector("#grp-delay").hidden = what !== "delay";
-    form.querySelector("#grp-notice").hidden = what !== "cancel";
+    var what = val("what"), notice = val("notice"), reroute = val("reroute"), denied = val("denied");
+    var shortNotice = what === "cancel" && (notice === "7to14" || notice === "lt7");
+    var alt = shortNotice && reroute === "yes";
+    show("grp-delay", what === "delay");
+    show("grp-notice", what === "cancel");
+    show("grp-reroute", shortNotice);
+    show("grp-rdep", alt); show("grp-rarr", alt); show("grp-accepted", alt);
+    show("grp-denied", what === "denied");
+    show("grp-checkin", what === "denied" && denied !== "vol");
+    show("grp-dreason", what === "denied" && denied !== "vol");
+    show("grp-cause", what !== "denied");
+  }
+  function inputs() {
+    return { what: val("what"), delay: val("delay"), notice: val("notice"), reroute: val("reroute"), rdep: val("rdep"),
+      rarr: val("rarr"), accepted: val("accepted"), denied: val("denied"), checkin: val("checkin"), dreason: val("dreason"), cause: val("cause") };
   }
   function run() {
     syncVisibility();
@@ -514,39 +710,45 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; var wb = out.querySelector("[data-where]"); if (wb) wb.hidden = true; return; }
     var slug = val("airline");
     var al = AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
-    var r = compute({ dep: dep, arr: arr, airline: al, what: val("what"), delay: val("delay"), notice: val("notice"), cause: val("cause") });
+    var o = inputs(); o.dep = dep; o.arr = arr; o.airline = al;
+    var r = compute(o);
     out.dataset.state = r.verdict;
     out.querySelector("[data-route]").textContent = dep[0] + " → " + arr[0];
     out.querySelector("[data-km]").textContent = fmt(r.dist || 0) + " km";
     out.querySelector("[data-amount]").textContent = money(r.amount || 0, r.cur);
     out.querySelector("[data-headline]").textContent =
-      r.verdict === "yes" ? T.yes(money(r.amount, r.cur))
-      : r.verdict === "maybe" && r.amount ? T.maybe(money(r.amount, r.cur))
-      : T.none;
+      r.verdict === "posible" ? T.hPos(money(r.amount, r.cur)) : r.verdict === "insuficiente" ? T.hIns : T.hNo;
     var ul = out.querySelector("[data-lines]"); ul.innerHTML = "";
-    r.lines.concat(r.notes).forEach(function (t, i) { var li = document.createElement("li"); li.textContent = t; if (i >= r.lines.length) li.className = "note"; ul.appendChild(li); });
-    care(r.dist || 0, val("what"));
-    where(al, r, dep);
-    out.querySelector("[data-cta]").hidden = !r.amount;
+    function li(text, cls) { var x = document.createElement("li"); x.textContent = text; if (cls) x.className = cls; ul.appendChild(x); }
+    r.missing.forEach(function (m) { li(T.missing + m, "missing"); });
+    r.lines.forEach(function (t) { li(t); });
+    r.notes.forEach(function (t) { li(t, "note"); });
+    care(r, o.what);
+    where(al, r, dep, arr);
+    // The claims-company link is shown whenever money could be owed, including when the airline must still prove an exemption.
+    out.querySelector("[data-cta]").hidden = !(r.amount || r.potential);
+    var lo = document.getElementById("letter-open"); if (lo) lo.hidden = r.verdict !== "posible";
+    if (r.verdict !== "posible") { var lp = document.getElementById("letter"); if (lp) { lp.hidden = true; if (lo) lo.setAttribute("aria-expanded", "false"); } }
     var alName = (form.querySelector("#airline").selectedOptions[0] || {}).textContent || "";
-    last = { r: r, dep: dep, arr: arr, what: val("what"), delay: val("delay"), notice: val("notice"),
-      airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
+    last = { r: r, dep: dep, arr: arr, o: o, airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
     letter();
   }
 
-  // ---------- Right to care (art. 6, 8, 9 Reg. 261/2004) ----------
-  function care(dist, what) {
+  // ---------- Right to care (Art. 6, 8, 9) ----------
+  function care(r, what) {
     var box = out.querySelector("[data-care]"); if (!box) return;
-    var en = LANG === "en", h = dist <= 1500 ? 2 : dist <= 3500 ? 3 : 4, items;
+    if (r.covered === false || !r.regime) { box.hidden = true; return; }
+    var en = LANG === "en", dist = r.dist || 0, items;
+    var h = dist <= 1500 ? 2 : (r.intra || dist <= 3500) ? 3 : 4; // Art. 6(1): 2 h / 3 h (incl. intra-EU >1,500 km) / 4 h
     if (what === "delay") {
       items = en ? [
         "Meals and drinks if your flight leaves " + h + "+ hours late (for this distance).",
         "A hotel and transfers if the new departure is the next day.",
-        "Delayed 5+ hours? You can give up the trip and get a full refund (but then there's no delay compensation)."
+        "Delayed 5+ hours? You can give up the trip and get a full refund."
       ] : [
         "Comida y bebida si el vuelo sale con " + h + " h o más de retraso (para esta distancia).",
         "Hotel y traslados si la salida se pasa al día siguiente.",
-        "¿Más de 5 h de retraso? Puedes renunciar al viaje y pedir el reembolso completo (pero entonces no hay compensación por retraso)."
+        "¿Más de 5 h de retraso? Puedes renunciar al viaje y pedir el reembolso completo."
       ];
     } else {
       items = en ? [
@@ -559,7 +761,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
         "Hotel y traslados si tienes que pasar la noche."
       ];
     }
-    var head = en ? "On top of that, while you wait you're owed:" : "Además, mientras esperas te deben:";
+    var head = en ? "Whatever the result, while you wait you're owed:" : "Sea cual sea el resultado, mientras esperas te deben:";
     var tip = en ? "Didn't get it and paid yourself? Keep the receipts: the airline must pay you back, even if the cause was extraordinary."
       : "¿No te lo dieron y lo pagaste tú? Guarda los tickets: la aerolínea tiene que devolvértelo, aunque la causa sea extraordinaria.";
     box.innerHTML = "<h3></h3><ul></ul><p class=\"tip\"></p>";
@@ -570,7 +772,9 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   }
 
   // ---------- Where to claim (official airline channel + escalation) ----------
-  function where(al, r, dep) {
+  // EU261: the enforcement body of the departure country, or of the arrival country for flights from outside the EU (Art. 16).
+  function nebCountry(r, dep, arr) { return r.regime === "UK" ? "UK" : (dep[6] === 1 ? dep[3] : arr[3]); }
+  function where(al, r, dep, arr) {
     var box = out.querySelector("[data-where]"); if (!box) return;
     var en = LANG === "en", h = "", name = al && al.name;
     if (name && al.claim) {
@@ -578,41 +782,56 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
         '<a href="' + al.claim + '" rel="noopener nofollow" target="_blank">' + (en ? "official claim page" : "página oficial de reclamación") + "</a>.</p>";
       if (al.note) h += "<p>" + al.note.replace(/</g, "&lt;") + "</p>";
     }
-    var esc;
-    if (r.regime === "UK") {
+    var esc, nc = nebCountry(r, dep, arr);
+    if (nc === "UK") {
       var adr = al && al.adr;
       esc = en ? "If they refuse or don't reply in 8 weeks: " + (adr && adr !== "CAA" ? adr + " (the airline's free dispute scheme)" : "the CAA's free complaints service (PACT)") + "."
         : "Si lo rechazan o no contestan en 8 semanas: " + (adr && adr !== "CAA" ? adr + " (mediación gratuita)" : "el servicio de reclamaciones de la CAA, gratuito") + ".";
-    } else if (dep && dep[3] === "ES") {
-      esc = en ? "If they refuse or don't reply in 8 weeks: AESA, Spain's aviation authority (free)." : "Si lo rechazan o no contestan en 8 semanas: AESA, gratis.";
+    } else if (nc === "ES") {
+      esc = (en ? "If they refuse or don't reply within a month: " : "Si lo rechazan o no contestan en un mes: ") +
+        '<a href="' + AESA_CLAIM + '" rel="noopener" target="_blank">' + (en ? "AESA, Spain's aviation authority (free)" : "reclama a AESA, gratis") + "</a>.";
     } else {
-      esc = en ? "If they refuse or don't reply in 8 weeks: the aviation authority of the departure country (free)." : "Si lo rechazan o no contestan en 8 semanas: el organismo de aviación del país de salida, gratis.";
+      esc = en ? "If they refuse or don't reply: the national enforcement body of the " + (dep[6] === 1 ? "departure" : "arrival") + " country (free)."
+        : "Si lo rechazan o no contestan: el organismo nacional de aviación del país de " + (dep[6] === 1 ? "salida" : "llegada") + ", gratis.";
     }
     h += "<p class=\"tip\">" + esc + "</p>";
     box.innerHTML = "<h3>" + (en ? "Where to claim" : "Dónde reclamar") + "</h3>" + h;
-    box.hidden = !r.amount;
+    box.hidden = r.verdict === "no" && !r.potential;
   }
 
-  // ---------- Claim letter (runs only in the browser) ----------
+  // ---------- Claim letter (runs only in the browser; only for "posible") ----------
   var last = null;
   function fval(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
   function fdate(iso, ph) {
     if (!iso) return ph;
     var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0];
   }
+  function cancelFacts(o, en) {
+    var n = o.notice === "7to14" ? (en ? "between 7 and 13 days" : "entre 7 y 13 días") : (en ? "less than 7 days" : "menos de 7 días");
+    var s = en ? "The flight was cancelled and I was informed " + n + " before departure. " : "El vuelo fue cancelado y se me informó con " + n + " de antelación. ";
+    if (o.reroute === "no") return s + (en ? "I was not offered alternative transport." : "No se me ofreció un transporte alternativo.");
+    var dep = { le1: en ? "no more than 1 hour earlier or later than" : "como mucho 1 hora antes, o después, que", "1to2": en ? "between 1 and 2 hours earlier than" : "entre 1 y 2 horas antes que", gt2: en ? "more than 2 hours earlier than" : "más de 2 horas antes que" }[o.rdep];
+    var arr = { lt2: en ? "less than 2 hours after" : "menos de 2 horas después que", "2to4": en ? "between 2 and 4 hours after" : "entre 2 y 4 horas después que", ge4: en ? "4 or more hours after" : "4 horas o más después que" }[o.rarr];
+    return s + (en ? "The alternative flight offered left " + dep + " the original and arrived " + arr + " the original, outside the limits of Article 5(1)(c)."
+      : "El vuelo alternativo ofrecido salía " + dep + " el original y llegaba " + arr + " el original, fuera de los márgenes del artículo 5.1.c).");
+  }
   function letterES(L, d) {
-    var facts, legal;
-    if (L.what === "delay") {
-      facts = "El vuelo llegó a su destino final con un retraso " + (L.delay === "3to4" ? "de entre 3 y 4 horas" : "de más de 4 horas") + ".";
+    var facts, legal, o = L.o;
+    if (o.what === "delay") {
+      facts = "El vuelo llegó a su destino final con un retraso " + (o.delay === "3to4" ? "de entre 3 y 4 horas" : "de más de 4 horas") + ".";
       legal = "los artículos 6 y 7 del Reglamento (CE) n.º 261/2004 y la sentencia del Tribunal de Justicia de la UE de 19 de noviembre de 2009 (asuntos C-402/07 y C-432/07, Sturgeon), que reconoce el derecho a compensación a partir de 3 horas de retraso en la llegada";
-    } else if (L.what === "cancel") {
-      facts = "El vuelo fue cancelado y se me informó con " + (L.notice === "7to14" ? "entre 7 y 14 días" : "menos de 7 días") + " de antelación, sin ofrecerme un transporte alternativo dentro de los plazos que establece el reglamento.";
+    } else if (o.what === "cancel") {
+      facts = cancelFacts(o, false);
       legal = "los artículos 5 y 7 del Reglamento (CE) n.º 261/2004";
     } else {
-      facts = "Se me denegó el embarque contra mi voluntad, a pesar de presentarme a tiempo con la documentación en regla.";
+      facts = "Se me denegó el embarque contra mi voluntad, a pesar de presentarme a tiempo a la facturación y al embarque con la documentación en regla.";
       legal = "los artículos 4 y 7 del Reglamento (CE) n.º 261/2004";
     }
-    if (L.r.regime === "UK") legal = legal.replace("Reglamento (CE) n.º 261/2004", "Reglamento (CE) n.º 261/2004 en su versión vigente en el Reino Unido (UK261)");
+    var uk = L.r.regime === "UK";
+    if (uk) legal = legal.replace("Reglamento (CE) n.º 261/2004", "Reglamento (CE) n.º 261/2004 en su versión vigente en el Reino Unido (UK261)");
+    var nc = nebCountry(L.r, L.dep, L.arr);
+    var neb = uk ? "la Autoridad de Aviación Civil del Reino Unido (CAA) o el organismo de resolución de conflictos de la aerolínea"
+      : nc === "ES" ? "la Agencia Estatal de Seguridad Aérea (AESA)" : "el organismo nacional competente en materia de derechos de los pasajeros";
     var n = d.n;
     return "Asunto: Reclamación de compensación, vuelo " + d.flight + " del " + d.date + "\n\n" +
       "A la atención de " + (L.airline || "[aerolínea]") + ", servicio de atención al cliente:\n\n" +
@@ -621,26 +840,30 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       facts + "\n\n" +
       "De acuerdo con " + legal + ", solicito una compensación de " + money(L.r.amount, L.r.cur) + " por pasajero" +
       (n > 1 ? " (" + money(L.r.amount * n, L.r.cur) + " en total por " + n + " pasajeros)" : "") +
-      ", correspondiente a un vuelo de " + fmt(L.r.dist) + " km.\n\n" +
+      ", correspondiente a un vuelo de " + fmt(L.r.dist) + " km. Si consideran que concurre una circunstancia extraordinaria, les ruego que me indiquen cuál y me aporten la documentación que lo acredite.\n\n" +
       (d.iban ? "Les ruego que realicen el pago en un plazo de 30 días a la cuenta " + d.iban + ", a nombre de " + d.name + "." :
         "Les ruego que me indiquen en un plazo de 30 días cómo realizarán el pago.") + "\n\n" +
-      "Si no recibo una respuesta satisfactoria, presentaré la reclamación ante la autoridad nacional competente (en España, la Agencia Estatal de Seguridad Aérea, AESA) y, en su caso, ante los tribunales.\n\n" +
+      "Si no recibo una respuesta satisfactoria, presentaré la reclamación ante " + neb + " y, en su caso, ante los tribunales.\n\n" +
       "Adjunto la tarjeta de embarque y la confirmación de la reserva.\n\n" +
       "Atentamente,\n" + d.name + "\n" + d.today + "\n";
   }
   function letterEN(L, d) {
-    var facts, legal;
-    if (L.what === "delay") {
-      facts = "The flight arrived at its final destination " + (L.delay === "3to4" ? "between 3 and 4 hours" : "more than 4 hours") + " late.";
+    var facts, legal, o = L.o;
+    if (o.what === "delay") {
+      facts = "The flight arrived at its final destination " + (o.delay === "3to4" ? "between 3 and 4 hours" : "more than 4 hours") + " late.";
       legal = "Articles 6 and 7 of Regulation (EC) No 261/2004 and the judgment of the Court of Justice of the EU of 19 November 2009 (Joined Cases C-402/07 and C-432/07, Sturgeon), which recognises the right to compensation for arrival delays of 3 hours or more";
-    } else if (L.what === "cancel") {
-      facts = "The flight was cancelled and I was informed " + (L.notice === "7to14" ? "between 7 and 14 days" : "less than 7 days") + " before departure, without being offered alternative transport within the time limits set by the regulation.";
+    } else if (o.what === "cancel") {
+      facts = cancelFacts(o, true);
       legal = "Articles 5 and 7 of Regulation (EC) No 261/2004";
     } else {
-      facts = "I was denied boarding against my will, although I presented myself on time with valid travel documents.";
+      facts = "I was denied boarding against my will, although I checked in and presented myself for boarding on time with valid travel documents.";
       legal = "Articles 4 and 7 of Regulation (EC) No 261/2004";
     }
-    if (L.r.regime === "UK") legal = legal.replace("Regulation (EC) No 261/2004", "Regulation (EC) No 261/2004 as retained in UK law (UK261)");
+    var uk = L.r.regime === "UK";
+    if (uk) legal = legal.replace("Regulation (EC) No 261/2004", "Regulation (EC) No 261/2004 as retained in UK law (UK261)");
+    var nc = nebCountry(L.r, L.dep, L.arr);
+    var neb = uk ? "the UK Civil Aviation Authority (CAA) or the airline's approved ADR scheme"
+      : nc === "ES" ? "Spain's aviation safety agency (AESA)" : "the competent national enforcement body";
     var n = d.n;
     return "Subject: Compensation claim, flight " + d.flight + " on " + d.date + "\n\n" +
       "To " + (L.airline || "[airline]") + " customer services,\n\n" +
@@ -649,16 +872,16 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       facts + "\n\n" +
       "Under " + legal + ", I request compensation of " + money(L.r.amount, L.r.cur) + " per passenger" +
       (n > 1 ? " (" + money(L.r.amount * n, L.r.cur) + " in total for " + n + " passengers)" : "") +
-      ", corresponding to a flight distance of " + fmt(L.r.dist) + " km.\n\n" +
+      ", corresponding to a flight distance of " + fmt(L.r.dist) + " km. If you consider that extraordinary circumstances apply, please tell me what they were and provide the supporting evidence.\n\n" +
       (d.iban ? "Please make the payment within 30 days to account " + d.iban + ", in the name of " + d.name + "." :
         "Please let me know within 30 days how you will make the payment.") + "\n\n" +
-      "If I do not receive a satisfactory reply, I will refer the claim to the competent national enforcement body (in Spain, AESA; in the UK, the CAA or an approved ADR scheme) and, if necessary, to the courts.\n\n" +
+      "If I do not receive a satisfactory reply, I will refer the claim to " + neb + " and, if necessary, to the courts.\n\n" +
       "Please find attached my boarding pass and booking confirmation.\n\n" +
       "Yours faithfully,\n" + d.name + "\n" + d.today + "\n";
   }
   function letter() {
     var box = document.getElementById("letter-text");
-    if (!box || !last || !last.r.amount) return;
+    if (!box || !last || last.r.verdict !== "posible" || !last.r.amount) return;
     var L = last, en = LANG === "en";
     var today = new Date();
     var d = {
@@ -673,6 +896,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     };
     box.value = en ? letterEN(L, d) : letterES(L, d);
   }
+  window.CTT_letters = { es: letterES, en: letterEN }; // exposed for tests
   function letterTools() {
     var panel = document.getElementById("letter");
     if (!panel) return;

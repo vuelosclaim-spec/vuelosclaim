@@ -119,9 +119,19 @@ S = {
   calc_h="Calcula tu compensación", from_="Origen", to="Destino final", ph="Ciudad o código", airline="Aerolínea",
   al_unknown="No lo sé / no aparece", al_eu="Otra aerolínea europea", al_noneu="Otra aerolínea no europea",
   what="Qué pasó", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
-  delay="Retraso al llegar al destino", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 a 4 h"), ("gt4", "Más de 4 h")],
-  notice="Te avisaron con", n=[("lt7", "Menos de 7 días"), ("7to14", "7 a 14 días"), ("gt14", "Más de 14 días")],
-  cause="Motivo que te dieron", c=[("unknown", "No me lo dijeron"), ("tech", "Problema técnico"), ("strike", "Huelga de la aerolínea"), ("extra", "Tiempo, controladores o seguridad")],
+  delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
+  notice="Te avisaron de la cancelación con", n=[("gt14", "14 días o más"), ("7to14", "Entre 7 y 13 días"), ("lt7", "Menos de 7 días"), ("unknown", "No lo sé")],
+  reroute="¿Te ofrecieron un vuelo alternativo?", rr=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
+  rdep="El vuelo alternativo salía, respecto al original…", rd=[("le1", "Como mucho 1 h antes, o más tarde"), ("1to2", "Entre 1 y 2 h antes"), ("gt2", "Más de 2 h antes"), ("unknown", "No lo sé")],
+  rarr="…y llegaba al destino", ra=[("lt2", "Menos de 2 h más tarde"), ("2to4", "Entre 2 y 4 h más tarde"), ("ge4", "4 h o más tarde"), ("unknown", "No lo sé")],
+  accepted="¿Aceptaste el vuelo alternativo?", ac=[("yes", "Sí"), ("no", "No, pedí el reembolso")],
+  denied="¿Cediste tu plaza?", dn=[("invol", "No, me la negaron"), ("vol", "Sí, voluntariamente"), ("unknown", "No lo tengo claro")],
+  checkin="¿Te presentaste a tiempo a facturación y embarque?", ci=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
+  dreason="Motivo de la denegación", dr=[("overbooking", "Overbooking u otro motivo de la aerolínea"), ("reasonable", "Salud, seguridad o documentación"), ("unknown", "No me lo explicaron")],
+  cause="Motivo que te dio la aerolínea", c=[("unknown", "No me lo dijeron"), ("tech", "Avería técnica"), ("crew", "Falta o enfermedad de la tripulación"),
+    ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("atc", "Restricción de control aéreo (ATC)"),
+    ("weather", "Meteorología adversa"), ("security", "Seguridad (amenaza, cierre del espacio aéreo)"), ("bird", "Choque con un ave u objeto en la pista"),
+    ("knock", "Retraso del vuelo anterior del avión")],
   empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Recarga la página.",
   example="Ejemplo editable", per="por pasajero", cta="Reclámalo sin coste por adelantado", cta_small="Lo gestiona una empresa de reclamaciones y solo cobra si ganas.",
   self="Prefiero reclamar yo gratis: generar mi carta", l_lead="Rellena tus datos y te preparamos la carta. Todo se queda en tu navegador: no guardamos nada.",
@@ -140,9 +150,19 @@ S = {
   calc_h="Check your compensation", from_="From", to="Final destination", ph="City or airport code", airline="Airline",
   al_unknown="Not sure / not listed", al_eu="Another European airline", al_noneu="Another non-European airline",
   what="What happened", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
-  delay="Delay on arrival", d=[("lt3", "Under 3 h"), ("3to4", "3 to 4 h"), ("gt4", "Over 4 h")],
-  notice="You were told", n=[("lt7", "Under 7 days ahead"), ("7to14", "7 to 14 days ahead"), ("gt14", "Over 14 days ahead")],
-  cause="Reason given", c=[("unknown", "None given"), ("tech", "Technical problem"), ("strike", "Airline staff strike"), ("extra", "Weather, ATC or security")],
+  delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
+  notice="You were told about the cancellation", n=[("gt14", "14 days or more ahead"), ("7to14", "7 to 13 days ahead"), ("lt7", "Under 7 days ahead"), ("unknown", "Not sure")],
+  reroute="Were you offered an alternative flight?", rr=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
+  rdep="Compared with the original, the alternative left…", rd=[("le1", "Up to 1 h earlier, or later"), ("1to2", "1 to 2 h earlier"), ("gt2", "Over 2 h earlier"), ("unknown", "Not sure")],
+  rarr="…and arrived", ra=[("lt2", "Under 2 h later"), ("2to4", "2 to 4 h later"), ("ge4", "4 h or more later"), ("unknown", "Not sure")],
+  accepted="Did you accept the alternative flight?", ac=[("yes", "Yes"), ("no", "No, I took a refund")],
+  denied="Did you give up your seat?", dn=[("invol", "No, I was refused"), ("vol", "Yes, voluntarily"), ("unknown", "Not sure")],
+  checkin="Did you check in and get to the gate on time?", ci=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
+  dreason="Reason for refusing you", dr=[("overbooking", "Overbooking or another airline reason"), ("reasonable", "Health, safety or documents"), ("unknown", "Not explained")],
+  cause="Reason the airline gave", c=[("unknown", "None given"), ("tech", "Technical fault"), ("crew", "Crew shortage or illness"),
+    ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("atc", "Air traffic control restriction"),
+    ("weather", "Bad weather"), ("security", "Security (threat, airspace closure)"), ("bird", "Bird strike or object on the runway"),
+    ("knock", "Earlier flight by the same aircraft was late")],
   empty="Choose where you flew from and to.", error="The airport list could not load. Please refresh the page.",
   example="Editable example", per="per passenger", cta="Claim it with no upfront cost", cta_small="Handled by a flight claims company that only charges if you win.",
   self="I'd rather claim myself for free: write my letter", l_lead="Fill in your details and we'll prepare the letter. Everything stays in your browser: we store nothing.",
@@ -225,8 +245,15 @@ def calculator(l, airline_slug, dep, arr):
 <div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
 <fieldset><legend>{s["what"]}</legend><div class="chips">{chips("what", s["w"], "delay")}</div></fieldset>
 <fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
-<fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "lt7")}</div></fieldset>
-<fieldset><legend>{s["cause"]}</legend><div class="chips">{chips("cause", s["c"], "unknown")}</div></fieldset>
+<fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
+<fieldset id="grp-reroute" hidden><legend>{s["reroute"]}</legend><div class="chips">{chips("reroute", s["rr"], "unknown")}</div></fieldset>
+<fieldset id="grp-rdep" hidden><legend>{s["rdep"]}</legend><div class="chips chips-wide">{chips("rdep", s["rd"], "unknown")}</div></fieldset>
+<fieldset id="grp-rarr" hidden><legend>{s["rarr"]}</legend><div class="chips chips-wide">{chips("rarr", s["ra"], "unknown")}</div></fieldset>
+<fieldset id="grp-accepted" hidden><legend>{s["accepted"]}</legend><div class="chips">{chips("accepted", s["ac"], None)}</div></fieldset>
+<fieldset id="grp-denied" hidden><legend>{s["denied"]}</legend><div class="chips">{chips("denied", s["dn"], "unknown")}</div></fieldset>
+<fieldset id="grp-checkin" hidden><legend>{s["checkin"]}</legend><div class="chips">{chips("checkin", s["ci"], "unknown")}</div></fieldset>
+<fieldset id="grp-dreason" hidden><legend>{s["dreason"]}</legend><div class="chips chips-wide">{chips("dreason", s["dr"], "unknown")}</div></fieldset>
+<div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">{s["empty"]}</p>
  <p class="error-msg">{s["error"]}</p>

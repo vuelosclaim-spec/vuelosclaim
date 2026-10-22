@@ -227,7 +227,7 @@ def section(a, airports, km, names, aesa_url, caa_url):
 <div class="board"><table><thead><tr><th>Example route</th><th>Distance</th><th>Leaving the UK (UK261)</th><th>Flying back (EU261)</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p class="lead" style="margin-top:12px">Amounts per passenger, including children. Example routes; distances are great-circle as the rules require. You get one payment per flight, not both.</p>
 <h2 style="margin-top:32px">When {n} can refuse (and when it can't)</h2>
-<p>The airline doesn't have to pay if the delay was caused by <strong>extraordinary circumstances</strong>: severe weather, air traffic control strikes or restrictions, airport security problems, bird strikes or political unrest. It <strong>cannot</strong> refuse because of a technical fault found before or during the flight, a lack of crew, or a strike by its own staff.</p>
+<p>The airline doesn't have to pay if the delay was caused by <strong>extraordinary circumstances</strong>: severe weather, air traffic control strikes, ATC restrictions whose underlying cause was itself extraordinary (CJEU, C-108/26), airport security problems, bird strikes or political unrest. It <strong>cannot</strong> refuse because of a technical fault found before or during the flight, a lack of crew, or a strike by its own staff.</p>
 <p>{t['quirk']}</p>
 <h2 style="margin-top:32px">How to claim from {n}, step by step</h2>
 <ol>
