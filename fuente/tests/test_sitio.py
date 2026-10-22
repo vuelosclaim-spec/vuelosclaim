@@ -47,6 +47,14 @@ def check_site():
         for href in re.findall(r'href="(/[^"#?]*)', s):
             if href not in pages and href not in files:
                 err(f"Enlace interno roto en {url}: {href}")
+        if 'id="l-iban"' in s or re.search(r"IBAN", s):
+            err(f"La página {url} todavía pide o menciona el IBAN")
+        if 'id="calc"' in s:
+            m = re.search(r'"dataUrl": "([^"]+)"', s)
+            if not m or (m.group(1) if m.group(1).startswith("/") else "/" + m.group(1)) not in files:
+                err(f"La calculadora de {url} apunta a una lista de aeropuertos inexistente: {m.group(1) if m else 'ninguna'}")
+            if 'id="ac-retry"' not in s:
+                err(f"La calculadora de {url} no tiene botón para reintentar la carga")
         if url in NOINDEX_OK:
             continue
         t = re.search(r"<title>(.*?)</title>", s, re.S)

@@ -18,6 +18,13 @@ node fuente/tests/test_reglas.js          # motor de reglas de la calculadora (N
 python3 fuente/tests/test_sitio.py docs   # enlaces, canonical, hreflang, JSON-LD, sitemap y datos
 ```
 
+Prueba en navegador (opcional, necesita Playwright instalado; si no está, se omite):
+
+```bash
+python3 -m http.server 8765 -d docs &
+node fuente/tests/test_navegador.js       # móvil táctil y escritorio: búsqueda, teclado, red lenta, fallos de carga, carta
+```
+
 Las mismas pruebas se ejecutan solas en cada PR (`.github/workflows/validar.yml`).
 Un caso marcado como `PEND.` es un error conocido del informe de auditoría pendiente de corregir en su fase: se muestra, pero no bloquea.
 
@@ -46,5 +53,7 @@ Un caso marcado como `PEND.` es un error conocido del informe de auditoría pend
 
 `data/airports.min.json` se generó a partir de los datos abiertos de OurAirports (https://ourairports.com/data/).
 El archivo original (`airports.csv`, 13 MB) no se guarda en el repositorio porque la compilación no lo usa.
+
+Historial de cambios: [CAMBIOS.md](CAMBIOS.md).
 
 No cambies sin revisar: el enlace de afiliado (`AFF_URL` en `build.py`), el identificador de Analytics (`G-6JRCZVTNDG`) ni el de AdSense.

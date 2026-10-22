@@ -78,6 +78,10 @@ input[type="text"]:focus, select:focus { border-color: var(--focus); outline: no
 .ac { position: absolute; z-index: 10; top: 100%; left: 0; right: 0; margin: 4px 0 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.4); max-height: 320px; overflow-y: auto; }
 .ac li { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 6px; cursor: pointer; }
 .ac li:hover, .ac li.on { background: var(--paper); }
+.ac li.ac-msg { cursor: default; color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
+.ac li.ac-msg:hover { background: none; }
+.btn-small { padding: 6px 12px; font-size: 0.9rem; min-height: 0; margin-left: 4px; }
+.result .error-msg { color: var(--no); }
 .opt-code { font: 700 0.85rem/1 var(--f-mono); background: var(--navy); color: var(--navy-ink); padding: 5px 6px; border-radius: 4px; min-width: 44px; text-align: center; }
 .opt-txt { display: grid; min-width: 0; }
 .opt-txt small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -226,7 +230,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 <div class="field" id="grp-cause"><label for="cause">Reason the airline gave</label><select id="cause" name="cause"><option value="unknown">None given</option><option value="tech">Technical fault</option><option value="crew">Crew shortage or illness</option><option value="strike_own">Airline staff strike</option><option value="strike_ext">Air traffic control or airport strike</option><option value="atc">Air traffic control restriction</option><option value="weather">Bad weather</option><option value="security">Security (threat, airspace closure)</option><option value="bird">Bird strike or object on the runway</option><option value="knock">Earlier flight by the same aircraft was late</option></select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">Choose where you flew from and to.</p>
- <p class="error-msg">The airport list could not load. Please refresh the page.</p>
+ <p class="error-msg"><span data-error-text>The airport list could not load. Check your connection and try again.</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">Try again</button></p>
  <div class="ticket">
   <div class="ticket-main">
    <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span>Editable example</span></div>
@@ -243,14 +247,13 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
  </div>
  <div class="care" data-where hidden></div>
  <div class="letter" id="letter" hidden>
-  <p class="letter-lead">Fill in your details and we'll prepare the letter. Everything stays in your browser: we store nothing.</p>
+  <p class="letter-lead">Fill in your details and we'll prepare the letter. It is put together in your browser: we don't send or store it. No bank details needed.</p>
   <div class="row2">
    <div class="field"><label for="l-name">Full name</label><input type="text" id="l-name" autocomplete="name"></div>
    <div class="field"><label for="l-booking">Booking reference</label><input type="text" id="l-booking" autocomplete="off" placeholder="X7K2PQ"></div>
    <div class="field"><label for="l-flight">Flight number</label><input type="text" id="l-flight" autocomplete="off" placeholder="VY1234"></div>
    <div class="field"><label for="l-date">Flight date</label><input type="date" id="l-date"></div>
    <div class="field"><label for="l-pax">Passengers on the booking</label><input type="number" id="l-pax" min="1" max="9" value="1"></div>
-   <div class="field"><label for="l-iban">IBAN or bank details (optional)</label><input type="text" id="l-iban" autocomplete="off" placeholder="GB00 XXXX 0000 0000 0000 00"></div>
   </div>
   <label class="sr" for="letter-text">Your letter</label>
   <textarea id="letter-text" rows="14" readonly></textarea>
@@ -405,6 +408,15 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       hIns: "Información insuficiente para determinarlo",
       insAmt: function (m) { return "Si los datos que faltan te son favorables, podrían corresponderte hasta " + m + " por pasajero."; },
       missing: "Falta saber: ",
+      letterLater: "Cuando completes los datos que faltan podrás generar una carta de reclamación.",
+      loading: "Cargando la lista de aeropuertos…",
+      acLoading: "Cargando aeropuertos… un momento.",
+      acError: "No se ha podido cargar la lista de aeropuertos. Pulsa «Reintentar» más abajo.",
+      acNone: "No encontramos ese aeropuerto. Prueba con la ciudad, el nombre o el código de 3 letras (MAD, BCN…).",
+      pick: "Elige el aeropuerto en la lista que aparece al escribir.",
+      same: "El origen y el destino son el mismo aeropuerto.",
+      loadError: "No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.",
+      offline: "Parece que no tienes conexión. Cuando vuelva, la lista de aeropuertos se cargará sola.",
       copied: "Carta copiada. Pégala en el formulario o el correo de la aerolínea.",
       selected: "Texto seleccionado: cópialo con Ctrl+C o mantén pulsado.",
       downloaded: "Carta descargada.", dlFail: "No se ha podido descargar. Usa el botón de copiar.",
@@ -479,6 +491,15 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       hIns: "Not enough information to decide",
       insAmt: function (m) { return "If the missing details go your way, you could be owed up to " + m + " per passenger."; },
       missing: "Still needed: ",
+      letterLater: "Once you fill in the missing details you'll be able to generate a claim letter.",
+      loading: "Loading the airport list…",
+      acLoading: "Loading airports… one moment.",
+      acError: "The airport list could not load. Press “Try again” below.",
+      acNone: "We can't find that airport. Try the city, the airport name or its 3-letter code (LHR, MAN…).",
+      pick: "Choose the airport from the list that appears as you type.",
+      same: "Departure and destination are the same airport.",
+      loadError: "The airport list could not load. Check your connection and try again.",
+      offline: "You seem to be offline. The airport list will load by itself when you reconnect.",
       copied: "Letter copied. Paste it into the airline's claim form or email.",
       selected: "Text selected: copy it with Ctrl+C or a long press.",
       downloaded: "Letter downloaded.", dlFail: "Download failed. Use the copy button instead.",
@@ -522,7 +543,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   function compute(o, lang) {
     var t = lang ? TT[lang] : T;
     var r = { verdict: "posible", amount: 0, potential: 0, cur: "EUR", regime: null, covered: false, intra: false,
-      lines: [], notes: [], missing: [], dist: 0 };
+      lines: [], notes: [], missing: [], dist: 0, full: 0 };
     var st = "posible";
     function worse(s) { if (RANK[s] > RANK[st]) st = s; }
     function miss(m) { if (r.missing.indexOf(m) < 0) r.missing.push(m); }
@@ -632,7 +653,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       }
     }
     r.verdict = st;
-    r.amount = amount; r.potential = amount;
+    r.amount = amount; r.potential = amount; r.full = base;
     if (st === "insuficiente") r.notes.unshift(t.insAmt(money(amount, r.cur)));
     return r;
   }
@@ -640,61 +661,92 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   window.CTT_strings = TT;
 
   // ---------- Autocomplete ----------
+  // Accepts IATA codes, city names (also Spanish/English aliases) and airport names, accents and case ignored.
+  // Every airport is scored before sorting, so an exact code is never lost among many partial matches.
+  var loadState = "loading"; // loading | ready | error
+  function haystack(a) { return a._h || (a._h = norm([a[0], a[1], a[2], ALIAS_ES[a[0]] || "", ALIAS_EN[a[0]] || ""].join(" "))); }
   function search(q) {
-    q = norm(q.trim());
+    q = norm(q.trim()).replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
     if (!q) return [];
-    var out = [];
-    for (var i = 0; i < airports.length && out.length < 60; i++) {
+    var words = q.split(" "), out = [];
+    for (var i = 0; i < airports.length; i++) {
       var a = airports[i], code = a[0].toLowerCase();
-      var es = ALIAS_ES[a[0]] || "", en = ALIAS_EN[a[0]] || "";
+      var es = norm(ALIAS_ES[a[0]] || ""), en = norm(ALIAS_EN[a[0]] || ""), city = norm(a[2]), name = norm(a[1]);
       var score = -1;
       if (code === q) score = 100;
+      else if (norm(cityOf(a)) === q || es === q || en === q || city === q) score = 85;
       else if (norm(cityOf(a)).indexOf(q) === 0) score = 80;
-      else if (norm(es).indexOf(q) === 0 || norm(en).indexOf(q) === 0 || norm(a[2]).indexOf(q) === 0) score = 70;
-      else if (norm(es + " " + en + " " + a[1] + " " + a[2]).indexOf(q) >= 0) score = 50;
+      else if (es.indexOf(q) === 0 || en.indexOf(q) === 0 || city.indexOf(q) === 0) score = 70;
+      else if (name.indexOf(q) === 0) score = 60;
+      else if (words.length > 1 && words[words.length - 1] === code && haystack(a).indexOf(words[0]) >= 0) score = 90; // "Madrid (MAD)" typed back
+      else if (haystack(a).indexOf(q) >= 0) score = 50;
+      else if (words.length > 1 && words.every(function (w) { return haystack(a).indexOf(w) >= 0; })) score = 40;
       var home = LANG === "en" ? (a[3] === "ES" || UK[a[3]]) : a[3] === "ES";
       if (score >= 0) out.push([score + (home ? 5 : 0) + (a[6] ? 2 : 0), a]);
     }
-    out.sort(function (x, y) { return y[0] - x[0]; });
-    return out.slice(0, 7).map(function (x) { return x[1]; });
+    out.sort(function (x, y) { return y[0] - x[0] || (x[1][0] < y[1][0] ? -1 : 1); });
+    return out.slice(0, 8).map(function (x) { return x[1]; });
   }
+  window.CTT_search = function (q, data) { airports = data; return search(q); }; // exposed for tests
 
   function attach(input) {
     var list = document.getElementById(input.getAttribute("aria-controls"));
     var items = [], active = -1;
-    function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); active = -1; }
+    function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; }
     function pick(a) { input.value = label(a); input.dataset.code = a[0]; close(); run(); }
+    function message(text) {
+      list.innerHTML = ""; items = [];
+      var li = document.createElement("li"); li.className = "ac-msg"; li.setAttribute("aria-disabled", "true"); li.textContent = text;
+      list.appendChild(li); list.hidden = false; input.setAttribute("aria-expanded", "false");
+    }
     function render() {
-      items = search(input.value);
+      if (!input.value.trim()) { close(); return; }
+      if (loadState === "loading") { message(T.acLoading); return; }
+      if (loadState === "error") { message(T.acError); return; }
+      items = search(input.value); active = -1;
+      if (!items.length) { message(T.acNone); return; }
       list.innerHTML = "";
       items.forEach(function (a, i) {
         var li = document.createElement("li");
         li.id = input.id + "-opt-" + i;
         li.setAttribute("role", "option");
+        li.setAttribute("aria-selected", "false");
         li.innerHTML = '<span class="opt-code"></span><span class="opt-txt"><b></b><small></small></span>';
         li.querySelector(".opt-code").textContent = a[0];
         li.querySelector("b").textContent = cityOf(a);
-        li.querySelector("small").textContent = a[1];
+        li.querySelector("small").textContent = a[1] + (a[3] ? " · " + a[3] : "");
+        // mousedown keeps the focus in the input (also fired after a tap); click is the fallback
         li.addEventListener("mousedown", function (e) { e.preventDefault(); pick(a); });
+        li.addEventListener("click", function () { if (input.dataset.code !== a[0]) pick(a); });
         list.appendChild(li);
       });
-      list.hidden = items.length === 0;
-      input.setAttribute("aria-expanded", items.length ? "true" : "false");
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
     }
     function highlight() {
-      Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("on", i === active); });
-      if (active >= 0) input.setAttribute("aria-activedescendant", input.id + "-opt-" + active);
+      Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("on", i === active); li.setAttribute("aria-selected", i === active ? "true" : "false"); });
+      if (active >= 0) { input.setAttribute("aria-activedescendant", input.id + "-opt-" + active); var el = list.children[active]; if (el && el.scrollIntoView) el.scrollIntoView({ block: "nearest" }); }
     }
-    input.addEventListener("input", function () { input.dataset.code = ""; render(); });
+    // Leaving the field with an unambiguous text (exact code or a single match) selects it
+    function autoPick() {
+      if (input.dataset.code || loadState !== "ready" || !input.value.trim()) return;
+      var r = search(input.value), q = norm(input.value.trim());
+      if (r.length && (r[0][0].toLowerCase() === q || r.length === 1)) pick(r[0]);
+      else run();
+    }
+    input.addEventListener("input", function () { input.dataset.code = ""; render(); run(); });
     input.addEventListener("focus", function () { if (!input.dataset.code) render(); else input.select(); });
-    input.addEventListener("blur", function () { setTimeout(close, 100); });
+    input.addEventListener("blur", function () { setTimeout(function () { close(); autoPick(); }, 150); });
     input.addEventListener("keydown", function (e) {
-      if (list.hidden) return;
+      if (e.key === "ArrowDown" && list.hidden) { render(); if (items.length) { active = 0; highlight(); } e.preventDefault(); return; }
+      if (list.hidden || !items.length) { if (e.key === "Escape") close(); return; }
       if (e.key === "ArrowDown") { active = Math.min(active + 1, items.length - 1); highlight(); e.preventDefault(); }
       else if (e.key === "ArrowUp") { active = Math.max(active - 1, 0); highlight(); e.preventDefault(); }
-      else if (e.key === "Enter") { if (items[active >= 0 ? active : 0]) pick(items[active >= 0 ? active : 0]); e.preventDefault(); }
-      else if (e.key === "Escape") close();
+      else if (e.key === "Enter") { pick(items[active >= 0 ? active : 0]); e.preventDefault(); }
+      else if (e.key === "Tab" && active >= 0) pick(items[active]);
+      else if (e.key === "Escape") { close(); e.preventDefault(); }
     });
+    input._render = render;
   }
 
   // ---------- Form wiring ----------
@@ -719,11 +771,22 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     return { what: val("what"), delay: val("delay"), notice: val("notice"), reroute: val("reroute"), rdep: val("rdep"),
       rarr: val("rarr"), accepted: val("accepted"), denied: val("denied"), checkin: val("checkin"), dreason: val("dreason"), cause: val("cause") };
   }
+  var emptyDefault = null;
+  function emptyMsg(text) {
+    var p = out.querySelector(".empty-msg"); if (!p) return;
+    if (emptyDefault === null) emptyDefault = p.textContent;
+    p.textContent = text || emptyDefault;
+  }
   function run() {
     syncVisibility();
     var dep = byCode[form.querySelector("#from").dataset.code];
     var arr = byCode[form.querySelector("#to").dataset.code];
-    if (!dep || !arr || dep === arr) { out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; var wb = out.querySelector("[data-where]"); if (wb) wb.hidden = true; return; }
+    if (loadState !== "ready") return;
+    if (!dep || !arr || dep === arr) {
+      var fromTxt = form.querySelector("#from").value.trim(), toTxt = form.querySelector("#to").value.trim();
+      emptyMsg(dep && arr ? T.same : ((!dep && fromTxt) || (!arr && toTxt)) ? T.pick : null);
+      out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; var wb = out.querySelector("[data-where]"); if (wb) wb.hidden = true; return;
+    }
     var slug = val("airline");
     var al = AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
     var o = inputs(); o.dep = dep; o.arr = arr; o.airline = al;
@@ -739,6 +802,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     r.missing.forEach(function (m) { li(T.missing + m, "missing"); });
     r.lines.forEach(function (t) { li(t); });
     r.notes.forEach(function (t) { li(t, "note"); });
+    if (r.verdict === "insuficiente") li(T.letterLater, "note");
     care(r, o.what);
     where(al, r, dep, arr);
     // The claims-company link is shown whenever money could be owed, including when the airline must still prove an exemption.
@@ -822,82 +886,103 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     if (!iso) return ph;
     var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0];
   }
+  // The letter is only offered for the "posible" result. It states the passenger's position and asks the airline to pay
+  // or to prove an exemption; it never claims that the right is already established. No bank details are requested.
+  var CAUSE_L = {
+    es: {
+      unknown: "La compañía no me comunicó el motivo.",
+      tech: "Se me indicó que el motivo fue un problema técnico, que según el Tribunal de Justicia de la UE no constituye por sí solo una circunstancia extraordinaria (asunto C-549/07).",
+      crew: "Se me indicó que el motivo fue la falta o indisposición de la tripulación, que no constituye una circunstancia extraordinaria (asuntos C-156/22 a C-158/22).",
+      strike_own: "Se me indicó que el motivo fue una huelga del personal de la propia compañía, que no constituye una circunstancia extraordinaria (asunto C-28/20)."
+    },
+    en: {
+      unknown: "The airline did not tell me the reason.",
+      tech: "I was told the reason was a technical problem, which according to the Court of Justice of the EU is not in itself an extraordinary circumstance (Case C-549/07).",
+      crew: "I was told the reason was a crew shortage or illness, which is not an extraordinary circumstance (Cases C-156/22 to C-158/22).",
+      strike_own: "I was told the reason was a strike by the airline's own staff, which is not an extraordinary circumstance (Case C-28/20)."
+    }
+  };
   function cancelFacts(o, en) {
     var n = o.notice === "7to14" ? (en ? "between 7 and 13 days" : "entre 7 y 13 días") : (en ? "less than 7 days" : "menos de 7 días");
     var s = en ? "The flight was cancelled and I was informed " + n + " before departure. " : "El vuelo fue cancelado y se me informó con " + n + " de antelación. ";
     if (o.reroute === "no") return s + (en ? "I was not offered alternative transport." : "No se me ofreció un transporte alternativo.");
-    var dep = { le1: en ? "no more than 1 hour earlier or later than" : "como mucho 1 hora antes, o después, que", "1to2": en ? "between 1 and 2 hours earlier than" : "entre 1 y 2 horas antes que", gt2: en ? "more than 2 hours earlier than" : "más de 2 horas antes que" }[o.rdep];
-    var arr = { lt2: en ? "less than 2 hours after" : "menos de 2 horas después que", "2to4": en ? "between 2 and 4 hours after" : "entre 2 y 4 horas después que", ge4: en ? "4 or more hours after" : "4 horas o más después que" }[o.rarr];
-    return s + (en ? "The alternative flight offered left " + dep + " the original and arrived " + arr + " the original, outside the limits of Article 5(1)(c)."
-      : "El vuelo alternativo ofrecido salía " + dep + " el original y llegaba " + arr + " el original, fuera de los márgenes del artículo 5.1.c).");
+    var dep = { le1: en ? "no more than 1 hour earlier than, or after," : "como mucho 1 hora antes que el original, o después de él,", "1to2": en ? "between 1 and 2 hours earlier than" : "entre 1 y 2 horas antes que el original", gt2: en ? "more than 2 hours earlier than" : "más de 2 horas antes que el original" }[o.rdep];
+    var arr = { lt2: en ? "less than 2 hours after" : "menos de 2 horas después que el original", "2to4": en ? "between 2 and 4 hours after" : "entre 2 y 4 horas después que el original", ge4: en ? "4 or more hours after" : "4 horas o más después que el original" }[o.rarr];
+    var acc = o.accepted === "yes" ? (en ? " I accepted it." : " Lo acepté.") : o.accepted === "no" ? (en ? " I did not accept it and requested a refund." : " No lo acepté y solicité el reembolso.") : "";
+    return s + (en ? "The alternative flight offered left " + dep + " the original and arrived " + arr + " the original, outside the limits of Article 5(1)(c)." + acc
+      : "El vuelo alternativo ofrecido salía " + dep + " y llegaba " + arr + ", fuera de los márgenes del artículo 5.1.c)." + acc);
+  }
+  function letterFacts(L, en) {
+    var o = L.o, f;
+    if (o.what === "delay") {
+      f = en ? "The flight arrived at its final destination " + (o.delay === "3to4" ? "between 3 and 4 hours" : "more than 4 hours") + " late."
+        : "El vuelo llegó a su destino final con un retraso " + (o.delay === "3to4" ? "de entre 3 y 4 horas" : "de más de 4 horas") + ".";
+    } else if (o.what === "cancel") f = cancelFacts(o, en);
+    else {
+      f = en ? "I was denied boarding against my will, although I checked in and presented myself for boarding on time with valid travel documents."
+        : "Se me denegó el embarque contra mi voluntad, a pesar de presentarme a tiempo a la facturación y al embarque con la documentación en regla.";
+      if (o.dreason === "overbooking") f += en ? " The airline gave overbooking or another operational reason." : " La compañía alegó overbooking u otro motivo operativo.";
+      else f += en ? " I was not given any reason of health, safety, security or travel documents." : " No se me indicó ningún motivo de salud, seguridad o documentación.";
+    }
+    if (o.what !== "denied") { var c = { strike: "strike_own" }[o.cause] || o.cause; f += " " + (CAUSE_L[en ? "en" : "es"][c] || CAUSE_L[en ? "en" : "es"].unknown); }
+    return f;
   }
   function letterES(L, d) {
-    var facts, legal, o = L.o;
-    if (o.what === "delay") {
-      facts = "El vuelo llegó a su destino final con un retraso " + (o.delay === "3to4" ? "de entre 3 y 4 horas" : "de más de 4 horas") + ".";
-      legal = "los artículos 6 y 7 del Reglamento (CE) n.º 261/2004 y la sentencia del Tribunal de Justicia de la UE de 19 de noviembre de 2009 (asuntos C-402/07 y C-432/07, Sturgeon), que reconoce el derecho a compensación a partir de 3 horas de retraso en la llegada";
-    } else if (o.what === "cancel") {
-      facts = cancelFacts(o, false);
-      legal = "los artículos 5 y 7 del Reglamento (CE) n.º 261/2004";
-    } else {
-      facts = "Se me denegó el embarque contra mi voluntad, a pesar de presentarme a tiempo a la facturación y al embarque con la documentación en regla.";
-      legal = "los artículos 4 y 7 del Reglamento (CE) n.º 261/2004";
-    }
+    var o = L.o, legal;
+    if (o.what === "delay") legal = "los artículos 6 y 7 del Reglamento (CE) n.º 261/2004 y la sentencia del Tribunal de Justicia de la UE de 19 de noviembre de 2009 (asuntos C-402/07 y C-432/07, Sturgeon), que reconoce el derecho a compensación a partir de 3 horas de retraso en la llegada";
+    else if (o.what === "cancel") legal = "los artículos 5 y 7 del Reglamento (CE) n.º 261/2004";
+    else legal = "los artículos 4 y 7 del Reglamento (CE) n.º 261/2004";
     var uk = L.r.regime === "UK";
     if (uk) legal = legal.replace("Reglamento (CE) n.º 261/2004", "Reglamento (CE) n.º 261/2004 en su versión vigente en el Reino Unido (UK261)");
     var nc = nebCountry(L.r, L.dep, L.arr);
     var neb = uk ? "la Autoridad de Aviación Civil del Reino Unido (CAA) o el organismo de resolución de conflictos de la aerolínea"
       : nc === "ES" ? "la Agencia Estatal de Seguridad Aérea (AESA)" : "el organismo nacional competente en materia de derechos de los pasajeros";
-    var n = d.n;
+    var n = d.n, amt = money(L.r.amount, L.r.cur);
+    var reduced = L.r.amount < L.r.full;
     return "Asunto: Reclamación de compensación, vuelo " + d.flight + " del " + d.date + "\n\n" +
       "A la atención de " + (L.airline || "[aerolínea]") + ", servicio de atención al cliente:\n\n" +
       "Yo, " + d.name + ", viajé " + (n > 1 ? "junto con " + (n - 1) + " pasajero" + (n > 2 ? "s" : "") + " más " : "") +
       "con la reserva " + d.booking + " en el vuelo " + d.flight + " del " + d.date + ", de " + d.route + ".\n\n" +
-      facts + "\n\n" +
-      "De acuerdo con " + legal + ", solicito una compensación de " + money(L.r.amount, L.r.cur) + " por pasajero" +
+      letterFacts(L, false) + "\n\n" +
+      "Considero que, de acuerdo con " + legal + ", tengo derecho a una compensación de " + amt + " por pasajero" +
       (n > 1 ? " (" + money(L.r.amount * n, L.r.cur) + " en total por " + n + " pasajeros)" : "") +
-      ", correspondiente a un vuelo de " + fmt(L.r.dist) + " km. Si consideran que concurre una circunstancia extraordinaria, les ruego que me indiquen cuál y me aporten la documentación que lo acredite.\n\n" +
-      (d.iban ? "Les ruego que realicen el pago en un plazo de 30 días a la cuenta " + d.iban + ", a nombre de " + d.name + "." :
-        "Les ruego que me indiquen en un plazo de 30 días cómo realizarán el pago.") + "\n\n" +
+      ", correspondiente a un vuelo de " + fmt(L.r.dist) + " km" + (reduced ? ", importe ya reducido conforme al artículo 7.2" : "") + ", y les solicito su abono.\n\n" +
+      "Si consideran que concurre una circunstancia extraordinaria que no pudo evitarse aun adoptando todas las medidas razonables, les ruego que me indiquen cuál fue y me faciliten la documentación que lo acredite.\n\n" +
+      "Les ruego que, en un plazo de 30 días, me indiquen cómo y cuándo abonarán la compensación. Les recuerdo que debe pagarse en metálico, por transferencia o por cheque, y que solo aceptaré bonos u otros servicios si lo acuerdo por escrito (artículo 7.3).\n\n" +
       "Si no recibo una respuesta satisfactoria, presentaré la reclamación ante " + neb + " y, en su caso, ante los tribunales.\n\n" +
       "Adjunto la tarjeta de embarque y la confirmación de la reserva.\n\n" +
       "Atentamente,\n" + d.name + "\n" + d.today + "\n";
   }
   function letterEN(L, d) {
-    var facts, legal, o = L.o;
-    if (o.what === "delay") {
-      facts = "The flight arrived at its final destination " + (o.delay === "3to4" ? "between 3 and 4 hours" : "more than 4 hours") + " late.";
-      legal = "Articles 6 and 7 of Regulation (EC) No 261/2004 and the judgment of the Court of Justice of the EU of 19 November 2009 (Joined Cases C-402/07 and C-432/07, Sturgeon), which recognises the right to compensation for arrival delays of 3 hours or more";
-    } else if (o.what === "cancel") {
-      facts = cancelFacts(o, true);
-      legal = "Articles 5 and 7 of Regulation (EC) No 261/2004";
-    } else {
-      facts = "I was denied boarding against my will, although I checked in and presented myself for boarding on time with valid travel documents.";
-      legal = "Articles 4 and 7 of Regulation (EC) No 261/2004";
-    }
+    var o = L.o, legal;
+    if (o.what === "delay") legal = "Articles 6 and 7 of Regulation (EC) No 261/2004 and the judgment of the Court of Justice of the EU of 19 November 2009 (Joined Cases C-402/07 and C-432/07, Sturgeon), which recognises the right to compensation for arrival delays of 3 hours or more";
+    else if (o.what === "cancel") legal = "Articles 5 and 7 of Regulation (EC) No 261/2004";
+    else legal = "Articles 4 and 7 of Regulation (EC) No 261/2004";
     var uk = L.r.regime === "UK";
     if (uk) legal = legal.replace("Regulation (EC) No 261/2004", "Regulation (EC) No 261/2004 as retained in UK law (UK261)");
     var nc = nebCountry(L.r, L.dep, L.arr);
     var neb = uk ? "the UK Civil Aviation Authority (CAA) or the airline's approved ADR scheme"
       : nc === "ES" ? "Spain's aviation safety agency (AESA)" : "the competent national enforcement body";
-    var n = d.n;
+    var n = d.n, amt = money(L.r.amount, L.r.cur);
+    var reduced = L.r.amount < L.r.full;
     return "Subject: Compensation claim, flight " + d.flight + " on " + d.date + "\n\n" +
       "To " + (L.airline || "[airline]") + " customer services,\n\n" +
       "I, " + d.name + ", travelled " + (n > 1 ? "with " + (n - 1) + " other passenger" + (n > 2 ? "s" : "") + " " : "") +
       "under booking " + d.booking + " on flight " + d.flight + " on " + d.date + ", from " + d.route + ".\n\n" +
-      facts + "\n\n" +
-      "Under " + legal + ", I request compensation of " + money(L.r.amount, L.r.cur) + " per passenger" +
+      letterFacts(L, true) + "\n\n" +
+      "I consider that, under " + legal + ", I am entitled to compensation of " + amt + " per passenger" +
       (n > 1 ? " (" + money(L.r.amount * n, L.r.cur) + " in total for " + n + " passengers)" : "") +
-      ", corresponding to a flight distance of " + fmt(L.r.dist) + " km. If you consider that extraordinary circumstances apply, please tell me what they were and provide the supporting evidence.\n\n" +
-      (d.iban ? "Please make the payment within 30 days to account " + d.iban + ", in the name of " + d.name + "." :
-        "Please let me know within 30 days how you will make the payment.") + "\n\n" +
+      ", corresponding to a flight distance of " + fmt(L.r.dist) + " km" + (reduced ? ", already reduced under Article 7(2)" : "") + ", and I ask you to pay it.\n\n" +
+      "If you consider that extraordinary circumstances applied which could not have been avoided even if all reasonable measures had been taken, please tell me what they were and provide the supporting evidence.\n\n" +
+      "Please let me know within 30 days how and when you will pay the compensation. It must be paid in cash, by bank transfer or by cheque; I will only accept vouchers or other services if I agree to it in writing (Article 7(3)).\n\n" +
       "If I do not receive a satisfactory reply, I will refer the claim to " + neb + " and, if necessary, to the courts.\n\n" +
       "Please find attached my boarding pass and booking confirmation.\n\n" +
       "Yours faithfully,\n" + d.name + "\n" + d.today + "\n";
   }
   function letter() {
     var box = document.getElementById("letter-text");
-    if (!box || !last || last.r.verdict !== "posible" || !last.r.amount) return;
+    if (!box || !last) return;
+    if (last.r.verdict !== "posible" || !last.r.amount) { box.value = ""; return; }
     var L = last, en = LANG === "en";
     var today = new Date();
     var d = {
@@ -906,7 +991,6 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       flight: fval("l-flight").toUpperCase() || (en ? "[flight number]" : "[número de vuelo]"),
       booking: fval("l-booking").toUpperCase() || (en ? "[booking reference]" : "[código de reserva]"),
       date: fdate(fval("l-date"), en ? "[flight date]" : "[fecha del vuelo]"),
-      iban: fval("l-iban").replace(/\s+/g, " ").toUpperCase(),
       route: cityOf(L.dep) + " (" + L.dep[0] + ")" + (en ? " to " : " a ") + cityOf(L.arr) + " (" + L.arr[0] + ")",
       today: ("0" + today.getDate()).slice(-2) + "/" + ("0" + (today.getMonth() + 1)).slice(-2) + "/" + today.getFullYear()
     };
@@ -956,11 +1040,37 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       }
     } catch (err) { /* invalid parameter: keep the default link */ }
     ["from", "to"].forEach(function (id) { attach(document.getElementById(id)); });
-    fetch(cfg.dataUrl).then(function (r) { return r.json(); }).then(function (d) {
-      airports = d; d.forEach(function (a) { byCode[a[0]] = a; });
-      ["from", "to"].forEach(function (id) { var el = document.getElementById(id); var a = byCode[el.dataset.code]; if (a) el.value = label(a); });
+    var retry = document.getElementById("ac-retry");
+    if (retry) retry.addEventListener("click", function () { loadAirports(0); });
+    window.addEventListener("online", function () { if (loadState === "error") loadAirports(0); });
+    loadAirports(0);
+  }
+  // Airport list: 15 s timeout, one automatic retry, HTTP and format checks, then a visible error with a retry button.
+  function loadAirports(attempt) {
+    loadState = "loading"; out.dataset.state = "empty"; emptyMsg(T.loading);
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+    fetch(cfg.dataUrl, ctrl ? { signal: ctrl.signal } : undefined).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) {
+      clearTimeout(timer);
+      if (!Array.isArray(d) || d.length < 100 || !Array.isArray(d[0]) || d[0].length < 7) throw new Error("formato");
+      airports = d; byCode = {}; d.forEach(function (a) { byCode[a[0]] = a; });
+      loadState = "ready"; emptyMsg(null);
+      ["from", "to"].forEach(function (id) {
+        var el = document.getElementById(id), a = byCode[el.dataset.code];
+        if (a) el.value = label(a);
+        else if (el.value.trim() && document.activeElement === el && el._render) el._render(); // typed while loading
+      });
       run();
-    }).catch(function () { out.dataset.state = "error"; });
+    }).catch(function () {
+      clearTimeout(timer);
+      if (attempt < 1) { setTimeout(function () { loadAirports(attempt + 1); }, 1500); return; }
+      loadState = "error"; out.dataset.state = "error";
+      var m = out.querySelector(".error-msg [data-error-text]");
+      if (m) m.textContent = navigator.onLine === false ? T.offline : T.loadError;
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

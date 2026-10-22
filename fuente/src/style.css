@@ -68,6 +68,10 @@ input[type="text"]:focus, select:focus { border-color: var(--focus); outline: no
 .ac { position: absolute; z-index: 10; top: 100%; left: 0; right: 0; margin: 4px 0 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.4); max-height: 320px; overflow-y: auto; }
 .ac li { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 6px; cursor: pointer; }
 .ac li:hover, .ac li.on { background: var(--paper); }
+.ac li.ac-msg { cursor: default; color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
+.ac li.ac-msg:hover { background: none; }
+.btn-small { padding: 6px 12px; font-size: 0.9rem; min-height: 0; margin-left: 4px; }
+.result .error-msg { color: var(--no); }
 .opt-code { font: 700 0.85rem/1 var(--f-mono); background: var(--navy); color: var(--navy-ink); padding: 5px 6px; border-radius: 4px; min-width: 44px; text-align: center; }
 .opt-txt { display: grid; min-width: 0; }
 .opt-txt small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

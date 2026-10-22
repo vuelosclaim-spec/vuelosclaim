@@ -184,5 +184,73 @@ check("Carta EN desde Reino Unido cita UK261 y la CAA", /UK261[\s\S]*CAA/.test(l
 check("Carta de cancelación sin alternativo lo dice", letterFor("es", "MAD-BCN", C({ a: "vueling", notice: "lt7", reroute: "no" })).includes("No se me ofreció"), "");
 check("Carta de cancelación con alternativo fuera de márgenes lo describe", letterFor("en", "MAD-BCN", C({ a: "vueling", notice: "lt7", reroute: "yes", rdep: "gt2", rarr: "ge4" })).includes("outside the limits"), "");
 
+// ---- Base de aeropuertos: formato, coordenadas y distancias ----
+check("Aeropuertos: más de 3.000 y sin códigos repetidos", airports.length > 3000 && new Set(airports.map((a) => a[0])).size === airports.length, "");
+check("Aeropuertos: formato [IATA, nombre, ciudad, país, lat, lon, UE]", airports.every((a) => a.length === 7 && /^[A-Z0-9]{3}$/.test(a[0]) && a[1] && /^[A-Z]{2}$/.test(a[3]) &&
+  a[4] >= -90 && a[4] <= 90 && a[5] >= -180 && a[5] <= 180 && (a[6] === 0 || a[6] === 1)), "");
+// Distancias ortodrómicas de referencia (±1 %): calculadas con las coordenadas oficiales de los aeropuertos
+for (const [r, ref] of [["MAD-BCN", 483], ["MAD-JFK", 5767], ["LHR-JFK", 5555], ["SYD-LAX", 12051]]) {
+  const [d, a] = r.split("-");
+  const km = W.es.CTT_compute({ dep: byCode[d], arr: byCode[a], airline: { eu: "yes" }, what: "delay", delay: "gt4" }).dist;
+  check(`Distancia ${r} ≈ ${ref} km (obtenido ${km})`, Math.abs(km - ref) / ref < 0.01, "");
+}
+// Ciudades con varios aeropuertos: deben estar en la base y tener coordenadas distintas
+for (const set of [["LHR", "LGW", "STN", "LTN", "LCY"], ["CDG", "ORY"], ["JFK", "EWR", "LGA"], ["TFN", "TFS"], ["FCO", "CIA"]]) {
+  check(`Aeropuertos distintos: ${set}`, set.every((c) => byCode[c]) && new Set(set.map((c) => byCode[c][4] + "," + byCode[c][5])).size === set.length, "");
+}
+
+// ---- Autocompletado: códigos IATA, ciudades, nombres, alias, acentos ----
+const findES = (q) => W.es.CTT_search(q, airports).map((a) => a[0]);
+const findEN = (q) => W.en.CTT_search(q, airports).map((a) => a[0]);
+const SEARCH = [
+  ["Código en mayúsculas", findES("MAD")[0] === "MAD"],
+  ["Código en minúsculas", findES("bcn")[0] === "BCN"],
+  ["Código exacto aunque haya muchas coincidencias parciales (san)", findES("san")[0] === "SAN"],
+  ["Ciudad", findES("madrid")[0] === "MAD"],
+  ["Ciudad sin acento (malaga)", findES("malaga")[0] === "AGP"],
+  ["Ciudad con acento (Málaga)", findES("Málaga")[0] === "AGP"],
+  ["Nombre del aeropuerto (barajas)", findES("barajas").includes("MAD")],
+  ["Nombre del aeropuerto (gatwick)", findES("gatwick")[0] === "LGW"],
+  ["Nombre del aeropuerto (heathrow)", findES("heathrow")[0] === "LHR"],
+  ["Alias en español (Londres) devuelve los 5 aeropuertos", ["LHR", "LGW", "STN", "LTN", "LCY"].every((c) => findES("londres").includes(c))],
+  ["Alias en español (Nueva York)", findES("nueva york").slice(0, 3).includes("JFK")],
+  ["En inglés (London)", ["LHR", "LGW", "STN"].every((c) => findEN("london").includes(c))],
+  ["Ciudad con dos aeropuertos (Tenerife)", ["TFN", "TFS"].every((c) => findES("tenerife").includes(c))],
+  ["Varias palabras (londres gatwick)", findES("londres gatwick")[0] === "LGW"],
+  ["Texto tal como queda al elegir (Madrid (MAD))", findES("Madrid (MAD)")[0] === "MAD"],
+  ["Espacios sobrantes", findES("  bcn ")[0] === "BCN"],
+  ["Sin coincidencias", findES("zzqxw").length === 0],
+  ["Como mucho 8 sugerencias", findES("a").length <= 8],
+];
+for (const [n, ok2] of SEARCH) check("Búsqueda: " + n, ok2, "");
+
+// ---- Cartas: sin datos bancarios, sin afirmar un derecho seguro, reflejan el resultado ----
+const LTR = [
+  ["es", "MAD-BCN", { a: "vueling", ...D, cause: "tech" }],
+  ["en", "MAN-ALC", { a: "jet2", ...D }],
+  ["es", "MAD-JFK", { a: "iberia", ...D, delay: "3to4" }],
+  ["es", "MAD-BCN", C({ a: "vueling", notice: "lt7", reroute: "yes", rdep: "1to2", rarr: "lt2", accepted: "yes" })],
+  ["en", "MAD-BCN", B({ a: "vueling", dreason: "unknown" })],
+];
+for (const [lang, route, inp] of LTR) {
+  const t = letterFor(lang, route, inp);
+  const tag = `Carta ${lang} ${route} ${inp.what}`;
+  check(tag + ": sin IBAN ni cuenta bancaria", !/IBAN|cuenta [A-Z0-9]|account [A-Z0-9]|\[iban/i.test(t), "");
+  check(tag + ": pide cómo se abonará", lang === "es" ? t.includes("cómo y cuándo abonarán") : t.includes("how and when you will pay"), "");
+  check(tag + ": se presenta como reclamación, no como derecho reconocido", lang === "es" ? t.includes("Considero que") && !/Te corresponden|me corresponden sin/.test(t) : t.includes("I consider that"), "");
+  check(tag + ": pide acreditar una circunstancia extraordinaria", lang === "es" ? t.includes("documentación que lo acredite") : t.includes("supporting evidence"), "");
+  check(tag + ": sin textos vacíos", !/undefined|NaN|null/.test(t), "");
+}
+const l1 = letterFor("es", "MAD-BCN", { a: "vueling", ...D, cause: "tech" });
+check("Carta refleja el motivo técnico", l1.includes("C-549/07") && l1.includes("250 €"), "");
+const l2 = letterFor("es", "MAD-JFK", { a: "iberia", ...D, delay: "3to4" });
+check("Carta de largo radio 3-4 h pide 300 € y explica la reducción", l2.includes("300 €") && l2.includes("artículo 7.2"), "");
+const l3 = letterFor("es", "MAD-BCN", C({ a: "vueling", notice: "lt7", reroute: "yes", rdep: "1to2", rarr: "lt2", accepted: "yes" }));
+check("Carta de cancelación con alternativo describe horarios, aceptación y reducción", l3.includes("entre 1 y 2 horas antes") && l3.includes("Lo acepté") && l3.includes("125 €"), "");
+const l4 = letterFor("en", "MAD-BCN", B({ a: "vueling", dreason: "unknown" }));
+check("Carta de denegación sin motivo lo dice", l4.includes("not given any reason"), "");
+const appSrc = fs.readFileSync(path.join(ROOT, "src", "app.js"), "utf8");
+check("app.js no usa almacenamiento ni envía los datos de la carta", !/localStorage|sessionStorage|indexedDB|sendBeacon|XMLHttpRequest/.test(appSrc) && (appSrc.match(/fetch\(/g) || []).length === 1, "");
+
 console.log(`\nMotor de reglas: ${CASES.length} casos, ${ok} comprobaciones correctas, ${fail} fallos`);
 process.exit(fail ? 1 : 0);
