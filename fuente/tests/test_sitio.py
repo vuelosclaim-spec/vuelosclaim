@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FUENTE = os.path.dirname(HERE)
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(os.path.dirname(FUENTE), "docs")
 BASE = "https://vuelosclaim.eu"
-NOINDEX_OK = {"/widget/"}  # widget para incrustar: noindex a propósito, sin H1 ni canonical
+NOINDEX_OK = {"/widget/", "/404.html"}  # widget para incrustar: noindex a propósito, sin H1 ni canonical
 
 errors, warnings = [], []
 
@@ -116,6 +116,9 @@ def check_site():
     for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
         if url in pages and re.search(r"<tbody><tr>|</tr><tr>", pages[url]):
             err(f"Hay huelgas sin fecha de fin (data-end) en {url}")
+    nf = pages.get("/404.html", "")
+    if not nf or 'name="robots" content="noindex"' not in nf or "/404.html" in sitemap:
+        err("Falta la página 404 propia, no es noindex o está en el sitemap")
     for url in sitemap:
         if url not in pages:
             err(f"El sitemap incluye una página que no existe: {url}")

@@ -24,7 +24,7 @@ No había eventos personalizados antes de este cambio, así que no hay duplicado
 | `letter_copied` | Copiar la carta con éxito | resultado |
 | `letter_downloaded` | Descargar la carta | resultado |
 
-Todos los eventos llevan `language` y `page_path`. Los valores salen de listas cerradas:
+Todos los eventos llevan `site_language` y `source_page`. No se usan `language` ni `page_path` porque GA4 los reserva: sobrescribirían el idioma del navegador y la ruta de la página. Los valores salen de listas cerradas:
 
 - `incident_type`: delay / cancel / denied.
 - `result`: posible / no / insuficiente.
@@ -35,10 +35,11 @@ El código descarta cualquier otro parámetro. Nunca se envía lo que escribe el
 
 ## Configuración pendiente en Google Analytics (Administrar)
 
-1. **Definiciones personalizadas → Crear dimensiones personalizadas** (ámbito de evento): `incident_type`, `result`, `compensation_category`, `regime`, `affiliate_id`, `placement`, `language`.
+1. **Definiciones personalizadas → Crear dimensiones personalizadas** (ámbito de evento): `incident_type`, `result`, `compensation_category`, `regime`, `affiliate_id`, `placement`, `site_language`, `source_page`.
 2. **Eventos → marcar `affiliate_click` como evento clave.** Opcional: también `letter_downloaded`.
 3. **Flujos de datos → Medición mejorada:** los «Clics salientes» registran también el clic en AirHelp como evento `click`. No duplica `affiliate_click`, pero para contar conversiones usa `affiliate_click`.
-4. **Explorar → Exploración de embudo**, con estos pasos:
+4. **Flujos de datos → Medición mejorada → Interacciones con formularios:** recomendable desactivarla. Envía `form_start` con la URL de la página y el identificador del primer campo; no son datos personales, pero duplican `calculator_started`.
+5. **Explorar → Exploración de embudo**, con estos pasos:
    1. `page_view`
    2. `calculator_started`
    3. `calculator_completed`

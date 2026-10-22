@@ -190,7 +190,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("calculator_started una sola vez"), names.filter((n) => n === "calculator_started").length === 1);
     const all = JSON.stringify(events);
     check(T("ningún evento contiene datos de la carta"), !/Zz Nombre|Secreto|QQ9ZZ9|IB1234/i.test(all), all.slice(0, 300));
-    const allowed = new Set(["language", "page_path", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
+    const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
     check(T("solo parámetros permitidos"), events.every((e) => Object.keys(e.params || {}).every((k) => allowed.has(k))), all.slice(0, 300));
     const aff = events.find((e) => e.name === "affiliate_click");
     check(T("affiliate_click identifica el destino y el lugar"), aff && aff.params.affiliate_id === "airhelp_tp" && aff.params.placement === "calculator", JSON.stringify(aff));

@@ -689,7 +689,7 @@ CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Coo
            "border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)\">"
            "<span id=\"ckt\"></span> <a id=\"ckl\" href=\"/privacidad/\" style=\"color:#facc15\">+info</a>"
            "<div style=\"margin-top:10px;display:flex;gap:8px;justify-content:flex-end\">"
-           "<button id=\"ckn\" style=\"background:transparent;color:#fff;border:1px solid #6b7280;border-radius:8px;padding:8px 14px;cursor:pointer\"></button>"
+           "<button id=\"ckn\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button>"
            "<button id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button></div></div>"
            "<script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='" + GA_ID + "',on=false,b=document.getElementById('ck');"
            "function get(){try{return localStorage.getItem(k)}catch(e){return null}}"
@@ -882,6 +882,22 @@ def build():
 <h2>¿Tienes enlace de afiliado de una empresa de reclamaciones?</h2><p>Puedes usar el tuyo en el botón "Reclámalo sin coste". Añade al final de la dirección del iframe <code>?aff=</code> seguido de tu enlace (AirHelp, AirAdvisor, Compensair, Flightright, Skyrefund o Reclamador). Las comisiones de tus lectores son tuyas.</p>
 <p>¿Dudas o quieres una versión con tus colores? Escríbenos a <strong>vuelosclaim@gmail.com</strong>.</p></div>"""
     emit("es", "/insertar-calculadora/", f"{head('es', 'Inserta la calculadora en tu web · ' + BRAND, 'Inserta gratis en tu blog la calculadora de compensación por retraso o cancelación de vuelos.', '/insertar-calculadora/')}\n{header('es', None)}<main>{ins_body}</main>{footer('es')}")
+
+    # 404 page (GitHub Pages serves docs/404.html with status 404): useful links instead of the generic GitHub page
+    def nf(l):
+        g = "".join(f'<li><a href="{u}">{t}</a></li>' for u, t in GUIDES[l])
+        if l == "es":
+            return (f'<div class="nf" lang="es"><h1>No encontramos esta página</h1><p class="lead">Puede que la dirección esté mal escrita o que la página ya no exista. '
+                    f'Desde aquí puedes seguir:</p><p><a class="btn btn-sign" href="/">Calcular mi compensación</a></p><h2>Guías</h2><ul>{g}</ul>'
+                    f'<p><a href="/#aerolineas">Compensación por aerolínea y por aeropuerto</a> · <a href="/en/">English version</a></p></div>')
+        return (f'<div class="nf" lang="en" hidden><h1>We can’t find this page</h1><p class="lead">The address may be mistyped or the page may no longer exist. '
+                f'You can carry on from here:</p><p><a class="btn btn-sign" href="/en/">Check my compensation</a></p><h2>Guides</h2><ul>{g}</ul>'
+                f'<p><a href="/en/#aerolineas">Compensation by airline and airport</a> · <a href="/">Versión en español</a></p></div>')
+    nf_js = ("<script>if(/^\\/en(\\/|$)/.test(location.pathname)){var d=document;d.documentElement.lang='en';d.title='Page not found · " + BRAND + "';"
+             "d.querySelector('.nf[lang=es]').hidden=true;d.querySelector('.nf[lang=en]').hidden=false}</script>")
+    nf_inner = (f'<title>Página no encontrada · {BRAND}</title><meta name="robots" content="noindex">{ICON}{FONTS}<style>{CSS}</style>'
+                f'{header("es", None)}<main class="wrap prose">{nf("es")}{nf("en")}</main>{footer("es")}{nf_js}')
+    write(os.path.join(OUT, "404.html"), full_doc(nf_inner, "es"))
 
     # Legal pages (both languages)
     legal_txt = {
