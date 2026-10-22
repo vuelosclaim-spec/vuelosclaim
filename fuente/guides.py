@@ -27,7 +27,7 @@ G = [
 <ol><li>Haz captura del aviso de cancelación y pide el motivo por escrito.</li>
 <li><a href="/">Calcula cuánto te corresponde</a> con la distancia real de tu ruta.</li>
 <li>Reclama en el formulario de compensación de la aerolínea (no el de reembolso: son distintos).</li>
-<li>Si no contesta en 8 semanas o lo rechaza, reclama gratis en <a href="https://www.seguridadaerea.gob.es/es/ambitos/pasajeros/reclamaciones" rel="noopener">AESA</a>.</li>
+<li>Si no contesta en un mes o lo rechaza, reclama gratis en <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li>
 <li>Último paso: juicio verbal, sin abogado si la cantidad no pasa de 2.000 €. En España tienes 5 años para reclamar.</li></ol>
 <p>Si hay huelgas a la vista, mira el <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>: quién hace huelga decide si cobras.</p>""",
             "faq": [
@@ -56,7 +56,7 @@ G = [
 <ol><li>Screenshot the cancellation notice and ask for the reason in writing.</li>
 <li><a href="/en/">Work out what you're owed</a> using your route's real distance.</li>
 <li>Claim on the airline's compensation form (not the refund form: they're different).</li>
-<li>No answer in 8 weeks or a refusal: escalate for free to the airline's ADR scheme or the <a href="https://www.caa.co.uk/passengers-and-public/resolving-travel-problems/" rel="noopener">CAA</a> for flights from the UK, or AESA for flights from Spain.</li>
+<li>A refusal, or no answer within 8 weeks (UK flights) or one month (flights from Spain): escalate for free to the airline's ADR scheme or the <a href="https://www.caa.co.uk/passengers-and-public/resolving-travel-problems/" rel="noopener">CAA</a> for flights from the UK, or AESA for flights from Spain.</li>
 <li>Last resort: small claims court, no lawyer needed. You have 6 years in England and Wales (5 in Scotland).</li></ol>
 <p>Strikes coming up? Check the <a href="/en/flight-strikes-spain-europe/">strike calendar</a>: who is striking decides whether you get paid.</p>""",
             "faq": [
@@ -133,7 +133,7 @@ G = [
 <li>Problemas de organización, retrasos en cadena por mala planificación o falta de aviones.</li></ul>
 <h2>Sí suelen serlo (no hay compensación)</h2>
 <ul><li>Meteorología que impide volar con seguridad.</li>
-<li>Huelga de controladores o restricciones del control aéreo.</li>
+<li>Huelga de controladores aéreos. Las restricciones del control aéreo, solo si la aerolínea identifica su causa de fondo y demuestra que era extraordinaria (TJUE, C-108/26, 2026).</li>
 <li>Choque con un pájaro (C-315/15, Pešková).</li>
 <li>Un defecto de fabricación oculto que el fabricante o las autoridades revelan (C-257/14, van der Lans).</li>
 <li>Un pasajero conflictivo que obliga a desviar el avión, o cierre del aeropuerto.</li></ul>
@@ -163,7 +163,7 @@ G = [
 <li>Poor planning, knock-on delays from the airline's own scheduling, or a lack of aircraft.</li></ul>
 <h2>Usually extraordinary (no compensation)</h2>
 <ul><li>Weather that makes flying unsafe.</li>
-<li>Air traffic control strikes or restrictions, including system failures like a NATS outage.</li>
+<li>Air traffic control strikes. ATC restrictions or system failures (like a NATS outage) only when the airline identifies the underlying cause and proves it was extraordinary (CJEU, C-108/26, 2026).</li>
 <li>A bird strike (C-315/15, Pešková).</li>
 <li>A hidden manufacturing defect revealed by the manufacturer or authorities (C-257/14, van der Lans).</li>
 <li>A disruptive passenger forcing a diversion, or the airport closing.</li></ul>
