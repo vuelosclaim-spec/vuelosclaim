@@ -883,6 +883,22 @@ def build():
 <p>¿Dudas o quieres una versión con tus colores? Escríbenos a <strong>vuelosclaim@gmail.com</strong>.</p></div>"""
     emit("es", "/insertar-calculadora/", f"{head('es', 'Inserta la calculadora en tu web · ' + BRAND, 'Inserta gratis en tu blog la calculadora de compensación por retraso o cancelación de vuelos.', '/insertar-calculadora/')}\n{header('es', None)}<main>{ins_body}</main>{footer('es')}")
 
+    # 404 page (GitHub Pages serves docs/404.html with status 404): useful links instead of the generic GitHub page
+    def nf(l):
+        g = "".join(f'<li><a href="{u}">{t}</a></li>' for u, t in GUIDES[l])
+        if l == "es":
+            return (f'<div class="nf" lang="es"><h1>No encontramos esta página</h1><p class="lead">Puede que la dirección esté mal escrita o que la página ya no exista. '
+                    f'Desde aquí puedes seguir:</p><p><a class="btn btn-sign" href="/">Calcular mi compensación</a></p><h2>Guías</h2><ul>{g}</ul>'
+                    f'<p><a href="/#aerolineas">Compensación por aerolínea y por aeropuerto</a> · <a href="/en/">English version</a></p></div>')
+        return (f'<div class="nf" lang="en" hidden><h1>We can’t find this page</h1><p class="lead">The address may be mistyped or the page may no longer exist. '
+                f'You can carry on from here:</p><p><a class="btn btn-sign" href="/en/">Check my compensation</a></p><h2>Guides</h2><ul>{g}</ul>'
+                f'<p><a href="/en/#aerolineas">Compensation by airline and airport</a> · <a href="/">Versión en español</a></p></div>')
+    nf_js = ("<script>if(/^\\/en(\\/|$)/.test(location.pathname)){var d=document;d.documentElement.lang='en';d.title='Page not found · " + BRAND + "';"
+             "d.querySelector('.nf[lang=es]').hidden=true;d.querySelector('.nf[lang=en]').hidden=false}</script>")
+    nf_inner = (f'<title>Página no encontrada · {BRAND}</title><meta name="robots" content="noindex">{ICON}{FONTS}<style>{CSS}</style>'
+                f'{header("es", None)}<main class="wrap prose">{nf("es")}{nf("en")}</main>{footer("es")}{nf_js}')
+    write(os.path.join(OUT, "404.html"), full_doc(nf_inner, "es"))
+
     # Legal pages (both languages)
     legal_txt = {
         "about": {

@@ -19,7 +19,8 @@ Los PR #2, #3 y #4 ya están publicados con autorización expresa. Este PR solo 
 1. **Parámetros reservados de GA4.** Los eventos enviaban `language` y `page_path`. En la petición real a Google se vio que sobrescribían el idioma del navegador (`ul`) y la ruta de la página (`dp`). Ahora son `site_language` y `source_page`.
 2. **Banner de cookies.** «Rechazar» tenía menos prominencia que «Aceptar». Ahora los dos tienen el mismo estilo.
 3. **`fuente/src_static/ads.txt` sobrante.** Ya existía `ads.txt` generado por `build.py` antes del 22-10; lo añadí por error y no se usaba. Eliminado.
-4. **Prueba independiente.** Se añade `tests/test_oraculo.js` a la integración continua: compara el motor con un oráculo escrito aparte en ~19.000 casos.
+4. **Página 404 propia** (pendiente de la auditoría inicial, H11): en español o en inglés según la dirección, con enlaces a la calculadora y las guías, `noindex` y fuera del sitemap.
+5. **Prueba independiente.** Se añade `tests/test_oraculo.js` a la integración continua: compara el motor con un oráculo escrito aparte en ~19.000 casos.
 
 ## 3. Pruebas superadas
 
