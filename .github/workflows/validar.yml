@@ -39,5 +39,8 @@ jobs:
       - name: Motor de reglas de la calculadora
         run: node fuente/tests/test_reglas.js
 
+      - name: Motor contra un oráculo independiente
+        run: node fuente/tests/test_oraculo.js
+
       - name: Enlaces, SEO y datos
         run: python3 fuente/tests/test_sitio.py docs

@@ -15,6 +15,7 @@ No necesita dependencias: Python 3.10 o superior.
 
 ```bash
 node fuente/tests/test_reglas.js          # motor de reglas de la calculadora (Node 18+)
+node fuente/tests/test_oraculo.js         # motor contra un oráculo independiente, ~19.000 casos
 python3 fuente/tests/test_sitio.py docs   # enlaces, canonical, hreflang, JSON-LD, sitemap y datos
 ```
 

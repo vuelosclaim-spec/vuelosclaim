@@ -211,7 +211,8 @@
   function track(name, params) {
     try {
       if (!window.vcAnalytics || typeof window.gtag !== "function") return false;
-      var q = { language: LANG, page_path: location.pathname };
+      // site_language/source_page: "language" and "page_path" are reserved by GA4 and would overwrite the browser language and page path
+      var q = { site_language: LANG, source_page: location.pathname };
       for (var k in params) if (TRACK_KEYS[k] && params[k] != null && params[k] !== "") q[k] = String(params[k]).replace(/[^\w.-]/g, "_").slice(0, 40);
       window.gtag("event", name, q);
       return true;

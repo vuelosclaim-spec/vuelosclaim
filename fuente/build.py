@@ -689,7 +689,7 @@ CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Coo
            "border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)\">"
            "<span id=\"ckt\"></span> <a id=\"ckl\" href=\"/privacidad/\" style=\"color:#facc15\">+info</a>"
            "<div style=\"margin-top:10px;display:flex;gap:8px;justify-content:flex-end\">"
-           "<button id=\"ckn\" style=\"background:transparent;color:#fff;border:1px solid #6b7280;border-radius:8px;padding:8px 14px;cursor:pointer\"></button>"
+           "<button id=\"ckn\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button>"
            "<button id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button></div></div>"
            "<script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='" + GA_ID + "',on=false,b=document.getElementById('ck');"
            "function get(){try{return localStorage.getItem(k)}catch(e){return null}}"
