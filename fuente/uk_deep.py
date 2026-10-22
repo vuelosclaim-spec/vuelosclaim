@@ -135,8 +135,8 @@ TEXT.update({
              "It depends on the distance, not the fare: €250 up to 1,500 km, €400 from 1,500 to 3,500 km and €600 beyond, or £220/£350/£520 under UK261 for flights from the UK. Most Ryanair routes between the UK and Spain pay €250–€400."),
             ("Does Ryanair pay compensation for ATC delays?",
              "Not when the delay was genuinely caused by air traffic control restrictions or an ATC strike. But if ATC is only part of the story, and the knock-on came from an earlier technical or crew problem, compensation is still owed. Ask for the cause in writing."),
-            ("How long does Ryanair take to pay compensation?",
-             "Valid claims are often answered within weeks, but it varies. If Ryanair hasn't resolved your claim after 8 weeks, escalate for free to the enforcement body of the country the flight departed from, for example AESA for Spain."),
+            ("What if Ryanair doesn't answer my claim?",
+             "Escalate for free: for a flight departing Spain, to AESA once a month has passed without a satisfactory answer; for a flight departing the UK, to the airline's ADR scheme or the CAA after 8 weeks; otherwise, to the enforcement body of the departure country."),
             ("Ryanair rejected my claim. What can I do?",
              "Check the reason they gave against the rules: technical faults, crew shortages and Ryanair's own staff strikes don't count as extraordinary. Then escalate for free to the national enforcement body of the departure country, or the CAA for flights from the UK."),
         ],
@@ -160,7 +160,7 @@ TEXT.update({
             ("Do I have to accept WIZZ credit?",
              "No. Compensation and refunds under EU261 are owed in money. Credit is only an option if you agree to it."),
             ("Wizz Air didn't answer my claim. What next?",
-             "After 8 weeks, escalate for free to the enforcement body of the country the flight departed from (AESA for Spain) or the CAA for flights from the UK."),
+             "Escalate for free: for a flight departing Spain, to AESA after a month without a satisfactory answer; for a flight departing the UK, to the airline's ADR scheme or the CAA after 8 weeks."),
         ],
     ),
     "klm": dict(
@@ -234,7 +234,7 @@ def section(a, airports, km, names, aesa_url, caa_url):
 <li><strong>Check the amount</strong> with the calculator above (it uses the real distance of your route).</li>
 <li><strong>Gather your proof:</strong> booking reference, boarding passes and, if you can, a screenshot of the arrival time.</li>
 <li><strong>Claim directly and for free</strong> through {t['claim_where']}. Ask explicitly for "compensation under UK261 / EU261 Article 7", not just expenses.</li>
-<li><strong>Wait up to 8 weeks.</strong> If {n} refuses or doesn't answer, escalate for free: the airline's ADR scheme or the <a href="{caa_url}" rel="noopener">CAA</a> for UK departures, or <a href="{aesa_url}" rel="noopener">AESA</a> for flights departing Spain.</li>
+<li><strong>Give the airline time to answer.</strong> If {n} refuses or doesn't answer, escalate for free: after 8 weeks, the airline's ADR scheme or the <a href="{caa_url}" rel="noopener">CAA</a> for UK departures; after a month, <a href="{aesa_url}" rel="noopener">AESA</a> for flights departing Spain.</li>
 <li><strong>Prefer not to deal with it?</strong> A claims company does it for you on a no-win, no-fee basis (typically 25–35% plus VAT).</li>
 </ol>
 <p>Flying from a regional airport? See <a href="/en/uk-airports-to-spain-flight-delay-compensation/">what every UK airport to Spain route pays</a>.</p>

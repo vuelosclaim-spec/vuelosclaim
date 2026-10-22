@@ -98,7 +98,7 @@ def build(ctx):
 <li><strong>5+ hours:</strong> you can choose not to fly and get a full refund (but then there's no delay compensation).</li>
 <li><strong>Get proof:</strong> a photo of the departures board and your boarding pass; ask staff for the reason in writing.</li></ul>
 <h2 style="margin-top:32px">Claiming for a {n}–Spain flight</h2>
-<p>Claim directly with the airline first, using its online EU261/UK261 compensation form; it's free. If it refuses or doesn't answer within 8 weeks, escalate: <a href="{ctx['CAA_URL']}" rel="noopener">the CAA</a> or the airline's ADR scheme for flights out of {n}, and <a href="{ctx['AESA_URL']}" rel="noopener">AESA</a> for flights home from Spain. Airline guides: <a href="/en/jet2-delay-compensation/">Jet2</a>, <a href="/en/easyjet-delay-compensation/">easyJet</a>, <a href="/en/tui-delay-compensation/">TUI</a>, <a href="/en/ryanair-delay-compensation/">Ryanair</a>.</p>
+<p>Claim directly with the airline first, using its online EU261/UK261 compensation form; it's free. If it refuses or doesn't answer, escalate for free: after 8 weeks, <a href="{ctx['CAA_URL']}" rel="noopener">the CAA</a> or the airline's ADR scheme for flights out of {n}; after a month, <a href="{ctx['AESA_URL']}" rel="noopener">AESA</a> for flights home from Spain. Airline guides: <a href="/en/jet2-delay-compensation/">Jet2</a>, <a href="/en/easyjet-delay-compensation/">easyJet</a>, <a href="/en/tui-delay-compensation/">TUI</a>, <a href="/en/ryanair-delay-compensation/">Ryanair</a>.</p>
 <h2 style="margin-top:32px">Common questions</h2>
 {faq_html}
 <p style="margin-top:24px"><a href="{HUB}">All UK airports to Spain →</a></p>

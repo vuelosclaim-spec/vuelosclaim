@@ -8,8 +8,8 @@
   "country_en": "Ireland",
   "claim_es": "https://eu261expenseclaim.ryanair.com/",
   "claim_en": "https://eu261expenseclaim.ryanair.com/",
-  "note_es": "Ryanair dice que resuelve en unos 10 días y recomienda reclamar directamente, sin intermediarios.",
-  "note_en": "Ryanair says it aims to decide within 10 days and recommends claiming directly, without a claims company.",
+  "note_es": "Ryanair tiene un formulario propio para la compensación del reglamento EU261.",
+  "note_en": "Ryanair has its own online form for EU261 compensation claims.",
   "adr_uk": "AviationADR"
  },
  {
@@ -125,8 +125,8 @@
   "country_en": "Hungary, Malta and the UK",
   "claim_es": "https://www.wizzair.com/en-gb/information-and-services/compliments-and-complaints",
   "claim_en": "https://www.wizzair.com/en-gb/information-and-services/compliments-and-complaints",
-  "note_es": "Wizz Air responde en 30 días. Si reclamas con una empresa, descuenta 50 € de gestión.",
-  "note_en": "Wizz Air replies within 30 days. If you claim through a company, it deducts a €50 admin fee.",
+  "note_es": "",
+  "note_en": "",
   "adr_uk": "AviationADR"
  },
  {

@@ -1,5 +1,16 @@
 # Cambios
 
+## 2026-10-22 — SEO técnico y contenido verificable
+
+Detalle, mediciones y estrategia en [SEO.md](SEO.md).
+
+- Páginas de aerolínea: ficha propia (canal oficial, norma aplicable según la dirección del vuelo, dónde acudir, documentos, plazos con fuente y preguntas frecuentes). Se quita el bloque genérico repetido.
+- Páginas de aeropuerto: sección «Dónde reclamar» con AESA, UK261, plazos y artículos.
+- Correcciones jurídicas en guías, comparativa y páginas británicas (importes intra-UE, «menos de 4/2 h», overbooking, escalas, plazos de AESA). Eliminadas notas de aerolíneas y tiempos de resolución sin fuente.
+- `lastmod` del sitemap según el último cambio real de cada página; huelgas que se ocultan al pasar su fecha.
+- Enlaces internos a las 14 páginas de aeropuertos británicos; un solo `WebSite` en los datos estructurados; títulos y descripciones ajustados; áreas táctiles del pie.
+- Pruebas: canal oficial y plazos en cada aerolínea, preguntas FAQ visibles, `lastmod` válido, huelgas con fecha de fin.
+
 ## 2026-10-22 — Formularios, aeropuertos y cartas
 
 **Lista de aeropuertos (`src/app.js`)**

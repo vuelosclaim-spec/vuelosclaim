@@ -181,7 +181,7 @@ FAQ = {
   ("¿El retraso se cuenta en la salida o en la llegada?", "En la llegada: cuando se abre al menos una puerta del avión en el destino final."),
   ("¿Tengo derecho aunque el billete fuera barato?", "Sí. El importe depende de la distancia, no del precio del billete."),
   ("¿Cuánto tiempo tengo para reclamar?", "En España, los tribunales aplican en general un plazo de 5 años desde el vuelo. Cuanto antes reclames, más fácil es conseguir las pruebas."),
-  ("¿Y si tenía una escala?", "Si era una única reserva, cuenta el retraso con el que llegaste al destino final y la distancia total entre origen y destino."),
+  ("¿Y si tenía una escala?", "Si era una única reserva, cuenta el retraso con el que llegaste al destino final y la distancia en línea recta entre el origen y el destino final, no la suma de los tramos (Tribunal de Justicia de la UE, asunto C-559/16)."),
  ],
  "en": [
   ("Is compensation per person or per booking?", "Per passenger. If four of you were on a flight of up to 1,500 km that arrived over 3 hours late under EU261, that is 4 × €250 = €1,000."),
@@ -328,7 +328,7 @@ def _reference_sections(l):
 <tr><td>Hasta 1.500 km (Madrid–París, Valencia–Ámsterdam)</td><td class="eur">250 €</td></tr>
 <tr><td>Más de 1.500 km dentro de la UE, o de 1.500 a 3.500 km</td><td class="eur">400 €</td></tr>
 <tr><td>Más de 3.500 km fuera de la UE (Madrid–Nueva York)</td><td class="eur">600 €</td></tr>
-<tr><td>Más de 3.500 km con 3 a 4 horas de retraso</td><td class="eur">300 €</td></tr>
+<tr><td>Más de 3.500 km fuera de la UE con 3 a 4 horas de retraso</td><td class="eur">300 €</td></tr>
 </tbody></table></div></div></section>
 <section class="ref"><div class="wrap two">
 <div><h3>Cuándo te pagan</h3><ul>
@@ -355,7 +355,7 @@ def _reference_sections(l):
 <tr><td>Up to 1,500 km (Madrid–Paris)</td><td class="eur">€250</td><td class="eur">£220</td></tr>
 <tr><td>1,500 to 3,500 km (Manchester–Malaga)</td><td class="eur">€400</td><td class="eur">£350</td></tr>
 <tr><td>Over 3,500 km (London–New York)</td><td class="eur">€600</td><td class="eur">£520</td></tr>
-<tr><td>Over 3,500 km, 3 to 4 hour delay</td><td class="eur">€300</td><td class="eur">£260</td></tr>
+<tr><td>Over 3,500 km (not within the EU), 3 to 4 hour delay</td><td class="eur">€300</td><td class="eur">£260</td></tr>
 </tbody></table></div></div></section>
 <section class="ref"><div class="wrap two">
 <div><h3>When you get paid</h3><ul>
@@ -498,32 +498,14 @@ def airline_section(l, a):
             note = f"{cur(lo)} for 3–4 h late; {cur(hi)} from 4 h" if long_haul else f"{cur(full)} for 3 h or more"
             rows.append(f"<tr><td>{nA} → {nB}</td><td>{d:,} km</td><td>{note}</td></tr>")
     n, slug = e(a["name"]), a["slug"]
+    claim = ""
     if l == "es":
-        if slug in SPANISH:
-            claim = (f"<p>{n} es española, así que si no te contesta en un mes o rechaza tu reclamación puedes ir gratis a <a href=\"{AESA_URL}\" rel=\"noopener\">AESA</a> "
-                     f"tanto si el vuelo salía de España como si llegaba a España desde fuera de la UE.</p>")
-        elif a["eu"] == "no" and not a["uk"]:
-            claim = (f"<p>{n} no es europea: solo puedes reclamarle por el reglamento europeo si el vuelo <strong>salía</strong> de un aeropuerto de la UE "
-                     f"(por ejemplo, Madrid–{e(NAMES['es'].get(AL_ROUTES[slug][0][1]) or AIRPORTS[AL_ROUTES[slug][0][1]][2])}). La vuelta a España con {n} no está cubierta.</p>")
-        else:
-            claim = (f"<p>Si el vuelo de {n} salía de España, el organismo que puede ayudarte gratis es <a href=\"{AESA_URL}\" rel=\"noopener\">AESA</a>. "
-                     f"Si salía de otro país de la UE, te corresponde el organismo de ese país.</p>")
-        if a["uk"]:
-            claim += f"<p>En los vuelos de {n} que salen del Reino Unido se aplica la norma británica (UK261), que paga en libras: 220, 350 o 520 £.</p>"
         return (f'<section class="ref"><div class="wrap"><h2>Cuánto paga {n}: ejemplos con distancias reales</h2>'
                 f'<p class="lead">El importe depende de la distancia del vuelo, no de lo que pagaste por el billete. Estos son ejemplos de trayectos de {n}, con la distancia calculada como manda el reglamento:</p>'
                 f'<div class="board"><table><thead><tr><th>Trayecto</th><th>Distancia</th><th>Compensación por pasajero</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
                 f'<h2 style="margin-top:32px">Cómo reclamar a {n}</h2>'
                 f'<p>Primero reclama directamente a {n} por escrito, desde el formulario de reclamaciones de su web, con tu número de reserva y la tarjeta de embarque. '
                 f'Pide expresamente la compensación del Reglamento (CE) 261/2004 además del reembolso o los gastos.</p>{claim}</div></section>')
-    if slug in SPANISH:
-        claim = f"<p>{n} is a Spanish airline, so if it ignores you for a month or rejects the claim you can escalate to <a href=\"{AESA_URL}\" rel=\"noopener\">AESA</a>, Spain's aviation authority, for free.</p>"
-    elif a["eu"] == "no" and not a["uk"]:
-        claim = f"<p>{n} is not a European airline, so EU261 only covers its flights <strong>departing</strong> the EU (for example, Madrid to {e(NAMES['en'].get(AL_ROUTES[slug][0][1]) or AIRPORTS[AL_ROUTES[slug][0][1]][2])}). Its flights into Spain are not covered.</p>"
-    else:
-        claim = f"<p>For a {n} flight departing Spain, the enforcement body is <a href=\"{AESA_URL}\" rel=\"noopener\">AESA</a>; for one departing the UK, the airline's ADR scheme or the <a href=\"{CAA_URL}\" rel=\"noopener\">CAA</a>.</p>"
-    if a["uk"]:
-        claim += f"<p>On {n} flights departing the UK, UK261 applies and pays £220, £350 or £520 instead of euros.</p>"
     return (f'<section class="ref"><div class="wrap"><h2>What {n} pays: examples with real distances</h2>'
             f'<p class="lead">The amount depends on the flight distance, not the ticket price. Here are example {n} routes with the distance worked out the way the regulation requires (EU261 amounts):</p>'
             f'<div class="board"><table><thead><tr><th>Route</th><th>Distance</th><th>Compensation per passenger</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
@@ -531,12 +513,150 @@ def airline_section(l, a):
             f'<p>Claim from {n} in writing first, through the claims form on its website, with your booking reference and boarding pass. '
             f'Ask explicitly for compensation under EU261 (or UK261) as well as any refund or expenses.</p>{claim}</div></section>')
 
+# ---------------------------------------------------------------- airline claim sheet (data-driven, sourced)
+AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa"
+EURLEX = {"es": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32004R0261",
+          "en": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32004R0261"}
+UK_ADR_OK = {"AviationADR", "CEDR"}  # schemes approved by the CAA for airline disputes
+GUIDES = {
+    "es": [("/vuelo-cancelado-que-hacer/", "Vuelo cancelado: qué hacer"), ("/overbooking-compensacion/", "Overbooking"),
+           ("/circunstancias-extraordinarias-vuelo/", "Circunstancias extraordinarias"), ("/huelgas-vuelos-espana/", "Huelgas"),
+           ("/comparativa-empresas-reclamacion-vuelos/", "Reclamar tú o con una empresa"), ("/#preguntas", "Preguntas frecuentes")],
+    "en": [("/en/flight-cancelled-what-to-do/", "Flight cancelled: what to do"), ("/en/denied-boarding-overbooking-compensation/", "Overbooking"),
+           ("/en/extraordinary-circumstances-flight-delay/", "Extraordinary circumstances"), ("/en/flight-strikes-spain-europe/", "Strikes"),
+           ("/en/flight-compensation-companies-compared/", "Claim yourself or use a company"), ("/en/uk-airports-to-spain-flight-delay-compensation/", "UK airports to Spain"),
+           ("/en/#preguntas", "FAQ")],
+}
+
+
+def rules_rows(l, a):
+    """Which rules apply to this airline's flights, by direction (Art. 3 Reg. 261/2004; CAA table for UK261)."""
+    eu, uk = a["eu"], a["uk"]
+    if l == "es":
+        dep_eu = "Reglamento (CE) 261/2004, en euros, sea cual sea la aerolínea."
+        if eu == "yes": in_eu = "Reglamento 261/2004: es una aerolínea comunitaria."
+        elif eu == "mixed": in_eu = "Reglamento 261/2004 si lo operó su compañía europea; UK261 (en libras) si lo operó la británica."
+        elif uk: in_eu = "No lo cubre el reglamento europeo, pero sí UK261 (en libras), por ser aerolínea británica."
+        else: in_eu = "No está cubierto: ni el reglamento europeo ni UK261."
+        dep_uk = "UK261, en libras, sea cual sea la aerolínea."
+        in_uk = "UK261, en libras." if (eu in ("yes", "mixed") or uk) else "No está cubierto."
+        head = ("Vuelo", "Norma que se aplica")
+        labels = ("Sale de España, la UE, el EEE o Suiza", "Llega a la UE desde fuera de Europa", "Sale del Reino Unido", "Llega al Reino Unido desde fuera de Europa")
+    else:
+        dep_eu = "EU261, in euros, whatever the airline."
+        if eu == "yes": in_eu = "EU261: it is an EU (Community) carrier."
+        elif eu == "mixed": in_eu = "EU261 if its EU company operated it; UK261 (in pounds) if its UK company did."
+        elif uk: in_eu = "Not EU261, but UK261 (in pounds) applies because it is a UK airline."
+        else: in_eu = "Not covered by EU261 or UK261."
+        dep_uk = "UK261, in pounds, whatever the airline."
+        in_uk = "UK261, in pounds." if (eu in ("yes", "mixed") or uk) else "Not covered."
+        head = ("Flight", "Rules that apply")
+        labels = ("Departs Spain, the EU, the EEA or Switzerland", "Arrives in the EU from outside Europe", "Departs the UK", "Arrives in the UK from outside Europe")
+    rows = "".join(f"<tr><td>{x}</td><td>{y}</td></tr>" for x, y in zip(labels, (dep_eu, in_eu, dep_uk, in_uk)))
+    return f'<div class="board board-text"><table><thead><tr><th>{head[0]}</th><th>{head[1]}</th></tr></thead><tbody>{rows}</tbody></table></div>'
+
+
+def airline_facts(l, a):
+    n, eu, uk = e(a["name"]), a["eu"], a["uk"]
+    claim = a.get("claim_" + l) or a.get("claim_es")
+    note = a.get("note_" + l) or ""
+    adr = a.get("adr_uk") if a.get("adr_uk") in UK_ADR_OK else None
+    home_q = eu == "yes" or eu == "mixed" or uk
+    if l == "es":
+        q = [
+            (f"¿{a['name']} cuenta como aerolínea europea para el reglamento?",
+             {"yes": f"Sí. {a['name']} es una aerolínea de {a['country']} con licencia comunitaria, así que el reglamento también cubre sus vuelos que llegan a la UE desde fuera.",
+              "mixed": f"Depende de la compañía del grupo que operó el vuelo ({a['country']}). Mira el código del vuelo en la tarjeta de embarque o pregúntalo a la aerolínea.",
+              "no": f"No. {a['name']} es una aerolínea de {a['country']}. El reglamento europeo solo cubre sus vuelos que salen de la UE, el EEE o Suiza."}[eu]),
+            (f"¿Dónde reclamo a {a['name']}?",
+             f"En su canal oficial de reclamaciones (enlace más arriba), por escrito y guardando el justificante. {note}".strip()),
+            (f"¿Y si mi vuelo con {a['name']} volvía a España desde fuera de Europa?",
+             "Está cubierto por el reglamento europeo." if eu == "yes" else
+             "Solo si lo operó su compañía europea; si lo operó la británica, se aplica UK261." if eu == "mixed" else
+             "El reglamento europeo no lo cubre. Si es una aerolínea británica, puede aplicarse UK261." if uk else
+             "No está cubierto por el reglamento europeo. Puede reclamarse el daño demostrado por el retraso según el Convenio de Montreal (art. 19)."),
+        ]
+        esc = (f'<li><strong>Vuelo que salió de España</strong> o que llegó a España desde fuera de la UE con aerolínea comunitaria: si {n} no responde en un mes o lo rechaza, '
+               f'<a href="{AESA_CLAIM}" rel="noopener">reclama gratis ante AESA</a>. Tienes hasta un año desde tu reclamación a la aerolínea y su resolución es vinculante para la aerolínea.</li>'
+               '<li><strong>Vuelo que salió de otro país de la UE</strong>: el organismo nacional de ese país.</li>'
+               + (f'<li><strong>Vuelo que salió del Reino Unido</strong>: tras 8 semanas, {e(adr) + " (el organismo de resolución de conflictos al que está adherida)" if adr else "el organismo de resolución de conflictos de la aerolínea o, si no tiene, la CAA"}.</li>'))
+        return (f'<section class="ref"><div class="wrap"><h2>Ficha para reclamar a {n}</h2>'
+                f'<p><strong>Canal oficial:</strong> <a href="{e(claim)}" rel="nofollow noopener" target="_blank">reclamaciones de {n}</a>.{(" " + e(note)) if note else ""}</p>'
+                f'<h3>Qué norma se aplica a los vuelos de {n}</h3>{rules_rows(l, a)}'
+                f'<p class="lead">Cuenta la aerolínea que <em>operó</em> el vuelo, no la que vendió el billete. Fuente: art. 3 del <a href="{EURLEX["es"]}" rel="noopener">Reglamento (CE) 261/2004</a> y la <a href="{CAA_URL}" rel="noopener">CAA</a> para UK261.</p>'
+                f'<h3>Si {n} no te paga</h3><ul>{esc}</ul>'
+                f'<h3>Qué documentos preparar</h3><ul><li>Tarjeta de embarque y confirmación de la reserva.</li><li>Correos, SMS o avisos de {n} sobre el retraso o la cancelación, con su fecha.</li>'
+                f'<li>El motivo que te dieron, mejor por escrito.</li><li>Tickets de comida, transporte u hotel que pagaste tú.</li></ul>'
+                f'<h3>Plazos</h3><ul><li>En España, 5 años para reclamar a la aerolínea, según <a href="{AESA_URL}" rel="noopener">AESA</a>.</li>'
+                f'<li>En Inglaterra y Gales, 6 años por vía judicial (Dawson contra Thomson, 2014).</li>'
+                f'<li>En otros países decide su ley nacional (Tribunal de Justicia de la UE, asunto C-139/11).</li></ul>'
+                f'<h3>Preguntas frecuentes sobre {n}</h3>' + "".join(f"<details><summary>{e(x)}</summary><p>{e(y)}</p></details>" for x, y in q)
+                + '</div></section>')
+    q = [
+        (f"Does {a['name']} count as a European airline for EU261?",
+         {"yes": f"Yes. {a['name']} is an airline from {a['country_en']} with an EU (Community) licence, so EU261 also covers its flights arriving in the EU from outside.",
+          "mixed": f"It depends on which group company operated the flight ({a['country_en']}). Check the flight number on your boarding pass or ask the airline.",
+          "no": f"No. {a['name']} is an airline from {a['country_en']}. EU261 only covers its flights departing the EU, the EEA or Switzerland."}[eu]),
+        (f"Where do I claim from {a['name']}?",
+         f"Through its official claims channel (link above), in writing, keeping proof that you sent it. {note}".strip()),
+        (f"What about a {a['name']} flight into the UK from outside Europe?",
+         "UK261 applies." if home_q else "It is not covered by UK261. Proven damage caused by the delay may be claimed under the Montreal Convention (Article 19)."),
+    ]
+    esc = (f'<li><strong>Flight departing the UK</strong>: after 8 weeks, {e(adr) + " (the dispute scheme it belongs to)" if adr else "the airline’s ADR scheme or, if it has none, the CAA"}.</li>'
+           f'<li><strong>Flight departing Spain</strong>, or arriving in Spain from outside the EU with an EU airline: if {n} refuses or hasn’t replied within a month, '
+           f'<a href="{AESA_CLAIM}" rel="noopener">claim for free with AESA</a> within a year of your claim to the airline; its decision binds the airline.</li>'
+           '<li><strong>Flight departing another EU country</strong>: that country’s national enforcement body.</li>')
+    return (f'<section class="ref"><div class="wrap"><h2>How to claim from {n}: key facts</h2>'
+            f'<p><strong>Official channel:</strong> <a href="{e(claim)}" rel="nofollow noopener" target="_blank">{n} claims page</a>.{(" " + e(note)) if note else ""}</p>'
+            f'<h3>Which rules cover {n} flights</h3>{rules_rows(l, a)}'
+            f'<p class="lead">What counts is the airline that <em>operated</em> the flight, not the one that sold the ticket. Sources: Article 3 of <a href="{EURLEX["en"]}" rel="noopener">Regulation (EC) 261/2004</a> and the <a href="{CAA_URL}" rel="noopener">CAA</a> for UK261.</p>'
+            f'<h3>If {n} won’t pay</h3><ul>{esc}</ul>'
+            f'<h3>Documents to keep</h3><ul><li>Boarding pass and booking confirmation.</li><li>Emails, texts or notices from {n} about the delay or cancellation, with their dates.</li>'
+            f'<li>The reason you were given, ideally in writing.</li><li>Receipts for food, transport or hotels you paid for.</li></ul>'
+            f'<h3>Time limits</h3><ul><li>England and Wales: 6 years through the courts (Dawson v Thomson, 2014).</li>'
+            f'<li>Spain: 5 years to claim from the airline, according to <a href="{AESA_URL}" rel="noopener">AESA</a>.</li>'
+            f'<li>Elsewhere, national law decides (Court of Justice of the EU, Case C-139/11).</li></ul>'
+            f'<h3>{n}: frequently asked questions</h3>' + "".join(f"<details><summary>{e(x)}</summary><p>{e(y)}</p></details>" for x, y in q)
+            + '</div></section>')
+
+
+def compact_refs(l):
+    """Internal links shared by airline and airport pages, without repeating the generic rules blocks."""
+    links = "".join(f'<li><a href="{u_airline(l, a)}">{e(a["name"])}</a></li>' for a in AIRLINES)
+    aps = "".join(f'<li><a href="{u_airport(l, ap)}">{e(ap[2] if l == "es" else ap[3])}</a></li>' for ap in ES_AIRPORTS)
+    guides_ = " · ".join(f'<a href="{u}">{t}</a>' for u, t in GUIDES[l])
+    if l == "es":
+        return (f'<section class="ref" id="aerolineas"><div class="wrap"><h2>Guías para reclamar</h2><p>{guides_}</p>'
+                f'<h2 style="margin-top:32px">Compensación por aerolínea</h2><ul class="airlines">{links}</ul>'
+                f'<h2 style="margin-top:32px">Vuelos que salen de aeropuertos españoles</h2><ul class="airlines">{aps}</ul></div></section>')
+    ukl = "".join(f'<li><a href="{uk_airports.u_uk(s)}">{e(nm)}</a></li>' for _, s, nm, _ in uk_airports.UK)
+    return (f'<section class="ref" id="aerolineas"><div class="wrap"><h2>Claim guides</h2><p>{guides_}</p>'
+            f'<h2 style="margin-top:32px">Compensation by airline</h2><ul class="airlines">{links}</ul>'
+            f'<h2 style="margin-top:32px">Flights from Spanish airports</h2><ul class="airlines">{aps}</ul>'
+            f'<h2 style="margin-top:32px">Flights from UK airports to Spain</h2><ul class="airlines">{ukl}</ul></div></section>')
+
+
+def airport_claim(l, name, code):
+    n = e(name)
+    if l == "es":
+        return (f'<section class="ref"><div class="wrap"><h2>Dónde reclamar un vuelo de {n}</h2><ol class="steps">'
+                f'<li>Reclama primero a la aerolínea que operó el vuelo, por escrito, con la tarjeta de embarque y la reserva.</li>'
+                f'<li>Si no responde en un mes o lo rechaza: los vuelos que salen de {n} ({code}) se reclaman gratis ante <a href="{AESA_CLAIM}" rel="noopener">AESA</a>, hasta un año después de tu reclamación a la aerolínea. '
+                f'También los que llegan a {n} desde fuera de la UE con una aerolínea comunitaria.</li>'
+                f'<li>Si llegaste a {n} desde el Reino Unido, se aplica UK261: reclama al organismo de resolución de conflictos de la aerolínea o a la <a href="{CAA_URL}" rel="noopener">CAA</a>.</li></ol>'
+                f'<p class="lead">Plazo para reclamar a la aerolínea en España: 5 años, según AESA. Fuente de las normas: <a href="{EURLEX["es"]}" rel="noopener">Reglamento (CE) 261/2004</a>, arts. 3, 7 y 16.</p></div></section>')
+    return (f'<section class="ref"><div class="wrap"><h2>Where to claim a flight from {n}</h2><ol class="steps">'
+            f'<li>Claim from the airline that operated the flight first, in writing, with your boarding pass and booking.</li>'
+            f'<li>If it refuses or hasn’t replied within a month: flights departing {n} ({code}) can go to <a href="{AESA_CLAIM}" rel="noopener">AESA</a> for free, within a year of your claim to the airline. '
+            f'So can flights into {n} from outside the EU on an EU airline.</li>'
+            f'<li>Flights from the UK into {n} fall under UK261: after 8 weeks, use the airline’s ADR scheme or the <a href="{CAA_URL}" rel="noopener">CAA</a>.</li></ol>'
+            f'<p class="lead">Time limit to claim from the airline in Spain: 5 years, according to AESA; in England and Wales, 6 years. Rules: <a href="{EURLEX["en"]}" rel="noopener">Regulation (EC) 261/2004</a>, Articles 3, 7 and 16.</p></div></section>')
+
 
 def extra_jsonld(l, title, path):
     home = u_home(l)
     if path == home:
-        data = [{"@context": "https://schema.org", "@type": "WebSite", "name": BRAND, "url": SITE_URL + home, "inLanguage": l},
-                {"@context": "https://schema.org", "@type": "WebApplication", "name": ("Calculadora de compensación por retraso de vuelo" if l == "es" else "Flight delay compensation calculator"),
+        data = [{"@context": "https://schema.org", "@type": "WebApplication", "name": ("Calculadora de compensación por retraso de vuelo" if l == "es" else "Flight delay compensation calculator"),
                  "url": SITE_URL + home, "applicationCategory": "TravelApplication", "operatingSystem": "Any", "inLanguage": l,
                  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
     else:
@@ -599,7 +719,32 @@ def out(path):
 
 
 # ---------------------------------------------------------------- build
+def _content_hash(doc):
+    """Hash of what a reader sees (title, description, main content): lastmod only changes when this changes."""
+    import hashlib
+    parts = [re.search(r"<title>.*?</title>", doc, re.S), re.search(r'<meta name="description"[^>]*>', doc), re.search(r"<main.*?</main>", doc, re.S)]
+    return hashlib.sha256("".join(m.group(0) for m in parts if m).encode()).hexdigest()
+
+
+def _previous_lastmod():
+    """lastmod and content hash of the pages currently in OUT (the committed site), read before rebuilding."""
+    prev = {}
+    try:
+        sm = open(os.path.join(OUT, "sitemap.xml"), encoding="utf-8").read()
+    except OSError:
+        return prev
+    for loc, lm in re.findall(r"<loc>" + re.escape(SITE_URL) + r"([^<]+)</loc><lastmod>([^<]+)</lastmod>", sm):
+        try:
+            prev[loc] = (lm, _content_hash(open(out(loc), encoding="utf-8").read()))
+        except OSError:
+            pass
+    return prev
+
+
 def build():
+    import datetime
+    previous = _previous_lastmod()
+    today = os.environ.get("BUILD_DATE") or datetime.date.today().isoformat()
     shutil.rmtree(OUT, ignore_errors=True)
     shutil.rmtree(PREV, ignore_errors=True)
     for d in (OUT, PREV):
@@ -648,9 +793,10 @@ def build():
                 elif a["eu"] == "mixed":
                     scope = f"{n} vuela con varias compañías de su grupo ({e(a['country'])}). Sus vuelos que salen de Europa están siempre cubiertos; en los que llegan desde fuera, depende de qué compañía lo operó."
                 else:
-                    scope = f"{n} es una aerolínea de {e(a['country'])}, fuera de la UE. El reglamento europeo cubre sus vuelos que salen de un aeropuerto europeo, pero no los que llegan a Europa desde fuera."
-                title = f"Compensación por retraso de {a['name']}: cuánto te toca"
-                desc = f"Calcula cuánto te debe {a['name']} por un retraso de más de 3 horas, una cancelación u overbooking: 250, 400 o 600 € por pasajero."
+                    scope = (f"{n} es una aerolínea de {e(a['country'])}, fuera de la UE. El reglamento europeo cubre sus vuelos que salen de la UE, el EEE o Suiza, pero no los que llegan a la UE desde fuera."
+                             + (" Sus vuelos que salen del Reino Unido, o que llegan allí desde fuera, se rigen por la norma británica UK261." if a["uk"] else ""))
+                title = f"Compensación por retraso de {a['name']}: cuánto te toca" if len(a["name"]) <= 14 else f"Reclamar a {a['name']}: retraso y cancelación"
+                desc = f"Retraso de 3 horas o más, cancelación u overbooking con {a['name']}: calcula si te pueden corresponder 250, 400 o 600 €, dónde reclamar y qué plazos hay."
                 h1 = f"Retraso o cancelación con {n}: calcula cuánto te toca"
                 lede = scope + " Mete tu vuelo y te decimos el importe."
             else:
@@ -662,8 +808,8 @@ def build():
                     scope = f"{n} is an airline from {e(a['country_en'])}. Its flights departing Spain or the rest of the EU are covered by EU261, and its flights departing the UK by UK261."
                 if a["uk"]:
                     scope += f" On a {n} flight from the UK to Spain, you claim in pounds under UK261; on the flight back from Spain, in euros under EU261."
-                title = f"{a['name']} delay compensation: how much you can claim"
-                desc = f"Check what {a['name']} owes you for a delay of over 3 hours, a cancellation or overbooking: up to €600 (EU261) or £520 (UK261) per passenger."
+                title = f"{a['name']} delay compensation: how much you can claim" if len(a["name"]) <= 14 else f"{a['name']} delay and cancellation compensation"
+                desc = f"{a['name']} flight 3+ hours late, cancelled or overbooked? Check if you could claim up to €600 (EU261) or £520 (UK261), where to claim and time limits."
                 h1 = f"{n} flight delayed or cancelled? Check what you're owed"
                 lede = scope + " Enter your flight and we'll work out the amount."
             deep = ""
@@ -671,7 +817,7 @@ def build():
                 m = uk_deep.META[a["slug"]]
                 title, desc, h1 = m["title"], m["desc"], e(m["h1"])
                 deep = uk_deep.section(a, AIRPORTS, km, NAMES["en"], AESA_URL, CAA_URL)
-            body = hero(l, h1, lede, a["slug"], dep, arr) + deep + airline_section(l, a) + reference_sections(l, True)
+            body = hero(l, h1, lede, a["slug"], dep, arr) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l)
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # Airports
@@ -685,11 +831,11 @@ def build():
                 extra = " Canarias forma parte de la UE a estos efectos, así que se aplica igual que en la Península." if code in CANARY else ""
                 lede = (f"Cualquier vuelo que sale del aeropuerto de {n} está cubierto por el reglamento europeo, sea cual sea la aerolínea.{extra} "
                         f"Si llegas a {n} desde fuera de Europa, solo está cubierto si vuelas con una aerolínea europea. Mete tu vuelo y te decimos el importe.")
-                title = f"Retraso vuelo aeropuerto {name_es.split('-')[0]}: cuánto te toca"
+                title = f"Retraso vuelo aeropuerto {name_es.split('-')[0]}: cuánto te toca" if len(name_es) < 22 else f"Vuelo retrasado en {name_es}: compensación"
                 desc = f"Calcula la compensación por un vuelo retrasado, cancelado o con overbooking en el aeropuerto de {name_es}: 250, 400 o 600 € por pasajero."
                 h1 = f"Vuelo retrasado en {n}: calcula cuánto te toca"
                 dep, arr = code, ("LHR" if code == "MAD" else "MAD")
-                body = hero(l, h1, lede, "", dep, arr) + route_table(l, code, name_es) + reference_sections(l, True)
+                body = hero(l, h1, lede, "", dep, arr) + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l)
             else:
                 n = e(name_en)
                 extra = " The Canary Islands count as part of the EU for these rules, exactly like mainland Spain." if code in CANARY else ""
@@ -699,7 +845,7 @@ def build():
                 desc = f"Delayed or cancelled flight at {name_en} airport? Check your compensation under EU261 or UK261: up to €600 or £520 per passenger."
                 h1 = f"Flight delayed at {n} airport? Check what you're owed"
                 dep, arr = code, ("LHR" if code != "MAN" else "LGW")
-                body = hero(l, h1, lede, "", dep, "MAN") + route_table(l, code, name_en) + reference_sections(l, True)
+                body = hero(l, h1, lede, "", dep, "MAN") + route_table(l, code, name_en) + airport_claim(l, name_en, code) + compact_refs(l)
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # UK airports -> Spain (EN programmatic pages)
@@ -746,15 +892,25 @@ def build():
             "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><p>The site uses the Travelpayouts affiliate script to attribute visits sent to claims services (for example, AirHelp). When you click an affiliate link, that service may use cookies to record that you came from this site. The site uses Google Analytics to count visits in aggregate (only if you accept in the cookie notice) and shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
         },
     }
+    LEGAL_DESC = {
+        "about": {"es": "Quién está detrás de VuelosClaim, cómo calculamos la compensación por retraso o cancelación de vuelos y qué fuentes oficiales usamos.",
+                  "en": "Who runs VuelosClaim, how we calculate flight delay and cancellation compensation, and the official sources we rely on."},
+        "legal": {"es": "Aviso legal de VuelosClaim: titular del sitio, contacto, carácter orientativo de las calculadoras y enlaces de afiliado.",
+                  "en": "VuelosClaim legal notice: site owner, contact details, the indicative nature of the calculators and affiliate links."},
+        "privacy": {"es": "Política de privacidad de VuelosClaim: qué datos se usan en la calculadora y la carta, cookies de analítica y anuncios, y contacto.",
+                    "en": "VuelosClaim privacy policy: what data the calculator and claim letter use, analytics and advertising cookies, and contact details."},
+    }
     for key, langs in legal_txt.items():
         alts = LEGAL[key]
         for l, (t, txt) in langs.items():
             other = "en" if l == "es" else "es"
-            emit(l, alts[l], f"{head(l, t + ' · ' + BRAND, t, alts[l], alts)}\n{header(l, alts[other])}<main class=\"wrap prose\"><h1>{t}</h1>{txt}</main>{footer(l)}")
+            emit(l, alts[l], f"{head(l, t + ' · ' + BRAND, LEGAL_DESC[key][l], alts[l], alts)}\n{header(l, alts[other])}<main class=\"wrap prose\"><h1>{t}</h1>{txt}</main>{footer(l)}")
 
-    fresh = {f"/en/{s}-delay-compensation/" for s in uk_deep.META} | set(uk_urls) | set(strike_urls)
-    fresh2 = set(cmp_urls) | {u for a in AIRLINES if a['slug'] in ('canaryfly','iberojet','plus-ultra','eurowings','condor','aer-lingus','sas','swiss','brussels-airlines','aegean','azores-airlines','level','wamos-air','world2fly','virgin-atlantic','loganair','austrian','lot','finnair','airbaltic','icelandair','pegasus') for u in (u_airline('es', a), u_airline('en', a))}
-    sm = "".join(f"<url><loc>{SITE_URL}{u}</loc><lastmod>{'2026-10-20' if u in fresh2 else '2026-10-19' if u in fresh else '2026-10-07'}</lastmod></url>" for u in urls)
+    def lastmod(u):
+        h = _content_hash(open(out(u), encoding="utf-8").read())
+        old = previous.get(u)
+        return old[0] if old and old[1] == h else today
+    sm = "".join(f"<url><loc>{SITE_URL}{u}</loc><lastmod>{lastmod(u)}</lastmod></url>" for u in urls)
     write(os.path.join(OUT, "sitemap.xml"), f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>\n')
     os.makedirs(os.path.join(OUT, "img"), exist_ok=True)
     for fn in ("vuelosclaim-logo.png", "vuelosclaim-banner.png", "og-image.png", "icon-192.png", "icon-512.png"):
