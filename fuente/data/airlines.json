@@ -19,8 +19,8 @@
   "eu": "yes",
   "uk": false,
   "country_en": "Spain",
-  "claim_es": "https://www.vueling.com/es/atencion-al-cliente/asistentes/compensacion",
-  "claim_en": "https://www.vueling.com/es/atencion-al-cliente/asistentes/compensacion",
+  "claim_es": "https://help.vueling.com/hc/es/articles/24476547783569-Retraso-en-mi-vuelo",
+  "claim_en": "https://help.vueling.com/hc/en-gb/articles/24476547783569-Delay-in-my-flight",
   "note_es": "También puedes pedirla por el chat de Vueling.",
   "note_en": "You can also ask for it through Vueling's chat."
  },
@@ -110,8 +110,8 @@
   "eu": "mixed",
   "uk": true,
   "country_en": "the UK, Germany, the Netherlands and Belgium",
-  "claim_es": "https://www.tui.co.uk/destinations/contact-us/flight-delays",
-  "claim_en": "https://www.tui.co.uk/destinations/contact-us/flight-delays",
+  "claim_es": "https://www.tui.co.uk/destinations/faq/airport-flights-and-luggage/feedback-on-your-flight-and-airport-experience/how-do-i-claim-my-flight-delay-compensation",
+  "claim_en": "https://www.tui.co.uk/destinations/faq/airport-flights-and-luggage/feedback-on-your-flight-and-airport-experience/how-do-i-claim-my-flight-delay-compensation",
   "note_es": "El formulario es solo para vuelos operados por TUI Airways (números TOM, BY u OR).",
   "note_en": "The form is only for flights operated by TUI Airways (flight numbers starting TOM, BY or OR).",
   "adr_uk": "AviationADR"
@@ -232,8 +232,8 @@
   "eu": "no",
   "uk": false,
   "country_en": "Turkey",
-  "claim_es": "https://www.turkishairlines.com/en-int/legal-notice/other-regulations/",
-  "claim_en": "https://www.turkishairlines.com/en-int/legal-notice/other-regulations/",
+  "claim_es": "https://www.turkishairlines.com/en-int/legal-notice/passenger-rights/",
+  "claim_en": "https://www.turkishairlines.com/en-int/legal-notice/passenger-rights/",
   "note_es": "Solo cubre vuelos que salen de la UE o del Reino Unido.",
   "note_en": "Only flights departing the EU or UK are covered.",
   "adr_uk": "AviationADR"
@@ -477,8 +477,8 @@
   "eu": "no",
   "uk": false,
   "country_en": "Turkey",
-  "claim_es": "https://www.flypgs.com/en",
-  "claim_en": "https://www.flypgs.com/en",
+  "claim_es": "https://www.flypgs.com/en/useful-info/other-info/passenger-rights",
+  "claim_en": "https://www.flypgs.com/en/useful-info/other-info/passenger-rights",
   "note_es": "Solo cubre vuelos que salen de la UE o del Reino Unido.",
   "note_en": "Only flights departing the EU or UK are covered."
  }
