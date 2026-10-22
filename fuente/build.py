@@ -132,11 +132,11 @@ S = {
     ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("atc", "Restricción de control aéreo (ATC)"),
     ("weather", "Meteorología adversa"), ("security", "Seguridad (amenaza, cierre del espacio aéreo)"), ("bird", "Choque con un ave u objeto en la pista"),
     ("knock", "Retraso del vuelo anterior del avión")],
-  empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Recarga la página.",
+  empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.", retry="Reintentar",
   example="Ejemplo editable", per="por pasajero", cta="Reclámalo sin coste por adelantado", cta_small="Lo gestiona una empresa de reclamaciones y solo cobra si ganas.",
-  self="Prefiero reclamar yo gratis: generar mi carta", l_lead="Rellena tus datos y te preparamos la carta. Todo se queda en tu navegador: no guardamos nada.",
+  self="Prefiero reclamar yo gratis: generar mi carta", l_lead="Rellena tus datos y te preparamos la carta. Se compone en tu navegador: no la enviamos ni la guardamos. No hace falta poner datos bancarios.",
   l_name="Nombre y apellidos", l_book="Código de reserva", l_flight="Número de vuelo", l_date="Fecha del vuelo", l_pax="Pasajeros en la reserva",
-  l_iban="IBAN para el pago (opcional)", l_text="Tu carta", copy="Copiar carta", dl="Descargar .txt",
+  l_text="Tu carta", copy="Copiar carta", dl="Descargar .txt",
   steps=["Envíala por el formulario de reclamaciones de la web de tu aerolínea o por correo, con la tarjeta de embarque adjunta.", "Guarda el justificante de envío.",
          f'Si en un mes no te pagan o te lo rechazan, reclama gratis ante <a href="{AESA_URL}" rel="noopener" target="_blank">AESA</a> (vuelos que salen de España).'],
   eyebrow="Reglamento CE 261/2004",
@@ -163,11 +163,11 @@ S = {
     ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("atc", "Air traffic control restriction"),
     ("weather", "Bad weather"), ("security", "Security (threat, airspace closure)"), ("bird", "Bird strike or object on the runway"),
     ("knock", "Earlier flight by the same aircraft was late")],
-  empty="Choose where you flew from and to.", error="The airport list could not load. Please refresh the page.",
+  empty="Choose where you flew from and to.", error="The airport list could not load. Check your connection and try again.", retry="Try again",
   example="Editable example", per="per passenger", cta="Claim it with no upfront cost", cta_small="Handled by a flight claims company that only charges if you win.",
-  self="I'd rather claim myself for free: write my letter", l_lead="Fill in your details and we'll prepare the letter. Everything stays in your browser: we store nothing.",
+  self="I'd rather claim myself for free: write my letter", l_lead="Fill in your details and we'll prepare the letter. It is put together in your browser: we don't send or store it. No bank details needed.",
   l_name="Full name", l_book="Booking reference", l_flight="Flight number", l_date="Flight date", l_pax="Passengers on the booking",
-  l_iban="IBAN or bank details (optional)", l_text="Your letter", copy="Copy letter", dl="Download .txt",
+  l_text="Your letter", copy="Copy letter", dl="Download .txt",
   steps=["Send it through your airline's online claim form or by email, attaching your boarding pass.", "Keep proof that you sent it.",
          f'If the airline refuses or does not pay within a month: for flights from Spain, complain for free to <a href="{AESA_URL}" rel="noopener" target="_blank">AESA</a>; for flights from the UK, use the airline\'s ADR scheme or the <a href="{CAA_URL}" rel="noopener" target="_blank">CAA</a>.'],
   eyebrow="EU261 and UK261",
@@ -235,7 +235,6 @@ def calculator(l, airline_slug, dep, arr):
     opts = [f'<option value="">{s["al_unknown"]}</option>'] + [
         f'<option value="{a["slug"]}"{" selected" if a["slug"] == airline_slug else ""}>{e(a["name"])}</option>' for a in AIRLINES
     ] + [f'<option value="otra-ue">{s["al_eu"]}</option>', f'<option value="otra-no-ue">{s["al_noneu"]}</option>']
-    iban_ph = "ES00 0000 0000 0000 0000 0000" if l == "es" else "GB00 XXXX 0000 0000 0000 00"
     return f"""<form class="calc" id="calc" novalidate>
 <h2>{s["calc_h"]}</h2>
 <div class="row2">
@@ -256,7 +255,7 @@ def calculator(l, airline_slug, dep, arr):
 <div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">{s["empty"]}</p>
- <p class="error-msg">{s["error"]}</p>
+ <p class="error-msg"><span data-error-text>{s["error"]}</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">{s["retry"]}</button></p>
  <div class="ticket">
   <div class="ticket-main">
    <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span>{s["example"]}</span></div>
@@ -280,7 +279,6 @@ def calculator(l, airline_slug, dep, arr):
    <div class="field"><label for="l-flight">{s["l_flight"]}</label><input type="text" id="l-flight" autocomplete="off" placeholder="VY1234"></div>
    <div class="field"><label for="l-date">{s["l_date"]}</label><input type="date" id="l-date"></div>
    <div class="field"><label for="l-pax">{s["l_pax"]}</label><input type="number" id="l-pax" min="1" max="9" value="1"></div>
-   <div class="field"><label for="l-iban">{s["l_iban"]}</label><input type="text" id="l-iban" autocomplete="off" placeholder="{iban_ph}"></div>
   </div>
   <label class="sr" for="letter-text">{s["l_text"]}</label>
   <textarea id="letter-text" rows="14" readonly></textarea>
@@ -744,8 +742,8 @@ def build():
             "en": ("Legal notice", f"<p>{BRAND} provides free calculators with indicative information. Results are based on Regulation (EC) 261/2004, UK261 and the details you enter, and are not legal advice.</p><p>Site owner: <strong>Salvador Fernández Lloris, tax ID 24444246F</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p><p>This site contains affiliate links. If you use a service through them, the owner may earn a commission. This costs you nothing and does not change the calculators' results.</p>"),
         },
         "privacy": {
-            "es": ("Política de privacidad", "<p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores.</p><p>La web usa el script de afiliación de Travelpayouts para atribuir las visitas que llegan a los servicios de reclamación (por ejemplo, AirHelp). Al pulsar un enlace de afiliado, ese servicio puede usar cookies para registrar que vienes de esta web. La web usa Google Analytics para contar visitas de forma agregada (solo si aceptas en el aviso de cookies) y muestra anuncios de Google AdSense: Google y sus socios pueden usar cookies para mostrar anuncios, personalizados o no según lo que elijas en el aviso de consentimiento. Más información en <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa Google las cookies en publicidad</a>.</p><p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p>"),
-            "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers.</p><p>The site uses the Travelpayouts affiliate script to attribute visits sent to claims services (for example, AirHelp). When you click an affiliate link, that service may use cookies to record that you came from this site. The site uses Google Analytics to count visits in aggregate (only if you accept in the cookie notice) and shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
+            "es": ("Política de privacidad", "<p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores. Los datos que escribes para la carta de reclamación (nombre, código de reserva, número y fecha del vuelo, número de pasajeros) solo se usan en tu navegador para componer el texto: no se envían a nadie, no se guardan y desaparecen al cerrar la página. No pedimos datos bancarios.</p><p>La web usa el script de afiliación de Travelpayouts para atribuir las visitas que llegan a los servicios de reclamación (por ejemplo, AirHelp). Al pulsar un enlace de afiliado, ese servicio puede usar cookies para registrar que vienes de esta web. La web usa Google Analytics para contar visitas de forma agregada (solo si aceptas en el aviso de cookies) y muestra anuncios de Google AdSense: Google y sus socios pueden usar cookies para mostrar anuncios, personalizados o no según lo que elijas en el aviso de consentimiento. Más información en <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa Google las cookies en publicidad</a>.</p><p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p>"),
+            "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><p>The site uses the Travelpayouts affiliate script to attribute visits sent to claims services (for example, AirHelp). When you click an affiliate link, that service may use cookies to record that you came from this site. The site uses Google Analytics to count visits in aggregate (only if you accept in the cookie notice) and shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
         },
     }
     for key, langs in legal_txt.items():
