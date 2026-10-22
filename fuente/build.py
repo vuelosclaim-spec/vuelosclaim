@@ -133,7 +133,7 @@ S = {
     ("weather", "Meteorología adversa"), ("security", "Seguridad (amenaza, cierre del espacio aéreo)"), ("bird", "Choque con un ave u objeto en la pista"),
     ("knock", "Retraso del vuelo anterior del avión")],
   empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.", retry="Reintentar",
-  example="Ejemplo editable", per="por pasajero", cta="Reclámalo sin coste por adelantado", cta_small="Lo gestiona una empresa de reclamaciones y solo cobra si ganas.",
+  example="Ejemplo editable", per="por pasajero", cta="Reclamar con AirHelp", cta_small="AirHelp es un servicio externo de reclamación: no cobra por adelantado y, si consigue la compensación, se queda un 35 % (IVA incluido), hasta un 50 % si hay que ir a juicio. No garantiza el resultado. Es un enlace de afiliado: VuelosClaim recibe una comisión, sin coste para ti.", cta_generic="Reclamar con una empresa", cta_small_generic="Servicio externo de reclamación: cobra una comisión si consigue la compensación y no garantiza el resultado. Enlace de afiliado.",
   self="Prefiero reclamar yo gratis: generar mi carta", l_lead="Rellena tus datos y te preparamos la carta. Se compone en tu navegador: no la enviamos ni la guardamos. No hace falta poner datos bancarios.",
   l_name="Nombre y apellidos", l_book="Código de reserva", l_flight="Número de vuelo", l_date="Fecha del vuelo", l_pax="Pasajeros en la reserva",
   l_text="Tu carta", copy="Copiar carta", dl="Descargar .txt",
@@ -164,7 +164,7 @@ S = {
     ("weather", "Bad weather"), ("security", "Security (threat, airspace closure)"), ("bird", "Bird strike or object on the runway"),
     ("knock", "Earlier flight by the same aircraft was late")],
   empty="Choose where you flew from and to.", error="The airport list could not load. Check your connection and try again.", retry="Try again",
-  example="Editable example", per="per passenger", cta="Claim it with no upfront cost", cta_small="Handled by a flight claims company that only charges if you win.",
+  example="Editable example", per="per passenger", cta="Claim with AirHelp", cta_small="AirHelp is an independent claims service: nothing upfront and, if it wins, it keeps 35% (VAT included), up to 50% if the case goes to court. Results are not guaranteed. This is an affiliate link: VuelosClaim earns a commission at no cost to you.", cta_generic="Claim with a company", cta_small_generic="Independent claims service: it charges a commission if it wins and cannot guarantee the result. Affiliate link.",
   self="I'd rather claim myself for free: write my letter", l_lead="Fill in your details and we'll prepare the letter. It is put together in your browser: we don't send or store it. No bank details needed.",
   l_name="Full name", l_book="Booking reference", l_flight="Flight number", l_date="Flight date", l_pax="Passengers on the booking",
   l_text="Your letter", copy="Copy letter", dl="Download .txt",
@@ -221,7 +221,7 @@ def footer(l):
     else:
         links.append('<a href="/en/flight-strikes-spain-europe/">Flight strikes</a>'); links.append('<a href="/en/flight-compensation-companies-compared/">AirHelp vs Flightright</a>'); links.append('<a href="/en/flight-cancelled-what-to-do/">Flight cancelled</a>'); links.append('<a href="/en/denied-boarding-overbooking-compensation/">Overbooking</a>'); links.append('<a href="/en/extraordinary-circumstances-flight-delay/">Extraordinary circumstances</a>')
         links.append(f'<a href="{uk_airports.HUB}">UK airports to Spain</a>')
-    links += [f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>', f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>']
+    links += [f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>', f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>', f'<a href="{LEGAL["privacy"][l]}#cookies" data-consent-open>Cookies</a>']
     return (f'<footer class="foot"><div class="wrap"><p>{s["foot1"]}</p><p>{s["foot2"]}</p><p>{s["foot3"].format(d=UPDATED[l])}</p>'
             f'<nav>{"".join(links)}</nav></div></footer>')
 
@@ -266,8 +266,8 @@ def calculator(l, airline_slug, dep, arr):
  </div>
  <div class="care" data-care hidden></div>
  <div class="cta" data-cta>
-  <a class="btn btn-sign" href="{e(AFF_URL)}" rel="sponsored nofollow noopener" target="_blank">{s["cta"]}</a>
-  <small>{s["cta_small"]}</small>
+  <a class="btn btn-sign" href="{e(AFF_URL)}" rel="sponsored nofollow noopener" target="_blank" data-generic="{e(s["cta_generic"])}">{s["cta"]}</a>
+  <small data-generic="{e(s["cta_small_generic"])}">{s["cta_small"]} <a href="{"/comparativa-empresas-reclamacion-vuelos/" if l == "es" else "/en/flight-compensation-companies-compared/"}">{"Compara con reclamar tú gratis" if l == "es" else "Compare with claiming yourself for free"}</a>.</small>
   <button type="button" class="btn btn-ghost" id="letter-open" aria-expanded="false" aria-controls="letter">{s["self"]}</button>
  </div>
  <div class="care" data-where hidden></div>
@@ -675,39 +675,45 @@ def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.mi
 def full_doc(inner, l):
     h, b = inner.split("</style>", 1)
     return (f'<!doctype html>\n<html lang="{l}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            f"{h}</style>\n{GA4}{TP_SCRIPT}{ADSENSE}</head>\n<body>{b}{CONSENT}</body></html>\n")
+            f"{h}</style>\n{GA4}{ADSENSE}</head>\n<body>{b}{CONSENT}</body></html>\n")
 
 
+GA_ID = "G-6JRCZVTNDG"
+TP_SRC = "https://emrldtp.cc/NTgyNjYx.js?t=582661"  # Travelpayouts (same identifier as before)
+# Before consent only the consent defaults are defined: gtag.js, the GA config and the Travelpayouts script are not loaded,
+# so no request reaches Google Analytics or Travelpayouts until the visitor accepts (checked in test_navegador.js).
 GA4 = ("<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
-       "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});"
-       "gtag('js',new Date());gtag('config','G-6JRCZVTNDG');</script>\n"
-       '<script async src="https://www.googletagmanager.com/gtag/js?id=G-6JRCZVTNDG"></script>\n')
+       "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});</script>\n")
 
-CONSENT = ("<div id=\"ck\" style=\"display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;"
+CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Cookies\" style=\"display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;"
            "border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)\">"
-           "<span id=\"ckt\"></span> <a href=\"/privacidad/\" style=\"color:#facc15\">+info</a>"
+           "<span id=\"ckt\"></span> <a id=\"ckl\" href=\"/privacidad/\" style=\"color:#facc15\">+info</a>"
            "<div style=\"margin-top:10px;display:flex;gap:8px;justify-content:flex-end\">"
-           "<button id=\"ckn\" style=\"background:transparent;color:#fff;border:1px solid #6b7280;border-radius:8px;padding:6px 12px;cursor:pointer\"></button>"
-           "<button id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer\"></button></div></div>"
-           "<script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',v=null;try{v=localStorage.getItem(k)}catch(e){}"
-           "function g(a){gtag('consent','update',{analytics_storage:a?'granted':'denied'})}"
-           "if(v){g(v==='y');return}var b=document.getElementById('ck');"
-           "document.getElementById('ckt').textContent=en?'We use analytics cookies to count visits.':'Usamos cookies de analítica para contar visitas.';"
-           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';"
-           "function s(a){try{localStorage.setItem(k,a?'y':'n')}catch(e){}g(a);b.style.display='none'}"
-           "document.getElementById('cky').onclick=function(){s(true)};document.getElementById('ckn').onclick=function(){s(false)};b.style.display='block'})();</script>\n")
+           "<button id=\"ckn\" style=\"background:transparent;color:#fff;border:1px solid #6b7280;border-radius:8px;padding:8px 14px;cursor:pointer\"></button>"
+           "<button id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button></div></div>"
+           "<script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='" + GA_ID + "',on=false,b=document.getElementById('ck');"
+           "function get(){try{return localStorage.getItem(k)}catch(e){return null}}"
+           "function put(v){try{localStorage.setItem(k,v)}catch(e){}}"
+           "function add(src){var s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s)}"
+           "function start(){if(on)return;on=true;window['ga-disable-'+ID]=false;"
+           "gtag('consent','update',{analytics_storage:'granted'});gtag('js',new Date());"
+           "gtag('config',ID,{allow_google_signals:false,allow_ad_personalization_signals:false});"
+           "add('https://www.googletagmanager.com/gtag/js?id='+ID);add('" + TP_SRC + "');window.vcAnalytics=true}"
+           "function stop(){window.vcAnalytics=false;window['ga-disable-'+ID]=true;gtag('consent','update',{analytics_storage:'denied'});"
+           "document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^_ga/.test(n)){['',location.hostname,'.'+location.hostname.replace(/^www\\./,'')].forEach(function(d){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}"
+           "function show(){document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':"
+           "'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';"
+           "document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';"
+           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block'}"
+           "document.getElementById('cky').onclick=function(){put('y');b.style.display='none';start()};"
+           "document.getElementById('ckn').onclick=function(){put('n');b.style.display='none';if(on){stop();on=false}};"
+           "document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();show()}});"
+           "var v=get();if(v==='y')start();else if(!v)show()})();</script>\n")
 
 ADSENSE_PUB = "ca-pub-1079386437086971"
 ADSENSE = ('<meta name="msvalidate.01" content="D3B289B2220FF34999D4248924B46B3C">\n'
            f'<meta name="google-adsense-account" content="{ADSENSE_PUB}">\n'
            f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_PUB}" crossorigin="anonymous"></script>\n')
-
-# Travelpayouts site verification / tracking
-TP_SCRIPT = ('<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">\n'
-             '  (function () {\n      var script = document.createElement("script");\n      script.async = 1;\n'
-             '      script.setAttribute("data-cmp-ab","2");\n      script.src = \'https://emrldtp.cc/NTgyNjYx.js?t=582661\';\n'
-             '      document.head.appendChild(script);\n  })();\n</script>\n')
-
 
 def write(path, content):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -888,8 +894,8 @@ def build():
             "en": ("Legal notice", f"<p>{BRAND} provides free calculators with indicative information. Results are based on Regulation (EC) 261/2004, UK261 and the details you enter, and are not legal advice.</p><p>Site owner: <strong>Salvador Fernández Lloris, tax ID 24444246F</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p><p>This site contains affiliate links. If you use a service through them, the owner may earn a commission. This costs you nothing and does not change the calculators' results.</p>"),
         },
         "privacy": {
-            "es": ("Política de privacidad", "<p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores. Los datos que escribes para la carta de reclamación (nombre, código de reserva, número y fecha del vuelo, número de pasajeros) solo se usan en tu navegador para componer el texto: no se envían a nadie, no se guardan y desaparecen al cerrar la página. No pedimos datos bancarios.</p><p>La web usa el script de afiliación de Travelpayouts para atribuir las visitas que llegan a los servicios de reclamación (por ejemplo, AirHelp). Al pulsar un enlace de afiliado, ese servicio puede usar cookies para registrar que vienes de esta web. La web usa Google Analytics para contar visitas de forma agregada (solo si aceptas en el aviso de cookies) y muestra anuncios de Google AdSense: Google y sus socios pueden usar cookies para mostrar anuncios, personalizados o no según lo que elijas en el aviso de consentimiento. Más información en <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa Google las cookies en publicidad</a>.</p><p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p>"),
-            "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><p>The site uses the Travelpayouts affiliate script to attribute visits sent to claims services (for example, AirHelp). When you click an affiliate link, that service may use cookies to record that you came from this site. The site uses Google Analytics to count visits in aggregate (only if you accept in the cookie notice) and shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
+            "es": ("Política de privacidad", "<p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores. Los datos que escribes para la carta de reclamación (nombre, código de reserva, número y fecha del vuelo, número de pasajeros) solo se usan en tu navegador para componer el texto: no se envían a nadie, no se guardan y desaparecen al cerrar la página. No pedimos datos bancarios.</p><h2 id=\"cookies\">Cookies y medición</h2><p>Solo si aceptas en el aviso de cookies, la web carga Google Analytics y el script de afiliación de Travelpayouts. Antes de aceptar, o si rechazas, no se cargan ni se les envía nada. Con tu permiso medimos de forma agregada: visitas, que se ha empezado y completado la calculadora, el tipo de incidencia (retraso, cancelación u overbooking), el resultado y el tramo de importe estimado, la apertura, copia o descarga de la carta y los clics en el enlace al servicio de reclamación. Nunca enviamos tu nombre, código de reserva, número de vuelo ni nada de lo que escribes. Las señales de Google y la personalización de anuncios de Analytics están desactivadas. Puedes cambiar tu elección cuando quieras en el enlace «Cookies» del pie de página.</p><p>Al pulsar un enlace de afiliado, el servicio de reclamación (por ejemplo, AirHelp, a través de Travelpayouts) puede usar cookies para registrar que vienes de esta web. La web muestra anuncios de Google AdSense: Google y sus socios pueden usar cookies para mostrar anuncios, personalizados o no según lo que elijas en el aviso de consentimiento. Más información en <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa Google las cookies en publicidad</a>.</p><p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p>"),
+            "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><h2 id=\"cookies\">Cookies and measurement</h2><p>Only if you accept in the cookie notice does the site load Google Analytics and the Travelpayouts affiliate script. Before you accept, or if you reject, they are not loaded and nothing is sent to them. With your permission we measure, in aggregate: visits, that the calculator was started and completed, the type of problem (delay, cancellation or overbooking), the result and the estimated amount band, opening, copying or downloading the letter, and clicks on the link to the claims service. We never send your name, booking reference, flight number or anything you type. Google signals and ad personalisation in Analytics are switched off. You can change your choice at any time with the “Cookies” link at the bottom of the page.</p><p>When you click an affiliate link, the claims service (for example, AirHelp, via Travelpayouts) may use cookies to record that you came from this site. The site shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
         },
     }
     LEGAL_DESC = {

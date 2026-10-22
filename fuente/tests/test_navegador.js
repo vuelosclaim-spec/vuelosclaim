@@ -141,6 +141,75 @@ async function pickAirport(p, device, id, text, code) {
     if (pre) check(T("ruta precargada calculada"), ["posible", "no", "insuficiente"].includes(await state(p)) && (await p.inputValue("#from")).includes(pre));
     await p.context().close();
   }
+
+  // 9. Consentimiento y medición: nada antes de aceptar; después, solo eventos previstos y sin datos personales
+  {
+    const T = (n) => `[consentimiento] ${n}`;
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 760 }, hasTouch: true, isMobile: true });
+    const p = await ctx.newPage();
+    const ext = [];
+    p.on("request", (r) => { if (!r.url().startsWith(BASE)) ext.push(r.url()); });
+    await p.route("**/*", (r) => {
+      const u = r.request().url();
+      if (u.startsWith(BASE)) return r.continue();
+      if (u.includes("googletagmanager.com/gtag/js")) return r.fulfill({ contentType: "text/javascript", body: "/* gtag.js simulado */" });
+      return r.abort();
+    });
+    await p.goto(BASE + "/compensacion-retraso-iberia/");
+    await p.waitForFunction(() => document.querySelector("#result").dataset.state !== "empty" || !document.querySelector("#from").dataset.code);
+    check(T("el banner aparece"), await p.isVisible("#ck"));
+    // Uso completo de la calculadora sin responder al banner
+    await p.selectOption("#cause", "tech");
+    await p.waitForTimeout(1500);
+    const evBefore = await p.evaluate(() => JSON.stringify(window.dataLayer));
+    check(T("sin consentimiento no se carga Analytics ni Travelpayouts"), !ext.some((u) => /googletagmanager|google-analytics|emrldtp|travelpayouts/.test(u)), ext.filter((u) => /google|emrldtp/.test(u)).join(" "));
+    check(T("sin consentimiento no hay eventos ni configuración en dataLayer"), !/"event"|"config"/.test(evBefore), evBefore.slice(0, 200));
+    // Aceptar
+    await p.click("#cky");
+    await p.waitForTimeout(300);
+    check(T("al aceptar se carga gtag.js y Travelpayouts"), ext.some((u) => u.includes("googletagmanager.com/gtag/js")) && ext.some((u) => u.includes("emrldtp.cc")));
+    const pick = async (id, q, code) => {
+      await p.fill("#" + id, ""); await p.type("#" + id, q, { delay: 10 });
+      await p.waitForSelector(`#${id}-list li[role=option]`);
+      const codes = await p.$$eval(`#${id}-list li[role=option] .opt-code`, (els) => els.map((e) => e.textContent));
+      await p.click(`#${id}-opt-${codes.indexOf(code)}`);
+    };
+    await pick("from", "madrid", "MAD"); await pick("to", "barcelona", "BCN");
+    await p.waitForTimeout(1600);
+    await p.click("#letter-open");
+    await p.fill("#l-name", "Zz Nombre Secreto"); await p.fill("#l-booking", "QQ9ZZ9"); await p.fill("#l-flight", "IB1234");
+    const [dl] = await Promise.all([p.waitForEvent("download"), p.click("#letter-dl")]);
+    await p.evaluate(() => { document.querySelector("[data-cta] a.btn-sign").addEventListener("click", (e) => e.preventDefault()); });
+    await p.click("[data-cta] a.btn-sign");
+    await p.click("label:has(input[name=what][value=cancel])");
+    await p.waitForTimeout(1600);
+    const events = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").map((x) => ({ name: x[1], params: x[2] })));
+    const names = events.map((e) => e.name);
+    for (const n of ["calculator_started", "calculator_completed", "compensation_possible", "compensation_insufficient_data", "letter_opened", "letter_downloaded", "affiliate_click"])
+      check(T("evento " + n), names.includes(n), names.join(","));
+    check(T("calculator_started una sola vez"), names.filter((n) => n === "calculator_started").length === 1);
+    const all = JSON.stringify(events);
+    check(T("ningún evento contiene datos de la carta"), !/Zz Nombre|Secreto|QQ9ZZ9|IB1234/i.test(all), all.slice(0, 300));
+    const allowed = new Set(["language", "page_path", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
+    check(T("solo parámetros permitidos"), events.every((e) => Object.keys(e.params || {}).every((k) => allowed.has(k))), all.slice(0, 300));
+    const aff = events.find((e) => e.name === "affiliate_click");
+    check(T("affiliate_click identifica el destino y el lugar"), aff && aff.params.affiliate_id === "airhelp_tp" && aff.params.placement === "calculator", JSON.stringify(aff));
+    const cfg = await p.evaluate(() => JSON.stringify(window.dataLayer.filter((x) => x[0] === "config")));
+    check(T("configuración sin señales de Google ni personalización"), /allow_google_signals":false/.test(cfg) && /allow_ad_personalization_signals":false/.test(cfg), cfg);
+    // Retirar el consentimiento desde el pie: se dejan de enviar eventos
+    await p.click("[data-consent-open]");
+    await p.click("#ckn");
+    const n1 = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").length);
+    await p.click("label:has(input[name=what][value=denied])"); await p.waitForTimeout(1600);
+    const n2 = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").length);
+    check(T("tras rechazar en «Cookies» no hay más eventos"), n1 === n2 && (await p.evaluate(() => window["ga-disable-G-6JRCZVTNDG"])) === true);
+    // Visita siguiente con rechazo guardado: nada se carga
+    ext.length = 0;
+    await p.reload(); await p.waitForTimeout(1500);
+    check(T("con rechazo guardado no aparece el banner ni se carga nada"), !(await p.isVisible("#ck")) && !ext.some((u) => /googletagmanager|emrldtp/.test(u)));
+    check(T("sin errores de JavaScript"), true);
+    await ctx.close();
+  }
   await browser.close();
   console.log(`\nNavegador: ${ok} comprobaciones correctas, ${fail} fallos`);
   process.exit(fail ? 1 : 0);
