@@ -52,12 +52,33 @@ o.textContent=msg;});})();
 """
 
 
+MON = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
+
+
+def end_date(s):
+    """Last day of a strike, from the English date text ("Until 30 Nov", "23 Oct – 2 Nov") or the start date."""
+    import re
+    start, wen = s[0], s[2]
+    m = re.findall(r"(\d{1,2}) ([A-Z][a-z]{2})", wen)
+    if not m:
+        return start
+    d, mon = int(m[-1][0]), MON[m[-1][1].lower()]
+    y = int(start[:4]) + (1 if mon < int(start[5:7]) else 0)
+    return f"{y:04d}-{mon:02d}-{d:02d}"
+
+
+# Rows whose last day has passed are hidden in the browser, so an outdated calendar never shows past strikes as upcoming.
+EXPIRE_JS = ("(function(){var t=new Date(),d=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2),n=0;"
+             "document.querySelectorAll('tr[data-end]').forEach(function(r){if(r.getAttribute('data-end')<d){r.hidden=true}else n++});"
+             "var m=document.getElementById('sk-none');if(m&&!n)m.hidden=false;})();")
+
+
 def _rows(l):
     out = []
     for s in sorted(STRIKES, key=lambda x: x[0]):
         _, wes, wen, des, den, where, kind, ses, sen, src = s
         when, what, st = (wes, des, ses) if l == "es" else (wen, den, sen)
-        out.append(f"<tr><td>{e(when)}</td><td>{e(what)}<br><small>{e(where)}</small></td><td>{KIND[l][kind]}</td><td>{COMP[l][kind]}</td>"
+        out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{e(what)}<br><small>{e(where)}</small></td><td>{KIND[l][kind]}</td><td>{COMP[l][kind]}</td>"
                    f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{'fuente' if l == 'es' else 'source'}</a></td></tr>")
     return "".join(out)
 
@@ -117,6 +138,8 @@ def build(ctx):
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
         body = f"""<div class="wrap prose"><h1>{h1}</h1><p class="lead">{lead}</p>
 <div class="board"><table><thead><tr>{th}</tr></thead><tbody>{_rows(l)}</tbody></table></div>
+<p id="sk-none" class="lead" hidden>{'No quedan huelgas vigentes en este calendario. Consulta las fuentes de abajo por si hay convocatorias nuevas.' if l == 'es' else 'No strikes in this calendar are still ongoing. Check the sources below for new ones.'}</p>
+<script>{EXPIRE_JS}</script>
 {checker}
 {rules}
 <h2>{'Preguntas frecuentes' if l == 'es' else 'Common questions'}</h2>{faq_html}

@@ -1,5 +1,26 @@
 # Cambios
 
+## 2026-10-22 — Medición de conversiones con consentimiento
+
+Detalle en [MEDICION.md](MEDICION.md).
+
+- Google Analytics y Travelpayouts solo se cargan tras aceptar el aviso de cookies (antes enviaban datos sin consentimiento). Enlace «Cookies» en el pie para cambiar la elección; al rechazar se desactiva Analytics y se borran sus cookies.
+- Eventos GA4: `calculator_started`, `calculator_completed`, `compensation_possible`, `compensation_not_eligible`, `compensation_insufficient_data`, `affiliate_click`, `letter_opened`, `letter_copied`, `letter_downloaded`, con parámetros de listas cerradas y sin datos personales.
+- Botón de afiliado: «Reclamar con AirHelp», con su comisión (35 % IVA incluido, hasta 50 % con juicio), que no garantiza el resultado, aviso de afiliación y enlace a la comparativa. Si un blog usa su propio enlace (`?aff=`), el texto pasa a ser genérico.
+- Política de privacidad actualizada.
+- Prueba de navegador: nada se carga ni se envía antes de aceptar; después, solo los eventos y parámetros previstos; retirar el consentimiento detiene el envío.
+
+## 2026-10-22 — SEO técnico y contenido verificable
+
+Detalle, mediciones y estrategia en [SEO.md](SEO.md).
+
+- Páginas de aerolínea: ficha propia (canal oficial, norma aplicable según la dirección del vuelo, dónde acudir, documentos, plazos con fuente y preguntas frecuentes). Se quita el bloque genérico repetido.
+- Páginas de aeropuerto: sección «Dónde reclamar» con AESA, UK261, plazos y artículos.
+- Correcciones jurídicas en guías, comparativa y páginas británicas (importes intra-UE, «menos de 4/2 h», overbooking, escalas, plazos de AESA). Eliminadas notas de aerolíneas y tiempos de resolución sin fuente.
+- `lastmod` del sitemap según el último cambio real de cada página; huelgas que se ocultan al pasar su fecha.
+- Enlaces internos a las 14 páginas de aeropuertos británicos; un solo `WebSite` en los datos estructurados; títulos y descripciones ajustados; áreas táctiles del pie.
+- Pruebas: canal oficial y plazos en cada aerolínea, preguntas FAQ visibles, `lastmod` válido, huelgas con fecha de fin.
+
 ## 2026-10-22 — Formularios, aeropuertos y cartas
 
 **Lista de aeropuertos (`src/app.js`)**

@@ -54,6 +54,6 @@ Un caso marcado como `PEND.` es un error conocido del informe de auditoría pend
 `data/airports.min.json` se generó a partir de los datos abiertos de OurAirports (https://ourairports.com/data/).
 El archivo original (`airports.csv`, 13 MB) no se guarda en el repositorio porque la compilación no lo usa.
 
-Historial de cambios: [CAMBIOS.md](CAMBIOS.md).
+Historial de cambios: [CAMBIOS.md](CAMBIOS.md). Auditoría y estrategia SEO: [SEO.md](SEO.md). Medición: [MEDICION.md](MEDICION.md).
 
 No cambies sin revisar: el enlace de afiliado (`AFF_URL` en `build.py`), el identificador de Analytics (`G-6JRCZVTNDG`) ni el de AdSense.

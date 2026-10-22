@@ -88,6 +88,34 @@ def check_site():
                 err(f"JSON-LD inválido en {url}: {e}")
         if url not in sitemap and "noindex" not in s:
             err(f"Página indexable fuera del sitemap: {url}")
+    # Datos estructurados FAQ: cada pregunta debe estar visible en la página (requisito de Google)
+    for url, s in pages.items():
+        visible = html.unescape(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>", "", s, flags=re.S)))
+        for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', s, re.S):
+            try:
+                data = json.loads(block)
+            except ValueError:
+                continue
+            for d in (data if isinstance(data, list) else [data]):
+                if d.get("@type") == "FAQPage":
+                    for q in d.get("mainEntity", []):
+                        if q.get("name") not in visible:
+                            err(f"Pregunta del marcado FAQ no visible en {url}: {q.get('name')}")
+        if len(re.findall(r'"@type": "WebSite"', s)) > 1:
+            err(f"Más de un WebSite en los datos estructurados de {url}")
+    # lastmod: fecha ISO válida y no futura
+    import datetime
+    sm_txt = open(os.path.join(SITE, "sitemap.xml"), encoding="utf-8").read()
+    for lm in re.findall(r"<lastmod>([^<]+)</lastmod>", sm_txt):
+        try:
+            if datetime.date.fromisoformat(lm) > datetime.date.today() + datetime.timedelta(days=1):
+                err(f"lastmod en el futuro: {lm}")
+        except ValueError:
+            err(f"lastmod no válido: {lm}")
+    # Huelgas: cada fila con fecha de fin para ocultarla cuando pase
+    for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
+        if url in pages and re.search(r"<tbody><tr>|</tr><tr>", pages[url]):
+            err(f"Hay huelgas sin fecha de fin (data-end) en {url}")
     for url in sitemap:
         if url not in pages:
             err(f"El sitemap incluye una página que no existe: {url}")
@@ -113,6 +141,15 @@ def check_data():
         for key in ("claim_es", "claim_en"):
             if not str(a.get(key, "")).startswith("https://"):
                 err(f"Aerolínea {a['slug']}: {key} debe empezar por https://")
+    # Cada página de aerolínea enlaza su canal oficial y explica plazos y fuentes
+    pages, _ = load_site()
+    for a in airlines:
+        for l, u in (("es", f"/compensacion-retraso-{a['slug']}/"), ("en", f"/en/{a['slug']}-delay-compensation/")):
+            pg = pages.get(u, "")
+            if html.escape(a["claim_" + l]) not in pg and a["claim_" + l] not in pg:
+                err(f"{u} no enlaza el canal oficial de {a['name']}")
+            if ("Plazos" if l == "es" else "Time limits") not in pg or "eur-lex.europa.eu" not in pg:
+                err(f"{u} no muestra plazos o la fuente legal")
     sys.path.insert(0, FUENTE)
     import build  # noqa: E402  (solo lee datos; no genera el sitio)
     for slug, routes in build.AL_ROUTES.items():

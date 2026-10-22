@@ -205,6 +205,25 @@
   T = T[LANG];
   var airports = [], byCode = {};
 
+  // ---------- Measurement: GA4 events, only after consent and never with personal data ----------
+  // Only these parameters, with values from fixed lists (incident type, result, amount band...), ever leave the page.
+  var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1 };
+  function track(name, params) {
+    try {
+      if (!window.vcAnalytics || typeof window.gtag !== "function") return false;
+      var q = { language: LANG, page_path: location.pathname };
+      for (var k in params) if (TRACK_KEYS[k] && params[k] != null && params[k] !== "") q[k] = String(params[k]).replace(/[^\w.-]/g, "_").slice(0, 40);
+      window.gtag("event", name, q);
+      return true;
+    } catch (e) { return false; /* measurement must never break the page */ }
+  }
+  function affId(href) {
+    try {
+      var h = new URL(href).hostname.replace(/^www\./, "");
+      return { "airhelp.tpx.gr": "airhelp_tp", "compensair.tpx.gr": "compensair_tp" }[h] || h;
+    } catch (e) { return "unknown"; }
+  }
+
   function norm(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
   function cityOf(a) { return (LANG === "en" ? ALIAS_EN[a[0]] : ALIAS_ES[a[0]]) || a[2] || a[1]; }
   function label(a) { return cityOf(a) + " (" + a[0] + ")"; }
@@ -466,6 +485,22 @@
     return { what: val("what"), delay: val("delay"), notice: val("notice"), reroute: val("reroute"), rdep: val("rdep"),
       rarr: val("rarr"), accepted: val("accepted"), denied: val("denied"), checkin: val("checkin"), dreason: val("dreason"), cause: val("cause") };
   }
+  var touched = false, started = false, resTimer = null, lastSig = "";
+  function resultParams(r, o) {
+    return { incident_type: o.what, result: r.verdict, regime: r.regime || "none",
+      compensation_category: r.verdict === "no" ? "none" : r.amount + "_" + r.cur };
+  }
+  // One calculator_completed (plus its result event) per distinct result, once the visitor stops changing answers
+  function reportResult(r, o) {
+    clearTimeout(resTimer);
+    resTimer = setTimeout(function () {
+      var p = resultParams(r, o), sig = [p.incident_type, p.result, p.compensation_category, p.regime].join("|");
+      if (sig === lastSig) return;
+      lastSig = sig;
+      track("calculator_completed", p);
+      track(r.verdict === "posible" ? "compensation_possible" : r.verdict === "insuficiente" ? "compensation_insufficient_data" : "compensation_not_eligible", p);
+    }, 1200);
+  }
   var emptyDefault = null;
   function emptyMsg(text) {
     var p = out.querySelector(".empty-msg"); if (!p) return;
@@ -507,6 +542,7 @@
     var alName = (form.querySelector("#airline").selectedOptions[0] || {}).textContent || "";
     last = { r: r, dep: dep, arr: arr, o: o, airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
     letter();
+    if (touched) reportResult(r, o);
   }
 
   // ---------- Right to care (Art. 6, 8, 9) ----------
@@ -701,7 +737,7 @@
       var t = document.getElementById("letter-text");
       function sel() { t.focus(); t.select(); msg.textContent = T.selected; }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(t.value).then(function () { msg.textContent = T.copied; }, sel);
+        navigator.clipboard.writeText(t.value).then(function () { msg.textContent = T.copied; track("letter_copied", last ? resultParams(last.r, last.o) : {}); }, sel);
       } else sel();
     });
     dl.addEventListener("click", function () {
@@ -710,19 +746,36 @@
         var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = T.file;
         document.body.appendChild(a); a.click(); a.remove();
         msg.textContent = T.downloaded;
+        track("letter_downloaded", last ? resultParams(last.r, last.o) : {});
       } catch (e) { msg.textContent = T.dlFail; }
     });
     var open = document.getElementById("letter-open");
     open.addEventListener("click", function () {
       panel.hidden = !panel.hidden; open.setAttribute("aria-expanded", String(!panel.hidden));
-      if (!panel.hidden) { letter(); document.getElementById("l-name").focus(); }
+      if (!panel.hidden) { letter(); document.getElementById("l-name").focus(); track("letter_opened", last ? resultParams(last.r, last.o) : {}); }
     });
   }
 
   function init() {
+    // Clicks on affiliate links anywhere on the site (calculator button, comparison page...)
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[rel~="sponsored"]');
+      if (!a) return;
+      var p = last ? resultParams(last.r, last.o) : {};
+      p.affiliate_id = affId(a.href);
+      p.placement = a.closest("[data-cta]") ? "calculator" : "content";
+      track("affiliate_click", p);
+    }, true);
     form = document.getElementById("calc");
     out = document.getElementById("result");
     if (!form) return;
+    function touch(e) {
+      if (e.target.closest && e.target.closest("#letter")) return;
+      touched = true;
+      if (!started) started = track("calculator_started", { incident_type: val("what") }); // sent once consent exists
+    }
+    form.addEventListener("input", touch, true);
+    form.addEventListener("change", touch, true);
     form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
     form.addEventListener("change", function (e) { if (!e.target.closest || !e.target.closest("#letter")) run(); });
     letterTools();
@@ -731,7 +784,11 @@
       var aff = new URLSearchParams(location.search).get("aff");
       if (aff) {
         var u = new URL(aff), ok = /(^|\.)(airhelp\.com|airadvisor\.com|compensair\.com|flightright\.(es|com|de|co\.uk)|skyrefund\.com|reclamador\.es|tp\.media|travelpayouts\.com|postaffiliatepro\.com)$/.test(u.hostname);
-        if (u.protocol === "https:" && ok) { var a = out.querySelector("[data-cta] a"); if (a) a.href = u.href; }
+        if (u.protocol === "https:" && ok) {
+          var a = out.querySelector("[data-cta] a.btn-sign"), sm = out.querySelector("[data-cta] small[data-generic]");
+          if (a) { a.href = u.href; if (a.dataset.generic) a.textContent = a.dataset.generic; } // another provider: no AirHelp-specific claims
+          if (sm && sm.firstChild) sm.firstChild.nodeValue = sm.dataset.generic + " ";
+        }
       }
     } catch (err) { /* invalid parameter: keep the default link */ }
     ["from", "to"].forEach(function (id) { attach(document.getElementById(id)); });
