@@ -116,6 +116,13 @@ def check_site():
     for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
         if url in pages and re.search(r"<tbody><tr>|</tr><tr>", pages[url]):
             err(f"Hay huelgas sin fecha de fin (data-end) en {url}")
+    # AdSense: nunca en el widget (se inserta en webs ajenas) ni en la 404; donde se carga, enlace para gestionar el consentimiento publicitario
+    for url, s in pages.items():
+        has_ads = "adsbygoogle.js" in s
+        if url in ("/widget/", "/404.html") and has_ads:
+            err(f"{url} no debe cargar AdSense")
+        if has_ads and "data-ads-consent" not in s:
+            err(f"{url} carga AdSense sin enlace para gestionar el consentimiento publicitario")
     nf = pages.get("/404.html", "")
     if not nf or 'name="robots" content="noindex"' not in nf or "/404.html" in sitemap:
         err("Falta la página 404 propia, no es noindex o está en el sitemap")

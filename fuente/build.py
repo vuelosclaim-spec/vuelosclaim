@@ -118,8 +118,10 @@ S = {
   foot3="Última revisión de importes y normas: {d}.", f_embed="Pon la calculadora en tu web", f_about="Quiénes somos y fuentes", f_legal="Aviso legal", f_privacy="Privacidad",
   calc_h="Calcula tu compensación", from_="Origen", to="Destino final", ph="Ciudad o código", airline="Aerolínea",
   al_unknown="No lo sé / no aparece", al_eu="Otra aerolínea europea", al_noneu="Otra aerolínea no europea",
+  via="¿Hiciste escala?", v=[("direct", "No, vuelo directo"), ("same", "Sí, una reserva y la misma aerolínea"), ("mixed", "Sí, una reserva y aerolíneas distintas"), ("separate", "Sí, con reservas separadas")],
+  fare="El billete", fa=[("public", "Lo pagué (también con puntos o en un paquete)"), ("staff", "Gratis o con tarifa no pública (p. ej., de empleado)")],
   what="Qué pasó", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
-  delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
+  delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h justas a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
   notice="Te avisaron de la cancelación con", n=[("gt14", "14 días o más"), ("7to14", "Entre 7 y 13 días"), ("lt7", "Menos de 7 días"), ("unknown", "No lo sé")],
   reroute="¿Te ofrecieron un vuelo alternativo?", rr=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
   rdep="El vuelo alternativo salía, respecto al original…", rd=[("le1", "Como mucho 1 h antes, o más tarde"), ("1to2", "Entre 1 y 2 h antes"), ("gt2", "Más de 2 h antes"), ("unknown", "No lo sé")],
@@ -129,7 +131,7 @@ S = {
   checkin="¿Te presentaste a tiempo a facturación y embarque?", ci=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
   dreason="Motivo de la denegación", dr=[("overbooking", "Overbooking u otro motivo de la aerolínea"), ("reasonable", "Salud, seguridad o documentación"), ("unknown", "No me lo explicaron")],
   cause="Motivo que te dio la aerolínea", c=[("unknown", "No me lo dijeron"), ("tech", "Avería técnica"), ("crew", "Falta o enfermedad de la tripulación"),
-    ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("atc", "Restricción de control aéreo (ATC)"),
+    ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("strike_sub", "Huelga de una empresa contratada por la aerolínea (handling, catering…)"), ("atc", "Restricción de control aéreo (ATC)"),
     ("weather", "Meteorología adversa"), ("security", "Seguridad (amenaza, cierre del espacio aéreo)"), ("bird", "Choque con un ave u objeto en la pista"),
     ("knock", "Retraso del vuelo anterior del avión")],
   empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.", retry="Reintentar",
@@ -149,8 +151,10 @@ S = {
   foot3="Amounts and rules last reviewed: {d}.", f_embed="", f_about="About us and sources", f_legal="Legal notice", f_privacy="Privacy",
   calc_h="Check your compensation", from_="From", to="Final destination", ph="City or airport code", airline="Airline",
   al_unknown="Not sure / not listed", al_eu="Another European airline", al_noneu="Another non-European airline",
+  via="Did you have a connection?", v=[("direct", "No, direct flight"), ("same", "Yes, one booking, same airline"), ("mixed", "Yes, one booking, different airlines"), ("separate", "Yes, separate bookings")],
+  fare="Your ticket", fa=[("public", "I paid for it (points or package holidays too)"), ("staff", "Free or a non-public fare (e.g. staff ticket)")],
   what="What happened", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
-  delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
+  delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "Exactly 3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
   notice="You were told about the cancellation", n=[("gt14", "14 days or more ahead"), ("7to14", "7 to 13 days ahead"), ("lt7", "Under 7 days ahead"), ("unknown", "Not sure")],
   reroute="Were you offered an alternative flight?", rr=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
   rdep="Compared with the original, the alternative left…", rd=[("le1", "Up to 1 h earlier, or later"), ("1to2", "1 to 2 h earlier"), ("gt2", "Over 2 h earlier"), ("unknown", "Not sure")],
@@ -160,7 +164,7 @@ S = {
   checkin="Did you check in and get to the gate on time?", ci=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
   dreason="Reason for refusing you", dr=[("overbooking", "Overbooking or another airline reason"), ("reasonable", "Health, safety or documents"), ("unknown", "Not explained")],
   cause="Reason the airline gave", c=[("unknown", "None given"), ("tech", "Technical fault"), ("crew", "Crew shortage or illness"),
-    ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("atc", "Air traffic control restriction"),
+    ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("strike_sub", "Strike at a company working for the airline (ground handling, catering…)"), ("atc", "Air traffic control restriction"),
     ("weather", "Bad weather"), ("security", "Security (threat, airspace closure)"), ("bird", "Bird strike or object on the runway"),
     ("knock", "Earlier flight by the same aircraft was late")],
   empty="Choose where you flew from and to.", error="The airport list could not load. Check your connection and try again.", retry="Try again",
@@ -221,7 +225,8 @@ def footer(l):
     else:
         links.append('<a href="/en/flight-strikes-spain-europe/">Flight strikes</a>'); links.append('<a href="/en/flight-compensation-companies-compared/">AirHelp vs Flightright</a>'); links.append('<a href="/en/flight-cancelled-what-to-do/">Flight cancelled</a>'); links.append('<a href="/en/denied-boarding-overbooking-compensation/">Overbooking</a>'); links.append('<a href="/en/extraordinary-circumstances-flight-delay/">Extraordinary circumstances</a>')
         links.append(f'<a href="{uk_airports.HUB}">UK airports to Spain</a>')
-    links += [f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>', f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>', f'<a href="{LEGAL["privacy"][l]}#cookies" data-consent-open>Cookies</a>']
+    links += [f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>', f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>', f'<a href="{LEGAL["privacy"][l]}#cookies" data-consent-open>{"Cookies de analítica" if l == "es" else "Analytics cookies"}</a>',
+              f'<a href="{LEGAL["privacy"][l]}#publicidad" data-ads-consent>{"Privacidad de los anuncios" if l == "es" else "Ad privacy settings"}</a>']
     return (f'<footer class="foot"><div class="wrap"><p>{s["foot1"]}</p><p>{s["foot2"]}</p><p>{s["foot3"].format(d=UPDATED[l])}</p>'
             f'<nav>{"".join(links)}</nav></div></footer>')
 
@@ -242,6 +247,7 @@ def calculator(l, airline_slug, dep, arr):
  <div class="field"><label for="to">{s["to"]}</label><input type="text" id="to" data-code="{arr}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="{s["ph"]}"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
 <div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
+<fieldset id="grp-via"><legend>{s["via"]}</legend><div class="chips chips-wide">{chips("via", s["v"], "direct")}</div></fieldset>
 <fieldset><legend>{s["what"]}</legend><div class="chips">{chips("what", s["w"], "delay")}</div></fieldset>
 <fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
 <fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
@@ -252,6 +258,7 @@ def calculator(l, airline_slug, dep, arr):
 <fieldset id="grp-denied" hidden><legend>{s["denied"]}</legend><div class="chips">{chips("denied", s["dn"], "unknown")}</div></fieldset>
 <fieldset id="grp-checkin" hidden><legend>{s["checkin"]}</legend><div class="chips">{chips("checkin", s["ci"], "unknown")}</div></fieldset>
 <fieldset id="grp-dreason" hidden><legend>{s["dreason"]}</legend><div class="chips chips-wide">{chips("dreason", s["dr"], "unknown")}</div></fieldset>
+<fieldset id="grp-fare"><legend>{s["fare"]}</legend><div class="chips chips-wide">{chips("fare", s["fa"], "public")}</div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">{s["empty"]}</p>
@@ -667,15 +674,16 @@ def extra_jsonld(l, title, path):
 
 
 def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.min.json"):
-    cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
     return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main>{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
             f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script>\n<script>{JS}</script>")
 
 
-def full_doc(inner, l):
+def full_doc(inner, l, ads=True):
+    """ads=False: no AdSense (widget embedded on third-party sites, 404 page without content)."""
     h, b = inner.split("</style>", 1)
     return (f'<!doctype html>\n<html lang="{l}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            f"{h}</style>\n{GA4}{ADSENSE}</head>\n<body>{b}{CONSENT}</body></html>\n")
+            f"{h}</style>\n{GA4}{ADSENSE if ads else ''}</head>\n<body>{b}{CONSENT}</body></html>\n")
 
 
 GA_ID = "G-6JRCZVTNDG"
@@ -707,7 +715,9 @@ CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Coo
            "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block'}"
            "document.getElementById('cky').onclick=function(){put('y');b.style.display='none';start()};"
            "document.getElementById('ckn').onclick=function(){put('n');b.style.display='none';if(on){stop();on=false}};"
-           "document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();show()}});"
+           "document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();show()}"
+           # Ad consent is Google's CMP (TCF): reopen its message; without it, the link just opens the privacy policy section
+           "var a=e.target.closest&&e.target.closest('[data-ads-consent]');if(a&&window.googlefc&&googlefc.callbackQueue){e.preventDefault();googlefc.callbackQueue.push(googlefc.showRevocationMessage)}});"
            "var v=get();if(v==='y')start();else if(!v)show()})();</script>\n")
 
 ADSENSE_PUB = "ca-pub-1079386437086971"
@@ -867,11 +877,11 @@ def build():
     cmp_urls += guides.build({"emit": emit, "page": page})
 
     # Widget for blogs (ES) + page explaining how to embed it
-    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
     winner = (f"<title>Calculadora de compensación de vuelos · {BRAND}</title><meta name=\"robots\" content=\"noindex\">{FONTS}<style>{CSS}</style>"
               f"<div class=\"embed\">{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></div>"
               f"<script>window.CTT={json.dumps(wcfg, ensure_ascii=False)};</script><script>{JS}</script>")
-    write(os.path.join(OUT, "widget", "index.html"), full_doc(winner, "es"))
+    write(os.path.join(OUT, "widget", "index.html"), full_doc(winner, "es", ads=False))
     code_snip = (f'<iframe src="{SITE_URL}/widget/" title="Calculadora de compensación por retraso de vuelo" '
                  f'style="width:100%;max-width:560px;height:960px;border:0" loading="lazy"></iframe>\n'
                  f'<p><a href="{SITE_URL}/">Calculadora de compensación por retraso de vuelo</a> de {BRAND}</p>')
@@ -897,7 +907,7 @@ def build():
              "d.querySelector('.nf[lang=es]').hidden=true;d.querySelector('.nf[lang=en]').hidden=false}</script>")
     nf_inner = (f'<title>Página no encontrada · {BRAND}</title><meta name="robots" content="noindex">{ICON}{FONTS}<style>{CSS}</style>'
                 f'{header("es", None)}<main class="wrap prose">{nf("es")}{nf("en")}</main>{footer("es")}{nf_js}')
-    write(os.path.join(OUT, "404.html"), full_doc(nf_inner, "es"))
+    write(os.path.join(OUT, "404.html"), full_doc(nf_inner, "es", ads=False))
 
     # Legal pages (both languages)
     legal_txt = {
@@ -910,8 +920,8 @@ def build():
             "en": ("Legal notice", f"<p>{BRAND} provides free calculators with indicative information. Results are based on Regulation (EC) 261/2004, UK261 and the details you enter, and are not legal advice.</p><p>Site owner: <strong>Salvador Fernández Lloris, tax ID 24444246F</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p><p>This site contains affiliate links. If you use a service through them, the owner may earn a commission. This costs you nothing and does not change the calculators' results.</p>"),
         },
         "privacy": {
-            "es": ("Política de privacidad", "<p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores. Los datos que escribes para la carta de reclamación (nombre, código de reserva, número y fecha del vuelo, número de pasajeros) solo se usan en tu navegador para componer el texto: no se envían a nadie, no se guardan y desaparecen al cerrar la página. No pedimos datos bancarios.</p><h2 id=\"cookies\">Cookies y medición</h2><p>Solo si aceptas en el aviso de cookies, la web carga Google Analytics y el script de afiliación de Travelpayouts. Antes de aceptar, o si rechazas, no se cargan ni se les envía nada. Con tu permiso medimos de forma agregada: visitas, que se ha empezado y completado la calculadora, el tipo de incidencia (retraso, cancelación u overbooking), el resultado y el tramo de importe estimado, la apertura, copia o descarga de la carta y los clics en el enlace al servicio de reclamación. Nunca enviamos tu nombre, código de reserva, número de vuelo ni nada de lo que escribes. Las señales de Google y la personalización de anuncios de Analytics están desactivadas. Puedes cambiar tu elección cuando quieras en el enlace «Cookies» del pie de página.</p><p>Al pulsar un enlace de afiliado, el servicio de reclamación (por ejemplo, AirHelp, a través de Travelpayouts) puede usar cookies para registrar que vienes de esta web. La web muestra anuncios de Google AdSense: Google y sus socios pueden usar cookies para mostrar anuncios, personalizados o no según lo que elijas en el aviso de consentimiento. Más información en <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa Google las cookies en publicidad</a>.</p><p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p>"),
-            "en": ("Privacy policy", "<p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><h2 id=\"cookies\">Cookies and measurement</h2><p>Only if you accept in the cookie notice does the site load Google Analytics and the Travelpayouts affiliate script. Before you accept, or if you reject, they are not loaded and nothing is sent to them. With your permission we measure, in aggregate: visits, that the calculator was started and completed, the type of problem (delay, cancellation or overbooking), the result and the estimated amount band, opening, copying or downloading the letter, and clicks on the link to the claims service. We never send your name, booking reference, flight number or anything you type. Google signals and ad personalisation in Analytics are switched off. You can change your choice at any time with the “Cookies” link at the bottom of the page.</p><p>When you click an affiliate link, the claims service (for example, AirHelp, via Travelpayouts) may use cookies to record that you came from this site. The site shows Google AdSense ads: Google and its partners may use cookies to serve ads, personalised or not depending on your choice in the consent notice. More at <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how Google uses cookies in advertising</a>.</p><p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p>"),
+            "es": ("Política de privacidad", "<p>Responsable: <strong>Salvador Fernández Lloris</strong>. Contacto: <strong>vuelosclaim@gmail.com</strong>.</p><h2>Calculadora y carta</h2><p>Las calculadoras funcionan en tu navegador: los datos de tu vuelo no se envían ni se guardan en nuestros servidores. Los datos que escribes para la carta de reclamación (nombre, código de reserva, número y fecha del vuelo, número de pasajeros) solo se usan en tu navegador para componer el texto: no se envían a nadie, no se guardan y desaparecen al cerrar la página. No pedimos datos bancarios.</p><h2 id=\"cookies\">Cookies de analítica y afiliación</h2><p>Solo si aceptas en nuestro aviso de cookies, la web carga Google Analytics y el script de afiliación de Travelpayouts. Antes de aceptar, o si rechazas, no se cargan ni se les envía nada. Con tu permiso medimos de forma agregada: visitas, que se ha empezado y completado la calculadora, el tipo de incidencia, el resultado y el tramo de importe estimado, la apertura, copia o descarga de la carta y los clics en el enlace al servicio de reclamación. Nunca enviamos tu nombre, código de reserva, número de vuelo ni nada de lo que escribes. Las señales de Google y la personalización de anuncios están desactivadas en Analytics. Google Analytics conserva los datos de eventos 2 meses y los de usuario 14 meses. Puedes cambiar tu elección en el enlace «Cookies de analítica» del pie de página.</p><p>Al pulsar un enlace de afiliado, el servicio de reclamación (por ejemplo, AirHelp, a través de Travelpayouts) puede usar cookies para registrar que vienes de esta web, según su propia política de privacidad.</p><h2 id=\"publicidad\">Publicidad (Google AdSense)</h2><p>La web usa Google AdSense para mostrar anuncios. Este consentimiento es independiente del de analítica. A los visitantes del Espacio Económico Europeo, el Reino Unido y Suiza, Google les pide el consentimiento publicitario con su propia plataforma de consentimiento, certificada en el Marco de Transparencia y Consentimiento (TCF) de IAB Europe. En ese aviso puedes aceptar, rechazar o elegir por finalidades y proveedores.</p><p>Sin tu consentimiento, Google solo puede mostrar anuncios no personalizados, basados en el contenido de la página, o anuncios limitados. No mostramos anuncios personalizados a quien no los ha aceptado. Puedes cambiar o retirar tu elección en cualquier momento con el enlace «Privacidad de los anuncios» del pie de página. Más información sobre <a href=\"https://policies.google.com/technologies/partner-sites?hl=es\" rel=\"noopener\">cómo usa Google la información de los sitios que usan sus servicios</a> y <a href=\"https://policies.google.com/technologies/ads?hl=es\" rel=\"noopener\">cómo usa las cookies en publicidad</a>.</p><h2>Base jurídica y destinatarios</h2><p>Las cookies de analítica, afiliación y publicidad se basan en tu consentimiento (art. 22.2 de la LSSI y art. 6.1.a del RGPD), que puedes retirar cuando quieras sin que afecte a lo anterior. Destinatarios: Google Ireland Limited (Analytics y AdSense), que puede tratar datos en Estados Unidos al amparo del Marco de Privacidad de Datos UE-EE. UU., y Travelpayouts (red de afiliación).</p><h2>Tus derechos</h2><p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <strong>vuelosclaim@gmail.com</strong>. Si no quedas conforme, puedes reclamar ante la <a href=\"https://www.aepd.es/\" rel=\"noopener\">Agencia Española de Protección de Datos</a>.</p>"),
+            "en": ("Privacy policy", "<p>Controller: <strong>Salvador Fernández Lloris</strong>. Contact: <strong>vuelosclaim@gmail.com</strong>.</p><h2>Calculator and letter</h2><p>The calculators run in your browser: your flight details are not sent to or stored on our servers. The details you type for the claim letter (name, booking reference, flight number and date, number of passengers) are only used in your browser to put the text together: they are not sent to anyone, not stored, and disappear when you close the page. We do not ask for bank details.</p><h2 id=\"cookies\">Analytics and affiliate cookies</h2><p>Only if you accept in our cookie notice does the site load Google Analytics and the Travelpayouts affiliate script. Before you accept, or if you reject, they are not loaded and nothing is sent to them. With your permission we measure, in aggregate: visits, that the calculator was started and completed, the type of problem, the result and the estimated amount band, opening, copying or downloading the letter, and clicks on the link to the claims service. We never send your name, booking reference, flight number or anything you type. Google signals and ad personalisation are switched off in Analytics. Google Analytics keeps event data for 2 months and user data for 14 months. You can change your choice with the “Analytics cookies” link at the bottom of the page.</p><p>When you click an affiliate link, the claims service (for example, AirHelp, via Travelpayouts) may use cookies to record that you came from this site, under its own privacy policy.</p><h2 id=\"publicidad\">Advertising (Google AdSense)</h2><p>The site uses Google AdSense to show ads. This consent is separate from the analytics one. Visitors in the European Economic Area, the UK and Switzerland are asked for advertising consent through Google’s own consent management platform, certified under IAB Europe’s Transparency and Consent Framework (TCF). In that notice you can accept, reject or choose by purpose and vendor.</p><p>Without your consent, Google can only show non-personalised ads, based on the page content, or limited ads. We do not show personalised ads to anyone who has not accepted them. You can change or withdraw your choice at any time with the “Ad privacy settings” link at the bottom of the page. More on <a href=\"https://policies.google.com/technologies/partner-sites\" rel=\"noopener\">how Google uses information from sites that use its services</a> and <a href=\"https://policies.google.com/technologies/ads\" rel=\"noopener\">how it uses cookies in advertising</a>.</p><h2>Legal basis and recipients</h2><p>Analytics, affiliate and advertising cookies are based on your consent (Article 22(2) of the Spanish LSSI and Article 6(1)(a) GDPR), which you can withdraw at any time without affecting earlier processing. Recipients: Google Ireland Limited (Analytics and AdSense), which may process data in the United States under the EU-US Data Privacy Framework, and Travelpayouts (affiliate network).</p><h2>Your rights</h2><p>You can exercise your rights of access, rectification, erasure, objection, restriction and portability by emailing <strong>vuelosclaim@gmail.com</strong>. You can also complain to the <a href=\"https://www.aepd.es/\" rel=\"noopener\">Spanish Data Protection Agency (AEPD)</a>.</p>"),
         },
     }
     LEGAL_DESC = {
@@ -919,7 +929,7 @@ def build():
                   "en": "Who runs VuelosClaim, how we calculate flight delay and cancellation compensation, and the official sources we rely on."},
         "legal": {"es": "Aviso legal de VuelosClaim: titular del sitio, contacto, carácter orientativo de las calculadoras y enlaces de afiliado.",
                   "en": "VuelosClaim legal notice: site owner, contact details, the indicative nature of the calculators and affiliate links."},
-        "privacy": {"es": "Política de privacidad de VuelosClaim: qué datos se usan en la calculadora y la carta, cookies de analítica y anuncios, y contacto.",
+        "privacy": {"es": "Política de privacidad de VuelosClaim: datos de la calculadora y la carta, cookies de analítica, consentimiento publicitario de AdSense y tus derechos.",
                     "en": "VuelosClaim privacy policy: what data the calculator and claim letter use, analytics and advertising cookies, and contact details."},
     }
     for key, langs in legal_txt.items():

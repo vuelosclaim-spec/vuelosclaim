@@ -33,18 +33,35 @@ Todos los eventos llevan `site_language` y `source_page`. No se usan `language` 
 
 El código descarta cualquier otro parámetro. Nunca se envía lo que escribe el usuario (nombre, reserva, vuelo, fecha). Lo comprueba `tests/test_navegador.js`.
 
-## Configuración pendiente en Google Analytics (Administrar)
+## Estado de la configuración en GA4 (propiedad «vuelosclaim.eu», 22-10-2026)
 
-1. **Definiciones personalizadas → Crear dimensiones personalizadas** (ámbito de evento): `incident_type`, `result`, `compensation_category`, `regime`, `affiliate_id`, `placement`, `site_language`, `source_page`.
-2. **Eventos → marcar `affiliate_click` como evento clave.** Opcional: también `letter_downloaded`.
-3. **Flujos de datos → Medición mejorada:** los «Clics salientes» registran también el clic en AirHelp como evento `click`. No duplica `affiliate_click`, pero para contar conversiones usa `affiliate_click`.
-4. **Flujos de datos → Medición mejorada → Interacciones con formularios:** recomendable desactivarla. Envía `form_start` con la URL de la página y el identificador del primer campo; no son datos personales, pero duplican `calculator_started`.
-5. **Explorar → Exploración de embudo**, con estos pasos:
-   1. `page_view`
-   2. `calculator_started`
-   3. `calculator_completed`
-   4. `compensation_possible`
-   5. `affiliate_click`
+| Ajuste | Estado | Comprobación |
+| --- | --- | --- |
+| 8 dimensiones personalizadas de ámbito evento: `incident_type` (Tipo de incidencia), `result` (Resultado de la calculadora), `compensation_category` (Tramo de compensación), `regime` (Régimen aplicable), `affiliate_id` (Destino de afiliación), `placement` (Ubicación del enlace), `site_language` (Idioma del sitio), `source_page` (Página de origen del evento) | **Creadas** | Vistas en Administrar → Definiciones personalizadas (8 de 8) |
+| Medición mejorada → Interacciones con formularios | **Desactivada** | Reabierto tras guardar |
+| Medición mejorada → Clics salientes | Activada (registra `click`, no duplica `affiliate_click`) | — |
+| `affiliate_click` como evento clave | **Pendiente.** El evento aún no aparece en «Eventos recientes» (Google tarda hasta 24 h) y GA4 solo permite marcar eventos que ya aparecen | Comprobado a las 20:05 |
+| Exploración de embudo | Pendiente (mejor cuando aparezcan todos los eventos) | — |
+
+### Instrucciones para el propietario
+
+**Marcar `affiliate_click` como evento clave** (cuenta vuelosclaim@gmail.com):
+1. Google Analytics → **Administrar** (rueda abajo a la izquierda) → Visualización de datos → **Eventos**.
+2. Pestaña **«Eventos recientes»**.
+3. En la fila `affiliate_click`, pulsa la **estrella ☆** de la izquierda. Pasa a «Eventos clave».
+4. Opcional: hacer lo mismo con `letter_downloaded`.
+5. Si `affiliate_click` no aparece pasadas 24 h: abrir vuelosclaim.eu, **aceptar** el aviso de cookies, hacer un cálculo y pulsar «Reclamar con AirHelp». Esperar otras 24 h.
+
+**Crear el embudo:** Explorar → **Exploración de embudo** → Pasos:
+1. `page_view`
+2. `calculator_started`
+3. `calculator_completed`
+4. `compensation_possible`
+5. `affiliate_click`
+
+Desglose opcional por la dimensión «Tipo de incidencia».
+
+**Si alguna dimensión desapareciera:** Administrar → Definiciones personalizadas → **Crear dimensión personalizada**. Rellenar nombre, ámbito «Evento» y en «Parámetro de evento» escribir el nombre exacto (p. ej. `incident_type`). Guardar.
 
 ## Límites
 

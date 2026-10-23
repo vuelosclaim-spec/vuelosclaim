@@ -146,6 +146,7 @@ async function pickAirport(p, device, id, text, code) {
   {
     const T = (n) => `[consentimiento] ${n}`;
     const ctx = await browser.newContext({ viewport: { width: 375, height: 760 }, hasTouch: true, isMobile: true });
+    await ctx.grantPermissions(["clipboard-read", "clipboard-write"], { origin: BASE });
     const p = await ctx.newPage();
     const ext = [];
     p.on("request", (r) => { if (!r.url().startsWith(BASE)) ext.push(r.url()); });
@@ -179,18 +180,28 @@ async function pickAirport(p, device, id, text, code) {
     await p.click("#letter-open");
     await p.fill("#l-name", "Zz Nombre Secreto"); await p.fill("#l-booking", "QQ9ZZ9"); await p.fill("#l-flight", "IB1234");
     const [dl] = await Promise.all([p.waitForEvent("download"), p.click("#letter-dl")]);
+    await p.click("#letter-copy"); await p.waitForTimeout(300);
     await p.evaluate(() => { document.querySelector("[data-cta] a.btn-sign").addEventListener("click", (e) => e.preventDefault()); });
     await p.click("[data-cta] a.btn-sign");
     await p.click("label:has(input[name=what][value=cancel])");
     await p.waitForTimeout(1600);
+    await p.click("label:has(input[name=what][value=delay])"); await p.selectOption("#cause", "weather");
+    await p.waitForTimeout(1600);
     const events = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").map((x) => ({ name: x[1], params: x[2] })));
     const names = events.map((e) => e.name);
-    for (const n of ["calculator_started", "calculator_completed", "compensation_possible", "compensation_insufficient_data", "letter_opened", "letter_downloaded", "affiliate_click"])
+    for (const n of ["calculator_started", "calculator_completed", "compensation_possible", "compensation_not_eligible", "compensation_insufficient_data", "letter_opened", "letter_copied", "letter_downloaded", "affiliate_click"])
       check(T("evento " + n), names.includes(n), names.join(","));
     check(T("calculator_started una sola vez"), names.filter((n) => n === "calculator_started").length === 1);
     const all = JSON.stringify(events);
     check(T("ningún evento contiene datos de la carta"), !/Zz Nombre|Secreto|QQ9ZZ9|IB1234/i.test(all), all.slice(0, 300));
     const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
+    // Nombres reservados por GA4 (no deben usarse como parámetros propios)
+    const reserved = /^(language|page_path|page_location|page_referrer|page_title|screen_resolution|cid|uid|_.*|ga_.*|google_.*|firebase_.*|gtag\..*)$/;
+    check(T("ningún parámetro con nombre reservado de GA4"), events.every((e) => Object.keys(e.params || {}).every((k) => !reserved.test(k))), all.slice(0, 200));
+    // Sin duplicados: un solo calculator_completed por resultado distinto y un affiliate_click por clic
+    const sigs = events.filter((e) => e.name === "calculator_completed").map((e) => JSON.stringify(e.params));
+    check(T("calculator_completed sin duplicados"), new Set(sigs).size === sigs.length, sigs.join(" | "));
+    check(T("un affiliate_click por clic"), names.filter((n) => n === "affiliate_click").length === 1);
     check(T("solo parámetros permitidos"), events.every((e) => Object.keys(e.params || {}).every((k) => allowed.has(k))), all.slice(0, 300));
     const aff = events.find((e) => e.name === "affiliate_click");
     check(T("affiliate_click identifica el destino y el lugar"), aff && aff.params.affiliate_id === "airhelp_tp" && aff.params.placement === "calculator", JSON.stringify(aff));

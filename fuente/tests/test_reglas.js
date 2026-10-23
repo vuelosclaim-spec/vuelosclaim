@@ -13,7 +13,7 @@ const airlines = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "airlines.js
 const byCode = Object.fromEntries(airports.map((a) => [a[0], a]));
 
 function load(lang) {
-  const window = { CTT: { lang, airlines: airlines.map((a) => ({ slug: a.slug, eu: a.eu, uk: a.uk })) } };
+  const window = { CTT: { lang, airlines: airlines.map((a) => ({ slug: a.slug, eu: a.eu, uk: a.uk, ukcomm: a.ukcomm === undefined ? true : a.ukcomm })) } };
   const document = { readyState: "complete", getElementById: () => null, addEventListener() {} };
   const ctx = vm.createContext({ window, document, location: { search: "" }, URLSearchParams, URL, fetch: () => Promise.reject(new Error("sin red")), console });
   vm.runInContext(fs.readFileSync(path.join(ROOT, "src", "app.js"), "utf8"), ctx);
@@ -50,12 +50,39 @@ const CASES = [
   ["Llega al Reino Unido con aerolínea desconocida", { r: "JFK-LHR", a: { eu: "unknown" }, ...D }, "insuficiente", 520, "GBP"],
   ["Suiza cuenta como UE", { r: "ZRH-MAD", a: "swiss", ...D }, "posible", 250, "EUR"],
   ["Islandia (EEE) cuenta como UE", { r: "KEF-MAD", a: { eu: "no" }, ...D }, "posible", 400, "EUR"],
-  ["Salida de Guernsey: régimen propio, faltan datos", { r: "GCI-LGW", a: { eu: "no", uk: true }, ...D }, "insuficiente", 220, "GBP", has("special")],
+  // ---- Territorios especiales (PRECISION_JURIDICA.md) ----
+  ["Guernsey → Londres con aerolínea británica: UK261 (art. 3.1.b.i)", { r: "GCI-LGW", a: { eu: "no", uk: true }, ...D }, "posible", 220, "GBP", has("crown")],
+  ["Guernsey → Londres con aerolínea local no británica: faltan datos, nunca «no»", { r: "GCI-LGW", a: { eu: "no" }, ...D }, "insuficiente", 220, "GBP", has("special")],
+  ["Jersey → Guernsey con aerolínea local: faltan datos", { r: "JER-GCI", a: { eu: "no" }, ...D }, "insuficiente", 220, "GBP"],
   ["Salida del Reino Unido a Guernsey: UK261", { r: "LGW-GCI", a: { eu: "no", uk: true }, ...D }, "posible", 220, "GBP"],
-  ["Salida de Gibraltar: faltan datos", { r: "GIB-LHR", a: "british-airways", ...D }, "insuficiente", 400, "EUR"],
+  ["Isla de Man → Dublín con aerolínea europea: EU261 (art. 3.1.b)", { r: "IOM-DUB", a: "aer-lingus", ...D }, "posible", 250, "EUR", has("crown")],
+  ["Gibraltar → Londres con British Airways: UK261", { r: "GIB-LHR", a: "british-airways", ...D }, "posible", 350, "GBP", has("gib")],
+  ["Gibraltar → Marruecos con aerolínea no europea: faltan datos", { r: "GIB-CMN", a: { eu: "no" }, ...D }, "insuficiente", 220, "GBP", has("special")],
   ["Salida de España a Gibraltar: EU261", { r: "MAD-GIB", a: "iberia", ...D }, "posible", 250, "EUR"],
-  ["Salida de Svalbard: faltan datos", { r: "LYR-OSL", a: { eu: "yes" }, ...D }, "insuficiente", 400, "EUR"],
-  ["Salida del norte de Chipre: faltan datos", { r: "ECN-IST", a: { eu: "no" }, ...D }, "insuficiente", 250, "EUR"],
+  ["Svalbard → Oslo con aerolínea europea: EU261 (llega al EEE)", { r: "LYR-OSL", a: "sas", ...D }, "posible", 400, "EUR", has("lyr")],
+  ["Svalbard → Oslo con aerolínea no europea: faltan datos", { r: "LYR-OSL", a: { eu: "no" }, ...D }, "insuficiente", 400, "EUR"],
+  ["Oslo → Svalbard: sale del EEE, cubierto", { r: "OSL-LYR", a: { eu: "no" }, ...D }, "posible", 400, "EUR"],
+  ["Norte de Chipre → Estambul: fuera de la UE, no cubierto", { r: "ECN-IST", a: { eu: "no" }, ...D }, "no", 0, null, has("not3")],
+  ["Norte de Chipre → Estambul con aerolínea europea: tampoco", { r: "ECN-IST", a: { eu: "yes" }, ...D }, "no", 0],
+  ["Frankfurt → Ercan: sale de la UE, no es vuelo intra-UE", { r: "FRA-ECN", a: "lufthansa", ...D }, "posible", 400, "EUR", (r, t) => r.intra === false && r.notes.includes(t.ecn)],
+  // ---- Licencia de la aerolínea en UK261 (art. 2.c: «Community carrier» = licencia de un Estado miembro) ----
+  ["Llega al Reino Unido desde fuera con SWISS: UK261 no la considera comunitaria", { r: "JFK-LHR", a: "swiss", ...D }, "no", 0, null, has("notUKcomm")],
+  ["Llega al Reino Unido desde fuera con Icelandair: no cubierto", { r: "JFK-LHR", a: "icelandair", ...D }, "no", 0],
+  ["Llega al Reino Unido desde fuera con Norwegian: depende de la filial", { r: "JFK-LHR", a: "norwegian", ...D }, "insuficiente", 520, "GBP", (r, t) => r.missing.includes(t.mLicence)],
+  ["SWISS desde Zúrich a Londres: sale de Suiza, EU261", { r: "ZRH-LHR", a: "swiss", ...D }, "posible", 250, "EUR"],
+  // ---- Escalas (TJUE C-11/11, C-559/16, C-451/20, C-502/18; UK261 art. 3.1A) ----
+  ["Escala con aerolíneas distintas, llegando a la UE desde fuera: faltan datos", { r: "JFK-MAD", a: "iberia", via: "mixed", ...D }, "insuficiente", 600, "EUR", (r, t) => r.missing.includes(t.mViaMixed)],
+  ["Escala con aerolíneas distintas y aerolínea no europea: faltan datos, no «no»", { r: "BOG-MAD", a: { eu: "no" }, via: "mixed", ...D }, "insuficiente", 600, "EUR"],
+  ["Escala con aerolíneas distintas saliendo de la UE: cubierto (C-502/18)", { r: "MAD-BKK", a: "emirates", via: "mixed", ...D }, "posible", 600, "EUR", has("viaSingle")],
+  ["Escala en la UE entre dos países de fuera: no cubierto (C-451/20)", { r: "JFK-CMN", a: "iberia", via: "same", ...D }, "no", 0, null, has("not3")],
+  ["Reservas separadas: aviso de reclamar cada vuelo", { r: "MAD-BCN", a: "vueling", via: "separate", ...D }, "posible", 250, "EUR", has("viaSeparate")],
+  // ---- Billetes no disponibles al público (art. 3.3) ----
+  ["Billete de empleado o gratuito: excluido", { r: "MAD-BCN", a: "vueling", fare: "staff", ...D }, "no", 0, null, has("fareStaff")],
+  // ---- Huelga de una empresa subcontratada: cuestión abierta ----
+  ["Huelga de una empresa contratada por la aerolínea: faltan datos", { r: "MAD-BCN", a: "vueling", what: "delay", delay: "gt4", cause: "strike_sub" }, "insuficiente", 250, "EUR", hasC("strike_sub")],
+  // ---- Retraso de 3 horas exactas ----
+  ["Retraso de 180 min exactos: compensación", { r: "MAD-BCN", a: "vueling", what: "delay", delayMin: 180, cause: "unknown" }, "posible", 250, "EUR", has("exact3")],
+  ["Retraso de 179 min: no", { r: "MAD-BCN", a: "vueling", what: "delay", delayMin: 179, cause: "unknown" }, "no", 0, null, has("exact3")],
   ["Región ultraperiférica: París–Reunión es intra-UE", { r: "CDG-RUN", a: "air-france", ...D }, "posible", 400, "EUR"],
 
   // ---- Distancia: límites exactos (art. 7.1) ----

@@ -8,19 +8,24 @@ const by = Object.fromEntries(airports.map((a) => [a[0], a]));
 const w = { CTT: { lang: "es", airlines: [] } };
 vm.runInContext(fs.readFileSync(ROOT + "/src/app.js", "utf8"), vm.createContext({ window: w, document: { readyState: "complete", getElementById: () => null, addEventListener() {} }, location: { search: "" }, URLSearchParams, URL, console }));
 const compute = w.CTT_compute;
-const CODES = ["MAD", "BCN", "LPA", "TFS", "PMI", "HEL", "CDG", "FRA", "ATH", "LIS", "OSL", "KEF", "ZRH", "LHR", "MAN", "EDI", "JFK", "DXB", "RAK", "IST", "BOG", "CUN", "TLV"];
+const CODES = ["MAD", "BCN", "LPA", "TFS", "PMI", "HEL", "CDG", "FRA", "ATH", "LIS", "OSL", "KEF", "ZRH", "LHR", "MAN", "EDI", "JFK", "DXB", "RAK", "IST", "BOG", "CUN", "TLV", "GIB", "JER", "IOM", "LYR", "ECN"];
 let seed = 261;
 const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
 const R = (a) => a[Math.floor(rnd() * a.length)], ri = (lo, hi) => lo + Math.floor(rnd() * (hi - lo + 1));
-const CARRIERS = [{ eu: "yes", uk: false }, { eu: "no", uk: true }, { eu: "no", uk: false }];
+const CARRIERS = [{ eu: "yes", uk: false }, { eu: "no", uk: true }, { eu: "no", uk: false }, { eu: "yes", uk: false, ukcomm: false }];
 function hav(a, b) { const r = Math.PI / 180, dl = (b[4] - a[4]) * r, dn = (b[5] - a[5]) * r; const h = Math.sin(dl / 2) ** 2 + Math.cos(a[4] * r) * Math.cos(b[4] * r) * Math.sin(dn / 2) ** 2; return Math.round(12742 * Math.asin(Math.sqrt(h))); }
 function oracle(o) {
-  const isEU = (a) => a[6] === 1, isUK = (a) => a[3] === "GB";
+  // Svalbard y Ercan: fuera del EEE/UE; Jersey, Guernsey, Man y Gibraltar: ni UE ni Reino Unido (ya marcados así en los datos)
+  const isEU = (a) => a[6] === 1 && a[0] !== "LYR" && a[0] !== "ECN", isUK = (a) => a[3] === "GB";
+  const unsure = (a) => ["GG", "JE", "IM", "GI"].includes(a[3]) || a[0] === "LYR";
+  const ukComm = o.airline.eu === "yes" && o.airline.ukcomm !== false;
   let reg = null;
   if (isEU(o.dep)) reg = "EU"; else if (isUK(o.dep)) reg = "UK";
   else if (isEU(o.arr)) reg = o.airline.eu === "yes" ? "EU" : o.airline.uk ? "UK" : null;
-  else if (isUK(o.arr)) reg = (o.airline.eu === "yes" || o.airline.uk) ? "UK" : null;
-  if (!reg) return { verdict: "no", amount: 0 };
+  else if (isUK(o.arr)) reg = (ukComm || o.airline.uk) ? "UK" : null;
+  if (!reg && !(unsure(o.dep) || unsure(o.arr))) return { verdict: "no", amount: 0 };
+  // Territorio dudoso sin cobertura clara: «insuficiente», salvo que el propio incidente ya excluya la compensación
+  if (!reg) { const x = oracle({ ...o, dep: by.MAD, arr: by.BCN }); return x.verdict === "no" ? x : { verdict: "insuficiente", amount: null }; }
   const d = hav(o.dep, o.arr), intra = (isEU(o.dep) && isEU(o.arr)) || (isUK(o.dep) && isUK(o.arr));
   const t = reg === "UK" ? [220, 350, 520] : [250, 400, 600];
   const tier = d <= 1500 ? 0 : (intra || d <= 3500) ? 1 : 2, base = t[tier];
@@ -43,6 +48,7 @@ for (let i = 0; i < 20000; i++) {
   else { o.what = "cancel"; o.noticeDays = R([6, 7, 13, 14, ri(0, 30)]); o.reroute = R(["yes", "no"]);
     o.rerouteDepEarlyMin = R([0, 60, 61, 120, 121, ri(-120, 300)]); o.rerouteArrLateMin = R([0, 119, 120, 121, 180, 181, 239, 240, 241, ri(0, 600)]); }
   const a = compute(o), b = oracle(o); n++;
+  if (b.amount === null) { if (a.verdict !== "insuficiente") bad.push({ r: o.dep[0] + "-" + o.arr[0], motor: a.verdict, oraculo: b.verdict }); continue; }
   if (a.verdict !== b.verdict || a.amount !== b.amount || (b.amount && a.cur !== b.cur)) bad.push({ r: o.dep[0] + "-" + o.arr[0], o: { ...o, dep: 0, arr: 0 }, motor: [a.verdict, a.amount, a.cur], oraculo: [b.verdict, b.amount, b.cur] });
 }
 console.log(`${n} casos aleatorios; discrepancias: ${bad.length}`);

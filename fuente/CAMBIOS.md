@@ -1,5 +1,13 @@
 # Cambios
 
+## 2026-10-22 — Consentimiento publicitario (AdSense)
+
+Detalle e instrucciones manuales en [CONSENTIMIENTO_ADSENSE.md](CONSENTIMIENTO_ADSENSE.md).
+
+- AdSense fuera del widget y de la página 404.
+- Enlace «Privacidad de los anuncios» que abre el mensaje de revocación de la CMP de Google (TCF), separado de «Cookies de analítica».
+- Política de privacidad: analítica y publicidad por separado, base jurídica, destinatarios, conservación y derechos.
+
 ## 2026-10-22 — Medición de conversiones con consentimiento
 
 Detalle en [MEDICION.md](MEDICION.md).
