@@ -75,10 +75,10 @@
   "eu": "yes",
   "uk": false,
   "country_en": "Spain",
-  "claim_es": "https://www.binter.com/es",
-  "claim_en": "https://www.binter.com/es",
-  "note_es": "Se reclama desde la sección de atención al cliente de su web.",
-  "note_en": "Claim through the customer service section of its website."
+  "claim_es": "https://www.bintercanarias.com/es/informacion/derechos-del-pasajero",
+  "claim_en": "https://www.bintercanarias.com/en/information/passengers-rights",
+  "note_es": "Su web oficial es bintercanarias.com. La reclamación se envía con su «Formulario para consultas o reclamaciones», enlazado al pie de la web.",
+  "note_en": "Its official website is bintercanarias.com. Send the claim with its 'consultations or claims' form, linked at the bottom of the site."
  },
  {
   "slug": "air-nostrum",
@@ -157,7 +157,7 @@
   "eu": "yes",
   "uk": false,
   "country_en": "France",
-  "claim_es": "https://wwws.airfrance.es/en/information/legal/remboursement",
+  "claim_es": "https://wwws.airfrance.es/information/legal/remboursement",
   "claim_en": "https://wwws.airfrance.es/en/information/legal/remboursement",
   "adr_uk": "AviationADR"
  },
@@ -396,10 +396,10 @@
   "eu": "yes",
   "uk": false,
   "country_en": "Spain",
-  "claim_es": "https://www.world2fly.com/",
-  "claim_en": "https://www.world2fly.com/",
-  "note_es": "Se reclama desde la sección de atención al cliente de su web.",
-  "note_en": "Claim through the customer service section of its website."
+  "claim_es": "https://www.w2fly.es/es-es/contacto/centro-de-atencion",
+  "claim_en": "https://www.w2fly.es/es-es/contacto/centro-de-atencion",
+  "note_es": "Ahora opera con la marca W2Fly (w2fly.es). En su centro de atención, el apartado «Reclamaciones sobre servicios» abre el formulario.",
+  "note_en": "It now trades as W2Fly (w2fly.es). On its customer service page, 'Reclamaciones sobre servicios' opens the claim form (in Spanish)."
  },
  {
   "slug": "virgin-atlantic",
