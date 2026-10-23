@@ -37,7 +37,7 @@ Ningún valor secreto aparece en este documento.
 2. Haz clic en tu avatar → **User settings** → **Applications**.
 3. En **Personal access tokens**, en la fila «claude», pulsa **Options** → **Delete** (o **Revoke**) y confirma.
 
-### Copia antigua del sitio en Netlify — problema comprobado
+### Copia antigua del sitio en Netlify — problema comprobado (resuelto el 23-10-2026)
 
 El proyecto de Netlify `vuelosclaim` (publicado por última vez el 20-10) sigue en línea en `vuelosclaim.netlify.app`, con la versión anterior a las mejoras:
 
@@ -46,7 +46,7 @@ El proyecto de Netlify `vuelosclaim` (publicado por última vez el 20-10) sigue 
 - Envía datos a la misma propiedad de GA4, así que mezcla visitas de esa copia con las de vuelosclaim.eu.
 - Tiene el canonical hacia vuelosclaim.eu, así que el riesgo SEO es bajo, pero el contenido jurídico está desactualizado.
 
-**Recomendación (requiere autorización):** borrar el proyecto `vuelosclaim` de Netlify, en Project configuration → General → Danger zone → Delete project. No afecta a vuelosclaim.eu, que está en GitHub Pages.
+**Resuelto:** el propietario borró el proyecto el 23-10-2026. Comprobado: `vuelosclaim.netlify.app` responde 404, vuelosclaim.eu responde 200 desde GitHub Pages y worldcupdle y taupe-kulfi siguen intactos. Procedimiento seguido: borrar el proyecto `vuelosclaim` de Netlify, en Project configuration → General → Danger zone → Delete project. No afecta a vuelosclaim.eu, que está en GitHub Pages.
 
 Si se prefiere conservarlo, la alternativa es desplegar en él solo un archivo `_redirects` con `/* https://vuelosclaim.eu/:splat 301!`.
 
