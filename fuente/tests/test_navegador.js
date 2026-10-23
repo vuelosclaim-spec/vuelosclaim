@@ -221,6 +221,54 @@ async function pickAirport(p, device, id, text, code) {
     check(T("sin errores de JavaScript"), true);
     await ctx.close();
   }
+  // 10. Accesibilidad: teclado, lectores de pantalla y pantallas pequeñas (errores corregidos en la tarea 7)
+  {
+    const T = (n) => `[accesibilidad] ${n}`;
+    const ctx = await browser.newContext({ viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true });
+    const p = await ctx.newPage();
+    await p.route("**/*", (r) => (r.request().url().startsWith(BASE) ? r.continue() : r.abort()));
+    await p.goto(BASE + "/compensacion-retraso-iberia/");
+    await p.waitForSelector("#from-list", { state: "attached" });
+    await p.waitForTimeout(400);
+    // Enlace para saltar al contenido y aviso de cookies al principio del orden de tabulación
+    await p.keyboard.press("Tab");
+    check(T("el primer Tab lleva al enlace «Saltar al contenido»"), await p.evaluate(() => document.activeElement.classList.contains("skip")));
+    await p.keyboard.press("Tab");
+    check(T("el aviso de cookies se alcanza justo después"), await p.evaluate(() => !!document.activeElement.closest("#ck")));
+    check(T("el aviso es una región con nombre, no un diálogo sin foco"), (await p.getAttribute("#ck", "role")) === "region" && (await p.textContent("#ckh")).length > 3);
+    const lk = await p.$eval("#ckl", (e) => ({ t: e.textContent, h: e.getBoundingClientRect().height }));
+    check(T("el enlace del aviso tiene texto claro y 24 px de alto"), lk.t.length > 5 && lk.h >= 24, JSON.stringify(lk));
+    check(T("con el aviso abierto la página reserva espacio para el foco"), await p.evaluate(() => parseInt(document.documentElement.style.scrollPaddingBottom) > 40));
+    // Tablas que desbordan: alcanzables con teclado y con nombre
+    const boards = await p.$$eval(".board", (els) => els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => [e.getAttribute("tabindex"), e.getAttribute("role"), e.getAttribute("aria-label")]));
+    check(T("hay tablas desplazables en 320 px"), boards.length > 0);
+    check(T("cada tabla desplazable es enfocable y tiene nombre"), boards.every(([t, r, l]) => t === "0" && r === "region" && l && l.length > 5), JSON.stringify(boards));
+    // Al decidir desde el pie, el foco vuelve al enlace que abrió el aviso
+    await p.click("#cky");
+    check(T("aceptar quita el espacio reservado"), await p.evaluate(() => !document.documentElement.style.scrollPaddingBottom));
+    await p.focus("[data-consent-open]"); await p.keyboard.press("Enter");
+    check(T("al reabrir el aviso el foco va a sus botones"), await p.evaluate(() => document.activeElement.id === "ckn"));
+    await p.keyboard.press("Enter");
+    check(T("tras elegir, el foco vuelve al enlace del pie"), await p.evaluate(() => document.activeElement.hasAttribute("data-consent-open")));
+    // Autocompletado: anuncios para lectores de pantalla y error ligado al campo
+    await p.fill("#from", ""); await p.type("#from", "valen", { delay: 20 });
+    await p.waitForTimeout(700);
+    check(T("se anuncia el número de aeropuertos encontrados"), /encontrad/.test(await p.textContent("#from-st")), await p.textContent("#from-st"));
+    await p.fill("#to", ""); await p.type("#to", "zzqq", { delay: 20 }); await p.waitForTimeout(700);
+    check(T("el mensaje sin resultados es una opción desactivada, no un elemento suelto en la lista"), (await p.getAttribute("#to-list li", "role")) === "option" && (await p.getAttribute("#to-list li", "aria-disabled")) === "true");
+    check(T("el mensaje sin resultados se anuncia"), /No encontramos/.test(await p.textContent("#to-st")));
+    await p.keyboard.press("Tab"); await p.waitForTimeout(300);
+    check(T("al salir sin elegir, el campo queda marcado como no válido"), (await p.getAttribute("#to", "aria-invalid")) === "true");
+    check(T("el error se ve bajo el campo y está ligado con aria-describedby"), (await p.isVisible("#to-err")) && (await p.getAttribute("#to", "aria-describedby")) === "to-err");
+    await p.fill("#to", ""); await p.type("#to", "BCN", { delay: 20 }); await p.keyboard.press("Enter"); await p.waitForTimeout(200);
+    check(T("al elegir un aeropuerto desaparece el error"), (await p.getAttribute("#to", "aria-invalid")) === null && !(await p.isVisible("#to-err")));
+    // Botones y opciones con al menos 24 x 24 px (WCAG 2.5.8), sin desbordamiento horizontal
+    const small = await p.$$eval("#calc button, #calc select, #calc input[type=text], #calc .chips span, .top nav a", (els) => els.filter((e) => e.offsetParent).map((e) => e.getBoundingClientRect()).filter((r) => r.width < 24 || r.height < 24).length);
+    check(T("controles de la calculadora y del menú de al menos 24 px"), small === 0, String(small));
+    check(T("sin desbordamiento horizontal a 320 px"), await p.evaluate(() => document.documentElement.scrollWidth <= 320));
+    await ctx.close();
+  }
+
   await browser.close();
   console.log(`\nNavegador: ${ok} comprobaciones correctas, ${fail} fallos`);
   process.exit(fail ? 1 : 0);
