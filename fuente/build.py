@@ -118,8 +118,10 @@ S = {
   foot3="Última revisión de importes y normas: {d}.", f_embed="Pon la calculadora en tu web", f_about="Quiénes somos y fuentes", f_legal="Aviso legal", f_privacy="Privacidad",
   calc_h="Calcula tu compensación", from_="Origen", to="Destino final", ph="Ciudad o código", airline="Aerolínea",
   al_unknown="No lo sé / no aparece", al_eu="Otra aerolínea europea", al_noneu="Otra aerolínea no europea",
+  via="¿Hiciste escala?", v=[("direct", "No, vuelo directo"), ("same", "Sí, una reserva y la misma aerolínea"), ("mixed", "Sí, una reserva y aerolíneas distintas"), ("separate", "Sí, con reservas separadas")],
+  fare="El billete", fa=[("public", "Lo pagué (también con puntos o en un paquete)"), ("staff", "Gratis o con tarifa no pública (p. ej., de empleado)")],
   what="Qué pasó", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
-  delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
+  delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h justas a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
   notice="Te avisaron de la cancelación con", n=[("gt14", "14 días o más"), ("7to14", "Entre 7 y 13 días"), ("lt7", "Menos de 7 días"), ("unknown", "No lo sé")],
   reroute="¿Te ofrecieron un vuelo alternativo?", rr=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
   rdep="El vuelo alternativo salía, respecto al original…", rd=[("le1", "Como mucho 1 h antes, o más tarde"), ("1to2", "Entre 1 y 2 h antes"), ("gt2", "Más de 2 h antes"), ("unknown", "No lo sé")],
@@ -129,7 +131,7 @@ S = {
   checkin="¿Te presentaste a tiempo a facturación y embarque?", ci=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
   dreason="Motivo de la denegación", dr=[("overbooking", "Overbooking u otro motivo de la aerolínea"), ("reasonable", "Salud, seguridad o documentación"), ("unknown", "No me lo explicaron")],
   cause="Motivo que te dio la aerolínea", c=[("unknown", "No me lo dijeron"), ("tech", "Avería técnica"), ("crew", "Falta o enfermedad de la tripulación"),
-    ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("atc", "Restricción de control aéreo (ATC)"),
+    ("strike_own", "Huelga del personal de la aerolínea"), ("strike_ext", "Huelga de controladores o del aeropuerto"), ("strike_sub", "Huelga de una empresa contratada por la aerolínea (handling, catering…)"), ("atc", "Restricción de control aéreo (ATC)"),
     ("weather", "Meteorología adversa"), ("security", "Seguridad (amenaza, cierre del espacio aéreo)"), ("bird", "Choque con un ave u objeto en la pista"),
     ("knock", "Retraso del vuelo anterior del avión")],
   empty="Elige origen y destino para ver el resultado.", error="No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.", retry="Reintentar",
@@ -149,8 +151,10 @@ S = {
   foot3="Amounts and rules last reviewed: {d}.", f_embed="", f_about="About us and sources", f_legal="Legal notice", f_privacy="Privacy",
   calc_h="Check your compensation", from_="From", to="Final destination", ph="City or airport code", airline="Airline",
   al_unknown="Not sure / not listed", al_eu="Another European airline", al_noneu="Another non-European airline",
+  via="Did you have a connection?", v=[("direct", "No, direct flight"), ("same", "Yes, one booking, same airline"), ("mixed", "Yes, one booking, different airlines"), ("separate", "Yes, separate bookings")],
+  fare="Your ticket", fa=[("public", "I paid for it (points or package holidays too)"), ("staff", "Free or a non-public fare (e.g. staff ticket)")],
   what="What happened", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
-  delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
+  delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "Exactly 3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
   notice="You were told about the cancellation", n=[("gt14", "14 days or more ahead"), ("7to14", "7 to 13 days ahead"), ("lt7", "Under 7 days ahead"), ("unknown", "Not sure")],
   reroute="Were you offered an alternative flight?", rr=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
   rdep="Compared with the original, the alternative left…", rd=[("le1", "Up to 1 h earlier, or later"), ("1to2", "1 to 2 h earlier"), ("gt2", "Over 2 h earlier"), ("unknown", "Not sure")],
@@ -160,7 +164,7 @@ S = {
   checkin="Did you check in and get to the gate on time?", ci=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
   dreason="Reason for refusing you", dr=[("overbooking", "Overbooking or another airline reason"), ("reasonable", "Health, safety or documents"), ("unknown", "Not explained")],
   cause="Reason the airline gave", c=[("unknown", "None given"), ("tech", "Technical fault"), ("crew", "Crew shortage or illness"),
-    ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("atc", "Air traffic control restriction"),
+    ("strike_own", "Airline staff strike"), ("strike_ext", "Air traffic control or airport strike"), ("strike_sub", "Strike at a company working for the airline (ground handling, catering…)"), ("atc", "Air traffic control restriction"),
     ("weather", "Bad weather"), ("security", "Security (threat, airspace closure)"), ("bird", "Bird strike or object on the runway"),
     ("knock", "Earlier flight by the same aircraft was late")],
   empty="Choose where you flew from and to.", error="The airport list could not load. Check your connection and try again.", retry="Try again",
@@ -243,6 +247,7 @@ def calculator(l, airline_slug, dep, arr):
  <div class="field"><label for="to">{s["to"]}</label><input type="text" id="to" data-code="{arr}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="{s["ph"]}"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
 <div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
+<fieldset id="grp-via"><legend>{s["via"]}</legend><div class="chips chips-wide">{chips("via", s["v"], "direct")}</div></fieldset>
 <fieldset><legend>{s["what"]}</legend><div class="chips">{chips("what", s["w"], "delay")}</div></fieldset>
 <fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
 <fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
@@ -253,6 +258,7 @@ def calculator(l, airline_slug, dep, arr):
 <fieldset id="grp-denied" hidden><legend>{s["denied"]}</legend><div class="chips">{chips("denied", s["dn"], "unknown")}</div></fieldset>
 <fieldset id="grp-checkin" hidden><legend>{s["checkin"]}</legend><div class="chips">{chips("checkin", s["ci"], "unknown")}</div></fieldset>
 <fieldset id="grp-dreason" hidden><legend>{s["dreason"]}</legend><div class="chips chips-wide">{chips("dreason", s["dr"], "unknown")}</div></fieldset>
+<fieldset id="grp-fare"><legend>{s["fare"]}</legend><div class="chips chips-wide">{chips("fare", s["fa"], "public")}</div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">{s["empty"]}</p>
@@ -668,7 +674,7 @@ def extra_jsonld(l, title, path):
 
 
 def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.min.json"):
-    cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
     return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main>{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
             f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script>\n<script>{JS}</script>")
 
@@ -871,7 +877,7 @@ def build():
     cmp_urls += guides.build({"emit": emit, "page": page})
 
     # Widget for blogs (ES) + page explaining how to embed it
-    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
     winner = (f"<title>Calculadora de compensación de vuelos · {BRAND}</title><meta name=\"robots\" content=\"noindex\">{FONTS}<style>{CSS}</style>"
               f"<div class=\"embed\">{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></div>"
               f"<script>window.CTT={json.dumps(wcfg, ensure_ascii=False)};</script><script>{JS}</script>")
