@@ -41,8 +41,8 @@
   "eu": "yes",
   "uk": false,
   "country_en": "Spain",
-  "claim_es": "https://www.iberiaexpress.com/",
-  "claim_en": "https://www.iberiaexpress.com/",
+  "claim_es": "https://www.iberiaexpress.com/informacion-general/contacto/atencion-cliente",
+  "claim_en": "https://www.iberiaexpress.com/informacion-general/contacto/atencion-cliente",
   "note_es": "Se reclama desde la sección de atención al cliente de su web.",
   "note_en": "Claim through the customer service section of its website."
  },
@@ -63,8 +63,8 @@
   "eu": "yes",
   "uk": false,
   "country_en": "Spain",
-  "claim_es": "https://www.volotea.com/en/contact/",
-  "claim_en": "https://www.volotea.com/en/contact/",
+  "claim_es": "https://www.volotea.com/en/contact/category/11014405963421",
+  "claim_en": "https://www.volotea.com/en/contact/category/11014405963421",
   "note_es": "Se reclama desde su centro de ayuda (formulario de reclamación).",
   "note_en": "Claim through its help centre (complaint form)."
  },
