@@ -1,0 +1,411 @@
+{
+ "_meta": "Datos comprobados en la web oficial de cada aerolínea. Solo hechos que la aerolínea publica; sin estadísticas ni opiniones. Fecha y fuentes por entrada.",
+ "iberia": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario de vuelo retrasado",
+    "en": "Delayed flight form",
+    "url": "https://www.iberia.com/es/reclamaciones/retraso-vuelo/"
+   },
+   {
+    "es": "Formulario de vuelo cancelado",
+    "en": "Cancelled flight form",
+    "url": "https://www.iberia.com/es/reclamaciones/cancelacion-vuelo/"
+   },
+   {
+    "es": "Consultar el estado de una reclamación",
+    "en": "Check the status of a claim",
+    "url": "https://www.iberia.com/es/reclamaciones/consultar-estado-reclamacion/"
+   }
+  ],
+  "steps_es": [
+   "Elige el motivo (retraso o cancelación) en su página de reclamaciones y rellena el formulario con el código de reserva y el número de billete.",
+   "Puedes reclamar en nombre de otra persona si tienes su autorización y aportas los datos del vuelo y del pasajero.",
+   "Iberia indica que atiende reclamaciones en español, catalán, portugués, inglés, francés, alemán, italiano, chino y japonés."
+  ],
+  "steps_en": [
+   "Choose the reason (delay or cancellation) on its claims page and fill in the form with your booking code and ticket number.",
+   "You can claim on someone else's behalf if you have their authorisation and give the flight and passenger details.",
+   "Iberia says it handles claims in Spanish, Catalan, Portuguese, English, French, German, Italian, Chinese and Japanese."
+  ],
+  "follow_es": [
+   "Recibirás un correo de confirmación con el número de expediente: guárdalo.",
+   "Puedes seguir el estado de la reclamación en su web, y la respuesta llega al correo que diste (revisa también la carpeta de spam).",
+   "Iberia publica que su objetivo es responder en 7 días laborables, y hasta 21 en los casos complejos."
+  ],
+  "follow_en": [
+   "You'll get a confirmation email with a case number: keep it.",
+   "You can track the claim on its website, and the reply goes to the email address you gave (check your spam folder too).",
+   "Iberia states that it aims to reply within 7 working days, and up to 21 for complex cases."
+  ],
+  "sources": [
+   {
+    "label": "Iberia: Reclamaciones y justificantes",
+    "url": "https://www.iberia.com/es/reclamaciones-justificantes/"
+   }
+  ]
+ },
+ "vueling": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Asistente de compensación de Vueling",
+    "en": "Vueling compensation assistant",
+    "url": "https://www.vueling.com/es/atencion-al-cliente/asistentes/compensacion"
+   }
+  ],
+  "steps_es": [
+   "La compensación se pide en su web con un asistente de chat, no con un formulario clásico.",
+   "El asistente te pide el código de reserva y el correo con el que compraste, o bien el código, el aeropuerto de origen y la fecha del primer vuelo.",
+   "Si el retraso supera 5 horas y renuncias al viaje, el reembolso se pide aparte, desde su centro de atención al cliente."
+  ],
+  "steps_en": [
+   "Compensation is requested on its website through a chat assistant, not a classic form.",
+   "The assistant asks for your booking code and the email you booked with, or the code, departure airport and date of the first flight.",
+   "If the delay is over 5 hours and you give up the trip, the refund is requested separately through its customer service area."
+  ],
+  "follow_es": [
+   "Vueling indica que el reembolso de los trayectos no utilizados se hace en un máximo de 7 días desde la solicitud, por el mismo método de pago (es lo que exige el art. 8 del reglamento)."
+  ],
+  "follow_en": [
+   "Vueling says refunds for unused flights are made within 7 days of the request, to the original payment method (as Article 8 of the regulation requires)."
+  ],
+  "sources": [
+   {
+    "label": "Vueling ayuda: Retraso en mi vuelo",
+    "url": "https://help.vueling.com/hc/es/articles/24476547783569-Retraso-en-mi-vuelo"
+   },
+   {
+    "label": "Vueling: asistente de compensación",
+    "url": "https://www.vueling.com/es/atencion-al-cliente/asistentes/compensacion"
+   }
+  ]
+ },
+ "air-europa": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario de reclamaciones de Air Europa",
+    "en": "Air Europa claims form",
+    "url": "https://customerservice.aireuropa.com/complaints/es/es/complaints-compliments/claims-form"
+   }
+  ],
+  "steps_es": [
+   "En el formulario elige el motivo (retraso, cancelación o denegación de embarque) e identifica la reserva con tus apellidos y el localizador o el número de billete.",
+   "Si el número de vuelo va de UX-2000 a UX-3999, es un código compartido operado por otra aerolínea: Air Europa pide reclamar a la que lo operó.",
+   "Si tenías billetes independientes (no conectados en la misma reserva), Air Europa avisa de que no asume la pérdida del otro vuelo."
+  ],
+  "steps_en": [
+   "On the form, choose the reason (delay, cancellation or denied boarding) and identify the booking with your surname and booking reference or ticket number.",
+   "If the flight number is between UX-2000 and UX-3999, it's a codeshare operated by another airline: Air Europa asks you to claim from the operating airline.",
+   "If you had separate tickets (not connected on the same booking), Air Europa warns it won't cover the missed onward flight."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "sources": [
+   {
+    "label": "Air Europa: formulario de reclamaciones",
+    "url": "https://customerservice.aireuropa.com/complaints/es/es/complaints-compliments/claims-form"
+   }
+  ]
+ },
+ "volotea": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario por retraso (en inglés)",
+    "en": "Delayed flight form",
+    "url": "https://www.volotea.com/en/contact/complaints-delay"
+   },
+   {
+    "es": "Formulario por cancelación (en inglés)",
+    "en": "Cancelled flight form",
+    "url": "https://www.volotea.com/en/contact/complaints-cancellation"
+   },
+   {
+    "es": "Formulario por denegación de embarque (en inglés)",
+    "en": "Denied boarding form",
+    "url": "https://www.volotea.com/en/contact/complaints-denied-boarding"
+   }
+  ],
+  "steps_es": [
+   "Volotea recomienda esperar al menos 7 días desde la fecha del vuelo antes de reclamar, porque sus sistemas no se sincronizan al momento con los del aeropuerto.",
+   "Cada pasajero tiene que rellenar su propio formulario: las reclamaciones se tramitan de forma individual.",
+   "Ten a mano el localizador (6 caracteres, en el correo de confirmación) y, según el caso, copia de la tarjeta de embarque y facturas de los gastos.",
+   "Los formularios están en inglés: la versión en español de la web no los tiene."
+  ],
+  "steps_en": [
+   "Volotea recommends waiting at least 7 days after the flight date before claiming, because its systems don't sync with the airport's in real time.",
+   "Each passenger has to fill in their own form: claims are handled individually.",
+   "Have your booking number (6 characters, in the confirmation email) and, depending on the case, a copy of your boarding pass and receipts for expenses.",
+   "The forms are in English only: the Spanish version of the site doesn't have them."
+  ],
+  "follow_es": [
+   "Volotea indica que su objetivo es tramitar la reclamación en 6 semanas.",
+   "Si no estás de acuerdo con la respuesta, Volotea remite al organismo de resolución alternativa de conflictos (en España, AESA)."
+  ],
+  "follow_en": [
+   "Volotea says it aims to process claims within 6 weeks.",
+   "If you disagree with the reply, Volotea refers you to the alternative dispute resolution body (in Spain, AESA)."
+  ],
+  "sources": [
+   {
+    "label": "Volotea: Claims (centro de ayuda)",
+    "url": "https://www.volotea.com/en/contact/category/11014405963421"
+   },
+   {
+    "label": "Volotea: formulario por retraso",
+    "url": "https://www.volotea.com/en/contact/complaints-delay"
+   }
+  ]
+ },
+ "easyjet": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario de reclamación EC261 (en español)",
+    "en": "EC261 claim form",
+    "url": "https://www.easyjet.com/claim/es/eu261"
+   }
+  ],
+  "steps_es": [
+   "Datos del vuelo: referencia de la reserva, número y fecha del vuelo, motivo y aeropuertos de salida y llegada.",
+   "Quien reclama tiene que ser un pasajero de la reserva y usar el mismo nombre que en ella.",
+   "El formulario de easyJet pide la cuenta bancaria en la que cobrar y la lista de pasajeros; los documentos de apoyo son opcionales."
+  ],
+  "steps_en": [
+   "Flight details: booking reference, flight number and date, reason, and departure and arrival airports.",
+   "The claimant must be a passenger on the booking and use the same name as on it.",
+   "easyJet’s form asks for the bank account to be paid into and the list of passengers; supporting documents are optional."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "caveat_es": "El formulario de easyJet dice que no paga compensación si la causa fueron restricciones del control aéreo. En vuelos con el reglamento europeo, el Tribunal de Justicia de la UE ha dicho que una restricción de control aéreo no exime por sí sola: la aerolínea tiene que demostrar que la causa de fondo era extraordinaria (asunto C-108/26, 2026).",
+  "caveat_en": "easyJet's form says it doesn't pay compensation for air traffic control restrictions. For flights under EU261, the EU Court of Justice has held that an ATC restriction is not an exemption in itself: the airline must prove the underlying cause was extraordinary (Case C-108/26, 2026). UK courts are not bound by this 2026 ruling for UK261 claims.",
+  "sources": [
+   {
+    "label": "easyJet: formulario de reclamación EC261",
+    "url": "https://www.easyjet.com/claim/es/eu261"
+   }
+  ]
+ },
+ "iberia-express": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Atención al cliente de Iberia Express (formulario de reclamaciones)",
+    "en": "Iberia Express customer service (claims form)",
+    "url": "https://www.iberiaexpress.com/informacion-general/contacto/atencion-cliente"
+   }
+  ],
+  "steps_es": [
+   "En su página de atención al cliente, el apartado «Reclamaciones e incidencias» enlaza el formulario de reclamaciones.",
+   "También acepta reclamaciones por correo postal dirigido a su domicilio social: Calle Alcañiz 23, 1.ª planta, 28042 Madrid. Si la envías así, hazlo con acuse de recibo.",
+   "Ojo: la sección «Solicitudes online» de su web es para bonos y cambios, no para reclamar la compensación."
+  ],
+  "steps_en": [
+   "On its customer service page, the 'Reclamaciones e incidencias' section links to the claims form.",
+   "It also accepts claims by post to its registered office: Calle Alcañiz 23, 1st floor, 28042 Madrid, Spain. If you post it, use a tracked service.",
+   "Note: the 'Solicitudes online' section of its website is for vouchers and changes, not for compensation claims."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "sources": [
+   {
+    "label": "Iberia Express: atención al cliente",
+    "url": "https://www.iberiaexpress.com/informacion-general/contacto/atencion-cliente"
+   }
+  ]
+ },
+ "jet2": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario de reclamación de Jet2 (en inglés)",
+    "en": "Jet2 claim form",
+    "url": "https://www.jet2.com/delays-and-cancellations/submit-a-claim"
+   }
+  ],
+  "steps_es": [
+   "Cuenta el retraso a la llegada, no a la salida.",
+   "Copia los datos exactamente como en la confirmación (nombres, número y fecha del vuelo original): con datos incorrectos Jet2 no tramita la reclamación.",
+   "Para reclamar por pasajeros que no son de tu grupo familiar necesitas su permiso firmado por escrito, y no puedes incluir a pasajeros de otra reserva.",
+   "Por correo postal: EU261 Team, PO Box 284, Leeds LS11 1GE (Reino Unido). Jet2 tiene guías para clientes en español y catalán."
+  ],
+  "steps_en": [
+   "The delay counts on arrival, not departure.",
+   "Copy the details exactly as on your confirmation (names, original flight number and date): Jet2 won't process claims with wrong details.",
+   "To claim for passengers outside your family group you need their signed written permission, and you can't include passengers on another booking.",
+   "By post: EU261 Team, PO Box 284, Leeds LS11 1GE."
+  ],
+  "follow_es": [
+   "Jet2 indica que su objetivo es contactarte en 28 días.",
+   "Si no estás de acuerdo: el equipo de quejas de la CAA (PACT) para vuelos con UK261; en vuelos que salen de España, AESA."
+  ],
+  "follow_en": [
+   "Jet2 says it aims to contact you within 28 days.",
+   "If you disagree: the CAA's Passenger Advice and Complaints Team (PACT) for UK261 flights; for flights departing Spain, AESA."
+  ],
+  "caveat_es": "Jet2 cita las restricciones de control aéreo entre los ejemplos de circunstancia extraordinaria. En vuelos con el reglamento europeo (los que salen de España), el Tribunal de Justicia de la UE exige que la aerolínea demuestre que la causa de fondo era extraordinaria (asunto C-108/26, 2026).",
+  "caveat_en": "Jet2 lists ATC restrictions among examples of extraordinary circumstances. For flights under EU261 (for example, flights departing Spain), the EU Court of Justice requires the airline to prove the underlying cause was extraordinary (Case C-108/26, 2026); UK courts are not bound by that ruling for UK261.",
+  "sources": [
+   {
+    "label": "Jet2: Flight delay and cancellation claims",
+    "url": "https://www.jet2.com/en/Delays-and-cancellations"
+   }
+  ]
+ },
+ "tui": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario de vuelo retrasado de TUI Airways (en inglés)",
+    "en": "TUI Airways delayed flight form",
+    "url": "https://www.tui.co.uk/destinations/contact-us/flight-delays"
+   }
+  ],
+  "steps_es": [
+   "El formulario es solo para vuelos de TUI Airways, con número que empieza por TOM, BY u OR. Si volaste con otra aerolínea dentro de tu paquete, reclama en la web de esa aerolínea.",
+   "TUI advierte de que los datos inexactos o incompletos retrasan la revisión."
+  ],
+  "steps_en": [
+   "The form is only for TUI Airways flights, with flight numbers starting TOM, BY or OR. If another airline operated your flight, claim on that airline's website.",
+   "TUI warns that inaccurate or incomplete details delay the assessment."
+  ],
+  "follow_es": [
+   "Tras enviarlo recibes un acuse automático y no hay más avisos hasta la respuesta final, con el resultado y el importe o la explicación del rechazo.",
+   "TUI indica que responde en un plazo de 56 días."
+  ],
+  "follow_en": [
+   "After sending it you get an automatic acknowledgement and no further updates until the final reply, which gives the outcome and amount, or the reason for refusal.",
+   "TUI says you'll receive a response within 56 days."
+  ],
+  "sources": [
+   {
+    "label": "TUI: How do I claim my flight delay compensation?",
+    "url": "https://www.tui.co.uk/destinations/faq/airport-flights-and-luggage/feedback-on-your-flight-and-airport-experience/how-do-i-claim-my-flight-delay-compensation"
+   },
+   {
+    "label": "TUI: what happens after the form",
+    "url": "https://www.tui.co.uk/destinations/faq/airport-flights-and-luggage/feedback-on-your-flight-and-airport-experience/i-have-completed-the-delayed-flight-online-form-what-happens-now"
+   }
+  ]
+ },
+ "binter": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Formulario para consultas o reclamaciones de Binter",
+    "en": "Binter enquiries and claims form",
+    "url": "https://www.bintercanarias.com/es/formulario-contacto"
+   }
+  ],
+  "steps_es": [
+   "La web oficial de Binter es bintercanarias.com. Su página de derechos del pasajero resume el Reglamento 261/2004.",
+   "La reclamación se envía con el formulario de consultas o reclamaciones: en el primer paso eliges hacer una reclamación."
+  ],
+  "steps_en": [
+   "Binter's official website is bintercanarias.com. Its passenger rights page summarises Regulation 261/2004.",
+   "Claims are sent with its enquiries and claims form: in the first step you choose to make a claim."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "sources": [
+   {
+    "label": "Binter: Derechos del pasajero",
+    "url": "https://www.bintercanarias.com/es/informacion/derechos-del-pasajero"
+   },
+   {
+    "label": "Binter: formulario de contacto",
+    "url": "https://www.bintercanarias.com/es/formulario-contacto"
+   }
+  ]
+ },
+ "world2fly": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Centro de atención de W2Fly (Reclamaciones sobre servicios)",
+    "en": "W2Fly customer service (claims section, in Spanish)",
+    "url": "https://www.w2fly.es/es-es/contacto/centro-de-atencion"
+   }
+  ],
+  "steps_es": [
+   "World2fly opera ahora con la marca W2Fly y su web es w2fly.es. La empresa es World2Fly S.L.U., de Palma; en vuelos con origen o destino Portugal opera World2Fly Portugal S.A.",
+   "En su centro de atención, el apartado «Reclamaciones sobre servicios» abre el formulario. Las incidencias de equipaje tienen un formulario aparte."
+  ],
+  "steps_en": [
+   "World2fly now trades as W2Fly, at w2fly.es. The company is World2Fly S.L.U. (Palma); flights to or from Portugal are operated by World2Fly Portugal S.A.",
+   "On its customer service page, the 'Reclamaciones sobre servicios' section opens the form. Baggage problems have a separate form."
+  ],
+  "follow_es": [
+   "Sus condiciones de transporte remiten al procedimiento de resolución alternativa de AESA (vuelos desde aeropuertos españoles) o de la ANAC (Portugal)."
+  ],
+  "follow_en": [
+   "Its conditions of carriage refer to AESA's alternative dispute resolution (flights from Spanish airports) or ANAC (Portugal)."
+  ],
+  "sources": [
+   {
+    "label": "W2Fly: centro de atención",
+    "url": "https://www.w2fly.es/es-es/contacto/centro-de-atencion"
+   },
+   {
+    "label": "W2Fly: condiciones de transporte",
+    "url": "https://www.w2fly.es/es-es/condiciones-de-transporte"
+   }
+  ]
+ },
+ "air-france": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "Solicitud de reembolso, vale o compensación",
+    "en": "Refund, voucher or compensation request",
+    "url": "https://wwws.airfrance.es/contact/topic/refund-compensation"
+   }
+  ],
+  "steps_es": [
+   "En «Reembolso, vale y compensación» eliges el motivo y sigues las etapas para pedir el reembolso, un vale o la compensación.",
+   "Si te ofrecen un vale en lugar de dinero, puedes rechazarlo: el reglamento exige el pago en dinero salvo que aceptes el vale por escrito (art. 7.3)."
+  ],
+  "steps_en": [
+   "On 'Refunds, vouchers and compensation', choose the reason and follow the steps to request a refund, a voucher or compensation.",
+   "If you're offered a voucher instead of money you can refuse it: the regulation requires payment in money unless you agree to a voucher in writing (Art. 7(3))."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "sources": [
+   {
+    "label": "Air France: Reembolso, vale y compensación",
+    "url": "https://wwws.airfrance.es/information/legal/remboursement"
+   }
+  ]
+ },
+ "british-airways": {
+  "checked": "2026-10-23",
+  "forms": [
+   {
+    "es": "British Airways: compensación por cancelación (normas UE/UK)",
+    "en": "British Airways: flight cancellation compensation",
+    "url": "https://www.britishairways.com/content/information/legal/flight-cancellation-compensation"
+   }
+  ],
+  "steps_es": [
+   "Si reservaste en ba.com, British Airways ofrece chat (solo en inglés), su centro de ayuda y sus vías de contacto.",
+   "Si reservaste con una agencia, un turoperador u otra web, BA pide dirigir las consultas a quien te vendió el billete. La compensación, en cambio, se reclama a la aerolínea que operó el vuelo."
+  ],
+  "steps_en": [
+   "If you booked on ba.com, British Airways offers live chat (English only), its Help Centre and contact options.",
+   "If you booked through an agent, tour operator or another website, BA asks you to contact them with queries. Compensation itself is owed by the airline that operated the flight."
+  ],
+  "follow_es": [],
+  "follow_en": [],
+  "sources": [
+   {
+    "label": "British Airways: Delays, cancellations and refunds",
+    "url": "https://www.britishairways.com/content/information/delayed-or-cancelled-flights"
+   }
+  ]
+ }
+}

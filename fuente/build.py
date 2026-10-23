@@ -29,6 +29,7 @@ PREV = os.path.join(ROOT, "preview")
 CSS = open(os.path.join(SRC, "style.css"), encoding="utf-8").read()
 JS = open(os.path.join(SRC, "app.js"), encoding="utf-8").read()
 AIRLINES = json.load(open(os.path.join(ROOT, "data", "airlines.json"), encoding="utf-8"))
+CLAIMS = {k: v for k, v in json.load(open(os.path.join(ROOT, "data", "airline_claims.json"), encoding="utf-8")).items() if not k.startswith("_")}
 AIRPORTS = {a[0]: a for a in json.load(open(os.path.join(ROOT, "data", "airports.min.json"), encoding="utf-8"))}
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800'
@@ -482,6 +483,34 @@ def eu_amount(d, intra, h4=False):
     return full // 2 if (h4 and full == 600) else full
 
 
+def claim_steps(l, a):
+    """Airline-specific claim procedure, only from facts checked on the airline's official website (data/airline_claims.json)."""
+    c = CLAIMS.get(a["slug"])
+    if not c:
+        return ""
+    n = e(a["name"])
+    forms = "".join(f'<li><a href="{e(f["url"])}" rel="nofollow noopener" target="_blank">{e(f[l])}</a></li>' for f in c["forms"])
+    steps = "".join(f"<li>{e(x)}</li>" for x in c["steps_" + l])
+    follow = "".join(f"<li>{e(x)}</li>" for x in c["follow_" + l])
+    caveat = c.get("caveat_" + l)
+    src = ", ".join(f'<a href="{e(x["url"])}" rel="nofollow noopener" target="_blank">{e(x["label"])}</a>' for x in c["sources"])
+    d = c["checked"].split("-")
+    when = f"{int(d[2])}-{int(d[1])}-{d[0]}" if l == "es" else f"{int(d[2])} {['January','February','March','April','May','June','July','August','September','October','November','December'][int(d[1]) - 1]} {d[0]}"
+    if l == "es":
+        return (f'<h2 style="margin-top:32px">Cómo reclamar a {n}, paso a paso</h2>'
+                f'<p class="lead">Lo que publica {n} en su web oficial, comprobado el {when}. Pide siempre de forma expresa la compensación del Reglamento (CE) 261/2004.</p>'
+                f'<h3>Canal oficial</h3><ul>{forms}</ul><h3>Qué te pide</h3><ol class="steps">{steps}</ol>'
+                + (f'<h3>Después de enviarla</h3><ul>{follow}</ul>' if follow else "")
+                + (f'<p><strong>A tener en cuenta:</strong> {e(caveat)}</p>' if caveat else "")
+                + f'<p class="lead">Fuentes: {src}.</p>')
+    return (f'<h2 style="margin-top:32px">How to claim from {n}, step by step</h2>'
+            f'<p class="lead">What {n} publishes on its official website, checked on {when}. Always ask explicitly for compensation under EU261 (or UK261).</p>'
+            f'<h3>Official channel</h3><ul>{forms}</ul><h3>What it asks for</h3><ol class="steps">{steps}</ol>'
+            + (f'<h3>After you send it</h3><ul>{follow}</ul>' if follow else "")
+            + (f'<p><strong>Worth knowing:</strong> {e(caveat)}</p>' if caveat else "")
+            + f'<p class="lead">Sources: {src}.</p>')
+
+
 def airline_section(l, a):
     rows, seen = [], set()
     for o, dcode in AL_ROUTES.get(a["slug"], []):
@@ -505,20 +534,21 @@ def airline_section(l, a):
             note = f"{cur(lo)} for 3–4 h late; {cur(hi)} from 4 h" if long_haul else f"{cur(full)} for 3 h or more"
             rows.append(f"<tr><td>{nA} → {nB}</td><td>{d:,} km</td><td>{note}</td></tr>")
     n, slug = e(a["name"]), a["slug"]
-    claim = ""
     if l == "es":
         return (f'<section class="ref"><div class="wrap"><h2>Cuánto paga {n}: ejemplos con distancias reales</h2>'
                 f'<p class="lead">El importe depende de la distancia del vuelo, no de lo que pagaste por el billete. Estos son ejemplos de trayectos de {n}, con la distancia calculada como manda el reglamento:</p>'
                 f'<div class="board"><table><thead><tr><th>Trayecto</th><th>Distancia</th><th>Compensación por pasajero</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+                + (claim_steps(l, a) or
                 f'<h2 style="margin-top:32px">Cómo reclamar a {n}</h2>'
                 f'<p>Primero reclama directamente a {n} por escrito, desde el formulario de reclamaciones de su web, con tu número de reserva y la tarjeta de embarque. '
-                f'Pide expresamente la compensación del Reglamento (CE) 261/2004 además del reembolso o los gastos.</p>{claim}</div></section>')
+                f'Pide expresamente la compensación del Reglamento (CE) 261/2004 además del reembolso o los gastos.</p>') + '</div></section>')
     return (f'<section class="ref"><div class="wrap"><h2>What {n} pays: examples with real distances</h2>'
             f'<p class="lead">The amount depends on the flight distance, not the ticket price. Here are example {n} routes with the distance worked out the way the regulation requires (EU261 amounts):</p>'
             f'<div class="board"><table><thead><tr><th>Route</th><th>Distance</th><th>Compensation per passenger</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+            + (claim_steps(l, a) or
             f'<h2 style="margin-top:32px">How to claim from {n}</h2>'
             f'<p>Claim from {n} in writing first, through the claims form on its website, with your booking reference and boarding pass. '
-            f'Ask explicitly for compensation under EU261 (or UK261) as well as any refund or expenses.</p>{claim}</div></section>')
+            f'Ask explicitly for compensation under EU261 (or UK261) as well as any refund or expenses.</p>') + '</div></section>')
 
 # ---------------------------------------------------------------- airline claim sheet (data-driven, sourced)
 AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa"
@@ -576,7 +606,8 @@ def airline_facts(l, a):
               "mixed": f"Depende de la compañía del grupo que operó el vuelo ({a['country']}). Mira el código del vuelo en la tarjeta de embarque o pregúntalo a la aerolínea.",
               "no": f"No. {a['name']} es una aerolínea de {a['country']}. El reglamento europeo solo cubre sus vuelos que salen de la UE, el EEE o Suiza."}[eu]),
             (f"¿Dónde reclamo a {a['name']}?",
-             f"En su canal oficial de reclamaciones (enlace más arriba), por escrito y guardando el justificante. {note}".strip()),
+             (f"En «{CLAIMS[a['slug']]['forms'][0]['es']}», enlazado más arriba. Guarda el justificante o el número que te den." if a["slug"] in CLAIMS else
+              f"En su canal oficial de reclamaciones (enlace más arriba), por escrito y guardando el justificante. {note}".strip())),
             (f"¿Y si mi vuelo con {a['name']} volvía a España desde fuera de Europa?",
              "Está cubierto por el reglamento europeo." if eu == "yes" else
              "Solo si lo operó su compañía europea; si lo operó la británica, se aplica UK261." if eu == "mixed" else
@@ -605,7 +636,8 @@ def airline_facts(l, a):
           "mixed": f"It depends on which group company operated the flight ({a['country_en']}). Check the flight number on your boarding pass or ask the airline.",
           "no": f"No. {a['name']} is an airline from {a['country_en']}. EU261 only covers its flights departing the EU, the EEA or Switzerland."}[eu]),
         (f"Where do I claim from {a['name']}?",
-         f"Through its official claims channel (link above), in writing, keeping proof that you sent it. {note}".strip()),
+         (f"Through '{CLAIMS[a['slug']]['forms'][0]['en']}', linked above. Keep the confirmation or reference number you're given." if a["slug"] in CLAIMS else
+          f"Through its official claims channel (link above), in writing, keeping proof that you sent it. {note}".strip())),
         (f"What about a {a['name']} flight into the UK from outside Europe?",
          "UK261 applies." if home_q else "It is not covered by UK261. Proven damage caused by the delay may be claimed under the Montreal Convention (Article 19)."),
     ]
