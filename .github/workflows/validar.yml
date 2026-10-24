@@ -47,3 +47,6 @@ jobs:
 
       - name: Coherencia y mantenimiento del calendario de huelgas
         run: python3 fuente/tests/test_mantenimiento.py
+
+      - name: URLs de reclamación sin destinos internos ni credenciales
+        run: python3 fuente/tests/test_canales_seguridad.py
