@@ -44,3 +44,6 @@ jobs:
 
       - name: Enlaces, SEO y datos
         run: python3 fuente/tests/test_sitio.py docs
+
+      - name: Coherencia y mantenimiento del calendario de huelgas
+        run: python3 fuente/tests/test_mantenimiento.py

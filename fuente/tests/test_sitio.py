@@ -166,6 +166,48 @@ def check_data():
                 err(f"{u} no enlaza el canal oficial de {a['name']}")
             if ("Plazos" if l == "es" else "Time limits") not in pg or "eur-lex.europa.eu" not in pg:
                 err(f"{u} no muestra plazos o la fuente legal")
+    # El canal oficial no puede ser la portada corporativa (error corregido: Binter, World2fly, Iberia Express).
+    # Excepción: subdominios dedicados solo a reclamaciones.
+    HOME_OK = {"eu261expenseclaim.ryanair.com"}
+    for a in airlines:
+        for key in ("claim_es", "claim_en"):
+            m = re.fullmatch(r"https://([^/]+)/?([a-z]{2}(-[a-z]{2})?/?)?", a[key])
+            if m and m.group(1) not in HOME_OK:
+                err(f"Aerolínea {a['slug']}: {key} es una portada, no una página de reclamaciones ({a[key]})")
+    # Fichas comprobadas en la web oficial (data/airline_claims.json): fecha, fuentes, ES/EN sincronizados y visibles
+    claims = {k: v for k, v in json.load(open(os.path.join(FUENTE, "data", "airline_claims.json"), encoding="utf-8")).items() if not k.startswith("_")}
+    for slug, c in claims.items():
+        if slug not in slugs:
+            err(f"airline_claims.json: aerolínea inexistente {slug}")
+            continue
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", c.get("checked", "")):
+            err(f"airline_claims.json: {slug} sin fecha de comprobación")
+        if not c.get("sources") or not c.get("forms"):
+            err(f"airline_claims.json: {slug} sin fuentes o sin canal")
+        for x in c.get("sources", []) + c.get("forms", []):
+            if not x["url"].startswith("https://"):
+                err(f"airline_claims.json: {slug} con URL no segura {x['url']}")
+        for part in ("steps", "follow"):
+            if len(c.get(part + "_es", [])) != len(c.get(part + "_en", [])):
+                err(f"airline_claims.json: {slug} con {part} distinto en español e inglés")
+        if bool(c.get("caveat_es")) != bool(c.get("caveat_en")):
+            err(f"airline_claims.json: {slug} con aviso solo en un idioma")
+        for l, u, h in (("es", f"/compensacion-retraso-{slug}/", "paso a paso"), ("en", f"/en/{slug}-delay-compensation/", "step by step")):
+            pg = pages.get(u, "")
+            if h not in pg:
+                err(f"{u} no muestra la ficha paso a paso comprobada")
+            for f in c["forms"]:
+                if html.escape(f["url"]) not in pg and f["url"] not in pg:
+                    err(f"{u} no enlaza {f['url']}")
+            for x in c["steps_" + l]:
+                if html.escape(x, quote=False) not in pg and html.escape(x) not in pg:
+                    err(f"{u} no muestra el paso: {x[:50]}")
+    # Ningún texto con estadísticas o tiempos inventados: los plazos de respuesta solo si se atribuyen a la aerolínea
+    for slug, c in claims.items():
+        for l in ("es", "en"):
+            for x in c["follow_" + l]:
+                if re.search(r"\d+ (días|days|semanas|weeks)", x) and not re.search(r"(indica|publica|says|states)", x):
+                    err(f"airline_claims.json: {slug} da un plazo sin atribuirlo a la aerolínea: {x[:60]}")
     sys.path.insert(0, FUENTE)
     import build  # noqa: E402  (solo lee datos; no genera el sitio)
     for slug, routes in build.AL_ROUTES.items():
