@@ -53,7 +53,7 @@ a { color: inherit; text-underline-offset: 3px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1.15rem/1 var(--f-display); letter-spacing: -0.01em; }
 .brand-mark { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 6px; background: var(--sign); color: var(--sign-ink); font: 700 1rem/1 var(--f-mono); }
 .top nav { display: flex; gap: 18px; font-size: 0.9rem; }
-.top nav a { text-decoration: none; opacity: 0.85; }
+.top nav a { text-decoration: none; opacity: 0.85; display: inline-block; padding-block: 3px; }
 .top nav a:hover { opacity: 1; text-decoration: underline; }
 
 /* Hero */
@@ -195,15 +195,23 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   .chips span { padding: 10px 6px; font-size: 0.88rem; hyphens: auto; overflow-wrap: anywhere; }
   .chips-wide { grid-template-columns: 1fr 1fr; }
 }
+
+/* Accessibility */
+.skip { position: absolute; left: 12px; top: -60px; z-index: 10000; background: var(--sign, #facc15); color: var(--sign-ink, #111827); padding: 10px 14px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+main:focus { outline: none; }
+.field-err { margin: 6px 0 0; font-size: 0.88rem; line-height: 1.35; color: var(--no); font-weight: 600; }
+.board[tabindex]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 </style>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});</script>
 <meta name="msvalidate.01" content="D3B289B2220FF34999D4248924B46B3C">
 <meta name="google-adsense-account" content="ca-pub-1079386437086971">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1079386437086971" crossorigin="anonymous"></script>
 </head>
-<body>
+<body><a class="skip" href="#main">Skip to content</a><div id="ck" role="region" aria-labelledby="ckh" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)"><span id="ckh" class="sr"></span><span id="ckt"></span> <a id="ckl" href="/privacidad/" style="color:#facc15;display:inline-block;padding:3px 0;min-height:24px"></a><div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end"><button type="button" id="ckn" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button><button type="button" id="cky" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button></div></div><script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='G-6JRCZVTNDG',on=false,b=document.getElementById('ck');function get(){try{return localStorage.getItem(k)}catch(e){return null}}function put(v){try{localStorage.setItem(k,v)}catch(e){}}function add(src){var s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s)}function start(){if(on)return;on=true;window['ga-disable-'+ID]=false;gtag('consent','update',{analytics_storage:'granted'});gtag('js',new Date());gtag('config',ID,{allow_google_signals:false,allow_ad_personalization_signals:false});add('https://www.googletagmanager.com/gtag/js?id='+ID);add('https://emrldtp.cc/NTgyNjYx.js?t=582661');window.vcAnalytics=true}function stop(){window.vcAnalytics=false;window['ga-disable-'+ID]=true;gtag('consent','update',{analytics_storage:'denied'});document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^_ga/.test(n)){['',location.hostname,'.'+location.hostname.replace(/^www\./,'')].forEach(function(d){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}var opener=null;function hide(){b.style.display='none';document.documentElement.style.scrollPaddingBottom='';if(opener&&opener.focus){opener.focus();opener=null}}function show(focus){document.getElementById('ckh').textContent=en?'Cookie notice':'Aviso de cookies';document.getElementById('ckl').textContent=en?'More info':'Más información';document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block';document.documentElement.style.scrollPaddingBottom=(b.offsetHeight+24)+'px';if(focus)document.getElementById('ckn').focus()}document.getElementById('cky').onclick=function(){put('y');hide();start()};document.getElementById('ckn').onclick=function(){put('n');hide();if(on){stop();on=false}};document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();opener=t;show(true)}var a=e.target.closest&&e.target.closest('[data-ads-consent]');if(a&&window.googlefc&&googlefc.callbackQueue){e.preventDefault();googlefc.callbackQueue.push(googlefc.showRevocationMessage)}});var v=get();if(v==='y')start();else if(!v)show()})();</script>
+
 <header class="top"><div class="wrap"><a class="brand" href="/en/"><span class="brand-mark" aria-hidden="true">€</span>VuelosClaim</a><nav aria-label="Main"><a href="/en/#cuanto">Amounts</a><a href="/en/#aerolineas">Airlines</a><a href="/en/#preguntas">FAQ</a></nav></div></header>
-<main><section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">EU261 and UK261</span><h1>Delayed flight between Liverpool and Spain? Here's what you're owed</h1><p class="lede">Pick your route below or enter your flight: we use the real distance from Liverpool to work out your compensation under UK261 and EU261.</p><ul class="facts facts-wide"><li><b>€250 / £220</b><span>flights up to 1,500 km</span></li><li><b>€400 / £350</b><span>1,500 to 3,500 km, or over 1,500 km within the EU</span></li><li><b>€600 / £520</b><span>over 3,500 km</span></li></ul></div><form class="calc" id="calc" novalidate>
+<main id="main" tabindex="-1"><section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">EU261 and UK261</span><h1>Delayed flight between Liverpool and Spain? Here's what you're owed</h1><p class="lede">Pick your route below or enter your flight: we use the real distance from Liverpool to work out your compensation under UK261 and EU261.</p><ul class="facts facts-wide"><li><b>€250 / £220</b><span>flights up to 1,500 km</span></li><li><b>€400 / £350</b><span>1,500 to 3,500 km, or over 1,500 km within the EU</span></li><li><b>€600 / £520</b><span>over 3,500 km</span></li></ul></div><form class="calc" id="calc" novalidate>
 <h2>Check your compensation</h2>
 <div class="row2">
  <div class="field"><label for="from">From</label><input type="text" id="from" data-code="LPL" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="from-list" placeholder="City or airport code"><ul class="ac" id="from-list" role="listbox" hidden></ul></div>
@@ -424,6 +432,8 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       acError: "No se ha podido cargar la lista de aeropuertos. Pulsa «Reintentar» más abajo.",
       acNone: "No encontramos ese aeropuerto. Prueba con la ciudad, el nombre o el código de 3 letras (MAD, BCN…).",
       pick: "Elige el aeropuerto en la lista que aparece al escribir.",
+      acCount: function (n) { return (n === 1 ? "1 aeropuerto encontrado" : n + " aeropuertos encontrados") + ". Usa las flechas arriba y abajo para elegir y pulsa Intro."; },
+      tableScroll: "tabla desplazable",
       same: "El origen y el destino son el mismo aeropuerto.",
       loadError: "No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.",
       offline: "Parece que no tienes conexión. Cuando vuelva, la lista de aeropuertos se cargará sola.",
@@ -522,6 +532,8 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       acError: "The airport list could not load. Press “Try again” below.",
       acNone: "We can't find that airport. Try the city, the airport name or its 3-letter code (LHR, MAN…).",
       pick: "Choose the airport from the list that appears as you type.",
+      acCount: function (n) { return (n === 1 ? "1 airport found" : n + " airports found") + ". Use the up and down arrows to choose and press Enter."; },
+      tableScroll: "scrollable table",
       same: "Departure and destination are the same airport.",
       loadError: "The airport list could not load. Check your connection and try again.",
       offline: "You seem to be offline. The airport list will load by itself when you reconnect.",
@@ -763,13 +775,24 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 
   function attach(input) {
     var list = document.getElementById(input.getAttribute("aria-controls"));
-    var items = [], active = -1;
+    var items = [], active = -1, sayT = null;
+    // Screen readers: announce the number of results or the message (the list itself only holds options)
+    var st = document.createElement("span"); st.className = "sr"; st.setAttribute("role", "status"); st.id = input.id + "-st";
+    input.parentNode.appendChild(st);
+    function say(text) { clearTimeout(sayT); sayT = setTimeout(function () { st.textContent = text; }, 450); }
+    // Visible error under the field, linked with aria-describedby
+    var err = document.createElement("p"); err.className = "field-err"; err.id = input.id + "-err"; err.hidden = true;
+    input.parentNode.appendChild(err);
+    function invalid(text) {
+      if (text) { err.textContent = text; err.hidden = false; input.setAttribute("aria-invalid", "true"); input.setAttribute("aria-describedby", err.id); }
+      else { err.hidden = true; input.removeAttribute("aria-invalid"); input.removeAttribute("aria-describedby"); }
+    }
     function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; }
-    function pick(a) { input.value = label(a); input.dataset.code = a[0]; close(); run(); }
+    function pick(a) { input.value = label(a); input.dataset.code = a[0]; invalid(""); close(); run(); }
     function message(text) {
       list.innerHTML = ""; items = [];
-      var li = document.createElement("li"); li.className = "ac-msg"; li.setAttribute("aria-disabled", "true"); li.textContent = text;
-      list.appendChild(li); list.hidden = false; input.setAttribute("aria-expanded", "false");
+      var li = document.createElement("li"); li.className = "ac-msg"; li.setAttribute("role", "option"); li.setAttribute("aria-disabled", "true"); li.textContent = text;
+      list.appendChild(li); list.hidden = false; input.setAttribute("aria-expanded", "false"); say(text);
     }
     function render() {
       if (!input.value.trim()) { close(); return; }
@@ -794,6 +817,7 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       });
       list.hidden = false;
       input.setAttribute("aria-expanded", "true");
+      say(T.acCount(items.length));
     }
     function highlight() {
       Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("on", i === active); li.setAttribute("aria-selected", i === active ? "true" : "false"); });
@@ -804,9 +828,9 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
       if (input.dataset.code || loadState !== "ready" || !input.value.trim()) return;
       var r = search(input.value), q = norm(input.value.trim());
       if (r.length && (r[0][0].toLowerCase() === q || r.length === 1)) pick(r[0]);
-      else run();
+      else { invalid(r.length ? T.pick : T.acNone); run(); }
     }
-    input.addEventListener("input", function () { input.dataset.code = ""; render(); run(); });
+    input.addEventListener("input", function () { input.dataset.code = ""; invalid(""); render(); run(); });
     input.addEventListener("focus", function () { if (!input.dataset.code) render(); else input.select(); });
     input.addEventListener("blur", function () { setTimeout(function () { close(); autoPick(); }, 150); });
     input.addEventListener("keydown", function (e) {
@@ -1115,7 +1139,22 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
     });
   }
 
+  function markScrollables() {
+    if (!document.querySelectorAll) return; // test harness without DOM
+    Array.prototype.forEach.call(document.querySelectorAll(".board"), function (el) {
+      if (el.scrollWidth > el.clientWidth + 1) {
+        var h = el.previousElementSibling, k = 0;
+        while (h && !/^H[2-4]$/.test(h.tagName) && k++ < 4) h = h.previousElementSibling;
+        if (!h || !/^H[2-4]$/.test(h.tagName)) { var sec = el.closest("section, .wrap"); h = sec && sec.querySelector("h2, h3"); }
+        el.setAttribute("tabindex", "0"); el.setAttribute("role", "region");
+        el.setAttribute("aria-label", (h ? h.textContent.trim() + " (" : "") + T.tableScroll + (h ? ")" : ""));
+      } else if (el.getAttribute("role") === "region") { el.removeAttribute("tabindex"); el.removeAttribute("role"); el.removeAttribute("aria-label"); }
+    });
+  }
+  var msT = null;
   function init() {
+    if (window.addEventListener) window.addEventListener("resize", function () { clearTimeout(msT); msT = setTimeout(markScrollables, 200); });
+    markScrollables();
     // Clicks on affiliate links anywhere on the site (calculator button, comparison page...)
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[rel~="sponsored"]');
@@ -1185,5 +1224,4 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
-</script><div id="ck" role="dialog" aria-live="polite" aria-label="Cookies" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)"><span id="ckt"></span> <a id="ckl" href="/privacidad/" style="color:#facc15">+info</a><div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end"><button id="ckn" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button><button id="cky" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button></div></div><script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='G-6JRCZVTNDG',on=false,b=document.getElementById('ck');function get(){try{return localStorage.getItem(k)}catch(e){return null}}function put(v){try{localStorage.setItem(k,v)}catch(e){}}function add(src){var s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s)}function start(){if(on)return;on=true;window['ga-disable-'+ID]=false;gtag('consent','update',{analytics_storage:'granted'});gtag('js',new Date());gtag('config',ID,{allow_google_signals:false,allow_ad_personalization_signals:false});add('https://www.googletagmanager.com/gtag/js?id='+ID);add('https://emrldtp.cc/NTgyNjYx.js?t=582661');window.vcAnalytics=true}function stop(){window.vcAnalytics=false;window['ga-disable-'+ID]=true;gtag('consent','update',{analytics_storage:'denied'});document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^_ga/.test(n)){['',location.hostname,'.'+location.hostname.replace(/^www\./,'')].forEach(function(d){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}function show(){document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block'}document.getElementById('cky').onclick=function(){put('y');b.style.display='none';start()};document.getElementById('ckn').onclick=function(){put('n');b.style.display='none';if(on){stop();on=false}};document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();show()}var a=e.target.closest&&e.target.closest('[data-ads-consent]');if(a&&window.googlefc&&googlefc.callbackQueue){e.preventDefault();googlefc.callbackQueue.push(googlefc.showRevocationMessage)}});var v=get();if(v==='y')start();else if(!v)show()})();</script>
-</body></html>
+</script></body></html>

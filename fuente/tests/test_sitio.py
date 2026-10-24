@@ -112,6 +112,12 @@ def check_site():
                 err(f"lastmod en el futuro: {lm}")
         except ValueError:
             err(f"lastmod no válido: {lm}")
+    # Accesibilidad: el enlace «Saltar al contenido» de cada página tiene destino, y el aviso de cookies no es un diálogo sin foco
+    for url, s in pages.items():
+        if 'href="#main"' in s and 'id="main"' not in s:
+            err(f"{url}: el enlace para saltar al contenido no tiene destino (#main)")
+        if 'id="ck" role="dialog"' in s:
+            err(f"{url}: el aviso de cookies usa role=dialog sin gestionar el foco")
     # Huelgas: cada fila con fecha de fin para ocultarla cuando pase
     for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
         if url in pages and re.search(r"<tbody><tr>|</tr><tr>", pages[url]):

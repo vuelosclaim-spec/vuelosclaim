@@ -707,7 +707,7 @@ def extra_jsonld(l, title, path):
 
 def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.min.json"):
     cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
-    return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main>{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
+    return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main id=\"main\" tabindex=\"-1\">{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
             f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script>\n<script>{JS}</script>")
 
 
@@ -715,7 +715,7 @@ def full_doc(inner, l, ads=True):
     """ads=False: no AdSense (widget embedded on third-party sites, 404 page without content)."""
     h, b = inner.split("</style>", 1)
     return (f'<!doctype html>\n<html lang="{l}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            f"{h}</style>\n{GA4}{ADSENSE if ads else ''}</head>\n<body>{b}{CONSENT}</body></html>\n")
+            f"{h}</style>\n{GA4}{ADSENSE if ads else ''}</head>\n<body><a class=\"skip\" href=\"#main\">{'Skip to content' if l == 'en' else 'Saltar al contenido'}</a>{CONSENT}{b}</body></html>\n")
 
 
 GA_ID = "G-6JRCZVTNDG"
@@ -725,12 +725,12 @@ TP_SRC = "https://emrldtp.cc/NTgyNjYx.js?t=582661"  # Travelpayouts (same identi
 GA4 = ("<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
        "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});</script>\n")
 
-CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Cookies\" style=\"display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;"
+CONSENT = ("<div id=\"ck\" role=\"region\" aria-labelledby=\"ckh\" style=\"display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;"
            "border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)\">"
-           "<span id=\"ckt\"></span> <a id=\"ckl\" href=\"/privacidad/\" style=\"color:#facc15\">+info</a>"
+           "<span id=\"ckh\" class=\"sr\"></span><span id=\"ckt\"></span> <a id=\"ckl\" href=\"/privacidad/\" style=\"color:#facc15;display:inline-block;padding:3px 0;min-height:24px\"></a>"
            "<div style=\"margin-top:10px;display:flex;gap:8px;justify-content:flex-end\">"
-           "<button id=\"ckn\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button>"
-           "<button id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button></div></div>"
+           "<button type=\"button\" id=\"ckn\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button>"
+           "<button type=\"button\" id=\"cky\" style=\"background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer\"></button></div></div>"
            "<script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='" + GA_ID + "',on=false,b=document.getElementById('ck');"
            "function get(){try{return localStorage.getItem(k)}catch(e){return null}}"
            "function put(v){try{localStorage.setItem(k,v)}catch(e){}}"
@@ -741,13 +741,15 @@ CONSENT = ("<div id=\"ck\" role=\"dialog\" aria-live=\"polite\" aria-label=\"Coo
            "add('https://www.googletagmanager.com/gtag/js?id='+ID);add('" + TP_SRC + "');window.vcAnalytics=true}"
            "function stop(){window.vcAnalytics=false;window['ga-disable-'+ID]=true;gtag('consent','update',{analytics_storage:'denied'});"
            "document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^_ga/.test(n)){['',location.hostname,'.'+location.hostname.replace(/^www\\./,'')].forEach(function(d){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}"
-           "function show(){document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':"
+           "var opener=null;function hide(){b.style.display='none';document.documentElement.style.scrollPaddingBottom='';if(opener&&opener.focus){opener.focus();opener=null}}"
+           "function show(focus){document.getElementById('ckh').textContent=en?'Cookie notice':'Aviso de cookies';document.getElementById('ckl').textContent=en?'More info':'Más información';document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':"
            "'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';"
            "document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';"
-           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block'}"
-           "document.getElementById('cky').onclick=function(){put('y');b.style.display='none';start()};"
-           "document.getElementById('ckn').onclick=function(){put('n');b.style.display='none';if(on){stop();on=false}};"
-           "document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();show()}"
+           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block';"
+           "document.documentElement.style.scrollPaddingBottom=(b.offsetHeight+24)+'px';if(focus)document.getElementById('ckn').focus()}"
+           "document.getElementById('cky').onclick=function(){put('y');hide();start()};"
+           "document.getElementById('ckn').onclick=function(){put('n');hide();if(on){stop();on=false}};"
+           "document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();opener=t;show(true)}"
            # Ad consent is Google's CMP (TCF): reopen its message; without it, the link just opens the privacy policy section
            "var a=e.target.closest&&e.target.closest('[data-ads-consent]');if(a&&window.googlefc&&googlefc.callbackQueue){e.preventDefault();googlefc.callbackQueue.push(googlefc.showRevocationMessage)}});"
            "var v=get();if(v==='y')start();else if(!v)show()})();</script>\n")
@@ -911,7 +913,7 @@ def build():
     # Widget for blogs (ES) + page explaining how to embed it
     wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
     winner = (f"<title>Calculadora de compensación de vuelos · {BRAND}</title><meta name=\"robots\" content=\"noindex\">{FONTS}<style>{CSS}</style>"
-              f"<div class=\"embed\">{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></div>"
+              f"<main class=\"embed\" id=\"main\" tabindex=\"-1\"><h1 class=\"sr\">Calculadora de compensación por retraso de vuelo</h1>{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></main>"
               f"<script>window.CTT={json.dumps(wcfg, ensure_ascii=False)};</script><script>{JS}</script>")
     write(os.path.join(OUT, "widget", "index.html"), full_doc(winner, "es", ads=False))
     code_snip = (f'<iframe src="{SITE_URL}/widget/" title="Calculadora de compensación por retraso de vuelo" '
@@ -923,7 +925,7 @@ def build():
 <label class="sr" for="embed-code">Código para insertar</label><textarea id="embed-code" rows="5" readonly onclick="this.select()">{e(code_snip)}</textarea>
 <h2>¿Tienes enlace de afiliado de una empresa de reclamaciones?</h2><p>Puedes usar el tuyo en el botón "Reclámalo sin coste". Añade al final de la dirección del iframe <code>?aff=</code> seguido de tu enlace (AirHelp, AirAdvisor, Compensair, Flightright, Skyrefund o Reclamador). Las comisiones de tus lectores son tuyas.</p>
 <p>¿Dudas o quieres una versión con tus colores? Escríbenos a <strong>vuelosclaim@gmail.com</strong>.</p></div>"""
-    emit("es", "/insertar-calculadora/", f"{head('es', 'Inserta la calculadora en tu web · ' + BRAND, 'Inserta gratis en tu blog la calculadora de compensación por retraso o cancelación de vuelos.', '/insertar-calculadora/')}\n{header('es', None)}<main>{ins_body}</main>{footer('es')}")
+    emit("es", "/insertar-calculadora/", f"{head('es', 'Inserta la calculadora en tu web · ' + BRAND, 'Inserta gratis en tu blog la calculadora de compensación por retraso o cancelación de vuelos.', '/insertar-calculadora/')}\n{header('es', None)}<main id=\"main\" tabindex=\"-1\">{ins_body}</main>{footer('es')}")
 
     # 404 page (GitHub Pages serves docs/404.html with status 404): useful links instead of the generic GitHub page
     def nf(l):
@@ -938,7 +940,7 @@ def build():
     nf_js = ("<script>if(/^\\/en(\\/|$)/.test(location.pathname)){var d=document;d.documentElement.lang='en';d.title='Page not found · " + BRAND + "';"
              "d.querySelector('.nf[lang=es]').hidden=true;d.querySelector('.nf[lang=en]').hidden=false}</script>")
     nf_inner = (f'<title>Página no encontrada · {BRAND}</title><meta name="robots" content="noindex">{ICON}{FONTS}<style>{CSS}</style>'
-                f'{header("es", None)}<main class="wrap prose">{nf("es")}{nf("en")}</main>{footer("es")}{nf_js}')
+                f'{header("es", None)}<main class="wrap prose" id="main" tabindex="-1">{nf("es")}{nf("en")}</main>{footer("es")}{nf_js}')
     write(os.path.join(OUT, "404.html"), full_doc(nf_inner, "es", ads=False))
 
     # Legal pages (both languages)
@@ -968,7 +970,7 @@ def build():
         alts = LEGAL[key]
         for l, (t, txt) in langs.items():
             other = "en" if l == "es" else "es"
-            emit(l, alts[l], f"{head(l, t + ' · ' + BRAND, LEGAL_DESC[key][l], alts[l], alts)}\n{header(l, alts[other])}<main class=\"wrap prose\"><h1>{t}</h1>{txt}</main>{footer(l)}")
+            emit(l, alts[l], f"{head(l, t + ' · ' + BRAND, LEGAL_DESC[key][l], alts[l], alts)}\n{header(l, alts[other])}<main class=\"wrap prose\" id=\"main\" tabindex=\"-1\"><h1>{t}</h1>{txt}</main>{footer(l)}")
 
     def lastmod(u):
         h = _content_hash(open(out(u), encoding="utf-8").read())

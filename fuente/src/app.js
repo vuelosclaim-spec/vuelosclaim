@@ -124,6 +124,8 @@
       acError: "No se ha podido cargar la lista de aeropuertos. Pulsa «Reintentar» más abajo.",
       acNone: "No encontramos ese aeropuerto. Prueba con la ciudad, el nombre o el código de 3 letras (MAD, BCN…).",
       pick: "Elige el aeropuerto en la lista que aparece al escribir.",
+      acCount: function (n) { return (n === 1 ? "1 aeropuerto encontrado" : n + " aeropuertos encontrados") + ". Usa las flechas arriba y abajo para elegir y pulsa Intro."; },
+      tableScroll: "tabla desplazable",
       same: "El origen y el destino son el mismo aeropuerto.",
       loadError: "No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.",
       offline: "Parece que no tienes conexión. Cuando vuelva, la lista de aeropuertos se cargará sola.",
@@ -222,6 +224,8 @@
       acError: "The airport list could not load. Press “Try again” below.",
       acNone: "We can't find that airport. Try the city, the airport name or its 3-letter code (LHR, MAN…).",
       pick: "Choose the airport from the list that appears as you type.",
+      acCount: function (n) { return (n === 1 ? "1 airport found" : n + " airports found") + ". Use the up and down arrows to choose and press Enter."; },
+      tableScroll: "scrollable table",
       same: "Departure and destination are the same airport.",
       loadError: "The airport list could not load. Check your connection and try again.",
       offline: "You seem to be offline. The airport list will load by itself when you reconnect.",
@@ -463,13 +467,24 @@
 
   function attach(input) {
     var list = document.getElementById(input.getAttribute("aria-controls"));
-    var items = [], active = -1;
+    var items = [], active = -1, sayT = null;
+    // Screen readers: announce the number of results or the message (the list itself only holds options)
+    var st = document.createElement("span"); st.className = "sr"; st.setAttribute("role", "status"); st.id = input.id + "-st";
+    input.parentNode.appendChild(st);
+    function say(text) { clearTimeout(sayT); sayT = setTimeout(function () { st.textContent = text; }, 450); }
+    // Visible error under the field, linked with aria-describedby
+    var err = document.createElement("p"); err.className = "field-err"; err.id = input.id + "-err"; err.hidden = true;
+    input.parentNode.appendChild(err);
+    function invalid(text) {
+      if (text) { err.textContent = text; err.hidden = false; input.setAttribute("aria-invalid", "true"); input.setAttribute("aria-describedby", err.id); }
+      else { err.hidden = true; input.removeAttribute("aria-invalid"); input.removeAttribute("aria-describedby"); }
+    }
     function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); active = -1; }
-    function pick(a) { input.value = label(a); input.dataset.code = a[0]; close(); run(); }
+    function pick(a) { input.value = label(a); input.dataset.code = a[0]; invalid(""); close(); run(); }
     function message(text) {
       list.innerHTML = ""; items = [];
-      var li = document.createElement("li"); li.className = "ac-msg"; li.setAttribute("aria-disabled", "true"); li.textContent = text;
-      list.appendChild(li); list.hidden = false; input.setAttribute("aria-expanded", "false");
+      var li = document.createElement("li"); li.className = "ac-msg"; li.setAttribute("role", "option"); li.setAttribute("aria-disabled", "true"); li.textContent = text;
+      list.appendChild(li); list.hidden = false; input.setAttribute("aria-expanded", "false"); say(text);
     }
     function render() {
       if (!input.value.trim()) { close(); return; }
@@ -494,6 +509,7 @@
       });
       list.hidden = false;
       input.setAttribute("aria-expanded", "true");
+      say(T.acCount(items.length));
     }
     function highlight() {
       Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("on", i === active); li.setAttribute("aria-selected", i === active ? "true" : "false"); });
@@ -504,9 +520,9 @@
       if (input.dataset.code || loadState !== "ready" || !input.value.trim()) return;
       var r = search(input.value), q = norm(input.value.trim());
       if (r.length && (r[0][0].toLowerCase() === q || r.length === 1)) pick(r[0]);
-      else run();
+      else { invalid(r.length ? T.pick : T.acNone); run(); }
     }
-    input.addEventListener("input", function () { input.dataset.code = ""; render(); run(); });
+    input.addEventListener("input", function () { input.dataset.code = ""; invalid(""); render(); run(); });
     input.addEventListener("focus", function () { if (!input.dataset.code) render(); else input.select(); });
     input.addEventListener("blur", function () { setTimeout(function () { close(); autoPick(); }, 150); });
     input.addEventListener("keydown", function (e) {
@@ -815,7 +831,22 @@
     });
   }
 
+  function markScrollables() {
+    if (!document.querySelectorAll) return; // test harness without DOM
+    Array.prototype.forEach.call(document.querySelectorAll(".board"), function (el) {
+      if (el.scrollWidth > el.clientWidth + 1) {
+        var h = el.previousElementSibling, k = 0;
+        while (h && !/^H[2-4]$/.test(h.tagName) && k++ < 4) h = h.previousElementSibling;
+        if (!h || !/^H[2-4]$/.test(h.tagName)) { var sec = el.closest("section, .wrap"); h = sec && sec.querySelector("h2, h3"); }
+        el.setAttribute("tabindex", "0"); el.setAttribute("role", "region");
+        el.setAttribute("aria-label", (h ? h.textContent.trim() + " (" : "") + T.tableScroll + (h ? ")" : ""));
+      } else if (el.getAttribute("role") === "region") { el.removeAttribute("tabindex"); el.removeAttribute("role"); el.removeAttribute("aria-label"); }
+    });
+  }
+  var msT = null;
   function init() {
+    if (window.addEventListener) window.addEventListener("resize", function () { clearTimeout(msT); msT = setTimeout(markScrollables, 200); });
+    markScrollables();
     // Clicks on affiliate links anywhere on the site (calculator button, comparison page...)
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[rel~="sponsored"]');

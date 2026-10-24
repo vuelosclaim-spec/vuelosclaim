@@ -43,7 +43,7 @@ a { color: inherit; text-underline-offset: 3px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1.15rem/1 var(--f-display); letter-spacing: -0.01em; }
 .brand-mark { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 6px; background: var(--sign); color: var(--sign-ink); font: 700 1rem/1 var(--f-mono); }
 .top nav { display: flex; gap: 18px; font-size: 0.9rem; }
-.top nav a { text-decoration: none; opacity: 0.85; }
+.top nav a { text-decoration: none; opacity: 0.85; display: inline-block; padding-block: 3px; }
 .top nav a:hover { opacity: 1; text-decoration: underline; }
 
 /* Hero */
@@ -185,3 +185,10 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
   .chips span { padding: 10px 6px; font-size: 0.88rem; hyphens: auto; overflow-wrap: anywhere; }
   .chips-wide { grid-template-columns: 1fr 1fr; }
 }
+
+/* Accessibility */
+.skip { position: absolute; left: 12px; top: -60px; z-index: 10000; background: var(--sign, #facc15); color: var(--sign-ink, #111827); padding: 10px 14px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+main:focus { outline: none; }
+.field-err { margin: 6px 0 0; font-size: 0.88rem; line-height: 1.35; color: var(--no); font-weight: 600; }
+.board[tabindex]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
