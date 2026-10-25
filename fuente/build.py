@@ -31,9 +31,15 @@ JS = open(os.path.join(SRC, "app.js"), encoding="utf-8").read()
 AIRLINES = json.load(open(os.path.join(ROOT, "data", "airlines.json"), encoding="utf-8"))
 CLAIMS = {k: v for k, v in json.load(open(os.path.join(ROOT, "data", "airline_claims.json"), encoding="utf-8")).items() if not k.startswith("_")}
 AIRPORTS = {a[0]: a for a in json.load(open(os.path.join(ROOT, "data", "airports.min.json"), encoding="utf-8"))}
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800'
-         '&family=IBM+Plex+Mono:wght@500;600;700&family=Public+Sans:wght@400;500;700&display=swap">')
+# Self-hosted Google Fonts (SIL OFL, files and licences in src_static/fonts): no render-blocking request to another domain.
+# Only the latin files used above the fold are preloaded; latin-ext loads only if a page needs those characters (unicode-range).
+_FONTS = json.load(open(os.path.join(ROOT, "src_static", "fonts", "fonts.json"), encoding="utf-8"))
+_FONT_FACE = "".join(
+    f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-display:swap;src:url(/fonts/{fn}) format('woff2');unicode-range:{rng}}}"
+    for fam, w, subset, fn, rng in _FONTS)
+_PRELOAD = [fn for fam, w, subset, fn, rng in _FONTS if subset == "latin" and fam in ("Public Sans", "Bricolage Grotesque")]
+FONTS = ("".join(f'<link rel="preload" href="/fonts/{fn}" as="font" type="font/woff2" crossorigin>' for fn in dict.fromkeys(_PRELOAD))
+         + f"<style>{_FONT_FACE}</style>")
 ICON = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">'
         '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#13213c">')
 OGIMG = ('<meta property="og:image" content="https://vuelosclaim.eu/img/og-image.png"><meta property="og:image:width" content="1200">'
@@ -705,8 +711,13 @@ def extra_jsonld(l, title, path):
     return "".join(f'<script type="application/ld+json">{json.dumps(d, ensure_ascii=False)}</script>' for d in data)
 
 
+def seed_airports(html_):
+    """Airports of the pre-filled example, so the example result shows before the full list (90 KB) is downloaded."""
+    return [AIRPORTS[c] for c in dict.fromkeys(re.findall(r'data-code="([A-Z]{3})"', html_)) if c in AIRPORTS]
+
+
 def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.min.json"):
-    cfg = {"lang": l, "dataUrl": data_url, "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    cfg = {"lang": l, "dataUrl": data_url, "seed": seed_airports(body), "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
     return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main id=\"main\" tabindex=\"-1\">{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
             f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script>\n<script>{JS}</script>")
 
@@ -757,7 +768,13 @@ CONSENT = ("<div id=\"ck\" role=\"region\" aria-labelledby=\"ckh\" style=\"displ
 ADSENSE_PUB = "ca-pub-1079386437086971"
 ADSENSE = ('<meta name="msvalidate.01" content="D3B289B2220FF34999D4248924B46B3C">\n'
            f'<meta name="google-adsense-account" content="{ADSENSE_PUB}">\n'
-           f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_PUB}" crossorigin="anonymous"></script>\n')
+           # Deferred: adsbygoogle.js (and Google's consent message, which it brings) loads after the page is ready,
+           # so it doesn't compete with the content and the calculator on mobile. Same script and publisher ID.
+           '<script>(function(){var done=false,ev=["pointerdown","keydown","scroll","touchstart"];function go(){if(done)return;done=true;'
+           'ev.forEach(function(e){removeEventListener(e,go,true)});var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";'
+           f's.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_PUB}";document.head.appendChild(s)}}'
+           'ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true,once:true})});'
+           'addEventListener("load",function(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(function(){setTimeout(go,1500)},{timeout:3000})})})();</script>\n')
 
 def write(path, content):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -911,7 +928,7 @@ def build():
     cmp_urls += guides.build({"emit": emit, "page": page})
 
     # Widget for blogs (ES) + page explaining how to embed it
-    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "seed": seed_airports(calculator('es', '', 'MAD', 'BER')), "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
     winner = (f"<title>Calculadora de compensación de vuelos · {BRAND}</title><meta name=\"robots\" content=\"noindex\">{FONTS}<style>{CSS}</style>"
               f"<main class=\"embed\" id=\"main\" tabindex=\"-1\"><h1 class=\"sr\">Calculadora de compensación por retraso de vuelo</h1>{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></main>"
               f"<script>window.CTT={json.dumps(wcfg, ensure_ascii=False)};</script><script>{JS}</script>")
@@ -981,6 +998,10 @@ def build():
     os.makedirs(os.path.join(OUT, "img"), exist_ok=True)
     for fn in ("vuelosclaim-logo.png", "vuelosclaim-banner.png", "og-image.png", "icon-192.png", "icon-512.png"):
         shutil.copy(os.path.join(ROOT, "src_static", fn), os.path.join(OUT, "img", fn))
+    os.makedirs(os.path.join(OUT, "fonts"), exist_ok=True)
+    for fn in os.listdir(os.path.join(ROOT, "src_static", "fonts")):
+        if fn.endswith((".woff2", ".txt")):
+            shutil.copy(os.path.join(ROOT, "src_static", "fonts", fn), os.path.join(OUT, "fonts", fn))
     for fn in ("favicon.ico", "apple-touch-icon.png", "favicon-48.png"):
         shutil.copy(os.path.join(ROOT, "src_static", fn), os.path.join(OUT, fn))
     write(os.path.join(OUT, "site.webmanifest"), json.dumps({"name": "VuelosClaim", "short_name": "VuelosClaim", "icons": [

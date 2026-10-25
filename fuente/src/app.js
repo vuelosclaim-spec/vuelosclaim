@@ -586,7 +586,7 @@
     syncVisibility();
     var dep = byCode[form.querySelector("#from").dataset.code];
     var arr = byCode[form.querySelector("#to").dataset.code];
-    if (loadState !== "ready") return;
+    if (loadState !== "ready" && !(dep && arr)) return;
     if (!dep || !arr || dep === arr) {
       var fromTxt = form.querySelector("#from").value.trim(), toTxt = form.querySelector("#to").value.trim();
       emptyMsg(dep && arr ? T.same : ((!dep && fromTxt) || (!arr && toTxt)) ? T.pick : null);
@@ -885,11 +885,23 @@
     var retry = document.getElementById("ac-retry");
     if (retry) retry.addEventListener("click", function () { loadAirports(0); });
     window.addEventListener("online", function () { if (loadState === "error") loadAirports(0); });
-    loadAirports(0);
+    // The example route is computed with the airports embedded in the page; the full list (about 90 KB) is
+    // downloaded as soon as the visitor touches an airport field, or once the page has finished loading.
+    (cfg.seed || []).forEach(function (a) { byCode[a[0]] = a; });
+    ["from", "to"].forEach(function (id) { var el = document.getElementById(id), a = byCode[el.dataset.code]; if (a) el.value = label(a); });
+    var seeded = !!(byCode[document.getElementById("from").dataset.code] && byCode[document.getElementById("to").dataset.code]);
+    if (!seeded) { loadAirports(0); return; }
+    run();
+    var started_ = false;
+    function startLoad() { if (started_) return; started_ = true; loadAirports(0); }
+    ["from", "to"].forEach(function (id) { var el = document.getElementById(id); el.addEventListener("focus", startLoad); el.addEventListener("pointerdown", startLoad); });
+    if (document.readyState === "complete") setTimeout(startLoad, 1200);
+    else window.addEventListener("load", function () { setTimeout(startLoad, 1200); });
   }
   // Airport list: 15 s timeout, one automatic retry, HTTP and format checks, then a visible error with a retry button.
   function loadAirports(attempt) {
-    loadState = "loading"; out.dataset.state = "empty"; emptyMsg(T.loading);
+    loadState = "loading";
+    if (out.dataset.state === "empty" || out.dataset.state === "error") { out.dataset.state = "empty"; emptyMsg(T.loading); }
     var ctrl = typeof AbortController === "function" ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
     fetch(cfg.dataUrl, ctrl ? { signal: ctrl.signal } : undefined).then(function (r) {

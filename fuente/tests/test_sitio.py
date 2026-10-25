@@ -118,6 +118,20 @@ def check_site():
             err(f"{url}: el enlace para saltar al contenido no tiene destino (#main)")
         if 'id="ck" role="dialog"' in s:
             err(f"{url}: el aviso de cookies usa role=dialog sin gestionar el foco")
+    # Rendimiento: fuentes propias (sin petición bloqueante a Google Fonts), AdSense diferido y aeropuertos del ejemplo incrustados
+    fonts_dir = os.path.join(SITE, "fonts")
+    for url, s in pages.items():
+        if "fonts.googleapis.com" in s:
+            err(f"{url}: vuelve a cargar Google Fonts desde fuera (bloquea el renderizado)")
+        for fn in set(re.findall(r"/fonts/([\w.-]+\.woff2)", s)):
+            if not os.path.exists(os.path.join(fonts_dir, fn)):
+                err(f"{url}: fuente inexistente /fonts/{fn}")
+        if len(re.findall(r'rel="preload"[^>]*as="font"', s)) > 2:
+            err(f"{url}: más de 2 fuentes precargadas")
+        if re.search(r'<script[^>]+src="https://pagead2\.googlesyndication\.com', s):
+            err(f"{url}: AdSense se carga con una etiqueta directa en vez del cargador diferido")
+        if 'id="calc"' in s and '"seed": [[' not in s:
+            err(f"{url}: la calculadora no lleva incrustados los aeropuertos del ejemplo")
     # Huelgas: cada fila con fecha de fin para ocultarla cuando pase
     for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
         if url in pages and re.search(r"<tbody><tr>|</tr><tr>", pages[url]):
