@@ -50,3 +50,6 @@ jobs:
 
       - name: URLs de reclamación sin destinos internos ni credenciales
         run: python3 fuente/tests/test_canales_seguridad.py
+
+      - name: Enlaces de afiliación y seguimiento de conversiones
+        run: python3 fuente/tests/test_monetizacion.py
