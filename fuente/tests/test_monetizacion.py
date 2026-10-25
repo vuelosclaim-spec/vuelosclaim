@@ -52,6 +52,23 @@ if not JS.is_file() or 'track("affiliate_click"' not in JS.read_text(encoding="u
 if count == 0:
     errors.append("No se ha detectado ningún enlace sponsored; revisar monetización")
 
+# Protección de confianza: cualquier comparativa monetizada tiene que dejar clara
+# la comisión de afiliado y ofrecer una vía para reclamar sin intermediario.
+for rel, disclosure, diy in (
+    ("comparativa-empresas-reclamacion-vuelos/index.html", "comisión de afiliado", "Calcular y reclamar gratis"),
+    ("en/flight-compensation-companies-compared/index.html", "affiliate commission", "Calculate and claim for free"),
+):
+    page = DOCS / rel
+    if not page.is_file():
+        errors.append(f"Falta la comparativa: {rel}")
+        continue
+    content = page.read_text(encoding="utf-8")
+    if disclosure not in content:
+        errors.append(f"{rel}: falta transparencia sobre la comisión de afiliación")
+    if diy not in content:
+        errors.append(f"{rel}: falta la alternativa de reclamación gratuita")
+
+
 for error in errors:
     print("ERROR:", error)
 print(f"Auditoría de monetización: {pages} HTML, {count} enlaces sponsored, {len(errors)} errores")
