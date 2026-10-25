@@ -30,7 +30,7 @@ Ningún valor secreto aparece en este documento.
   - Ni el CI ni los scripts de despliegue lo usan.
   - worldcupdle y taupe-kulfi se publicaron por última vez en junio, antes de crear el token.
 - El valor solo estaba en un registro interno de la sesión de trabajo, que ya se ha borrado de ese registro. Nunca estuvo en git.
-- **Recomendación:** revocarlo ya, sin esperar a que caduque.
+- **Resuelto:** el propietario lo borró el 25-10-2026. Comprobado en Netlify: en «Personal access tokens» ya no hay ningún token.
 
 **Cómo revocarlo:**
 1. Entra en app.netlify.com con salvalloris@gmail.com.
