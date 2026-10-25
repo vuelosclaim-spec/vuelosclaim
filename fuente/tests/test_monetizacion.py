@@ -71,6 +71,21 @@ for rel, disclosure, diy in (
         errors.append(f"{rel}: falta el texto comparativo de las dos vías de reclamación")
 
 
+# La calculadora debe mantener visible la alternativa gratuita junto a AirHelp.
+# El servicio externo nunca debe ser la única vía ofrecida al pasajero.
+for rel in ("index.html", "en/index.html"):
+    page = DOCS / rel
+    if not page.is_file():
+        errors.append(f"Falta la portada: {rel}")
+        continue
+    content = page.read_text(encoding="utf-8")
+    for marker in ('data-cta', 'id="letter-open"', 'rel="sponsored nofollow noopener"'):
+        if marker not in content:
+            errors.append(f"{rel}: falta opción de reclamación o enlace seguro ({marker})")
+    if "data-generic=" not in content:
+        errors.append(f"{rel}: falta texto neutral para otros proveedores")
+
+
 for error in errors:
     print("ERROR:", error)
 print(f"Auditoría de monetización: {pages} HTML, {count} enlaces sponsored, {len(errors)} errores")
