@@ -41,6 +41,8 @@ for i, item in enumerate(strikes.STRIKES, 1):
     host = url.split("/")[2].lower()
     if not any(host == d or host.endswith("." + d) for d in OFFICIAL):
         errors.append(f"Entrada {i}: fuente no oficial ({host})")
+    if where not in getattr(strikes, "WHERE_EN", {}):
+        errors.append(f"Entrada {i}: ubicación sin traducción al inglés ({where})")
     if not all([label_es, label_en, desc_es, desc_en, where, status_es, status_en]):
         errors.append(f"Entrada {i}: traducción o estado vacío")
     identity = (start, desc_es.strip().casefold(), where.strip().casefold())

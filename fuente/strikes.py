@@ -24,10 +24,12 @@ STRIKES = [
      "Leeds Bradford (Reino Unido)", "airport", "Suspendida mientras se negocia con mediación de Acas", "Suspended while Acas-brokered talks take place", SRC_LBA),
     ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo (ENAV) en el aeropuerto de Bari", "Air traffic control (ENAV) at Bari airport",
      "Bari (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
+     "Toda Italia", "atc", "Sin confirmar: no figura en todos los calendarios; los mismos sindicatos tienen convocada otra el 21 nov", "Not confirmed: not in every calendar; the same unions have one called for 21 Nov", SRC_IT),
     ("2026-11-11", "11 nov, 24 h", "11 Nov, 24 h", "Huelga general en España (CCOO y UGT)", "General strike in Spain (CCOO and UGT unions)",
      "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos aún sin publicar", "Called; airport minimum services not yet published", SRC_GEN),
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
-     "Toda Italia: puede afectar a los vuelos", "general", "Convocada; horario en el transporte aéreo por confirmar", "Called; hours for air transport not yet confirmed", SRC_IT),
+     "Toda Italia", "general", "Convocada; no consta en el calendario del transporte aéreo, efecto en los vuelos sin confirmar", "Called; not listed in the air transport calendar, effect on flights not confirmed", SRC_IT),
     ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
      "Toda Italia", "atc", "Convocada", "Scheduled", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Control aéreo (ENAV) en Malpensa", "Air traffic control (ENAV) at Malpensa",
@@ -35,6 +37,16 @@ STRIKES = [
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
      "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
 ]
+
+# English for the "where" column (the table above keeps it in Spanish); every place must have a translation (test_mantenimiento.py)
+WHERE_EN = {
+    "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
+    "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
+        "Jerez, A Coruña, Seville, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos",
+    "Leeds Bradford (Reino Unido)": "Leeds Bradford (UK)", "Bari (Italia)": "Bari (Italy)", "Toda Italia": "All of Italy",
+    "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)",
+    "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
+}
 
 KIND = {
     "es": {"airline": "Plantilla de la aerolínea", "atc": "Control aéreo", "airport": "Aeropuerto / handling", "general": "Huelga general"},
@@ -85,6 +97,8 @@ def _rows(l):
     for s in sorted(STRIKES, key=lambda x: x[0]):
         _, wes, wen, des, den, where, kind, ses, sen, src = s
         when, what, st = (wes, des, ses) if l == "es" else (wen, den, sen)
+        if l == "en":
+            where = WHERE_EN[where]
         out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{e(what)}<br><small>{e(where)}</small></td><td>{KIND[l][kind]}</td><td>{COMP[l][kind]}</td>"
                    f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{'fuente' if l == 'es' else 'source'}</a></td></tr>")
     return "".join(out)
