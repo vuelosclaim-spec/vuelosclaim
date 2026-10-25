@@ -221,6 +221,33 @@ async function pickAirport(p, device, id, text, code) {
     check(T("sin errores de JavaScript"), true);
     await ctx.close();
   }
+  // 11. Rendimiento: el ejemplo se calcula sin esperar a la lista completa de aeropuertos, que se descarga después
+  {
+    const T = (n) => `[rendimiento] ${n}`;
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 760 }, isMobile: true, hasTouch: true });
+    const p = await ctx.newPage();
+    let release, asked = 0; const gate = new Promise((r) => (release = r));
+    await p.route("**/*", async (r) => {
+      const u = r.request().url();
+      if (!u.startsWith(BASE)) return r.abort();
+      if (u.includes(DATA)) { asked++; await gate; }
+      return r.continue();
+    });
+    await p.goto(BASE + "/compensacion-retraso-iberia/");
+    await p.waitForTimeout(300);
+    check(T("el ejemplo se calcula antes de tener la lista"), (await p.getAttribute("#result", "data-state")) === "posible", await p.getAttribute("#result", "data-state"));
+    check(T("los campos muestran el ejemplo"), /\(\w{3}\)/.test(await p.inputValue("#from")) && /\(\w{3}\)/.test(await p.inputValue("#to")));
+    await p.waitForTimeout(3000);
+    check(T("la lista se pide sola tras cargar la página"), asked === 1, String(asked));
+    await p.click("#to"); await p.fill("#to", ""); await p.type("#to", "bcn", { delay: 20 });
+    check(T("mientras llega la lista se avisa"), /Cargando|Loading/.test(await p.textContent("#to-list")));
+    release(); await p.waitForSelector("#to-list [role=option]");
+    check(T("al llegar la lista aparecen las sugerencias"), (await p.textContent("#to-opt-0 .opt-code")) === "BCN");
+    const fonts = await p.evaluate(() => [...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family));
+    check(T("fuentes propias cargadas"), fonts.includes("Public Sans") && fonts.includes("Bricolage Grotesque"), fonts.join(","));
+    await ctx.close();
+  }
+
   // 10. Accesibilidad: teclado, lectores de pantalla y pantallas pequeñas (errores corregidos en la tarea 7)
   {
     const T = (n) => `[accesibilidad] ${n}`;
