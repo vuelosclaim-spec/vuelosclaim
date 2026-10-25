@@ -67,6 +67,8 @@ for rel, disclosure, diy in (
         errors.append(f"{rel}: falta transparencia sobre la comisión de afiliación")
     if diy not in content:
         errors.append(f"{rel}: falta la alternativa de reclamación gratuita")
+    if ("Dos formas de reclamar: tú decides" if rel.startswith("comparativa-") else "Two ways to claim: your choice") not in content:
+        errors.append(f"{rel}: falta el texto comparativo de las dos vías de reclamación")
 
 
 for error in errors:

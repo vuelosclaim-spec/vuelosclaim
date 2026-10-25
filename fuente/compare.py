@@ -141,10 +141,15 @@ document.getElementById('cmp-out').innerHTML=h+'</tbody></table></div>'}});}})()
         faq_html = "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in t["faq"])
         faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]]}
+        choice_heading = "Dos formas de reclamar: tú decides" if l == "es" else "Two ways to claim: your choice"
+        choice_explainer = ("Por tu cuenta: sin comisión de intermediario, tú gestionas los trámites. "
+                            "Con AirHelp: delegas la gestión, pero se descuenta una comisión si consiguen la compensación.") if l == "es" else (
+                            "Claim yourself: no intermediary fee, you manage the process. "
+                            "With AirHelp: they handle the claim, but deduct a fee if compensation is recovered.")
         home = "/" if l == "es" else "/en/"
         body = f"""<div class="wrap prose"><h1>{t['h1']}</h1><p class="lead">{t['lead'].format(u=UPDATED[l])}</p>
 <div class="board"><table><thead><tr>{t['th']}</tr></thead><tbody>{rows}</tbody></table></div>
-<p><a class="btn btn-sign" href="{home}">{t['cta_diy']}</a> <a class="btn" href="{e(ctx['AFF_URL'])}" rel="sponsored nofollow noopener" target="_blank">{t['cta_aff']}</a></p>
+<h2>{choice_heading}</h2>\n<p>{choice_explainer}</p>\n<p><a class="btn btn-sign" href="{home}">{t['cta_diy']}</a> <a class="btn" href="{e(ctx['AFF_URL'])}" rel="sponsored nofollow noopener" target="_blank">{t['cta_aff']}</a></p>
 <p><small>{t['disc']}</small></p>
 {calc}
 {t['body']}
