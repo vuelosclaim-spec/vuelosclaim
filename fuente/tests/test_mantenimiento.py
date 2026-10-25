@@ -7,6 +7,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import strikes
 
+OFFICIAL = ("transportes.gob.es", "mitma.gob.es", "boe.es", "aena.es", "enaire.es", "mit.gov.it", "enav.it", "enac.gov.it",
+            "ccoo.es", "ugt.es", "usca.es", "unitetheunion.org", "gmb.org.uk", "caa.co.uk", "gov.uk", "dgac.fr", "ecologie.gouv.fr")
 errors = []
 warnings = []
 seen = set()
@@ -35,6 +37,10 @@ for i, item in enumerate(strikes.STRIKES, 1):
         errors.append(f"Entrada {i}: categoría no reconocida")
     if not url.startswith("https://"):
         errors.append(f"Entrada {i}: fuente sin HTTPS")
+    # Solo fuentes oficiales: ministerios, aeropuertos, proveedores de control aéreo o el sindicato convocante
+    host = url.split("/")[2].lower()
+    if not any(host == d or host.endswith("." + d) for d in OFFICIAL):
+        errors.append(f"Entrada {i}: fuente no oficial ({host})")
     if not all([label_es, label_en, desc_es, desc_en, where, status_es, status_en]):
         errors.append(f"Entrada {i}: traducción o estado vacío")
     identity = (start, desc_es.strip().casefold(), where.strip().casefold())
