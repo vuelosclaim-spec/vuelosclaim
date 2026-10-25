@@ -4,10 +4,13 @@ Linkable, newsjackable asset. Update STRIKES and UPDATED when news changes.
 import json
 from html import escape as e
 
-UPDATED = {"es": "19 de octubre de 2026", "en": "19 October 2026", "iso": "2026-10-19"}
+UPDATED = {"es": "25 de octubre de 2026", "en": "25 October 2026", "iso": "2026-10-25"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
-SRC_EU = "https://myflyright.com/blog/europe-flight-strikes-october-and-november-2026/"
-SRC_GEN = "https://pixidia.com/es/huelga-general-espana-11-noviembre-2026"
+# Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
+# sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
+SRC_IT = "https://www.mit.gov.it/come-fare-per/trasporti/calendario-scioperi-trasporti"
+SRC_GEN = "https://huelga.ccoo.es/"
+SRC_LBA = "https://www.unitetheunion.org/news-events/news/2026/october/leeds-bradford-airport-strikes-suspended-for-talks"
 
 # date_sort, ES when, EN when, ES what, EN what, where, kind(airline|atc|airport|general), status ES, status EN, source
 STRIKES = [
@@ -17,16 +20,20 @@ STRIKES = [
      "Barcelona-El Prat", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-10-01", "Hasta el 30 nov (lun, jue, vie, sáb, dom)", "Until 30 Nov (Mon, Thu, Fri, Sat, Sun)", "Sistema de equipajes de Barajas (Outsmart), paros de 05:00–07:00 y 13:00–15:00",
      "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00", "Madrid-Barajas", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
-    ("2026-10-23", "23 oct – 2 nov", "23 Oct – 2 Nov", "Acciones de protesta del personal del aeropuerto", "Proposed industrial action at the airport",
-     "Leeds Bradford (Reino Unido)", "airport", "Propuesta, sin confirmar", "Proposed, not confirmed", SRC_EU),
-    ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV)", "Italian air traffic control (ENAV)",
-     "Toda Italia", "atc", "Convocada", "Scheduled", SRC_EU),
+    ("2026-10-23", "23 oct – 2 nov", "23 Oct – 2 Nov", "Personal del aeropuerto, incluidos los controladores (Unite)", "Airport staff, including air traffic controllers (Unite)",
+     "Leeds Bradford (Reino Unido)", "airport", "Suspendida mientras se negocia con mediación de Acas", "Suspended while Acas-brokered talks take place", SRC_LBA),
+    ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo (ENAV) en el aeropuerto de Bari", "Air traffic control (ENAV) at Bari airport",
+     "Bari (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
     ("2026-11-11", "11 nov, 24 h", "11 Nov, 24 h", "Huelga general en España (CCOO y UGT)", "General strike in Spain (CCOO and UGT unions)",
-     "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; impacto en vuelos sin confirmar", "Called; impact on flights not yet confirmed", SRC_GEN),
-    ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV)", "Italian air traffic control (ENAV)",
-     "Toda Italia", "atc", "Convocada", "Scheduled", SRC_EU),
-    ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Control aéreo (ENAV) en Malpensa y seguridad en Venecia", "ATC (ENAV) at Malpensa and security staff at Venice",
-     "Milán-Malpensa, Venecia", "atc", "Convocada", "Scheduled", SRC_EU),
+     "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos aún sin publicar", "Called; airport minimum services not yet published", SRC_GEN),
+    ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
+     "Toda Italia: puede afectar a los vuelos", "general", "Convocada; horario en el transporte aéreo por confirmar", "Called; hours for air transport not yet confirmed", SRC_IT),
+    ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
+     "Toda Italia", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Control aéreo (ENAV) en Malpensa", "Air traffic control (ENAV) at Malpensa",
+     "Milán-Malpensa (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
+     "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
 ]
 
 KIND = {
@@ -99,14 +106,14 @@ def build(ctx):
 <li><strong>Huelga de control aéreo</strong>: normalmente <strong>no</strong>, porque la aerolínea no la controla.</li>
 <li><strong>Huelga de aeropuerto, handling o huelga general</strong>: <strong>depende</strong> de si la aerolínea podía haber evitado la cancelación. Pídele la causa por escrito.</li>
 <li><strong>Siempre</strong>, sea cual sea la huelga: reembolso completo en 7 días o vuelo alternativo, y comida, bebida y hotel mientras esperas.</li>
-<li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada antes del 28 de octubre no daría compensación.</li></ul>"""
+<li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>"""
             checker = """<h2>¿Me toca algo? Compruébalo</h2>
 <form id="sk-form" class="sk"><label>Fecha del vuelo <input type="date" id="sk-flight" required></label>
 <label>Fecha en que te avisaron de la cancelación <input type="date" id="sk-notice" required></label>
 <label>¿Quién hacía huelga? <select id="sk-kind"><option value="airline">La plantilla de la aerolínea</option><option value="atc">Control aéreo</option><option value="airport">Aeropuerto o handling</option><option value="general">Huelga general</option></select></label>
 <button class="btn btn-sign" type="submit">Comprobar</button></form><p id="sk-out" class="lead" aria-live="polite"></p>
 <p>¿Retraso en vez de cancelación? <a href="/">Calcula el importe exacto de tu ruta aquí</a>.</p>"""
-            src = f"<p><small>Fuentes: <a href=\"{SRC_MIN}\">Ministerio de Transportes, servicios mínimos</a> · <a href=\"{SRC_EU}\">calendario europeo de huelgas</a> · <a href=\"{SRC_GEN}\">huelga general del 11 de noviembre</a>. Las convocatorias pueden cambiar o desconvocarse; revisa con tu aerolínea.</small></p>"
+            src = f"<p><small>Fuentes: <a href=\"{SRC_MIN}\">Ministerio de Transportes, servicios mínimos</a> · <a href=\"{SRC_IT}\">Ministerio de Infraestructuras y Transportes de Italia, calendario de huelgas</a> · <a href=\"{SRC_GEN}\">CCOO, huelga general del 11 de noviembre</a> · <a href=\"{SRC_LBA}\">Unite, aeropuerto de Leeds Bradford</a>. Las convocatorias pueden cambiar o desconvocarse; revisa con tu aerolínea.</small></p>"
             faq = [("¿Me devuelven el dinero si cancelan mi vuelo por huelga?", "Sí. Sea cual sea la huelga, puedes elegir el reembolso completo del billete en 7 días o un vuelo alternativo, y la aerolínea debe darte comida y hotel si tienes que esperar."),
                    ("¿Me pagan compensación si la huelga es de controladores?", "Normalmente no: las huelgas de control aéreo se consideran circunstancias extraordinarias. Sí tienes derecho al reembolso o a un vuelo alternativo y a asistencia."),
                    ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te tocan 250, 400 o 600 € si te avisan con menos de 14 días.")]
@@ -122,14 +129,14 @@ def build(ctx):
 <li><strong>Air traffic control strike</strong>: usually <strong>no</strong>, because the airline can't control it.</li>
 <li><strong>Airport, ground handling or general strike</strong>: <strong>it depends</strong> on whether the airline could have avoided the cancellation. Ask it for the cause in writing.</li>
 <li><strong>Always</strong>, whatever the strike: a full refund within 7 days or a new flight, plus meals, drinks and a hotel while you wait.</li>
-<li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified before 28 October would not carry compensation.</li></ul>"""
+<li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified on or before 28 October would not carry compensation.</li></ul>"""
             checker = """<h2>Am I owed anything? Check it</h2>
 <form id="sk-form" class="sk"><label>Flight date <input type="date" id="sk-flight" required></label>
 <label>Date you were told about the cancellation <input type="date" id="sk-notice" required></label>
 <label>Who was on strike? <select id="sk-kind"><option value="airline">The airline's own staff</option><option value="atc">Air traffic control</option><option value="airport">Airport or ground handling</option><option value="general">General strike</option></select></label>
 <button class="btn btn-sign" type="submit">Check</button></form><p id="sk-out" class="lead" aria-live="polite"></p>
 <p>Delayed rather than cancelled? <a href="/en/">Work out the exact amount for your route here</a>.</p>"""
-            src = f"<p><small>Sources: <a href=\"{SRC_MIN}\">Spanish Ministry of Transport, minimum services</a> · <a href=\"{SRC_EU}\">European strike calendar</a> · <a href=\"{SRC_GEN}\">11 November general strike</a>. Strikes can change or be called off; check with your airline.</small></p>"
+            src = f"<p><small>Sources: <a href=\"{SRC_MIN}\">Spanish Ministry of Transport, minimum services</a> · <a href=\"{SRC_IT}\">Italian Ministry of Infrastructure and Transport, strike calendar</a> · <a href=\"{SRC_GEN}\">CCOO, 11 November general strike</a> · <a href=\"{SRC_LBA}\">Unite, Leeds Bradford Airport</a>. Strikes can change or be called off; check with your airline.</small></p>"
             faq = [("Do I get a refund if my flight is cancelled by a strike?", "Yes. Whatever the strike, you can choose a full refund within 7 days or a new flight, and the airline must provide meals and a hotel if you have to wait."),
                    ("Do I get compensation for an air traffic control strike?", "Usually not: ATC strikes count as extraordinary circumstances. You are still owed a refund or rerouting and care while you wait."),
                    ("What if the airline's pilots or cabin crew are on strike?", "Then usually yes: the EU Court of Justice treats an airline's own staff strike as not extraordinary, so you're owed €250, €400 or €600 if told less than 14 days before.")]
