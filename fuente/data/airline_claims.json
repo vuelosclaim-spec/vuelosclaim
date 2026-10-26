@@ -407,5 +407,47 @@
     "url": "https://www.britishairways.com/content/information/delayed-or-cancelled-flights"
    }
   ]
+ },
+ "ryanair": {
+  "checked": "2026-10-26",
+  "forms": [
+   {
+    "es": "Formulario de compensación EU261 de Ryanair",
+    "en": "Ryanair EU261 compensation form",
+    "url": "https://onlineform.ryanair.com/ie/en/eu-261"
+   }
+  ],
+  "steps_es": [
+   "Para usar el formulario tienes que confirmar que eres un pasajero de la reserva, verificando tu documento de viaje.",
+   "Si reclamas por otra persona, Ryanair pide que lo haga desde su propia cuenta myRyanair.",
+   "La compensación y los gastos (comida, hotel, transporte) se piden y se revisan por separado."
+  ],
+  "steps_en": [
+   "To use the form you must confirm you are a named passenger on the booking by verifying your travel document.",
+   "Claiming for someone else? Ryanair asks for it to be submitted through their own myRyanair account.",
+   "Compensation and expenses (meals, hotel, transport) are requested and reviewed separately."
+  ],
+  "follow_es": [
+   "Si no estás de acuerdo con la decisión, Ryanair remite al organismo de resolución alternativa de conflictos (ADR) de tu país; en vuelos que salen de España, AESA."
+  ],
+  "follow_en": [
+   "If you disagree with the decision, Ryanair points you to your local alternative dispute resolution (ADR) body; for UK flights, the CAA-approved ADR scheme, and for flights departing Spain, AESA."
+  ],
+  "caveat_es": "Ryanair publica una lista de motivos por los que no paga, entre ellos las huelgas de control aéreo. Para vuelos con el reglamento europeo, el Tribunal de Justicia de la UE exige que la aerolínea demuestre que la causa de fondo era extraordinaria (asunto C-108/26, 2026); una huelga de su propio personal no la exime (C-28/20).",
+  "caveat_en": "Ryanair publishes a list of reasons it won't pay, including air traffic control strikes. For flights under EU261, the EU Court of Justice requires the airline to prove the underlying cause was extraordinary (Case C-108/26, 2026), and a strike by its own staff is no exemption (C-28/20). UK courts are not bound by the 2026 ruling for UK261 claims.",
+  "sources": [
+   {
+    "label": "Ryanair: EU-261 Passenger Rights (centro de ayuda)",
+    "url": "https://help.ryanair.com/hc/en-ie/sections/12488602662545-EU-261-Passenger-Rights"
+   },
+   {
+    "label": "Ryanair: Why is identity verification required when claiming?",
+    "url": "https://help.ryanair.com/hc/en-ie/articles/38961343001873-Why-is-identity-verification-required-when-claiming"
+   },
+   {
+    "label": "Ryanair: I'm not happy with my EU261 compensation decision",
+    "url": "https://help.ryanair.com/hc/en-ie/articles/27396828616081-I-m-not-happy-with-my-EU261-compensation-decision-Is-there-anything-else-I-can-do"
+   }
+  ]
  }
 }
