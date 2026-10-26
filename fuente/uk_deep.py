@@ -17,19 +17,19 @@ UK_ROUTES = {
 
 META = {
     "tui": dict(
-        title="TUI Delay Compensation Claim: £220–£520 per Passenger",
+        title="TUI Compensation Claim: Delays & Cancellations (£220–£520)",
         desc="Delayed 3+ hours with TUI? You're owed £220–£520 (UK261) or €250–€600 (EU261) per person, even on a package holiday. Free calculator and claim guide.",
-        h1="TUI flight delayed or cancelled? Check what you can claim",
+        h1="TUI compensation claim: flight delayed or cancelled",
     ),
     "jet2": dict(
-        title="Jet2 Delay Compensation Claim: £220–£520 per Passenger",
-        desc="Delayed 3+ hours with Jet2 or Jet2holidays? Claim £220–£520 (UK261) or €250–€600 (EU261) per person. Free calculator, refusal reasons and how to claim.",
-        h1="Jet2 flight delayed or cancelled? Check what you can claim",
+        title="Jet2 Delay & Cancellation Compensation: £220–£520",
+        desc="Jet2 flight delayed 3+ hours or cancelled? Claim £220–£520 (UK261) or €250–€600 (EU261) per person. Free calculator, refusal reasons and how to claim.",
+        h1="Jet2 delay and cancellation compensation: what you can claim",
     ),
     "easyjet": dict(
-        title="easyJet Delay Compensation Claim: £220–£520 per Passenger",
-        desc="Delayed 3+ hours with easyJet? You're owed £220–£520 (UK261) or €250–€600 (EU261) per person. Free calculator, when easyJet can refuse, and how to claim.",
-        h1="easyJet flight delayed or cancelled? Check what you can claim",
+        title="easyJet Compensation: Delays & Cancellations, £220–£520",
+        desc="easyJet flight delayed 3+ hours or cancelled? Owed £220–£520 (UK261) or €250–€600 (EU261) per person. Free calculator, when easyJet can refuse, how to claim.",
+        h1="easyJet compensation for delayed and cancelled flights",
     ),
 }
 
@@ -37,7 +37,7 @@ META.update({
     "ryanair": dict(
         title="Ryanair Delay Compensation Claim: €250–€600 / £220–£520",
         desc="Ryanair flight delayed 3+ hours or cancelled? Claim €250–€600 (EU261) or £220–£520 (UK261) per person. Free calculator, ATC refusals and how to claim.",
-        h1="Ryanair flight delayed or cancelled? Check what you can claim",
+        h1="Ryanair delay compensation: what you can claim",
     ),
     "wizz-air": dict(
         title="Wizz Air Delay Compensation: €250–€600 per Passenger",
@@ -229,7 +229,7 @@ def section(a, airports, km, names, aesa_url, caa_url):
 <h2 style="margin-top:32px">When {n} can refuse (and when it can't)</h2>
 <p>The airline doesn't have to pay if the delay was caused by <strong>extraordinary circumstances</strong>: severe weather, air traffic control strikes, ATC restrictions whose underlying cause was itself extraordinary (CJEU, C-108/26), airport security problems, bird strikes or political unrest. It <strong>cannot</strong> refuse because of a technical fault found before or during the flight, a lack of crew, or a strike by its own staff.</p>
 <p>{t['quirk']}</p>
-<h2 style="margin-top:32px">How to claim from {n}, step by step</h2>
+<h2 style="margin-top:32px">Claiming {n} compensation: the overview</h2>
 <ol>
 <li><strong>Check the amount</strong> with the calculator above (it uses the real distance of your route).</li>
 <li><strong>Gather your proof:</strong> booking reference, boarding passes and, if you can, a screenshot of the arrival time.</li>
