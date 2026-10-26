@@ -120,7 +120,8 @@ def build(ctx):
 <li><strong>Huelga de control aéreo</strong>: normalmente <strong>no</strong>, porque la aerolínea no la controla.</li>
 <li><strong>Huelga de aeropuerto, handling o huelga general</strong>: <strong>depende</strong> de si la aerolínea podía haber evitado la cancelación. Pídele la causa por escrito.</li>
 <li><strong>Siempre</strong>, sea cual sea la huelga: reembolso completo en 7 días o vuelo alternativo, y comida, bebida y hotel mientras esperas.</li>
-<li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>"""
+<li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>
+<p>Guía completa: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a>.</p>"""
             checker = """<h2>¿Me toca algo? Compruébalo</h2>
 <form id="sk-form" class="sk"><label>Fecha del vuelo <input type="date" id="sk-flight" required></label>
 <label>Fecha en que te avisaron de la cancelación <input type="date" id="sk-notice" required></label>
@@ -143,7 +144,8 @@ def build(ctx):
 <li><strong>Air traffic control strike</strong>: usually <strong>no</strong>, because the airline can't control it.</li>
 <li><strong>Airport, ground handling or general strike</strong>: <strong>it depends</strong> on whether the airline could have avoided the cancellation. Ask it for the cause in writing.</li>
 <li><strong>Always</strong>, whatever the strike: a full refund within 7 days or a new flight, plus meals, drinks and a hotel while you wait.</li>
-<li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified on or before 28 October would not carry compensation.</li></ul>"""
+<li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified on or before 28 October would not carry compensation.</li></ul>
+<p>Full guide: <a href="/en/spain-general-strike-11-november-flights/">Spain general strike on 11 November and your flight</a>.</p>"""
             checker = """<h2>Am I owed anything? Check it</h2>
 <form id="sk-form" class="sk"><label>Flight date <input type="date" id="sk-flight" required></label>
 <label>Date you were told about the cancellation <input type="date" id="sk-notice" required></label>
