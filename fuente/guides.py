@@ -185,7 +185,7 @@ G = [
     {
         "paths": {"es": "/huelga-general-11-noviembre-vuelos/", "en": "/en/spain-general-strike-11-november-flights/"},
         "es": {
-            "title": "Huelga general 11 de noviembre: qué pasa con tu vuelo",
+            "title": "Huelga general 11 noviembre: vuelos cancelados y tus derechos",
             "desc": "Huelga general del 11 de noviembre de 2026 en España: si te cancelan o retrasan el vuelo, reembolso, asistencia y cuándo hay compensación de 250–600 €.",
             "h1": "Huelga general del 11 de noviembre: qué pasa con tu vuelo",
             "lead": "CCOO y UGT han convocado una huelga general de 24 horas en toda España el miércoles 11 de noviembre de 2026. Si vuelas ese día, esto es lo que te corresponde si tu vuelo se cancela o se retrasa.",
@@ -217,7 +217,7 @@ G = [
             ],
         },
         "en": {
-            "title": "Spain general strike 11 November: what it means for flights",
+            "title": "Spain general strike 11 November: flights and your rights",
             "desc": "Spain's 24-hour general strike on 11 November 2026: refunds, meals and hotels, and when €250–600 / £220–520 compensation applies if your flight is cancelled.",
             "h1": "Spain general strike on 11 November: what it means for your flight",
             "lead": "Spain's two main unions, CCOO and UGT, have called a 24-hour nationwide general strike for Wednesday 11 November 2026. If you're flying that day, here's what you're entitled to if your flight is cancelled or delayed.",

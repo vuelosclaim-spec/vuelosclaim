@@ -109,8 +109,8 @@ def build(ctx):
     for l in ("es", "en"):
         other = "en" if l == "es" else "es"
         if l == "es":
-            title = "Huelgas de vuelos en España 2026: calendario y qué te deben"
-            desc = "Calendario actualizado de huelgas que afectan a vuelos en España y Europa (oct–nov 2026) y cuándo te toca compensación de 250–600 €."
+            title = "Huelgas de vuelos noviembre 2026: calendario y qué te deben"
+            desc = "Huelga general del 11N, control aéreo en Italia y más: calendario de huelgas de vuelos de noviembre de 2026 con fuentes oficiales y cuándo te pagan 250–600 €."
             h1 = "Huelgas que afectan a vuelos en España: calendario y tus derechos"
             lead = (f"Actualizado el {UPDATED['es']}. Estas son las huelgas convocadas que pueden afectar a vuelos con salida o llegada en España y a los destinos europeos más habituales. "
                     "Si te cancelan el vuelo con menos de 14 días de aviso, lo que decide si cobras 250–600 € es <strong>quién hace la huelga</strong>.")
@@ -133,8 +133,8 @@ def build(ctx):
                    ("¿Me pagan compensación si la huelga es de controladores?", "Normalmente no: las huelgas de control aéreo se consideran circunstancias extraordinarias. Sí tienes derecho al reembolso o a un vuelo alternativo y a asistencia."),
                    ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te tocan 250, 400 o 600 € si te avisan con menos de 14 días.")]
         else:
-            title = "Flight strikes Spain & Europe 2026: dates and your rights"
-            desc = "Up-to-date calendar of strikes affecting flights in Spain and Europe (Oct–Nov 2026) and when you're owed €250–€600 compensation."
+            title = "Flight strikes November 2026: Spain & Europe calendar"
+            desc = "Spain's 11 Nov general strike, Italian ATC strikes and more: November 2026 flight strike calendar from official sources, and when you're owed €250–600."
             h1 = "Strikes affecting flights to and from Spain: calendar and your rights"
             lead = (f"Updated {UPDATED['en']}. These are the strikes called that may affect flights to and from Spain and the most common European connections. "
                     "If your flight is cancelled with less than 14 days' notice, what decides whether you get €250–€600 is <strong>who is on strike</strong>.")
