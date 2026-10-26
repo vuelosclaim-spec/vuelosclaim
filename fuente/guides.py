@@ -182,6 +182,73 @@ G = [
             ],
         },
     },
+    {
+        "paths": {"es": "/huelga-general-11-noviembre-vuelos/", "en": "/en/spain-general-strike-11-november-flights/"},
+        "es": {
+            "title": "Huelga general 11 de noviembre: qué pasa con tu vuelo",
+            "desc": "Huelga general del 11 de noviembre de 2026 en España: si te cancelan o retrasan el vuelo, reembolso, asistencia y cuándo hay compensación de 250–600 €.",
+            "h1": "Huelga general del 11 de noviembre: qué pasa con tu vuelo",
+            "lead": "CCOO y UGT han convocado una huelga general de 24 horas en toda España el miércoles 11 de noviembre de 2026. Si vuelas ese día, esto es lo que te corresponde si tu vuelo se cancela o se retrasa.",
+            "body": """<h2>Lo que se sabe (actualizado el 26 de octubre)</h2>
+<ul><li><strong>Fecha:</strong> miércoles 11 de noviembre de 2026, 24 horas, en toda España.</li>
+<li><strong>Convocan:</strong> CCOO y UGT, con el apoyo de otros sindicatos.</li>
+<li><strong>Servicios mínimos en aeropuertos:</strong> aún sin publicar. Los fija el Ministerio de Transportes, normalmente pocos días antes. Como referencia, en la huelga general de 2012 se garantizó el 10 % de los vuelos peninsulares, el 50 % de los enlaces con Baleares y Canarias, el 20 % de los vuelos a la UE y el 40 % del resto de internacionales. Los de 2026 pueden ser distintos.</li></ul>
+<p>Sigue el <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>: lo actualizamos con fuentes oficiales.</p>
+<h2>Si te cancelan el vuelo: siempre tienes estos derechos</h2>
+<ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004).</li>
+<li><strong>Asistencia mientras esperas:</strong> comida, bebida y, si hay que pasar la noche, hotel y traslado (art. 9). Si no te lo dan, guarda los tickets y reclámalos.</li></ul>
+<p>Estos dos derechos no dependen de quién haga huelga.</p>
+<h2>La compensación de 250–600 €: depende</h2>
+<ul><li><strong>Si te avisan de la cancelación con 14 días o más</strong> (para el 11 de noviembre, el 28 de octubre o antes): no hay compensación fija.</li>
+<li><strong>Si la huelga es del personal de la propia aerolínea</strong> (tripulación, pilotos, su personal de tierra): el TJUE considera que no es una circunstancia extraordinaria (asunto C-28/20, Airhelp contra SAS). Si te avisan con menos de 14 días, normalmente te corresponde la compensación.</li>
+<li><strong>Si la huelga es de controladores, del aeropuerto o de empresas ajenas a la aerolínea:</strong> suele considerarse circunstancia extraordinaria y normalmente no hay compensación.</li>
+<li><strong>Huelga general:</strong> no hay una sentencia del TJUE específica. Lo que cuenta es qué personal paró y por qué se canceló tu vuelo. Por eso es clave pedir el motivo por escrito.</li></ul>
+<h2>Qué hacer si vuelas el 11 de noviembre</h2>
+<ol><li>Revisa la app o el correo de tu aerolínea los días previos.</li>
+<li>Si te cancelan, haz captura del aviso, anota la fecha en que te avisaron y pide el motivo por escrito.</li>
+<li>Elige reembolso o vuelo alternativo y guarda todos los tickets de gastos.</li>
+<li><a href="/">Comprueba gratis si te corresponde compensación</a> y genera la carta para reclamar tú mismo.</li>
+<li>Si la aerolínea no responde en un mes o lo rechaza, reclama gratis en <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li></ol>
+<p>Más detalle: <a href="/vuelo-cancelado-que-hacer/">vuelo cancelado, qué hacer</a> y <a href="/circunstancias-extraordinarias-vuelo/">circunstancias extraordinarias</a>.</p>""",
+            "faq": [
+                ("¿Hay vuelos el 11 de noviembre de 2026?", "Sí, la huelga no cierra los aeropuertos, pero puede haber cancelaciones y retrasos. Los servicios mínimos aún no se han publicado."),
+                ("¿Me compensan si me cancelan el vuelo por la huelga general?", "Depende de cuándo te avisaron y de qué personal hizo huelga. Con aviso de 14 días o más, no. Si fue el personal de la propia aerolínea y te avisaron con menos, normalmente sí. El reembolso o vuelo alternativo y la asistencia te corresponden siempre."),
+                ("¿Qué día es el límite de los 14 días para el 11 de noviembre?", "El 28 de octubre. Una cancelación comunicada ese día o antes no da derecho a compensación fija."),
+            ],
+        },
+        "en": {
+            "title": "Spain general strike 11 November: what it means for flights",
+            "desc": "Spain's 24-hour general strike on 11 November 2026: refunds, meals and hotels, and when €250–600 / £220–520 compensation applies if your flight is cancelled.",
+            "h1": "Spain general strike on 11 November: what it means for your flight",
+            "lead": "Spain's two main unions, CCOO and UGT, have called a 24-hour nationwide general strike for Wednesday 11 November 2026. If you're flying that day, here's what you're entitled to if your flight is cancelled or delayed.",
+            "body": """<h2>What we know (updated 26 October)</h2>
+<ul><li><strong>Date:</strong> Wednesday 11 November 2026, 24 hours, across Spain.</li>
+<li><strong>Called by:</strong> CCOO and UGT, backed by other unions.</li>
+<li><strong>Airport minimum services:</strong> not published yet. Spain's Ministry of Transport sets them, usually a few days before. For reference, the 2012 general strike guaranteed 10% of mainland domestic flights, 50% of flights to and between the Balearic and Canary Islands, 20% of flights to the EU and 40% of other international flights. This year's may differ.</li></ul>
+<p>Keep an eye on our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>, updated from official sources.</p>
+<h2>If your flight is cancelled: you always get this</h2>
+<ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261; the same applies under UK261).</li>
+<li><strong>Care while you wait:</strong> meals, drinks and, if you're stuck overnight, a hotel and transfers (Art. 9). If the airline doesn't provide it, keep your receipts and claim them back.</li></ul>
+<p>These two rights don't depend on who is on strike.</p>
+<h2>€250–600 / £220–520 compensation: it depends</h2>
+<ul><li><strong>Cancellation notified 14 days or more in advance</strong> (for 11 November, on or before 28 October): no fixed compensation.</li>
+<li><strong>The airline's own staff on strike</strong> (cabin crew, pilots, its ground staff): the EU Court of Justice says this is not an extraordinary circumstance (case C-28/20, Airhelp v SAS). With less than 14 days' notice, compensation usually applies.</li>
+<li><strong>Air traffic control, airport or other outside staff on strike:</strong> usually treated as extraordinary, so usually no compensation.</li>
+<li><strong>General strike:</strong> there's no specific EU Court ruling. What matters is which staff stopped work and why your flight was cancelled, so ask the airline for the reason in writing.</li></ul>
+<h2>What to do if you're flying on 11 November</h2>
+<ol><li>Check your airline's app or emails in the days before.</li>
+<li>If your flight is cancelled, screenshot the notice, note the date you were told and ask for the reason in writing.</li>
+<li>Choose a refund or a new flight and keep every receipt.</li>
+<li><a href="/en/">Check for free whether compensation applies</a> and generate a claim letter to send yourself.</li>
+<li>If the airline refuses or doesn't reply, escalate for free: AESA for flights from Spain, or the airline's ADR scheme or the <a href="https://www.caa.co.uk/passengers-and-public/resolving-travel-problems/" rel="noopener">CAA</a> for UK flights.</li></ol>
+<p>More detail: <a href="/en/flight-cancelled-what-to-do/">flight cancelled, what to do</a> and <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstances</a>.</p>""",
+            "faq": [
+                ("Will there be flights on 11 November 2026?", "Yes, the strike doesn't close airports, but cancellations and delays are possible. Minimum services haven't been published yet."),
+                ("Do I get compensation if my flight is cancelled because of the general strike?", "It depends on when you were told and which staff went on strike. With 14 days' notice or more, no. If it was the airline's own staff and you were told with less notice, usually yes. A refund or new flight and care while you wait always apply."),
+                ("What is the 14-day cut-off date for 11 November flights?", "28 October. A cancellation notified on or before that day carries no fixed compensation."),
+            ],
+        },
+    },
 ]
 
 
