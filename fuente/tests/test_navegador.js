@@ -244,7 +244,7 @@ async function pickAirport(p, device, id, text, code) {
     release(); await p.waitForSelector("#to-list [role=option]");
     check(T("al llegar la lista aparecen las sugerencias"), (await p.textContent("#to-opt-0 .opt-code")) === "BCN");
     const fonts = await p.evaluate(() => [...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family));
-    check(T("fuentes propias cargadas"), fonts.includes("Public Sans") && fonts.includes("Bricolage Grotesque"), fonts.join(","));
+    check(T("fuentes propias cargadas"), fonts.includes("Noto Sans"), fonts.join(","));
     await ctx.close();
   }
 

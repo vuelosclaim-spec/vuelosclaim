@@ -37,11 +37,11 @@ _FONTS = json.load(open(os.path.join(ROOT, "src_static", "fonts", "fonts.json"),
 _FONT_FACE = "".join(
     f"@font-face{{font-family:'{fam}';font-style:normal;font-weight:{w};font-display:swap;src:url(/fonts/{fn}) format('woff2');unicode-range:{rng}}}"
     for fam, w, subset, fn, rng in _FONTS)
-_PRELOAD = [fn for fam, w, subset, fn, rng in _FONTS if subset == "latin" and fam in ("Public Sans", "Bricolage Grotesque")]
+_PRELOAD = [fn for fam, w, subset, fn, rng in _FONTS if subset == "latin" and fam == "Noto Sans" and w in ("400", "800")]
 FONTS = ("".join(f'<link rel="preload" href="/fonts/{fn}" as="font" type="font/woff2" crossorigin>' for fn in dict.fromkeys(_PRELOAD))
          + f"<style>{_FONT_FACE}</style>")
 ICON = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="192x192" href="/img/icon-192.png">'
-        '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#13213c">')
+        '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#0d6b3b">')
 OGIMG = ('<meta property="og:image" content="https://vuelosclaim.eu/img/og-image.png"><meta property="og:image:width" content="1200">'
          '<meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@vuelosclaim">')
 ORG_LD = ('<script type="application/ld+json">' + __import__("json").dumps([
@@ -127,7 +127,7 @@ S = {
   al_unknown="No lo sé / no aparece", al_eu="Otra aerolínea europea", al_noneu="Otra aerolínea no europea",
   via="¿Hiciste escala?", v=[("direct", "No, vuelo directo"), ("same", "Sí, una reserva y la misma aerolínea"), ("mixed", "Sí, una reserva y aerolíneas distintas"), ("separate", "Sí, con reservas separadas")],
   fare="El billete", fa=[("public", "Lo pagué (también con puntos o en un paquete)"), ("staff", "Gratis o con tarifa no pública (p. ej., de empleado)")],
-  what="Qué pasó", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
+  what="¿Qué le pasó a tu vuelo?", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
   delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h justas a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
   notice="Te avisaron de la cancelación con", n=[("gt14", "14 días o más"), ("7to14", "Entre 7 y 13 días"), ("lt7", "Menos de 7 días"), ("unknown", "No lo sé")],
   reroute="¿Te ofrecieron un vuelo alternativo?", rr=[("yes", "Sí"), ("no", "No"), ("unknown", "No lo sé")],
@@ -160,7 +160,7 @@ S = {
   al_unknown="Not sure / not listed", al_eu="Another European airline", al_noneu="Another non-European airline",
   via="Did you have a connection?", v=[("direct", "No, direct flight"), ("same", "Yes, one booking, same airline"), ("mixed", "Yes, one booking, different airlines"), ("separate", "Yes, separate bookings")],
   fare="Your ticket", fa=[("public", "I paid for it (points or package holidays too)"), ("staff", "Free or a non-public fare (e.g. staff ticket)")],
-  what="What happened", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
+  what="What happened to your flight?", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
   delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "Exactly 3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
   notice="You were told about the cancellation", n=[("gt14", "14 days or more ahead"), ("7to14", "7 to 13 days ahead"), ("lt7", "Under 7 days ahead"), ("unknown", "Not sure")],
   reroute="Were you offered an alternative flight?", rr=[("yes", "Yes"), ("no", "No"), ("unknown", "Not sure")],
@@ -218,8 +218,8 @@ def head(l, title, desc, path, alts=None):
 
 def header(l, alt_path):
     s, h = S[l], u_home(l)
-    sw = f'<a class="lang" href="{alt_path}" hreflang="{"en" if l == "es" else "es"}" aria-label="{s["switch_label"]}">{s["switch"]}</a>' if alt_path else ""
-    return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true">€</span>{BRAND}</a>'
+    sw = f'<a class="lang" href="{alt_path}" hreflang="{"en" if l == "es" else "es"}" aria-label="{s["switch"]} – {s["switch_label"]}">{s["switch"]}</a>' if alt_path else ""
+    return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>{BRAND}</a>'
             f'<nav aria-label="{s["nav"]}"><a href="{h}#cuanto">{s["nav_amounts"]}</a><a href="{h}#aerolineas">{s["nav_airlines"]}</a><a href="{h}#preguntas">{s["nav_faq"]}</a>{sw}</nav></div></header>')
 
 
@@ -249,13 +249,13 @@ def calculator(l, airline_slug, dep, arr):
     ] + [f'<option value="otra-ue">{s["al_eu"]}</option>', f'<option value="otra-no-ue">{s["al_noneu"]}</option>']
     return f"""<form class="calc" id="calc" novalidate>
 <h2>{s["calc_h"]}</h2>
+<fieldset class="what"><legend>{s["what"]}</legend><div class="chips chips-what">{chips("what", s["w"], "delay")}</div></fieldset>
 <div class="row2">
  <div class="field"><label for="from">{s["from_"]}</label><input type="text" id="from" data-code="{dep}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="from-list" placeholder="{s["ph"]}"><ul class="ac" id="from-list" role="listbox" hidden></ul></div>
  <div class="field"><label for="to">{s["to"]}</label><input type="text" id="to" data-code="{arr}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="{s["ph"]}"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
 <div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
 <fieldset id="grp-via"><legend>{s["via"]}</legend><div class="chips chips-wide">{chips("via", s["v"], "direct")}</div></fieldset>
-<fieldset><legend>{s["what"]}</legend><div class="chips">{chips("what", s["w"], "delay")}</div></fieldset>
 <fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
 <fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
 <fieldset id="grp-reroute" hidden><legend>{s["reroute"]}</legend><div class="chips">{chips("reroute", s["rr"], "unknown")}</div></fieldset>
@@ -309,6 +309,32 @@ def hero(l, h1, lede, airline_slug, dep, arr):
     facts = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in s["facts"])
     return (f'<section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">{s["eyebrow"]}</span><h1>{h1}</h1>'
             f'<p class="lede">{lede}</p><ul class="facts{" facts-wide" if l == "en" else ""}">{facts}</ul></div>{calculator(l, airline_slug, dep, arr)}</div></section>')
+
+
+WHY = {
+    "es": ("Por qué usar VuelosClaim", [
+        ("eur", "Gratis de verdad", "La calculadora y la carta no cuestan nada. Nos financian los anuncios y un enlace de afiliado, siempre señalado."),
+        ("law", "Con la ley en la mano", "Cada resultado cita el artículo del reglamento o la sentencia del TJUE que lo respalda."),
+        ("lock", "Sin datos para calcular", "No pedimos nombre, correo ni código de reserva para saber cuánto te corresponde."),
+        ("way", "Tú eliges el camino", "Reclama tú con la carta y quédate el 100 %, o delega en un servicio que cobra solo si ganas.")]),
+    "en": ("Why use VuelosClaim", [
+        ("eur", "Genuinely free", "The calculator and the letter cost nothing. Ads and a clearly marked affiliate link pay for the site."),
+        ("law", "Backed by the law", "Every result cites the regulation article or the EU Court of Justice ruling behind it."),
+        ("lock", "No personal data to check", "We don't ask for your name, email or booking code to tell you what you're owed."),
+        ("way", "Your choice of route", "Claim yourself with the letter and keep 100%, or hand it to a service that only charges if you win.")]),
+}
+_ICON = {
+    "eur": '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7M7 11h6M7 13.5h6"/>',
+    "law": '<path d="M4 19h16M6 19V9M10 19V9M14 19V9M18 19V9M3 9l9-5 9 5"/>',
+    "lock": '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    "way": '<path d="M3 12h18M13 5l7 7-7 7"/>',
+}
+
+
+def why_cards(l):
+    h, items = WHY[l]
+    cards = "".join(f'<li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{_ICON[k]}</svg><h3>{t}</h3><p>{d}</p></li>' for k, t, d in items)
+    return f'<section class="why-us"><div class="wrap"><h2>{h}</h2><ul>{cards}</ul></div></section>\n'
 
 
 def faq_html(l):
@@ -840,7 +866,7 @@ def build():
     for l in ("es", "en"):
         title, desc, h1, lede, (dep, arr) = T[l]
         other = "en" if l == "es" else "es"
-        body = hero(l, e(h1), lede, "", dep, arr) + reference_sections(l)
+        body = hero(l, e(h1), lede, "", dep, arr) + why_cards(l) + reference_sections(l)
         p = page(l, title, desc, homes[l], body, homes, homes[other])
         emit(l, homes[l], p)
         if l == "es":
@@ -1006,7 +1032,7 @@ def build():
         shutil.copy(os.path.join(ROOT, "src_static", fn), os.path.join(OUT, fn))
     write(os.path.join(OUT, "site.webmanifest"), json.dumps({"name": "VuelosClaim", "short_name": "VuelosClaim", "icons": [
         {"src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png"}],
-        "theme_color": "#13213c", "background_color": "#13213c", "display": "browser"}))
+        "theme_color": "#0d6b3b", "background_color": "#f3f7f4", "display": "browser"}))
     _k=open(os.path.join(ROOT,"src_static","indexnow.key")).read().strip(); write(os.path.join(OUT, _k+".txt"), _k)
     write(os.path.join(OUT, "CNAME"), "vuelosclaim.eu\n"); write(os.path.join(OUT, ".nojekyll"), "")
     write(os.path.join(OUT, "ads.txt"), "google.com, pub-1079386437086971, DIRECT, f08c47fec0942fa0\n")

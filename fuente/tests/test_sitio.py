@@ -118,6 +118,17 @@ def check_site():
             err(f"{url}: el enlace para saltar al contenido no tiene destino (#main)")
         if 'id="ck" role="dialog"' in s:
             err(f"{url}: el aviso de cookies usa role=dialog sin gestionar el foco")
+    # Diseño: «¿Qué le pasó a tu vuelo?» es lo primero de la calculadora; el selector de idioma incluye su texto visible en el nombre (WCAG 2.5.3)
+    for url, s in pages.items():
+        m = re.search(r'<form class="calc" id="calc"[^>]*>\s*<h2>[^<]*</h2>\s*<fieldset class="what">', s)
+        if 'id="calc"' in s and not m:
+            err(f"{url}: la pregunta «qué pasó» no es lo primero de la calculadora")
+        for vis_label, txt in re.findall(r'<a class="lang"[^>]*aria-label="([^"]*)"[^>]*>([^<]*)</a>', s):
+            if not vis_label.startswith(txt.strip()):
+                err(f"{url}: el nombre accesible del selector de idioma no incluye el texto visible «{txt}»")
+    for url in ("/", "/en/"):
+        if url in pages and 'class="why-us"' not in pages[url]:
+            err(f"{url}: falta el bloque «Por qué usar VuelosClaim»")
     # Rendimiento: fuentes propias (sin petición bloqueante a Google Fonts), AdSense diferido y aeropuertos del ejemplo incrustados
     fonts_dir = os.path.join(SITE, "fonts")
     for url, s in pages.items():
