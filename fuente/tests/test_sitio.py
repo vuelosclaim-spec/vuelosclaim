@@ -129,6 +129,18 @@ def check_site():
     for url in ("/", "/en/"):
         if url in pages and 'class="why-us"' not in pages[url]:
             err(f"{url}: falta el bloque «Por qué usar VuelosClaim»")
+    # Páginas de aeropuerto: bloque propio con datos de Aena y listas de enlaces recortadas (evita páginas casi duplicadas)
+    for url, s in pages.items():
+        if re.match(r"^/(retraso-vuelo-aeropuerto-[a-z-]+|en/[a-z-]+-airport-flight-delay)/$", url):
+            if "aena.es/" in s and not re.search(r"<h2>(El aeropuerto de .+ en cifras|.+ airport in numbers)</h2>", s):
+                err(f"{url}: cita a Aena pero falta el bloque de cifras")
+        if re.match(r"^/(retraso-vuelo-aeropuerto-|compensacion-retraso-|en/[a-z-]+-(airport-flight-delay|delay-compensation)/)", url):
+            sec = re.search(r'<section class="ref" id="aerolineas">(.*?)</section>', s, re.S)
+            if sec and sec.group(1).count("<li>") > 30:
+                err(f"{url}: la lista de enlaces a aerolíneas y aeropuertos vuelve a ser completa ({sec.group(1).count('<li>')} enlaces)")
+    for url in ("/retraso-vuelo-aeropuerto-madrid-barajas/", "/en/seville-airport-flight-delay/"):
+        if url in pages and "airport in numbers" not in pages[url] and "en cifras" not in pages[url]:
+            err(f"{url}: falta el bloque de cifras de Aena")
     # Enlazado interno del calendario de huelgas: bloque de aeropuertos/aerolíneas y enlaces desde la tabla
     for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
         if url in pages:

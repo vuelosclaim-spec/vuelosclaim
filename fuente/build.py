@@ -31,6 +31,8 @@ JS = open(os.path.join(SRC, "app.js"), encoding="utf-8").read()
 AIRLINES = json.load(open(os.path.join(ROOT, "data", "airlines.json"), encoding="utf-8"))
 CLAIMS = {k: v for k, v in json.load(open(os.path.join(ROOT, "data", "airline_claims.json"), encoding="utf-8")).items() if not k.startswith("_")}
 AIRPORTS = {a[0]: a for a in json.load(open(os.path.join(ROOT, "data", "airports.min.json"), encoding="utf-8"))}
+# Aena's official 2025 traffic per airport (only figures Aena states; see data/airport_stats.json)
+AP_STATS = json.load(open(os.path.join(ROOT, "data", "airport_stats.json"), encoding="utf-8"))["airports"]
 # Self-hosted Google Fonts (SIL OFL, files and licences in src_static/fonts): no render-blocking request to another domain.
 # Only the latin files used above the fold are preloaded; latin-ext loads only if a page needs those characters (unicode-range).
 _FONTS = json.load(open(os.path.join(ROOT, "src_static", "fonts", "fonts.json"), encoding="utf-8"))
@@ -691,20 +693,111 @@ def airline_facts(l, a):
             + '</div></section>')
 
 
-def compact_refs(l):
-    """Internal links shared by airline and airport pages, without repeating the generic rules blocks."""
-    links = "".join(f'<li><a href="{u_airline(l, a)}">{e(a["name"])}</a></li>' for a in AIRLINES)
-    aps = "".join(f'<li><a href="{u_airport(l, ap)}">{e(ap[2] if l == "es" else ap[3])}</a></li>' for ap in ES_AIRPORTS)
+# Airlines and airports linked from airline/airport pages: the most used from Spain, not the whole list (the home page has it)
+TOP_AIRLINES = ["ryanair", "vueling", "iberia", "air-europa", "easyjet", "binter", "volotea", "iberia-express", "air-nostrum", "jet2", "tui", "wizz-air"]
+COUNTRY = {"es": {"DE": "Alemania", "GB": "Reino Unido", "CH": "Suiza", "IT": "Italia", "NL": "Países Bajos", "FR": "Francia", "BE": "Bélgica"},
+           "en": {"DE": "Germany", "GB": "the UK", "CH": "Switzerland", "IT": "Italy", "NL": "the Netherlands", "FR": "France", "BE": "Belgium"}}
+
+
+def _n(l, x):
+    return f"{x:,}".replace(",", ".") if l == "es" else f"{x:,}"
+
+
+def _pct(l, x):
+    t = f"{x:+.1f}".replace("+", "+" if x else "")
+    return (t.replace(".", ",") + " %") if l == "es" else t + "%"
+
+
+def compact_refs(l, code=None, airline=None):
+    """Internal links shared by airline and airport pages: guides, the main airlines and the nearest airports (or the busiest),
+    instead of every airline and airport on every page, which made these pages near-duplicates of each other."""
+    tops = [a for s_ in TOP_AIRLINES for a in AIRLINES if a["slug"] == s_ and a["slug"] != airline]
+    links = "".join(f'<li><a href="{u_airline(l, a)}">{e(a["name"])}</a></li>' for a in tops)
+    if code:
+        near = sorted((km(AIRPORTS[code], AIRPORTS[ap[0]]), ap) for ap in ES_AIRPORTS if ap[0] != code)[:6]
+        aps_l = [ap for _, ap in near]
+    else:
+        aps_l = ES_AIRPORTS[:10]
+    aps = "".join(f'<li><a href="{u_airport(l, ap)}">{e(ap[2] if l == "es" else ap[3])}</a></li>' for ap in aps_l)
     guides_ = " · ".join(f'<a href="{u}">{t}</a>' for u, t in GUIDES[l])
+    home = u_home(l)
     if l == "es":
+        h_ap = "Aeropuertos más cercanos" if code else "Aeropuertos con más vuelos"
         return (f'<section class="ref" id="aerolineas"><div class="wrap"><h2>Guías para reclamar</h2><p>{guides_}</p>'
                 f'<h2 style="margin-top:32px">Compensación por aerolínea</h2><ul class="airlines">{links}</ul>'
-                f'<h2 style="margin-top:32px">Vuelos que salen de aeropuertos españoles</h2><ul class="airlines">{aps}</ul></div></section>')
-    ukl = "".join(f'<li><a href="{uk_airports.u_uk(s)}">{e(nm)}</a></li>' for _, s, nm, _ in uk_airports.UK)
+                f'<h2 style="margin-top:32px">{h_ap}</h2><ul class="airlines">{aps}</ul>'
+                f'<p><a href="{home}#aerolineas">Todas las aerolíneas y aeropuertos</a></p></div></section>')
+    h_ap = "Nearest airports" if code else "Busiest Spanish airports"
     return (f'<section class="ref" id="aerolineas"><div class="wrap"><h2>Claim guides</h2><p>{guides_}</p>'
             f'<h2 style="margin-top:32px">Compensation by airline</h2><ul class="airlines">{links}</ul>'
-            f'<h2 style="margin-top:32px">Flights from Spanish airports</h2><ul class="airlines">{aps}</ul>'
-            f'<h2 style="margin-top:32px">Flights from UK airports to Spain</h2><ul class="airlines">{ukl}</ul></div></section>')
+            f'<h2 style="margin-top:32px">{h_ap}</h2><ul class="airlines">{aps}</ul>'
+            f'<p><a href="{home}#aerolineas">All airlines and airports</a> · <a href="{uk_airports.HUB}">UK airports to Spain</a></p></div></section>')
+
+
+def airport_facts(l, code, name):
+    """Unique per-airport block: Aena's 2025 traffic and the strikes in our calendar that touch this airport."""
+    n = e(name)
+    st = AP_STATS.get(code)
+    parts = []
+    if st:
+        items = []
+        if l == "es":
+            items.append(f"<li><strong>{_n(l, st['pax'])} pasajeros</strong> en 2025 ({_pct(l, st['pct'])} respecto a 2024).</li>")
+            if st.get("flights"):
+                items.append(f"<li>{_n(l, st['flights'])} vuelos entre despegues y aterrizajes, unos {_n(l, round(st['flights'] / 365))} al día.</li>")
+            if st.get("intl") and st.get("dom"):
+                share = round(100 * st["intl"] / (st["intl"] + st["dom"]))
+                items.append(f"<li>{_n(l, st['intl'])} pasajeros en vuelos internacionales y {_n(l, st['dom'])} en nacionales: el {share} % de los viajeros comerciales vuela a o desde el extranjero.</li>")
+            elif st.get("intl"):
+                items.append(f"<li>{_n(l, st['intl'])} pasajeros en vuelos internacionales.</li>")
+            if st.get("markets"):
+                mk = ", ".join(f"{COUNTRY[l][c]} ({_n(l, v)})" for c, v in st["markets"])
+                items.append(f"<li>Principales mercados internacionales: {mk}.</li>")
+            if st.get("cargo_t"):
+                items.append(f"<li>{_n(l, st['cargo_t'])} toneladas de mercancía transportadas.</li>")
+            parts.append(f'<h2>El aeropuerto de {n} en cifras</h2><ul>{"".join(items)}</ul>'
+                         f'<p class="lead"><small>Fuente: <a href="{st["src"]}" rel="noopener">Aena, balance de tráfico de 2025</a>.</small></p>')
+            if st.get("intl") and st.get("dom") and st["intl"] >= 0.4 * (st["intl"] + st["dom"]):
+                parts.append(f"<p>Con tanto tráfico internacional, conviene recordarlo: <strong>cualquier vuelo que sale de {n} está cubierto por el reglamento europeo</strong>, también si lo opera una aerolínea de fuera de la UE. "
+                             f"A la vuelta, si vienes de fuera de la UE, solo lo está si la aerolínea es europea.</p>")
+        else:
+            items.append(f"<li><strong>{_n(l, st['pax'])} passengers</strong> in 2025 ({_pct(l, st['pct'])} on 2024).</li>")
+            if st.get("flights"):
+                items.append(f"<li>{_n(l, st['flights'])} take-offs and landings, around {_n(l, round(st['flights'] / 365))} a day.</li>")
+            if st.get("intl") and st.get("dom"):
+                share = round(100 * st["intl"] / (st["intl"] + st["dom"]))
+                items.append(f"<li>{_n(l, st['intl'])} passengers on international flights and {_n(l, st['dom'])} on domestic ones: {share}% of commercial passengers fly to or from abroad.</li>")
+            elif st.get("intl"):
+                items.append(f"<li>{_n(l, st['intl'])} passengers on international flights.</li>")
+            if st.get("markets"):
+                mk = ", ".join(f"{COUNTRY[l][c]} ({_n(l, v)})" for c, v in st["markets"])
+                items.append(f"<li>Biggest international markets: {mk}.</li>")
+            if st.get("cargo_t"):
+                items.append(f"<li>{_n(l, st['cargo_t'])} tonnes of cargo handled.</li>")
+            parts.append(f'<h2>{n} airport in numbers</h2><ul>{"".join(items)}</ul>'
+                         f'<p class="lead"><small>Source: <a href="{st["src"]}" rel="noopener">Aena, 2025 traffic report</a> (Spanish).</small></p>')
+            if st.get("intl") and st.get("dom") and st["intl"] >= 0.4 * (st["intl"] + st["dom"]):
+                parts.append(f"<p>With this much international traffic, worth remembering: <strong>every flight departing {n} is covered by EU261</strong>, including on non-EU airlines. "
+                             f"Flights into {n} from outside the EU are only covered on an EU airline; from the UK, UK261 applies.</p>")
+    # Strikes from the calendar that name this airport, plus Spain-wide general strikes; past ones hide in the browser
+    path_es = next(u_airport("es", ap) for ap in ES_AIRPORTS if ap[0] == code)
+    names = [k for k, v in strikes.LINKS["es"].items() if v == path_es]
+    rows = []
+    for s_ in sorted(strikes.STRIKES, key=lambda x: x[0]):
+        where = s_[5]
+        if any(re.search(r"(?<![\w-])" + re.escape(nm) + r"(?![\w-])", where) for nm in names) or where.startswith("Toda España"):
+            when, what = (s_[1], s_[3]) if l == "es" else (s_[2], s_[4])
+            rows.append(f'<tr data-end="{strikes.end_date(s_)}"><td>{e(when)}</td><td>{e(what)}</td><td>{strikes.COMP[l][s_[6]]}</td></tr>')
+    cal = "/huelgas-vuelos-espana/" if l == "es" else "/en/flight-strikes-spain-europe/"
+    if rows:
+        th = "<th>Cuándo</th><th>Huelga</th><th>¿Compensación?</th>" if l == "es" else "<th>When</th><th>Strike</th><th>Compensation?</th>"
+        h = f"Huelgas que pueden afectar a {n}" if l == "es" else f"Strikes that may affect {n}"
+        more = "Todas las huelgas y sus fuentes" if l == "es" else "All strikes and their sources"
+        parts.append(f'<h2>{h}</h2><div class="board"><table><thead><tr>{th}</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+                     f'<p><a href="{cal}">{more}</a></p><script>{strikes.EXPIRE_JS}</script>')
+    if not parts:
+        return ""
+    return f'<section class="ref"><div class="wrap">{"".join(parts)}</div></section>'
 
 
 def airport_claim(l, name, code):
@@ -910,7 +1003,7 @@ def build():
                 m = uk_deep.META[a["slug"]]
                 title, desc, h1 = m["title"], m["desc"], e(m["h1"])
                 deep = uk_deep.section(a, AIRPORTS, km, NAMES["en"], AESA_URL, CAA_URL)
-            body = hero(l, h1, lede, a["slug"], dep, arr) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l)
+            body = hero(l, h1, lede, a["slug"], dep, arr) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l, airline=a["slug"])
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # Airports
@@ -928,7 +1021,7 @@ def build():
                 desc = f"Calcula la compensación por un vuelo retrasado, cancelado o con overbooking en el aeropuerto de {name_es}: 250, 400 o 600 € por pasajero."
                 h1 = f"Vuelo retrasado en {n}: calcula cuánto te toca"
                 dep, arr = code, ("LHR" if code == "MAD" else "MAD")
-                body = hero(l, h1, lede, "", dep, arr) + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l)
+                body = hero(l, h1, lede, "", dep, arr) + airport_facts(l, code, name_es) + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l, code=code)
             else:
                 n = e(name_en)
                 extra = " The Canary Islands count as part of the EU for these rules, exactly like mainland Spain." if code in CANARY else ""
@@ -938,7 +1031,7 @@ def build():
                 desc = f"Delayed or cancelled flight at {name_en} airport? Check your compensation under EU261 or UK261: up to €600 or £520 per passenger."
                 h1 = f"Flight delayed at {n} airport? Check what you're owed"
                 dep, arr = code, ("LHR" if code != "MAN" else "LGW")
-                body = hero(l, h1, lede, "", dep, "MAN") + route_table(l, code, name_en) + airport_claim(l, name_en, code) + compact_refs(l)
+                body = hero(l, h1, lede, "", dep, "MAN") + airport_facts(l, code, name_en) + route_table(l, code, name_en) + airport_claim(l, name_en, code) + compact_refs(l, code=code)
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # UK airports -> Spain (EN programmatic pages)
@@ -946,7 +1039,7 @@ def build():
         "AIRPORTS": AIRPORTS, "km": km,
         "es_names": {ap[0]: ap[3] for ap in ES_AIRPORTS},
         "es_url": {ap[0]: u_airport("en", ap) for ap in ES_AIRPORTS},
-        "page": page, "hero": hero, "reference_sections": reference_sections, "emit": emit,
+        "page": page, "hero": hero, "reference_sections": reference_sections, "compact_refs": compact_refs, "emit": emit,
         "AESA_URL": AESA_URL, "CAA_URL": CAA_URL})
 
     strike_urls = strikes.build({"emit": emit, "page": page})
