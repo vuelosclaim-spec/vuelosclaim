@@ -129,6 +129,15 @@ def check_site():
     for url in ("/", "/en/"):
         if url in pages and 'class="why-us"' not in pages[url]:
             err(f"{url}: falta el bloque «Por qué usar VuelosClaim»")
+    # Enlazado interno del calendario de huelgas: bloque de aeropuertos/aerolíneas y enlaces desde la tabla
+    for url in ("/huelgas-vuelos-espana/", "/en/flight-strikes-spain-europe/"):
+        if url in pages:
+            s = pages[url]
+            if s.count('class="see-also"') != 1 or len(re.findall(r'<p class="see-also">(.*?)</p>', s, re.S)[0].split("<a ")) < 9:
+                err(f"{url}: falta el bloque de aeropuertos y aerolíneas (o tiene menos de 8 enlaces)")
+            tbody = re.search(r"<tbody>(.*?)</tbody>", s, re.S)
+            if not tbody or not re.search(r'<a href="/(en/)?[a-z-]*(aeropuerto|airport)[a-z-]*/">', tbody.group(1)):
+                err(f"{url}: la tabla de huelgas no enlaza con ninguna página de aeropuerto")
     # Rendimiento: fuentes propias (sin petición bloqueante a Google Fonts), AdSense diferido y aeropuertos del ejemplo incrustados
     fonts_dir = os.path.join(SITE, "fonts")
     for url, s in pages.items():

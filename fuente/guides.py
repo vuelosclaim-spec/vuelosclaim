@@ -249,6 +249,83 @@ G = [
             ],
         },
     },
+    {
+        "paths": {"es": "/huelga-easyjet-portugal-diciembre/", "en": "/en/easyjet-portugal-strike-december/"},
+        "es": {
+            "title": "Huelga easyJet Portugal 19–23 diciembre: tus derechos",
+            "desc": "Huelga de tripulantes de easyJet en Lisboa, Oporto y Faro del 19 al 23 de diciembre de 2026: reembolso, asistencia y cuándo te tocan 250–600 €.",
+            "h1": "Huelga de easyJet en Portugal del 19 al 23 de diciembre: qué te deben",
+            "lead": "El sindicato portugués de tripulantes SNPVAC ha convocado huelga del personal de cabina de easyJet con base en Portugal del sábado 19 al miércoles 23 de diciembre de 2026, en plena Navidad. Al ser una huelga de la propia plantilla de la aerolínea, si te cancelan con poco aviso normalmente te corresponde compensación.",
+            "body": """<h2>Lo que se sabe (actualizado el 27 de octubre)</h2>
+<ul><li><strong>Fechas:</strong> del 19 al 23 de diciembre de 2026, ambos incluidos.</li>
+<li><strong>Quién:</strong> tripulantes de cabina de easyJet con base en <strong>Lisboa, Oporto y Faro</strong>, convocados por el SNPVAC.</li>
+<li><strong>Servicios mínimos:</strong> los ha fijado el Gobierno portugués (<a href="https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro" rel="noopener">despacho de la DGERT</a>), con protección reforzada por la Navidad y para los enlaces con Madeira. El texto no publica una lista de vuelos garantizados.</li>
+<li><strong>Precedente:</strong> en la huelga del 2 al 6 de octubre, el sindicato habló de 370 vuelos cancelados, la mayoría antes de empezar la huelga (<a href="https://www.rtp.pt/noticias/economia/greve-dos-tripulantes-da-easyjet-originou-o-cancelamento-de-370-voos-diz-sindicato_n1769960" rel="noopener">RTP</a>). easyJet dijo que canceló de forma preventiva para dar más previsibilidad.</li></ul>
+<p>Afecta sobre todo a los vuelos que operan tripulaciones de esas tres bases, es decir, los que salen de Lisboa, Oporto o Faro o vuelven a ellas. Los vuelos de easyJet con tripulaciones de otras bases, como las españolas, en principio no están convocados. Revisa siempre tu reserva. La convocatoria puede cambiar o desconvocarse: sigue el <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>.</p>
+<h2>Si te cancelan el vuelo: siempre tienes estos derechos</h2>
+<ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004).</li>
+<li><strong>Asistencia mientras esperas:</strong> comida, bebida y, si hay que pasar la noche, hotel y traslado (art. 9). Si no te lo dan, guarda los tickets y reclámalos.</li></ul>
+<h2>La compensación de 250–600 €: aquí normalmente sí</h2>
+<p>El Tribunal de Justicia de la UE dice que la huelga del personal de la propia aerolínea <strong>no es una circunstancia extraordinaria</strong> (asunto C-28/20, Airhelp contra SAS). Por eso, si te cancelan con menos de 14 días de aviso o llegas con más de 3 horas de retraso por la huelga, normalmente te corresponde la compensación:</p>
+<ul><li><strong>250 €</strong> hasta 1.500 km (por ejemplo, la mayoría de vuelos entre Portugal y España).</li>
+<li><strong>400 €</strong> entre 1.500 y 3.500 km, o cualquier vuelo más largo dentro de la UE.</li>
+<li><strong>600 €</strong> a partir de 3.500 km fuera de la UE.</li></ul>
+<h2>La fecha clave: 14 días antes de tu vuelo</h2>
+<p>Si easyJet te avisa de la cancelación con 14 días o más de antelación, no hay compensación fija (sí reembolso o vuelo alternativo):</p>
+<ul><li>Vuelo el <strong>19 de diciembre</strong>: un aviso el 5 de diciembre o antes no da compensación.</li>
+<li>Vuelo el <strong>23 de diciembre</strong>: un aviso el 9 de diciembre o antes no da compensación.</li></ul>
+<p>Guarda el correo o el SMS del aviso con su fecha: es lo que decide si cobras.</p>
+<h2>Qué hacer si vuelas con easyJet esos días</h2>
+<ol><li>Revisa la app o el correo de easyJet en las semanas previas.</li>
+<li>Si te cancelan, haz captura del aviso y anota la fecha en que te avisaron.</li>
+<li>Elige reembolso o vuelo alternativo y guarda todos los tickets de gastos.</li>
+<li><a href="/">Calcula gratis cuánto te corresponde</a> con la distancia de tu ruta y genera la carta para reclamar tú mismo.</li>
+<li>Reclama a easyJet por su formulario (mira <a href="/compensacion-retraso-easyjet/">cómo reclamar a easyJet</a>). Si no responde o lo rechaza, acude al organismo del país de salida: la ANAC en Portugal o <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a> en España.</li></ol>
+<p>Más detalle: <a href="/vuelo-cancelado-que-hacer/">vuelo cancelado, qué hacer</a>.</p>""",
+            "faq": [
+                ("¿Cuándo es la huelga de easyJet en Portugal?", "Del sábado 19 al miércoles 23 de diciembre de 2026. La convoca el SNPVAC para los tripulantes de cabina con base en Lisboa, Oporto y Faro."),
+                ("¿Me pagan compensación si easyJet cancela mi vuelo por la huelga?", "Normalmente sí, si te avisan con menos de 14 días: la huelga de la propia plantilla no es circunstancia extraordinaria (TJUE, C-28/20). Son 250, 400 o 600 € según la distancia, además del reembolso o vuelo alternativo."),
+                ("¿Y si me avisan con más de 14 días?", "Entonces no hay compensación fija, pero sí puedes elegir el reembolso completo o un vuelo alternativo. Para un vuelo el 19 de diciembre, el límite es el 5 de diciembre."),
+            ],
+        },
+        "en": {
+            "title": "easyJet Portugal strike 19–23 December: your rights",
+            "desc": "easyJet cabin crew strike in Lisbon, Porto and Faro on 19–23 December 2026: refunds, meals and hotels, and when €250–600 compensation applies.",
+            "h1": "easyJet Portugal strike on 19–23 December: what you're owed",
+            "lead": "Portugal's cabin crew union SNPVAC has called a strike by easyJet cabin crew based in Portugal from Saturday 19 to Wednesday 23 December 2026, right over Christmas. Because it's the airline's own staff striking, a short-notice cancellation usually means you're owed compensation.",
+            "body": """<h2>What we know (updated 27 October)</h2>
+<ul><li><strong>Dates:</strong> 19 to 23 December 2026 inclusive.</li>
+<li><strong>Who:</strong> easyJet cabin crew based in <strong>Lisbon, Porto and Faro</strong>, called by SNPVAC.</li>
+<li><strong>Minimum services:</strong> set by the Portuguese government (<a href="https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro" rel="noopener">DGERT order</a>), with extra protection for Christmas travel and for Madeira. The order doesn't publish a list of protected flights.</li>
+<li><strong>Precedent:</strong> during the 2–6 October strike, the union said 370 flights were cancelled, most of them before the strike started (<a href="https://www.rtp.pt/noticias/economia/greve-dos-tripulantes-da-easyjet-originou-o-cancelamento-de-370-voos-diz-sindicato_n1769960" rel="noopener">RTP</a>). easyJet said it cancelled early to give passengers more certainty.</li></ul>
+<p>It mainly affects flights crewed from those three bases, so flights leaving from or returning to Lisbon, Porto or Faro. easyJet flights crewed from other bases, such as the UK or Spain, are not part of this strike, but check your booking. Strikes can change or be called off: follow our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>.</p>
+<h2>If your flight is cancelled: you always get this</h2>
+<ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261).</li>
+<li><strong>Care while you wait:</strong> meals, drinks and, if you're stuck overnight, a hotel and transfers (Art. 9). Keep your receipts if the airline doesn't provide it.</li></ul>
+<h2>€250–600 compensation: usually yes here</h2>
+<p>The EU Court of Justice ruled that a strike by the airline's own staff is <strong>not an extraordinary circumstance</strong> (case C-28/20, Airhelp v SAS). So if your flight is cancelled with less than 14 days' notice, or you arrive more than 3 hours late because of the strike, you're usually owed:</p>
+<ul><li><strong>€250</strong> up to 1,500 km.</li>
+<li><strong>€400</strong> from 1,500 to 3,500 km, or any longer flight within the EU.</li>
+<li><strong>€600</strong> beyond 3,500 km outside the EU.</li></ul>
+<h2>The key date: 14 days before your flight</h2>
+<p>If easyJet tells you about the cancellation 14 days or more before departure, there's no fixed compensation (you still get a refund or new flight):</p>
+<ul><li>Flight on <strong>19 December</strong>: notice on or before 5 December means no compensation.</li>
+<li>Flight on <strong>23 December</strong>: notice on or before 9 December means no compensation.</li></ul>
+<p>Keep the cancellation email or text with its date: it decides whether you get paid.</p>
+<h2>What to do if you're flying easyJet on those days</h2>
+<ol><li>Check the easyJet app and your emails in the weeks before.</li>
+<li>If you're cancelled, screenshot the notice and note the date you were told.</li>
+<li>Choose a refund or new flight and keep every receipt.</li>
+<li><a href="/en/">Work out what you're owed for free</a> using your route's distance, and generate a claim letter to send yourself.</li>
+<li>Claim through easyJet's form (see <a href="/en/easyjet-delay-compensation/">how to claim from easyJet</a>). If it refuses or doesn't reply, go to the body in the country you flew from: ANAC in Portugal, AESA in Spain, or the airline's ADR scheme or the CAA for flights from the UK.</li></ol>
+<p>More detail: <a href="/en/flight-cancelled-what-to-do/">flight cancelled, what to do</a>.</p>""",
+            "faq": [
+                ("When is the easyJet strike in Portugal?", "From Saturday 19 to Wednesday 23 December 2026. SNPVAC called it for cabin crew based in Lisbon, Porto and Faro."),
+                ("Will I get compensation if easyJet cancels my flight because of the strike?", "Usually yes, if you're told less than 14 days before: an airline's own staff strike is not extraordinary (CJEU, C-28/20). It's €250, €400 or €600 depending on distance, on top of a refund or new flight."),
+                ("What if I'm told more than 14 days before?", "Then there's no fixed compensation, but you can still choose a full refund or a new flight. For a 19 December flight, the cut-off is 5 December."),
+            ],
+        },
+    },
 ]
 
 
