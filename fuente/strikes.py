@@ -4,15 +4,17 @@ Linkable, newsjackable asset. Update STRIKES and UPDATED when news changes.
 import json
 from html import escape as e
 
-UPDATED = {"es": "25 de octubre de 2026", "en": "25 October 2026", "iso": "2026-10-25"}
+UPDATED = {"es": "27 de octubre de 2026", "en": "27 October 2026", "iso": "2026-10-27"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
 SRC_IT = "https://www.mit.gov.it/come-fare-per/trasporti/calendario-scioperi-trasporti"
 SRC_GEN = "https://huelga.ccoo.es/"
+# December: Portugal's labour ministry (DGERT) minimum-services order for the easyJet cabin crew strike.
+SRC_DGERT = "https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro"
 SRC_LBA = "https://www.unitetheunion.org/news-events/news/2026/october/leeds-bradford-airport-strikes-suspended-for-talks"
 
-# date_sort, ES when, EN when, ES what, EN what, where, kind(airline|atc|airport|general), status ES, status EN, source
+# date_sort, ES when, EN when, ES what, EN what, where, kind(airline|atc|airport|general), status ES, status EN, source[, (guide ES, guide EN)]
 STRIKES = [
     ("2026-10-01", "Hasta el 30 nov", "Until 30 Nov", "Control aéreo de torre (SAERCO), huelga indefinida", "Control tower staff (SAERCO), open-ended strike",
      "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos", "atc", "Con servicios mínimos", "Minimum services set", SRC_MIN),
@@ -36,6 +38,9 @@ STRIKES = [
      "Milán-Malpensa (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
      "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
+    ("2026-12-19", "19–23 dic", "19–23 Dec", "Tripulantes de cabina de easyJet con base en Portugal (SNPVAC)", "easyJet cabin crew based in Portugal (SNPVAC)",
+     "Lisboa, Oporto y Faro (Portugal)", "airline", "Convocada; servicios mínimos fijados por el Gobierno portugués", "Called; minimum services set by the Portuguese government", SRC_DGERT,
+     ("/huelga-easyjet-portugal-diciembre/", "/en/easyjet-portugal-strike-december/")),
 ]
 
 # English for the "where" column (the table above keeps it in Spanish); every place must have a translation (test_mantenimiento.py)
@@ -45,7 +50,49 @@ WHERE_EN = {
         "Jerez, A Coruña, Seville, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos",
     "Leeds Bradford (Reino Unido)": "Leeds Bradford (UK)", "Bari (Italia)": "Bari (Italy)", "Toda Italia": "All of Italy",
     "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)",
+    "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)",
     "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
+}
+
+# Internal links from the calendar to the airport and airline pages (more useful pages per visit). Keys are the names as shown.
+LINKS = {
+    "es": {"Barcelona-El Prat": "/retraso-vuelo-aeropuerto-barcelona-el-prat/", "Madrid-Barajas": "/retraso-vuelo-aeropuerto-madrid-barajas/",
+           "Jerez": "/retraso-vuelo-aeropuerto-jerez/", "Sevilla": "/retraso-vuelo-aeropuerto-sevilla/", "Vigo": "/retraso-vuelo-aeropuerto-vigo/",
+           "Fuerteventura": "/retraso-vuelo-aeropuerto-fuerteventura/", "Lanzarote": "/retraso-vuelo-aeropuerto-lanzarote/",
+           "La Palma": "/retraso-vuelo-aeropuerto-la-palma/", "easyJet": "/compensacion-retraso-easyjet/"},
+    "en": {"Barcelona-El Prat": "/en/barcelona-el-prat-airport-flight-delay/", "Madrid-Barajas": "/en/madrid-barajas-airport-flight-delay/",
+           "Jerez": "/en/jerez-airport-flight-delay/", "Seville": "/en/seville-airport-flight-delay/", "Vigo": "/en/vigo-airport-flight-delay/",
+           "Fuerteventura": "/en/fuerteventura-airport-flight-delay/", "Lanzarote": "/en/lanzarote-airport-flight-delay/",
+           "La Palma": "/en/la-palma-airport-flight-delay/", "easyJet": "/en/easyjet-delay-compensation/"},
+}
+
+
+def linkify(l, text):
+    """Escape text and link the airports/airlines that have their own page (one pass, longest names first)."""
+    import re
+    names = sorted(LINKS[l], key=len, reverse=True)
+    rx = re.compile(r"(?<![\w-])(" + "|".join(re.escape(e(n)) for n in names) + r")(?![\w-])")
+    return rx.sub(lambda m: f'<a href="{LINKS[l][m.group(1)]}">{m.group(1)}</a>', e(text))
+
+
+# "If you fly from..." block under the table: the busiest airports and airlines, so a strike visitor finds their own page.
+SEE_ALSO = {
+    "es": ("Tu aeropuerto o tu aerolínea", [
+        ("/retraso-vuelo-aeropuerto-madrid-barajas/", "Madrid-Barajas"), ("/retraso-vuelo-aeropuerto-barcelona-el-prat/", "Barcelona-El Prat"),
+        ("/retraso-vuelo-aeropuerto-palma-de-mallorca/", "Palma de Mallorca"), ("/retraso-vuelo-aeropuerto-malaga/", "Málaga"),
+        ("/retraso-vuelo-aeropuerto-alicante-elche/", "Alicante"), ("/retraso-vuelo-aeropuerto-valencia/", "Valencia"),
+        ("/retraso-vuelo-aeropuerto-gran-canaria/", "Gran Canaria"), ("/retraso-vuelo-aeropuerto-tenerife-sur/", "Tenerife Sur"),
+        ("/compensacion-retraso-ryanair/", "Ryanair"), ("/compensacion-retraso-vueling/", "Vueling"), ("/compensacion-retraso-iberia/", "Iberia"),
+        ("/compensacion-retraso-easyjet/", "easyJet"), ("/compensacion-retraso-air-europa/", "Air Europa")],
+        "Mira qué te corresponde en tu aeropuerto o con tu aerolínea, y cómo reclamarle:"),
+    "en": ("Your airport or airline", [
+        ("/en/madrid-barajas-airport-flight-delay/", "Madrid-Barajas"), ("/en/barcelona-el-prat-airport-flight-delay/", "Barcelona-El Prat"),
+        ("/en/palma-de-mallorca-airport-flight-delay/", "Palma de Mallorca"), ("/en/malaga-airport-flight-delay/", "Málaga"),
+        ("/en/alicante-airport-flight-delay/", "Alicante"), ("/en/tenerife-south-airport-flight-delay/", "Tenerife South"),
+        ("/en/uk-airports-to-spain-flight-delay-compensation/", "UK airports to Spain"),
+        ("/en/ryanair-delay-compensation/", "Ryanair"), ("/en/jet2-delay-compensation/", "Jet2"), ("/en/easyjet-delay-compensation/", "easyJet"),
+        ("/en/tui-delay-compensation/", "TUI"), ("/en/vueling-delay-compensation/", "Vueling"), ("/en/british-airways-delay-compensation/", "British Airways")],
+        "What you're owed at your airport or with your airline, and how to claim from it:"),
 }
 
 KIND = {
@@ -95,12 +142,14 @@ EXPIRE_JS = ("(function(){var t=new Date(),d=t.getFullYear()+'-'+('0'+(t.getMont
 def _rows(l):
     out = []
     for s in sorted(STRIKES, key=lambda x: x[0]):
-        _, wes, wen, des, den, where, kind, ses, sen, src = s
+        _, wes, wen, des, den, where, kind, ses, sen, src = s[:10]
+        guide = s[10][0 if l == "es" else 1] if len(s) > 10 else None
         when, what, st = (wes, des, ses) if l == "es" else (wen, den, sen)
         if l == "en":
             where = WHERE_EN[where]
-        out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{e(what)}<br><small>{e(where)}</small></td><td>{KIND[l][kind]}</td><td>{COMP[l][kind]}</td>"
-                   f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{'fuente' if l == 'es' else 'source'}</a></td></tr>")
+        g = f' · <a href="{guide}">{"guía" if l == "es" else "guide"}</a>' if guide else ""
+        out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{linkify(l, what)}<br><small>{linkify(l, where)}</small></td><td>{KIND[l][kind]}</td><td>{COMP[l][kind]}</td>"
+                   f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{'fuente' if l == 'es' else 'source'}</a>{g}</td></tr>")
     return "".join(out)
 
 
@@ -109,8 +158,8 @@ def build(ctx):
     for l in ("es", "en"):
         other = "en" if l == "es" else "es"
         if l == "es":
-            title = "Huelgas de vuelos en España 2026: calendario y qué te deben"
-            desc = "Calendario actualizado de huelgas que afectan a vuelos en España y Europa (oct–nov 2026) y cuándo te toca compensación de 250–600 €."
+            title = "Huelgas de vuelos noviembre y diciembre 2026: calendario"
+            desc = "Huelga general del 11N, control aéreo en Italia y easyJet en Portugal del 19 al 23 de diciembre: calendario con fuentes oficiales y cuándo te pagan 250–600 €."
             h1 = "Huelgas que afectan a vuelos en España: calendario y tus derechos"
             lead = (f"Actualizado el {UPDATED['es']}. Estas son las huelgas convocadas que pueden afectar a vuelos con salida o llegada en España y a los destinos europeos más habituales. "
                     "Si te cancelan el vuelo con menos de 14 días de aviso, lo que decide si cobras 250–600 € es <strong>quién hace la huelga</strong>.")
@@ -121,20 +170,20 @@ def build(ctx):
 <li><strong>Huelga de aeropuerto, handling o huelga general</strong>: <strong>depende</strong> de si la aerolínea podía haber evitado la cancelación. Pídele la causa por escrito.</li>
 <li><strong>Siempre</strong>, sea cual sea la huelga: reembolso completo en 7 días o vuelo alternativo, y comida, bebida y hotel mientras esperas.</li>
 <li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>
-<p>Guía completa: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a>.</p>"""
+<p>Guías: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a> · <a href="/huelga-easyjet-portugal-diciembre/">huelga de easyJet en Portugal del 19 al 23 de diciembre</a>.</p>"""
             checker = """<h2>¿Me toca algo? Compruébalo</h2>
 <form id="sk-form" class="sk"><label>Fecha del vuelo <input type="date" id="sk-flight" required></label>
 <label>Fecha en que te avisaron de la cancelación <input type="date" id="sk-notice" required></label>
 <label>¿Quién hacía huelga? <select id="sk-kind"><option value="airline">La plantilla de la aerolínea</option><option value="atc">Control aéreo</option><option value="airport">Aeropuerto o handling</option><option value="general">Huelga general</option></select></label>
 <button class="btn btn-sign" type="submit">Comprobar</button></form><p id="sk-out" class="lead" aria-live="polite"></p>
 <p>¿Retraso en vez de cancelación? <a href="/">Calcula el importe exacto de tu ruta aquí</a>.</p>"""
-            src = f"<p><small>Fuentes: <a href=\"{SRC_MIN}\">Ministerio de Transportes, servicios mínimos</a> · <a href=\"{SRC_IT}\">Ministerio de Infraestructuras y Transportes de Italia, calendario de huelgas</a> · <a href=\"{SRC_GEN}\">CCOO, huelga general del 11 de noviembre</a> · <a href=\"{SRC_LBA}\">Unite, aeropuerto de Leeds Bradford</a>. Las convocatorias pueden cambiar o desconvocarse; revisa con tu aerolínea.</small></p>"
+            src = f"<p><small>Fuentes: <a href=\"{SRC_MIN}\">Ministerio de Transportes, servicios mínimos</a> · <a href=\"{SRC_IT}\">Ministerio de Infraestructuras y Transportes de Italia, calendario de huelgas</a> · <a href=\"{SRC_GEN}\">CCOO, huelga general del 11 de noviembre</a> · <a href=\"{SRC_LBA}\">Unite, aeropuerto de Leeds Bradford</a> · <a href=\"{SRC_DGERT}\">DGERT (Portugal), servicios mínimos de easyJet</a>. Las convocatorias pueden cambiar o desconvocarse; revisa con tu aerolínea.</small></p>"
             faq = [("¿Me devuelven el dinero si cancelan mi vuelo por huelga?", "Sí. Sea cual sea la huelga, puedes elegir el reembolso completo del billete en 7 días o un vuelo alternativo, y la aerolínea debe darte comida y hotel si tienes que esperar."),
                    ("¿Me pagan compensación si la huelga es de controladores?", "Normalmente no: las huelgas de control aéreo se consideran circunstancias extraordinarias. Sí tienes derecho al reembolso o a un vuelo alternativo y a asistencia."),
                    ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te tocan 250, 400 o 600 € si te avisan con menos de 14 días.")]
         else:
-            title = "Flight strikes Spain & Europe 2026: dates and your rights"
-            desc = "Up-to-date calendar of strikes affecting flights in Spain and Europe (Oct–Nov 2026) and when you're owed €250–€600 compensation."
+            title = "Flight strikes Nov–Dec 2026: Spain & Europe calendar"
+            desc = "Spain's 11 Nov general strike, easyJet Portugal cabin crew on 19–23 Dec, Italian ATC strikes: calendar with sources and when you're owed €250–600."
             h1 = "Strikes affecting flights to and from Spain: calendar and your rights"
             lead = (f"Updated {UPDATED['en']}. These are the strikes called that may affect flights to and from Spain and the most common European connections. "
                     "If your flight is cancelled with less than 14 days' notice, what decides whether you get €250–€600 is <strong>who is on strike</strong>.")
@@ -145,14 +194,14 @@ def build(ctx):
 <li><strong>Airport, ground handling or general strike</strong>: <strong>it depends</strong> on whether the airline could have avoided the cancellation. Ask it for the cause in writing.</li>
 <li><strong>Always</strong>, whatever the strike: a full refund within 7 days or a new flight, plus meals, drinks and a hotel while you wait.</li>
 <li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified on or before 28 October would not carry compensation.</li></ul>
-<p>Full guide: <a href="/en/spain-general-strike-11-november-flights/">Spain general strike on 11 November and your flight</a>.</p>"""
+<p>Guides: <a href="/en/spain-general-strike-11-november-flights/">Spain general strike on 11 November and your flight</a> · <a href="/en/easyjet-portugal-strike-december/">easyJet Portugal cabin crew strike, 19–23 December</a>.</p>"""
             checker = """<h2>Am I owed anything? Check it</h2>
 <form id="sk-form" class="sk"><label>Flight date <input type="date" id="sk-flight" required></label>
 <label>Date you were told about the cancellation <input type="date" id="sk-notice" required></label>
 <label>Who was on strike? <select id="sk-kind"><option value="airline">The airline's own staff</option><option value="atc">Air traffic control</option><option value="airport">Airport or ground handling</option><option value="general">General strike</option></select></label>
 <button class="btn btn-sign" type="submit">Check</button></form><p id="sk-out" class="lead" aria-live="polite"></p>
 <p>Delayed rather than cancelled? <a href="/en/">Work out the exact amount for your route here</a>.</p>"""
-            src = f"<p><small>Sources: <a href=\"{SRC_MIN}\">Spanish Ministry of Transport, minimum services</a> · <a href=\"{SRC_IT}\">Italian Ministry of Infrastructure and Transport, strike calendar</a> · <a href=\"{SRC_GEN}\">CCOO, 11 November general strike</a> · <a href=\"{SRC_LBA}\">Unite, Leeds Bradford Airport</a>. Strikes can change or be called off; check with your airline.</small></p>"
+            src = f"<p><small>Sources: <a href=\"{SRC_MIN}\">Spanish Ministry of Transport, minimum services</a> · <a href=\"{SRC_IT}\">Italian Ministry of Infrastructure and Transport, strike calendar</a> · <a href=\"{SRC_GEN}\">CCOO, 11 November general strike</a> · <a href=\"{SRC_LBA}\">Unite, Leeds Bradford Airport</a> · <a href=\"{SRC_DGERT}\">DGERT (Portugal), easyJet minimum services</a>. Strikes can change or be called off; check with your airline.</small></p>"
             faq = [("Do I get a refund if my flight is cancelled by a strike?", "Yes. Whatever the strike, you can choose a full refund within 7 days or a new flight, and the airline must provide meals and a hotel if you have to wait."),
                    ("Do I get compensation for an air traffic control strike?", "Usually not: ATC strikes count as extraordinary circumstances. You are still owed a refund or rerouting and care while you wait."),
                    ("What if the airline's pilots or cabin crew are on strike?", "Then usually yes: the EU Court of Justice treats an airline's own staff strike as not extraordinary, so you're owed €250, €400 or €600 if told less than 14 days before.")]
@@ -163,6 +212,7 @@ def build(ctx):
 <div class="board"><table><thead><tr>{th}</tr></thead><tbody>{_rows(l)}</tbody></table></div>
 <p id="sk-none" class="lead" hidden>{'No quedan huelgas vigentes en este calendario. Consulta las fuentes de abajo por si hay convocatorias nuevas.' if l == 'es' else 'No strikes in this calendar are still ongoing. Check the sources below for new ones.'}</p>
 <script>{EXPIRE_JS}</script>
+<h2>{SEE_ALSO[l][0]}</h2><p>{SEE_ALSO[l][2]}</p><p class="see-also">{" · ".join(f'<a href="{u}">{t}</a>' for u, t in SEE_ALSO[l][1])}</p>
 {checker}
 {rules}
 <h2>{'Preguntas frecuentes' if l == 'es' else 'Common questions'}</h2>{faq_html}

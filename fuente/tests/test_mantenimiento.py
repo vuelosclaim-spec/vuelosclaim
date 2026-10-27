@@ -8,7 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import strikes
 
 OFFICIAL = ("transportes.gob.es", "mitma.gob.es", "boe.es", "aena.es", "enaire.es", "mit.gov.it", "enav.it", "enac.gov.it",
-            "ccoo.es", "ugt.es", "usca.es", "unitetheunion.org", "gmb.org.uk", "caa.co.uk", "gov.uk", "dgac.fr", "ecologie.gouv.fr")
+            "ccoo.es", "ugt.es", "usca.es", "unitetheunion.org", "gmb.org.uk", "caa.co.uk", "gov.uk", "dgac.fr", "ecologie.gouv.fr",
+            "dgert.gov.pt", "anac.pt")
 errors = []
 warnings = []
 seen = set()
@@ -21,10 +22,12 @@ if (today - updated).days > 30:
     warnings.append("Calendario sin revisión declarada en más de 30 días")
 
 for i, item in enumerate(strikes.STRIKES, 1):
-    if len(item) != 10:
-        errors.append(f"Entrada {i}: se esperaban 10 campos")
+    if len(item) not in (10, 11):
+        errors.append(f"Entrada {i}: se esperaban 10 campos (u 11 con la guía)")
         continue
-    start, label_es, label_en, desc_es, desc_en, where, kind, status_es, status_en, url = item
+    if len(item) == 11 and not (len(item[10]) == 2 and all(g.startswith("/") and g.endswith("/") for g in item[10])):
+        errors.append(f"Entrada {i}: la guía debe ser (ruta ES, ruta EN)")
+    start, label_es, label_en, desc_es, desc_en, where, kind, status_es, status_en, url = item[:10]
     try:
         first = dt.date.fromisoformat(start)
         last = dt.date.fromisoformat(strikes.end_date(item))

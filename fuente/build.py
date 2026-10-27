@@ -589,10 +589,10 @@ EURLEX = {"es": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32004
 UK_ADR_OK = {"AviationADR", "CEDR"}  # schemes approved by the CAA for airline disputes
 GUIDES = {
     "es": [("/vuelo-cancelado-que-hacer/", "Vuelo cancelado: qué hacer"), ("/overbooking-compensacion/", "Overbooking"),
-           ("/circunstancias-extraordinarias-vuelo/", "Circunstancias extraordinarias"), ("/huelgas-vuelos-espana/", "Huelgas"), ("/huelga-general-11-noviembre-vuelos/", "Huelga general 11 de noviembre"),
+           ("/circunstancias-extraordinarias-vuelo/", "Circunstancias extraordinarias"), ("/huelgas-vuelos-espana/", "Huelgas"), ("/huelga-general-11-noviembre-vuelos/", "Huelga general 11 de noviembre"), ("/huelga-easyjet-portugal-diciembre/", "Huelga easyJet Portugal diciembre"),
            ("/comparativa-empresas-reclamacion-vuelos/", "Reclamar tú o con una empresa"), ("/#preguntas", "Preguntas frecuentes")],
     "en": [("/en/flight-cancelled-what-to-do/", "Flight cancelled: what to do"), ("/en/denied-boarding-overbooking-compensation/", "Overbooking"),
-           ("/en/extraordinary-circumstances-flight-delay/", "Extraordinary circumstances"), ("/en/flight-strikes-spain-europe/", "Strikes"), ("/en/spain-general-strike-11-november-flights/", "Spain general strike 11 November"),
+           ("/en/extraordinary-circumstances-flight-delay/", "Extraordinary circumstances"), ("/en/flight-strikes-spain-europe/", "Strikes"), ("/en/spain-general-strike-11-november-flights/", "Spain general strike 11 November"), ("/en/easyjet-portugal-strike-december/", "easyJet Portugal strike December"),
            ("/en/flight-compensation-companies-compared/", "Claim yourself or use a company"), ("/en/uk-airports-to-spain-flight-delay-compensation/", "UK airports to Spain"),
            ("/en/#preguntas", "FAQ")],
 }
