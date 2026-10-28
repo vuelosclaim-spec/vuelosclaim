@@ -1,0 +1,240 @@
+{
+ "_about": "Aena 2025 annual traffic (press releases of 13 Jan 2026). Only figures stated by Aena; XRY and RMU have no 2025 annual release found, so they are left out. Verified 2026-10-27.",
+ "year": 2025,
+ "airports": {
+  "MAD": {
+   "pax": 68179054,
+   "pct": 3.0,
+   "flights": 430616,
+   "intl": 51394869,
+   "dom": 16667665,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-mad-estadisticas-2025.pdf"
+  },
+  "BCN": {
+   "pax": 57483036,
+   "pct": 4.4,
+   "flights": 360786,
+   "intl": 43256689,
+   "dom": 14127522,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-bcn-estadisticas-2025.pdf"
+  },
+  "PMI": {
+   "pax": 33806427,
+   "pct": 1.5,
+   "flights": 246486,
+   "intl": 24802227,
+   "dom": 8990044,
+   "markets": [
+    [
+     "DE",
+     9837735
+    ],
+    [
+     "GB",
+     5921981
+    ],
+    [
+     "CH",
+     1303533
+    ]
+   ],
+   "src": "https://www.aena.es/doc/detalleprensa/260113-pmi-estadisticas-2025.pdf"
+  },
+  "AGP": {
+   "pax": 26760549,
+   "pct": 7.4,
+   "flights": 186990,
+   "intl": 22248605,
+   "markets": [
+    [
+     "GB",
+     6149697
+    ]
+   ],
+   "src": "https://www.aena.es/doc/detalleprensa/260113-agp-estadisticas-2025.pdf"
+  },
+  "ALC": {
+   "pax": 19950394,
+   "pct": 8.5,
+   "flights": 126081,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-aena-estadisticas-2025.pdf"
+  },
+  "LPA": {
+   "pax": 15826553,
+   "pct": 4.0,
+   "flights": 142884,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  },
+  "TFS": {
+   "pax": 13969678,
+   "pct": 1.7,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  },
+  "TFN": {
+   "pax": 7174977,
+   "pct": 6.1,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  },
+  "VLC": {
+   "pax": 11847527,
+   "pct": 9.6,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-aena-estadisticas-2025.pdf"
+  },
+  "IBZ": {
+   "pax": 9138224,
+   "pct": 0.7,
+   "flights": 85086,
+   "intl": 5345383,
+   "dom": 3774781,
+   "markets": [
+    [
+     "GB",
+     1870796
+    ],
+    [
+     "IT",
+     968861
+    ],
+    [
+     "DE",
+     694734
+    ],
+    [
+     "NL",
+     578690
+    ]
+   ],
+   "src": "https://www.aena.es/doc/detalleprensa/260113-ibz-estadisticas-2025.pdf"
+  },
+  "SVQ": {
+   "pax": 9686487,
+   "pct": 5.6,
+   "flights": 73141,
+   "intl": 5202855,
+   "dom": 4463423,
+   "markets": [
+    [
+     "IT",
+     1104353
+    ],
+    [
+     "FR",
+     911359
+    ]
+   ],
+   "src": "https://www.aena.es/doc/detalleprensa/260113-svq-estadisticas-2025.pdf"
+  },
+  "BIO": {
+   "pax": 7062681,
+   "pct": 4.2,
+   "flights": 54468,
+   "intl": 3154408,
+   "dom": 3896749,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-bio-estadisticas-2025.pdf"
+  },
+  "ACE": {
+   "pax": 8920901,
+   "pct": 2.4,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  },
+  "FUE": {
+   "pax": 6886935,
+   "pct": 6.8,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  },
+  "MAH": {
+   "pax": 4210152,
+   "pct": 0.9,
+   "flights": 37444,
+   "intl": 2099192,
+   "dom": 2104377,
+   "src": "https://www.aena.es/es/prensa/el-aeropuerto-de-menorca-cierra-2025-con-42-millones-de-pasajeros.html"
+  },
+  "SCQ": {
+   "pax": 3120759,
+   "pct": -14.3,
+   "flights": 24837,
+   "intl": 585886,
+   "dom": 2521701,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-scq-estadisticas-2025.pdf"
+  },
+  "GRO": {
+   "pax": 2185561,
+   "pct": 9.4,
+   "flights": 28067,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-gro-estadisticas-2025.pdf"
+  },
+  "OVD": {
+   "pax": 2051342,
+   "pct": 2.9,
+   "flights": 15783,
+   "intl": 458982,
+   "dom": 1586190,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-ovd-estadisticas-2025.pdf"
+  },
+  "VGO": {
+   "pax": 1114810,
+   "pct": 5.3,
+   "flights": 12511,
+   "intl": 52952,
+   "dom": 1059709,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-vgo-estadisticas-2025.pdf"
+  },
+  "SDR": {
+   "pax": 1069390,
+   "pct": -2.4,
+   "flights": 11619,
+   "intl": 485793,
+   "dom": 579535,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-sdr-estadisticas-2025.pdf"
+  },
+  "GRX": {
+   "pax": 1152872,
+   "pct": 1.7,
+   "flights": 24284,
+   "intl": 62012,
+   "dom": 1088510,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-grx-estadisticas-2025.pdf"
+  },
+  "LEI": {
+   "pax": 801689,
+   "pct": 1.9,
+   "flights": 14076,
+   "intl": 383828,
+   "dom": 412222,
+   "markets": [
+    [
+     "GB",
+     249124
+    ],
+    [
+     "BE",
+     54107
+    ],
+    [
+     "NL",
+     23030
+    ]
+   ],
+   "src": "https://www.aena.es/doc/detalleprensa/260113-lei-estadisticas-2025.pdf"
+  },
+  "REU": {
+   "pax": 1336826,
+   "pct": 13.1,
+   "flights": 23251,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-reu-estadisticas-2025.pdf"
+  },
+  "ZAZ": {
+   "pax": 707493,
+   "pct": 1.9,
+   "flights": 10508,
+   "cargo_t": 182886,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-zaz-estadisticas-2025.pdf"
+  },
+  "SPC": {
+   "pax": 1533355,
+   "pct": 2.5,
+   "src": "https://www.aena.es/doc/detalleprensa/260113-can-estadisticas-2025.pdf"
+  }
+ }
+}

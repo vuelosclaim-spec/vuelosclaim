@@ -55,6 +55,19 @@ for i, item in enumerate(strikes.STRIKES, 1):
     if last < today:
         warnings.append(f"Entrada {i}: huelga vencida el {last}; comprobar limpieza editorial")
 
+# Datos de Aena por aeropuerto (data/airport_stats.json): coherencia y fuente oficial
+import json
+stats = json.load(open(Path(__file__).resolve().parents[1] / "data" / "airport_stats.json", encoding="utf-8"))["airports"]
+for code, st in stats.items():
+    if not st.get("src", "").startswith("https://www.aena.es/"):
+        errors.append(f"Aeropuerto {code}: la fuente no es aena.es")
+    if not isinstance(st.get("pax"), int) or st["pax"] <= 0:
+        errors.append(f"Aeropuerto {code}: pasajeros no válidos")
+    if st.get("intl", 0) + st.get("dom", 0) > st.get("pax", 0):
+        errors.append(f"Aeropuerto {code}: internacionales + nacionales superan el total")
+    if not -50 < st.get("pct", 0) < 50:
+        errors.append(f"Aeropuerto {code}: variación anual improbable")
+
 for msg in warnings:
     print("AVISO:", msg)
 for msg in errors:

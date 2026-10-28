@@ -4,6 +4,7 @@ Each page: real great-circle distances to Spain's main holiday airports, UK261 (
 EU261 (return, €) amounts, computed stats for that airport, regional claim time limits, internal links
 to the Spanish airport pages and the UK airline pages.
 """
+import re
 import json
 from html import escape as e
 
@@ -113,7 +114,8 @@ def build(ctx):
         desc = f"{name}–Spain flight delayed 3+ hours or cancelled? Every route's payout: {rng} out (UK261), {erng} back (EU261), real distances."
         h1 = f"Delayed flight between {n} and Spain? Here's what you're owed"
         lede = f"Pick your route below or enter your flight: we use the real distance from {n} to work out your compensation under UK261 and EU261."
-        body = ctx["hero"]("en", h1, lede, "", code, "AGP") + body_extra + ctx["reference_sections"]("en", True)
+        body = ctx["hero"]("en", h1, lede, "", code, "AGP") + body_extra + re.sub(r'<section class="ref" id="aerolineas">.*?</section>', lambda _m: ctx["compact_refs"]("en"),
+                                                ctx["reference_sections"]("en", True), flags=re.S)
         alts = {"en": path}
         ctx["emit"]("en", path, ctx["page"]("en", title, desc, path, body, alts, None))
         hub_rows.append(f'<li><a href="{path}">{n} to Spain</a> — £{_uk(near_d)}–£{_uk(far_d)} out, €{_eu(near_d)}–€{_eu(far_d)} back</li>')
