@@ -83,7 +83,7 @@ G = [
 <li>Presentarte a facturación a la hora indicada o, si no la había, 45 minutos antes de la salida.</li>
 <li>Que no te nieguen el embarque por motivos justificados (salud, seguridad o documentación de viaje inadecuada, según el art. 2.j del reglamento).</li></ul>
 <h2>¿Ser voluntario o no?</h2>
-<p>Antes de denegar el embarque, la aerolínea tiene que pedir voluntarios. Si te ofreces, cobras lo que negocies (dinero, vale, puntos) más reembolso o vuelo alternativo, <strong>pero no la compensación fija</strong>. Solo merece la pena si lo que te ofrecen supera lo que te tocaría si te dejaran en tierra, y mejor en dinero que en vale.</p>
+<p>Antes de denegar el embarque, la aerolínea tiene que pedir voluntarios. Si te ofreces, cobras lo que negocies (dinero, vale, puntos) más reembolso o vuelo alternativo, <strong>pero no la compensación fija</strong>. Solo merece la pena si lo que te ofrecen supera lo que te correspondería si te dejaran en tierra, y mejor en dinero que en vale.</p>
 <h2>Si te bajan de clase</h2>
 <p>Si te sientan en una clase inferior a la que pagaste, te deben devolver el 30, 50 o 75% del precio de ese trayecto según la distancia.</p>
 <p><a href="/">Calcula cuánto te corresponde por tu ruta</a> o compara <a href="/comparativa-empresas-reclamacion-vuelos/">reclamar tú o con una empresa</a>.</p>""",
@@ -253,7 +253,7 @@ G = [
         "paths": {"es": "/huelga-easyjet-portugal-diciembre/", "en": "/en/easyjet-portugal-strike-december/"},
         "es": {
             "title": "Huelga easyJet Portugal 19–23 diciembre: tus derechos",
-            "desc": "Huelga de tripulantes de easyJet en Lisboa, Oporto y Faro del 19 al 23 de diciembre de 2026: reembolso, asistencia y cuándo te tocan 250–600 €.",
+            "desc": "Huelga de tripulantes de easyJet en Lisboa, Oporto y Faro del 19 al 23 de diciembre de 2026: reembolso, asistencia y cuándo te corresponden 250–600 €.",
             "h1": "Huelga de easyJet en Portugal del 19 al 23 de diciembre: qué te deben",
             "lead": "El sindicato portugués de tripulantes SNPVAC ha convocado huelga del personal de cabina de easyJet con base en Portugal del sábado 19 al miércoles 23 de diciembre de 2026, en plena Navidad. Al ser una huelga de la propia plantilla de la aerolínea, si te cancelan con poco aviso normalmente te corresponde compensación.",
             "body": """<h2>Lo que se sabe (actualizado el 27 de octubre)</h2>

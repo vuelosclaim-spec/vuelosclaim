@@ -453,7 +453,7 @@ def route_table(l, code, name):
     rows.sort()
     body = "".join(r for _, r in rows)
     if l == "es":
-        return f"""<section class="ref"><div class="wrap"><h2>Cuánto te toca desde {e(name)} según el destino</h2>
+        return f"""<section class="ref"><div class="wrap"><h2>Cuánto te corresponde desde {e(name)} según el destino</h2>
 <p class="lead">Distancia en línea recta desde el aeropuerto de {e(name)} ({code}) y compensación por pasajero con 3 horas o más de retraso al llegar. Calculado con el método del reglamento (ruta ortodrómica).</p>
 <div class="board"><table><thead><tr><th>Destino</th><th>Distancia</th><th>Compensación</th></tr></thead><tbody>{body}</tbody></table></div></div></section>"""
     return f"""<section class="ref"><div class="wrap"><h2>{e(name)} flight delays: what each route pays</h2>
@@ -945,10 +945,10 @@ def build():
     # Home
     homes = {"es": "/", "en": "/en/"}
     T = {
-        "es": ("Reclamar vuelo retrasado o cancelado: calcula cuánto te toca",
+        "es": ("Vuelo retrasado o cancelado: calcula cuánto te corresponde",
                "Calcula gratis la compensación por retraso, cancelación u overbooking de tu vuelo: 250, 400 o 600 € por pasajero según el reglamento europeo.",
-               "Reclamar un vuelo retrasado o cancelado: calcula cuánto te toca",
-               "Si llegaste con 3 horas o más de retraso, te cancelaron el vuelo o no te dejaron embarcar, la aerolínea puede deberte hasta 600 € por pasajero. Mete tu vuelo y lo calculamos en segundos.",
+               "Reclamar un vuelo retrasado o cancelado: calcula cuánto te corresponde",
+               "Si llegaste con 3 horas o más de retraso, te cancelaron el vuelo o no te dejaron embarcar, la aerolínea puede deberte hasta 600 € por pasajero. Introduce los datos de tu vuelo y lo calculamos en segundos.",
                ("MAD", "BER")),
         "en": ("Flight delay compensation calculator for Spain and the UK",
                "Free calculator for delayed, cancelled or overbooked flights to and from Spain: up to €600 under EU261 or £520 under UK261 per passenger.",
@@ -981,10 +981,10 @@ def build():
                 else:
                     scope = (f"{n} es una aerolínea de {e(a['country'])}, fuera de la UE. El reglamento europeo cubre sus vuelos que salen de la UE, el EEE o Suiza, pero no los que llegan a la UE desde fuera."
                              + (" Sus vuelos que salen del Reino Unido, o que llegan allí desde fuera, se rigen por la norma británica UK261." if a["uk"] else ""))
-                title = f"Compensación por retraso de {a['name']}: cuánto te toca" if len(a["name"]) <= 14 else f"Reclamar a {a['name']}: retraso y cancelación"
+                title = f"Compensación por retraso de {a['name']}: cuánto te corresponde" if len(a["name"]) <= 14 else f"Reclamar a {a['name']}: retraso y cancelación"
                 desc = f"Retraso de 3 horas o más, cancelación u overbooking con {a['name']}: calcula si te pueden corresponder 250, 400 o 600 €, dónde reclamar y qué plazos hay."
-                h1 = f"Retraso o cancelación con {n}: calcula cuánto te toca"
-                lede = scope + " Mete tu vuelo y te decimos el importe."
+                h1 = f"Retraso o cancelación con {n}: calcula cuánto te corresponde"
+                lede = scope + " Introduce los datos de tu vuelo y te indicamos el importe."
             else:
                 if a["eu"] == "yes":
                     scope = f"{n} is an airline from {e(a['country_en'])}, so EU261 covers all its flights departing Europe and its flights arriving in Europe from outside."
@@ -1016,10 +1016,10 @@ def build():
                 n = e(name_es)
                 extra = " Canarias forma parte de la UE a estos efectos, así que se aplica igual que en la Península." if code in CANARY else ""
                 lede = (f"Cualquier vuelo que sale del aeropuerto de {n} está cubierto por el reglamento europeo, sea cual sea la aerolínea.{extra} "
-                        f"Si llegas a {n} desde fuera de Europa, solo está cubierto si vuelas con una aerolínea europea. Mete tu vuelo y te decimos el importe.")
-                title = f"Retraso vuelo aeropuerto {name_es.split('-')[0]}: cuánto te toca" if len(name_es) < 22 else f"Vuelo retrasado en {name_es}: compensación"
+                        f"Si llegas a {n} desde fuera de Europa, solo está cubierto si vuelas con una aerolínea europea. Introduce los datos de tu vuelo y te indicamos el importe.")
+                title = f"Retraso vuelo aeropuerto {name_es.split('-')[0]}: cuánto te corresponde" if len(name_es) < 22 else f"Vuelo retrasado en {name_es}: compensación"
                 desc = f"Calcula la compensación por un vuelo retrasado, cancelado o con overbooking en el aeropuerto de {name_es}: 250, 400 o 600 € por pasajero."
-                h1 = f"Vuelo retrasado en {n}: calcula cuánto te toca"
+                h1 = f"Vuelo retrasado en {n}: calcula cuánto te corresponde"
                 dep, arr = code, ("LHR" if code == "MAD" else "MAD")
                 body = hero(l, h1, lede, "", dep, arr) + airport_facts(l, code, name_es) + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l, code=code)
             else:

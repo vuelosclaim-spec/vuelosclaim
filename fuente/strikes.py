@@ -107,11 +107,11 @@ COMP = {
 CHECKER_JS = r"""
 (function(){var f=document.getElementById('sk-form');if(!f)return;var L=document.documentElement.lang==='en';
 f.addEventListener('submit',function(ev){ev.preventDefault();var d=new Date(document.getElementById('sk-flight').value+'T12:00:00'),n=new Date(document.getElementById('sk-notice').value+'T12:00:00'),o=document.getElementById('sk-out');
-if(isNaN(d)||isNaN(n)){o.textContent=L?'Enter both dates.':'Pon las dos fechas.';return;}
+if(isNaN(d)||isNaN(n)){o.textContent=L?'Enter both dates.':'Indica las dos fechas.';return;}
 var days=Math.round((d-n)/864e5),k=document.getElementById('sk-kind').value;
 var msg;if(days<0){msg=L?'The notice date is after the flight: check the dates.':'La fecha del aviso es posterior al vuelo: revisa las fechas.';}
 else if(days>=14){msg=L?('You were told '+days+' days before: no fixed compensation for the cancellation, but you can still choose a full refund or a new flight.'):('Te avisaron con '+days+' días: no hay compensación fija por la cancelación, pero sí puedes elegir reembolso completo o vuelo alternativo.');}
-else if(k==='airline'){msg=L?('Told '+days+' days before and it was the airline\'s own staff: you are very likely owed €250–€600 per passenger, plus a refund or new flight.'):('Te avisaron con '+days+' días y la huelga era de la propia plantilla de la aerolínea: muy probablemente te tocan 250–600 € por pasajero, además de reembolso o vuelo alternativo.');}
+else if(k==='airline'){msg=L?('Told '+days+' days before and it was the airline\'s own staff: you are very likely owed €250–€600 per passenger, plus a refund or new flight.'):('Te avisaron con '+days+' días y la huelga era de la propia plantilla de la aerolínea: muy probablemente te corresponden 250–600 € por pasajero, además de reembolso o vuelo alternativo.');}
 else if(k==='atc'){msg=L?('Told '+days+' days before, but air traffic control strikes are usually extraordinary circumstances: compensation is unlikely. You are still owed a refund or new flight, plus meals and hotel while you wait.'):('Te avisaron con '+days+' días, pero las huelgas de control aéreo suelen ser circunstancia extraordinaria: es difícil cobrar compensación. Sí te deben reembolso o vuelo alternativo, y comida y hotel mientras esperas.');}
 else{msg=L?('Told '+days+' days before. With airport or general strikes it depends on whether the airline could have avoided the cancellation: ask it in writing for the exact cause. Refund or new flight plus meals and hotel are owed either way.'):('Te avisaron con '+days+' días. En huelgas de aeropuerto o generales depende de si la aerolínea podía haber evitado la cancelación: pídele la causa por escrito. El reembolso o vuelo alternativo, y la comida y el hotel, te los deben igualmente.');}
 o.textContent=msg;});})();
@@ -171,7 +171,7 @@ def build(ctx):
 <li><strong>Siempre</strong>, sea cual sea la huelga: reembolso completo en 7 días o vuelo alternativo, y comida, bebida y hotel mientras esperas.</li>
 <li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>
 <p>Guías: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a> · <a href="/huelga-easyjet-portugal-diciembre/">huelga de easyJet en Portugal del 19 al 23 de diciembre</a>.</p>"""
-            checker = """<h2>¿Me toca algo? Compruébalo</h2>
+            checker = """<h2>¿Tengo derecho a algo? Compruébalo</h2>
 <form id="sk-form" class="sk"><label>Fecha del vuelo <input type="date" id="sk-flight" required></label>
 <label>Fecha en que te avisaron de la cancelación <input type="date" id="sk-notice" required></label>
 <label>¿Quién hacía huelga? <select id="sk-kind"><option value="airline">La plantilla de la aerolínea</option><option value="atc">Control aéreo</option><option value="airport">Aeropuerto o handling</option><option value="general">Huelga general</option></select></label>
@@ -180,7 +180,7 @@ def build(ctx):
             src = f"<p><small>Fuentes: <a href=\"{SRC_MIN}\">Ministerio de Transportes, servicios mínimos</a> · <a href=\"{SRC_IT}\">Ministerio de Infraestructuras y Transportes de Italia, calendario de huelgas</a> · <a href=\"{SRC_GEN}\">CCOO, huelga general del 11 de noviembre</a> · <a href=\"{SRC_LBA}\">Unite, aeropuerto de Leeds Bradford</a> · <a href=\"{SRC_DGERT}\">DGERT (Portugal), servicios mínimos de easyJet</a>. Las convocatorias pueden cambiar o desconvocarse; revisa con tu aerolínea.</small></p>"
             faq = [("¿Me devuelven el dinero si cancelan mi vuelo por huelga?", "Sí. Sea cual sea la huelga, puedes elegir el reembolso completo del billete en 7 días o un vuelo alternativo, y la aerolínea debe darte comida y hotel si tienes que esperar."),
                    ("¿Me pagan compensación si la huelga es de controladores?", "Normalmente no: las huelgas de control aéreo se consideran circunstancias extraordinarias. Sí tienes derecho al reembolso o a un vuelo alternativo y a asistencia."),
-                   ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te tocan 250, 400 o 600 € si te avisan con menos de 14 días.")]
+                   ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te corresponden 250, 400 o 600 € si te avisan con menos de 14 días.")]
         else:
             title = "Flight strikes Nov–Dec 2026: Spain & Europe calendar"
             desc = "Spain's 11 Nov general strike, easyJet Portugal cabin crew on 19–23 Dec, Italian ATC strikes: calendar with sources and when you're owed €250–600."
