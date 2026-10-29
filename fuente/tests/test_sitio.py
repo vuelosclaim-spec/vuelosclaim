@@ -63,6 +63,10 @@ def check_site():
             err(f"Sin <title>: {url}")
         else:
             titles.setdefault(t.group(1), []).append(url)
+            # El título solo puede prometer huelgas si la página tiene la tabla de huelgas
+            if re.search(r"huelgas|strikes", t.group(1), re.I) and ("aeropuerto" in url or "airport" in url):
+                if "Huelgas que pueden afectar" not in s and "Strikes that may affect" not in s:
+                    err(f"El título menciona huelgas pero la página no tiene tabla de huelgas: {url}")
             if len(html.unescape(t.group(1))) > 65:
                 warnings.append(f"Título de {len(html.unescape(t.group(1)))} caracteres: {url}")
         if not d:

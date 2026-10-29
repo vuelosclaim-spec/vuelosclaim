@@ -182,7 +182,7 @@ def build(ctx):
                    ("¿Me pagan compensación si la huelga es de controladores?", "Normalmente no: las huelgas de control aéreo se consideran circunstancias extraordinarias. Sí tienes derecho al reembolso o a un vuelo alternativo y a asistencia."),
                    ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te corresponden 250, 400 o 600 € si te avisan con menos de 14 días.")]
         else:
-            title = "Flight strikes Nov–Dec 2026: Spain & Europe calendar"
+            title = "Spain flight strikes Nov–Dec 2026: dates and your rights"
             desc = "Spain's 11 Nov general strike, easyJet Portugal cabin crew on 19–23 Dec, Italian ATC strikes: calendar with sources and when you're owed €250–600."
             h1 = "Strikes affecting flights to and from Spain: calendar and your rights"
             lead = (f"Updated {UPDATED['en']}. These are the strikes called that may affect flights to and from Spain and the most common European connections. "

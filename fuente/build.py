@@ -981,7 +981,7 @@ def build():
                 else:
                     scope = (f"{n} es una aerolínea de {e(a['country'])}, fuera de la UE. El reglamento europeo cubre sus vuelos que salen de la UE, el EEE o Suiza, pero no los que llegan a la UE desde fuera."
                              + (" Sus vuelos que salen del Reino Unido, o que llegan allí desde fuera, se rigen por la norma británica UK261." if a["uk"] else ""))
-                title = f"Compensación por retraso de {a['name']}: cuánto te corresponde" if len(a["name"]) <= 14 else f"Reclamar a {a['name']}: retraso y cancelación"
+                title = f"{a['name']}: retraso o cancelación, hasta 600 € por pasajero" if len(a["name"]) <= 16 else f"{a['name']}: retraso o cancelación, hasta 600 €"
                 desc = f"Retraso de 3 horas o más, cancelación u overbooking con {a['name']}: calcula si te pueden corresponder 250, 400 o 600 €, dónde reclamar y qué plazos hay."
                 h1 = f"Retraso o cancelación con {n}: calcula cuánto te corresponde"
                 lede = scope + " Introduce los datos de tu vuelo y te indicamos el importe."
@@ -1017,21 +1017,35 @@ def build():
                 extra = " Canarias forma parte de la UE a estos efectos, así que se aplica igual que en la Península." if code in CANARY else ""
                 lede = (f"Cualquier vuelo que sale del aeropuerto de {n} está cubierto por el reglamento europeo, sea cual sea la aerolínea.{extra} "
                         f"Si llegas a {n} desde fuera de Europa, solo está cubierto si vuelas con una aerolínea europea. Introduce los datos de tu vuelo y te indicamos el importe.")
-                title = f"Retraso vuelo aeropuerto {name_es.split('-')[0]}: cuánto te corresponde" if len(name_es) < 22 else f"Vuelo retrasado en {name_es}: compensación"
-                desc = f"Calcula la compensación por un vuelo retrasado, cancelado o con overbooking en el aeropuerto de {name_es}: 250, 400 o 600 € por pasajero."
+                facts = airport_facts(l, code, name_es)
+                short = name_es.split('-')[0]
+                huelgas = "Huelgas que pueden afectar" in facts
+                title = (f"Aeropuerto de {short}: retrasos, huelgas y hasta 600 €" if huelgas else f"Aeropuerto de {short}: vuelo retrasado, hasta 600 €")
+                if len(title) > 60:
+                    title = f"Aeropuerto de {short}: retrasos y hasta 600 €"
+                desc = (f"¿Vuelo retrasado, cancelado o con overbooking en {short}? "
+                        + ("Huelgas previstas y calculadora gratuita: " if huelgas else "Calculadora gratuita: ")
+                        + "te pueden corresponder 250, 400 o 600 €.")
                 h1 = f"Vuelo retrasado en {n}: calcula cuánto te corresponde"
                 dep, arr = code, ("LHR" if code == "MAD" else "MAD")
-                body = hero(l, h1, lede, "", dep, arr) + airport_facts(l, code, name_es) + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l, code=code)
+                body = hero(l, h1, lede, "", dep, arr) + facts + route_table(l, code, name_es) + airport_claim(l, name_es, code) + compact_refs(l, code=code)
             else:
                 n = e(name_en)
                 extra = " The Canary Islands count as part of the EU for these rules, exactly like mainland Spain." if code in CANARY else ""
                 lede = (f"Every flight departing {n} airport is covered by EU261, whatever the airline, and pays up to €600.{extra} "
                         f"Flights from the UK into {n} are covered by UK261 and pay up to £520. Enter your flight and we'll work out the amount.")
-                title = f"{name_en.split('-')[0].split(' (')[0]} airport flight delay compensation"
-                desc = f"Delayed or cancelled flight at {name_en} airport? Check your compensation under EU261 or UK261: up to €600 or £520 per passenger."
+                facts = airport_facts(l, code, name_en)
+                short = name_en.split('-')[0].split(' (')[0]
+                strikes_on = "Strikes that may affect" in facts
+                title = f"{short} airport delays & strikes: claim up to €600" if strikes_on else f"{short} airport flight delay: claim up to €600"
+                if len(title) > 60:
+                    title = f"{short} airport delays: claim up to €600"
+                desc = (f"Delayed or cancelled flight at {name_en} airport? "
+                        + ("See upcoming strikes and check your compensation: " if strikes_on else "Check your compensation: ")
+                        + "up to €600 (EU261) or £520 (UK261) per passenger.")
                 h1 = f"Flight delayed at {n} airport? Check what you're owed"
                 dep, arr = code, ("LHR" if code != "MAN" else "LGW")
-                body = hero(l, h1, lede, "", dep, "MAN") + airport_facts(l, code, name_en) + route_table(l, code, name_en) + airport_claim(l, name_en, code) + compact_refs(l, code=code)
+                body = hero(l, h1, lede, "", dep, "MAN") + facts + route_table(l, code, name_en) + airport_claim(l, name_en, code) + compact_refs(l, code=code)
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # UK airports -> Spain (EN programmatic pages)
