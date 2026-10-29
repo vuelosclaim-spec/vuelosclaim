@@ -50,7 +50,7 @@ T = {
 <li><strong>Si te cobran si cancelas.</strong> Algunas cobran si te echas atrás después de que hayan reclamado.</li>
 <li><strong>No firmes con dos a la vez</strong> ni reclames tú por tu cuenta mientras una empresa lleva el caso.</li></ul>
 <h2>Nuestra recomendación</h2>
-<p>Primero comprueba cuánto te toca y reclama tú con nuestra carta gratuita. Si la aerolínea no paga o no tienes tiempo, entonces pásaselo a una empresa. <a href="/">Calcula tu compensación aquí</a>.</p>""",
+<p>Primero comprueba cuánto te corresponde y reclama tú con nuestra carta gratuita. Si la aerolínea no paga o no tienes tiempo, entonces pásaselo a una empresa. <a href="/">Calcula tu compensación aquí</a>.</p>""",
         "disc": "Transparencia: si eliges AirHelp desde nuestros enlaces, nos llevamos una comisión de afiliado. No cambia lo que pagas ni los datos de esta tabla, que salen de las webs de cada empresa.",
         "cta_diy": "Calcular y reclamar gratis",
         "cta_aff": "Que lo lleve AirHelp",
