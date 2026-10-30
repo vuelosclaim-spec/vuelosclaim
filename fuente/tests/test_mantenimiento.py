@@ -55,6 +55,19 @@ for i, item in enumerate(strikes.STRIKES, 1):
     if last < today:
         warnings.append(f"Entrada {i}: huelga vencida el {last}; comprobar limpieza editorial")
 
+# Calendario en italiano y alemán: cada fila y cada lugar tienen traducción (strikes_i18n.py)
+import strikes_i18n
+for i, item in enumerate(strikes.STRIKES, 1):
+    tr = strikes_i18n.ROWS.get((item[0], item[4]))
+    if not tr or set(tr) != {"it", "de"} or not all(all(x.strip() for x in tr[l]) for l in tr):
+        errors.append(f"Entrada {i}: falta la traducción al italiano o al alemán en strikes_i18n.ROWS")
+    for l in ("it", "de"):
+        if item[5] not in strikes_i18n.WHERE[l]:
+            errors.append(f"Entrada {i}: ubicación sin traducción ({l}): {item[5]}")
+stale = set(strikes_i18n.ROWS) - {(s[0], s[4]) for s in strikes.STRIKES}
+if stale:
+    warnings.append(f"Traducciones de huelgas que ya no están en el calendario: {sorted(stale)}")
+
 # Datos de Aena por aeropuerto (data/airport_stats.json): coherencia y fuente oficial
 import json
 stats = json.load(open(Path(__file__).resolve().parents[1] / "data" / "airport_stats.json", encoding="utf-8"))["airports"]

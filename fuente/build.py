@@ -10,6 +10,7 @@ import uk_airports
 import strikes
 import compare
 import guides
+import i18n
 
 SITE_URL = os.environ.get("SITE_URL", "https://vuelosclaim.eu")
 AFF_URL = os.environ.get("AFF_URL", "https://airhelp.tpx.gr/Ow8vczQM")  # Travelpayouts AirHelp; backup Compensair: https://compensair.tpx.gr/Ev5bFUPY
@@ -18,7 +19,10 @@ AESA_URL = "https://www.seguridadaerea.gob.es/es/ambitos/derechos-de-los-pasajer
 CAA_URL = "https://www.caa.co.uk/air-passengers/travel-problems-and-rights/flight-delays-and-cancellations/"
 EU_URL = {"es": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_es.htm",
           "en": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm"}
-UPDATED = {"es": "7 de octubre de 2026", "en": "7 October 2026"}
+UPDATED = {"es": "7 de octubre de 2026", "en": "7 October 2026", **i18n.UPDATED}
+EU_URL.update(i18n.EU_URL)
+LANGS = ("es", "en", "it", "de")
+LANG_NAMES = {"es": "Español", "en": "English", "it": "Italiano", "de": "Deutsch"}
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(ROOT)
@@ -112,11 +116,11 @@ DESTS = {
 UKC = {"GB", "GG", "JE", "IM"}
 
 # ---------------------------------------------------------------- URLs
-def u_home(l): return "/" if l == "es" else "/en/"
+def u_home(l): return {"es": "/", "en": "/en/", **i18n.HOME}[l]
 def u_airline(l, a): return f"/compensacion-retraso-{a['slug']}/" if l == "es" else f"/en/{a['slug']}-delay-compensation/"
 def u_airport(l, ap): return f"/retraso-vuelo-aeropuerto-{ap[1]}/" if l == "es" else f"/en/{slugify(ap[3])}-airport-flight-delay/"
-LEGAL = {"about": {"es": "/quienes-somos/", "en": "/en/about/"}, "legal": {"es": "/aviso-legal/", "en": "/en/legal-notice/"},
-         "privacy": {"es": "/privacidad/", "en": "/en/privacy/"}}
+LEGAL = {"about": {"es": "/quienes-somos/", "en": "/en/about/", "it": "/en/about/", "de": "/en/about/"}, "legal": {"es": "/aviso-legal/", "en": "/en/legal-notice/", "it": "/en/legal-notice/", "de": "/en/legal-notice/"},
+         "privacy": {"es": "/privacidad/", "en": "/en/privacy/", "it": "/en/privacy/", "de": "/en/privacy/"}}
 
 # ---------------------------------------------------------------- strings
 S = {
@@ -206,6 +210,10 @@ FAQ = {
 }
 
 
+S.update(i18n.S(BRAND, AESA_URL, CAA_URL))
+FAQ.update(i18n.FAQ)
+
+
 # ---------------------------------------------------------------- building blocks
 def head(l, title, desc, path, alts=None):
     canon = SITE_URL + path
@@ -218,9 +226,17 @@ def head(l, title, desc, path, alts=None):
             f"<meta property=\"og:url\" content=\"{canon}\"><meta property=\"og:locale\" content=\"{S[l]['locale']}\">\n{OGIMG}\n{ICON}\n{ORG_LD if path in ('/', '/en/') else ''}\n{FONTS}\n<style>{CSS}</style>")
 
 
-def header(l, alt_path):
+def header(l, alt_path, alts=None):
     s, h = S[l], u_home(l)
-    sw = f'<a class="lang" href="{alt_path}" hreflang="{"en" if l == "es" else "es"}" aria-label="{s["switch"]} – {s["switch_label"]}">{s["switch"]}</a>' if alt_path else ""
+    if alts and len(alts) > 2:  # pages in more than two languages: one link per other language
+        sw = '<span class="langs">' + "".join(f'<a class="lang" href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{k.upper()} – {LANG_NAMES[k]}">{k.upper()}</a>' for k in LANGS if k in alts and k != l) + "</span>"
+    elif l in ("it", "de"):
+        sw = f'<a class="lang" href="{alt_path}" hreflang="es" aria-label="ES – Español">ES</a>' if alt_path else ""
+    else:
+        sw = f'<a class="lang" href="{alt_path}" hreflang="{"en" if l == "es" else "es"}" aria-label="{s["switch"]} – {s["switch_label"]}">{s["switch"]}</a>' if alt_path else ""
+    if l in ("it", "de"):
+        return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>{BRAND}</a>'
+                f'<nav aria-label="{s["nav"]}"><a href="{h}#cuanto">{s["nav_amounts"]}</a><a href="{i18n.STRIKES[l]}">{s["nav_airlines"]}</a><a href="{h}#preguntas">{s["nav_faq"]}</a>{sw}</nav></div></header>')
     return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>{BRAND}</a>'
             f'<nav aria-label="{s["nav"]}"><a href="{h}#cuanto">{s["nav_amounts"]}</a><a href="{h}#aerolineas">{s["nav_airlines"]}</a><a href="{h}#preguntas">{s["nav_faq"]}</a>{sw}</nav></div></header>')
 
@@ -228,6 +244,13 @@ def header(l, alt_path):
 def footer(l):
     s = S[l]
     links = []
+    if l in ("it", "de"):
+        lab = {"it": ("Scioperi aerei", "Cookie di analisi", "Privacy degli annunci"), "de": ("Streiks bei Flügen", "Analyse-Cookies", "Datenschutz bei Anzeigen")}[l]
+        links = [f'<a href="{i18n.STRIKES[l]}">{lab[0]}</a>', f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>',
+                 f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>', f'<a href="{LEGAL["privacy"][l]}#cookies" data-consent-open>{lab[1]}</a>',
+                 f'<a href="{LEGAL["privacy"][l]}#publicidad" data-ads-consent>{lab[2]}</a>']
+        return (f'<footer class="foot"><div class="wrap"><p>{s["foot1"]}</p><p>{s["foot2"]}</p><p>{s["foot3"].format(d=UPDATED[l])}</p>'
+                f'<nav>{"".join(links)}</nav></div></footer>')
     if l == "es":
         links.append('<a href="/huelgas-vuelos-espana/">Huelgas de vuelos</a>'); links.append('<a href="/comparativa-empresas-reclamacion-vuelos/">AirHelp vs Reclamador</a>'); links.append('<a href="/vuelo-cancelado-que-hacer/">Vuelo cancelado</a>'); links.append('<a href="/overbooking-compensacion/">Overbooking</a>'); links.append('<a href="/circunstancias-extraordinarias-vuelo/">Circunstancias extraordinarias</a>')
         links.append(f'<a href="/insertar-calculadora/">{s["f_embed"]}</a>')
@@ -283,7 +306,7 @@ def calculator(l, airline_slug, dep, arr):
  <div class="care" data-care hidden></div>
  <div class="cta" data-cta>
   <a class="btn btn-sign" href="{e(AFF_URL)}" rel="sponsored nofollow noopener" target="_blank" data-generic="{e(s["cta_generic"])}">{s["cta"]}</a>
-  <small data-generic="{e(s["cta_small_generic"])}">{s["cta_small"]} <a href="{"/comparativa-empresas-reclamacion-vuelos/" if l == "es" else "/en/flight-compensation-companies-compared/"}">{"Compara con reclamar tú gratis" if l == "es" else "Compare with claiming yourself for free"}</a>.</small>
+  <small data-generic="{e(s["cta_small_generic"])}">{s["cta_small"]} <a href="{"/comparativa-empresas-reclamacion-vuelos/" if l == "es" else "/en/flight-compensation-companies-compared/"}">{s.get("cmp") or ("Compara con reclamar tú gratis" if l == "es" else "Compare with claiming yourself for free")}</a>.</small>
   <button type="button" class="btn btn-ghost" id="letter-open" aria-expanded="false" aria-controls="letter">{s["self"]}</button>
  </div>
  <div class="care" data-where hidden></div>
@@ -333,6 +356,9 @@ _ICON = {
 }
 
 
+WHY.update(i18n.WHY)
+
+
 def why_cards(l):
     h, items = WHY[l]
     cards = "".join(f'<li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{_ICON[k]}</svg><h3>{t}</h3><p>{d}</p></li>' for k, t, d in items)
@@ -350,6 +376,8 @@ def faq_jsonld(l):
 
 
 def reference_sections(l, compact=False):
+    if l in ("it", "de"):
+        return i18n.reference(l, faq_html(l), e)
     full = _reference_sections(l)
     if not compact:
         return full
@@ -820,7 +848,7 @@ def airport_claim(l, name, code):
 def extra_jsonld(l, title, path):
     home = u_home(l)
     if path == home:
-        data = [{"@context": "https://schema.org", "@type": "WebApplication", "name": ("Calculadora de compensación por retraso de vuelo" if l == "es" else "Flight delay compensation calculator"),
+        data = [{"@context": "https://schema.org", "@type": "WebApplication", "name": {"es": "Calculadora de compensación por retraso de vuelo", "en": "Flight delay compensation calculator", "it": "Calcolatore della compensazione per voli in ritardo", "de": "Rechner für Entschädigung bei Flugverspätung"}[l],
                  "url": SITE_URL + home, "applicationCategory": "TravelApplication", "operatingSystem": "Any", "inLanguage": l,
                  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
     else:
@@ -836,8 +864,8 @@ def seed_airports(html_):
 
 
 def page(l, title, desc, path, body, alts, alt_path, data_url="/data/airports.min.json"):
-    cfg = {"lang": l, "dataUrl": data_url, "seed": seed_airports(body), "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
-    return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path)}\n<main id=\"main\" tabindex=\"-1\">{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
+    cfg = {"lang": l, "dataUrl": data_url, "seed": seed_airports(body), "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_" + l) or a.get("claim_en"), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
+    return (f"{head(l, title, desc, path, alts)}\n{header(l, alt_path, alts)}\n<main id=\"main\" tabindex=\"-1\">{body}</main>\n{footer(l)}\n{faq_jsonld(l) if path == u_home(l) else ''}\n{extra_jsonld(l, title, path)}\n"
             f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script>\n<script>{JS}</script>")
 
 
@@ -845,7 +873,7 @@ def full_doc(inner, l, ads=True):
     """ads=False: no AdSense (widget embedded on third-party sites, 404 page without content)."""
     h, b = inner.split("</style>", 1)
     return (f'<!doctype html>\n<html lang="{l}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            f"{h}</style>\n{GA4}{ADSENSE if ads else ''}</head>\n<body><a class=\"skip\" href=\"#main\">{'Skip to content' if l == 'en' else 'Saltar al contenido'}</a>{CONSENT}{b}</body></html>\n")
+            f"{h}</style>\n{GA4}{ADSENSE if ads else ''}</head>\n<body><a class=\"skip\" href=\"#main\">{S[l].get('skip') or ('Skip to content' if l == 'en' else 'Saltar al contenido')}</a>{CONSENT}{b}</body></html>\n")
 
 
 GA_ID = "G-6JRCZVTNDG"
@@ -875,7 +903,10 @@ CONSENT = ("<div id=\"ck\" role=\"region\" aria-labelledby=\"ckh\" style=\"displ
            "function show(focus){document.getElementById('ckh').textContent=en?'Cookie notice':'Aviso de cookies';document.getElementById('ckl').textContent=en?'More info':'Más información';document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':"
            "'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';"
            "document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';"
-           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';b.style.display='block';"
+           "document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';"
+           "var X=" + json.dumps({k: list(v) for k, v in i18n.CONSENT_TXT.items()}, ensure_ascii=False).replace("'", "\\'") + "[document.documentElement.lang];"
+           "if(X){['ckh','ckl','ckt','cky','ckn'].forEach(function(id,i){document.getElementById(id).textContent=X[i]});document.getElementById('ckl').href='/en/privacy/'}"
+           "b.style.display='block';"
            "document.documentElement.style.scrollPaddingBottom=(b.offsetHeight+24)+'px';if(focus)document.getElementById('ckn').focus()}"
            "document.getElementById('cky').onclick=function(){put('y');hide();start()};"
            "document.getElementById('ckn').onclick=function(){put('n');hide();if(on){stop();on=false}};"
@@ -943,7 +974,7 @@ def build():
         urls.append(path)
 
     # Home
-    homes = {"es": "/", "en": "/en/"}
+    homes = {"es": "/", "en": "/en/", **i18n.HOME}
     T = {
         "es": ("Vuelo retrasado o cancelado: calcula cuánto te corresponde",
                "Calcula gratis la compensación por retraso, cancelación u overbooking de tu vuelo: 250, 400 o 600 € por pasajero según el reglamento europeo.",
@@ -956,7 +987,8 @@ def build():
                "If you arrived 3 or more hours late, your flight was cancelled or you were bumped, the airline may owe you up to €600 or £520 per passenger. Enter your flight and we'll work it out in seconds.",
                ("MAN", "AGP")),
     }
-    for l in ("es", "en"):
+    T.update(i18n.HOME_TEXT)
+    for l in LANGS:
         title, desc, h1, lede, (dep, arr) = T[l]
         other = "en" if l == "es" else "es"
         body = hero(l, e(h1), lede, "", dep, arr) + why_cards(l) + reference_sections(l)
