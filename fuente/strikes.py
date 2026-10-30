@@ -2,6 +2,7 @@
 Linkable, newsjackable asset. Update STRIKES and UPDATED when news changes.
 """
 import json
+import strikes_i18n as X
 from html import escape as e
 
 UPDATED = {"es": "27 de octubre de 2026", "en": "27 October 2026", "iso": "2026-10-27"}
@@ -105,7 +106,10 @@ COMP = {
 }
 
 CHECKER_JS = r"""
-(function(){var f=document.getElementById('sk-form');if(!f)return;var L=document.documentElement.lang==='en';
+(function(){var f=document.getElementById('sk-form');if(!f)return;var L=document.documentElement.lang==='en',M=window.SK_MSG;
+if(M){f.addEventListener('submit',function(ev){ev.preventDefault();var d=new Date(document.getElementById('sk-flight').value+'T12:00:00'),n=new Date(document.getElementById('sk-notice').value+'T12:00:00'),o=document.getElementById('sk-out');
+if(isNaN(d)||isNaN(n)){o.textContent=M[0];return;}var days=Math.round((d-n)/864e5),k=document.getElementById('sk-kind').value;
+o.textContent=(days<0?M[1]:days>=14?M[2]:k==='airline'?M[3]:k==='atc'?M[4]:M[5]).replace('{d}',days);});return;}
 f.addEventListener('submit',function(ev){ev.preventDefault();var d=new Date(document.getElementById('sk-flight').value+'T12:00:00'),n=new Date(document.getElementById('sk-notice').value+'T12:00:00'),o=document.getElementById('sk-out');
 if(isNaN(d)||isNaN(n)){o.textContent=L?'Enter both dates.':'Indica las dos fechas.';return;}
 var days=Math.round((d-n)/864e5),k=document.getElementById('sk-kind').value;
@@ -143,6 +147,11 @@ def _rows(l):
     out = []
     for s in sorted(STRIKES, key=lambda x: x[0]):
         _, wes, wen, des, den, where, kind, ses, sen, src = s[:10]
+        if l in ("it", "de"):
+            when, what, st = X.ROWS[(s[0], den)][l]
+            out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{e(what)}<br><small>{e(X.WHERE[l][where])}</small></td><td>{X.KIND[l][kind]}</td><td>{X.COMP[l][kind]}</td>"
+                       f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{X.PAGE[l]['source']}</a></td></tr>")
+            continue
         guide = s[10][0 if l == "es" else 1] if len(s) > 10 else None
         when, what, st = (wes, des, ses) if l == "es" else (wen, den, sen)
         if l == "en":
@@ -220,5 +229,41 @@ def build(ctx):
 <style>.sk{{display:grid;gap:12px;max-width:520px;margin:12px 0}}.sk label{{display:grid;gap:4px;font-weight:600}}.sk input,.sk select{{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit}}</style>
 <script type="application/ld+json">{json.dumps(faq_ld, ensure_ascii=False)}</script>
 <script>{CHECKER_JS}</script>"""
-        ctx["emit"](l, paths[l], ctx["page"](l, title, desc, paths[l], body, paths, paths[other]))
+        alts = {**paths, "it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/"}
+        ctx["emit"](l, paths[l], ctx["page"](l, title, desc, paths[l], body, alts, paths[other]))
+    return list(paths.values()) + build_x(ctx)
+
+
+MESI = {"it": ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
+        "de": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]}
+
+
+def build_x(ctx):
+    """Italian and German calendars (same rows and sources; texts in strikes_i18n.py)."""
+    paths = {"it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/"}
+    y, m, d = (int(x) for x in UPDATED["iso"].split("-"))
+    upd = {"it": f"{d} {MESI['it'][m - 1]} {y}", "de": f"{d}. {MESI['de'][m - 1]} {y}"}
+    for l in ("it", "de"):
+        P = X.PAGE[l]
+        srcs = (SRC_MIN, SRC_IT, SRC_GEN, SRC_LBA, SRC_DGERT)
+        src = f"<p><small>{P['sources']}: " + " · ".join(f'<a href="{u}">{n}</a>' for u, n in zip(srcs, P["src_names"])) + "</small></p>"
+        faq_html = "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in P["faq"])
+        faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
+        home = "/it/" if l == "it" else "/de/"
+        body = f"""<div class="wrap prose"><h1>{P['h1']}</h1><p class="lead">{P['lead'].format(u=upd[l])}</p>
+<div class="board"><table><thead><tr>{P['th']}</tr></thead><tbody>{_rows(l)}</tbody></table></div>
+<p id="sk-none" class="lead" hidden>{P['none']}</p>
+<script>{EXPIRE_JS}</script>
+<h2>{P['see'][0]}</h2><p>{P['see'][1]} <a href="{home}">{P['see'][2]}</a></p>
+{P['checker']}
+{P['rules']}
+<h2>{P['faq_h']}</h2>{faq_html}
+{src}</div>
+<style>.sk{{display:grid;gap:12px;max-width:520px;margin:12px 0}}.sk label{{display:grid;gap:4px;font-weight:600}}.sk input,.sk select{{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit}}</style>
+<script type="application/ld+json">{json.dumps(faq_ld, ensure_ascii=False)}</script>
+<script>window.SK_MSG={json.dumps(X.CHECK[l], ensure_ascii=False)};</script>
+<script>{CHECKER_JS}</script>"""
+        alts = {"es": "/huelgas-vuelos-espana/", "en": "/en/flight-strikes-spain-europe/", **paths}
+        ctx["emit"](l, paths[l], ctx["page"](l, P["title"], P["desc"], paths[l], body, alts, "/huelgas-vuelos-espana/"))
     return list(paths.values())

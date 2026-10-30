@@ -42,6 +42,9 @@ jobs:
       - name: Motor contra un oráculo independiente
         run: node fuente/tests/test_oraculo.js
 
+      - name: Calculadora en italiano y alemán
+        run: node fuente/tests/test_idiomas.js
+
       - name: Enlaces, SEO y datos
         run: python3 fuente/tests/test_sitio.py docs
 

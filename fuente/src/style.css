@@ -176,6 +176,9 @@ input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(-
 .embed-foot { margin: 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
 .prose textarea { width: 100%; font: 0.85rem/1.5 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
 .top nav a.lang { opacity: 1; border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; font: 700 0.8rem/1.4 var(--f-body); letter-spacing: 0.04em; }
+.top nav .langs { display: inline-flex; gap: 4px; }
+@media (max-width: 520px) { .top nav a.lang { padding: 2px 6px; min-height: 24px; display: inline-flex; align-items: center; } }
+@media (max-width: 420px) { .top nav:has(.langs) { gap: 6px 10px; font-size: 0.85rem; } }
 .top nav a.lang:hover { background: var(--sign); color: var(--sign-ink); text-decoration: none; border-color: var(--sign); }
 .facts.facts-wide b { font-size: 1.3rem; }
 
