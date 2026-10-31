@@ -35,6 +35,18 @@ async function newPage(browser, device, opts = {}) {
 const state = (p) => p.getAttribute("#result", "data-state");
 const tapOrClick = (p, device, sel) => (device === "movil" ? p.tap(sel) : p.click(sel));
 const choose = (p, name, value) => p.click(`label:has(input[name=${name}][value=${value}])`);
+// The calculator shows one question per screen: move with its own buttons, as a visitor would
+async function wiz(p, n) {
+  await p.waitForTimeout(30); // a tap on the first question moves on right after the click
+  for (let k = 0; k < 10; k++) {
+    const at = +(await p.getAttribute("#calc", "data-at"));
+    if (at === n) return true;
+    if (at === 1) { await p.click("label:has(input[name=what]:checked)"); await p.waitForFunction(() => document.querySelector("#calc").dataset.at !== "1"); }
+    else if (at < n) await p.click(".wiz-next");
+    else await p.click(".wiz-back");
+  }
+  return false;
+}
 
 async function pickAirport(p, device, id, text, code) {
   await p.click("#" + id);
@@ -58,6 +70,11 @@ async function pickAirport(p, device, id, text, code) {
     await p.waitForFunction(() => !/Cargando|Loading/.test(document.querySelector(".empty-msg").textContent) && document.querySelector("#result").dataset.state !== "error");
     check(T("la lista carga: sin el mensaje de error visible"), !(await p.isVisible(".error-msg")));
     check(T("el ejemplo precargado se calcula"), ["posible", "no", "insuficiente", "empty"].includes(await state(p)), await state(p));
+    check(T("al principio solo se ve la primera pregunta"), (await p.isVisible(".chips-what")) && !(await p.isVisible("#from")) && !(await p.isVisible("#result .ticket")));
+    await tapOrClick(p, device, "label:has(input[name=what][value=delay])");
+    await p.waitForFunction(() => document.querySelector("#calc").dataset.at === "2", null, { timeout: 2000 }).catch(() => {});
+    check(T("elegir qué pasó lleva al paso 2"), (await p.getAttribute("#calc", "data-at")) === "2" && (await p.isVisible("#from")));
+    check(T("paso 2 sin la pregunta 1 a la vista"), !(await p.isVisible(".chips-what")));
     check(T("elegir Madrid tocando la sugerencia"), await pickAirport(p, device, "from", "madrid", "MAD"));
     check(T("distingue aeropuertos de Londres y elige Gatwick"), await pickAirport(p, device, "to", "londres", "LGW"));
     check(T("resultado calculado"), (await state(p)) === "posible", await state(p));
@@ -80,16 +97,21 @@ async function pickAirport(p, device, id, text, code) {
     await p.fill("#to", ""); await p.type("#to", "zzqxw", { delay: 10 });
     check(T("sin coincidencias se explica"), /No encontramos|can't find/.test(await p.textContent("#to-list")));
     check(T("texto sin elegir pide elegir de la lista"), /Elige el aeropuerto|Choose the airport/.test(await p.textContent(".empty-msg")));
+    await p.keyboard.press("Escape");
+    await tapOrClick(p, device, ".wiz-next");
+    check(T("sin ruta válida no se pasa del paso 2 y se explica"), (await p.getAttribute("#calc", "data-at")) === "2" && (await p.isVisible(".wiz-note")));
     await pickAirport(p, device, "to", "MAD", "MAD");
     check(T("mismo origen y destino se explica"), /mismo aeropuerto|same airport/.test(await p.textContent(".empty-msg")));
     await pickAirport(p, device, "to", "BCN", "BCN");
 
     // 4. Carta: sin IBAN, solo para "posible", refleja el resultado, copiar y descargar
     check(T("no existe el campo IBAN"), (await p.$("#l-iban")) === null);
-    await p.selectOption("#cause", "weather");
+    check(T("el resultado no se ve antes del último paso"), !(await p.isVisible("[data-cta]")));
+    await wiz(p, 4); await p.selectOption("#cause", "weather"); await wiz(p, 5);
     check(T("sin botón de carta cuando no parece corresponder"), !(await p.isVisible("#letter-open")));
-    await p.selectOption("#cause", "tech");
+    await wiz(p, 4); await p.selectOption("#cause", "tech"); await wiz(p, 5);
     check(T("botón de carta visible si es posible"), await p.isVisible("#letter-open"));
+    check(T("el resultado muestra el importe y el botón de reclamar"), (await p.isVisible("[data-amount]")) && (await p.isVisible("[data-cta] a.btn-sign")));
     await tapOrClick(p, device, "#letter-open");
     await p.fill("#l-name", "Zz Prueba Privada");
     await p.fill("#l-booking", "QQ9ZZ9");
@@ -99,7 +121,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("descarga .txt"), /\.txt$/.test(dl.suggestedFilename()));
     await tapOrClick(p, device, "#letter-copy");
     check(T("copiar muestra confirmación"), (await p.textContent("#letter-msg")).length > 5);
-    await choose(p, "what", "cancel");
+    await wiz(p, 1); await choose(p, "what", "cancel");
     check(T("al cambiar a un caso sin datos se oculta la carta"), !(await p.isVisible("#letter")) && (await p.inputValue("#letter-text")) === "");
     check(T("los datos de la carta no salen del navegador"), !page_leak(p.requests, ["Zz Prueba Privada", "Zz+Prueba", "QQ9ZZ9"]));
     check(T("sin desbordamiento horizontal"), (await p.evaluate(() => document.documentElement.scrollWidth)) <= (device === "movil" ? 375 : 1280));
@@ -108,7 +130,7 @@ async function pickAirport(p, device, id, text, code) {
 
     // 5. Red lenta: escribir antes de que llegue la lista
     p = await newPage(browser, device, { data: async (r) => { await new Promise((ok2) => setTimeout(ok2, 2500)); r.continue(); } });
-    await p.click("#from"); await p.type("#from", "valencia", { delay: 10 });
+    await wiz(p, 2); await p.click("#from"); await p.type("#from", "valencia", { delay: 10 });
     check(T("aviso de carga mientras llega la lista"), /Cargando|Loading/.test(await p.textContent("#from-list")));
     await p.waitForSelector("#from-list li[role=option]", { timeout: 10000 });
     check(T("sugerencias en cuanto llega la lista"), (await p.textContent("#from-opt-0 .opt-code")) === "VLC");
@@ -120,7 +142,7 @@ async function pickAirport(p, device, id, text, code) {
     await p.waitForFunction(() => document.querySelector("#result").dataset.state === "error", null, { timeout: 10000 });
     check(T("tras un fallo reintenta una vez sola"), fails === 2, String(fails));
     check(T("mensaje de error y botón visibles"), (await p.isVisible(".error-msg")) && (await p.isVisible("#ac-retry")));
-    await p.click("#from"); await p.type("#from", "mad", { delay: 10 });
+    await p.click("label:has(input[name=what][value=delay])"); await p.click("#from"); await p.type("#from", "mad", { delay: 10 });
     check(T("el desplegable explica el fallo"), /No se ha podido|could not load/.test(await p.textContent("#from-list")));
     broken = false;
     await tapOrClick(p, device, "#ac-retry");
@@ -160,7 +182,7 @@ async function pickAirport(p, device, id, text, code) {
     await p.waitForFunction(() => document.querySelector("#result").dataset.state !== "empty" || !document.querySelector("#from").dataset.code);
     check(T("el banner aparece"), await p.isVisible("#ck"));
     // Uso completo de la calculadora sin responder al banner
-    await p.selectOption("#cause", "tech");
+    await wiz(p, 4); await p.selectOption("#cause", "tech");
     await p.waitForTimeout(1500);
     const evBefore = await p.evaluate(() => JSON.stringify(window.dataLayer));
     check(T("sin consentimiento no se carga Analytics ni Travelpayouts"), !ext.some((u) => /googletagmanager|google-analytics|emrldtp|travelpayouts/.test(u)), ext.filter((u) => /google|emrldtp/.test(u)).join(" "));
@@ -175,17 +197,17 @@ async function pickAirport(p, device, id, text, code) {
       const codes = await p.$$eval(`#${id}-list li[role=option] .opt-code`, (els) => els.map((e) => e.textContent));
       await p.click(`#${id}-opt-${codes.indexOf(code)}`);
     };
-    await pick("from", "madrid", "MAD"); await pick("to", "barcelona", "BCN");
+    await wiz(p, 2); await pick("from", "madrid", "MAD"); await pick("to", "barcelona", "BCN");
     await p.waitForTimeout(1600);
-    await p.click("#letter-open");
+    await wiz(p, 5); await p.click("#letter-open");
     await p.fill("#l-name", "Zz Nombre Secreto"); await p.fill("#l-booking", "QQ9ZZ9"); await p.fill("#l-flight", "IB1234");
     const [dl] = await Promise.all([p.waitForEvent("download"), p.click("#letter-dl")]);
     await p.click("#letter-copy"); await p.waitForTimeout(300);
     await p.evaluate(() => { document.querySelector("[data-cta] a.btn-sign").addEventListener("click", (e) => e.preventDefault()); });
     await p.click("[data-cta] a.btn-sign");
-    await p.click("label:has(input[name=what][value=cancel])");
+    await wiz(p, 1); await p.click("label:has(input[name=what][value=cancel])");
     await p.waitForTimeout(1600);
-    await p.click("label:has(input[name=what][value=delay])"); await p.selectOption("#cause", "weather");
+    await wiz(p, 1); await p.click("label:has(input[name=what][value=delay])"); await wiz(p, 4); await p.selectOption("#cause", "weather");
     await p.waitForTimeout(1600);
     const events = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").map((x) => ({ name: x[1], params: x[2] })));
     const names = events.map((e) => e.name);
@@ -211,7 +233,7 @@ async function pickAirport(p, device, id, text, code) {
     await p.click("[data-consent-open]");
     await p.click("#ckn");
     const n1 = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").length);
-    await p.click("label:has(input[name=what][value=denied])"); await p.waitForTimeout(1600);
+    await wiz(p, 1); await p.click("label:has(input[name=what][value=denied])"); await p.waitForTimeout(1600);
     const n2 = await p.evaluate(() => window.dataLayer.filter((x) => x[0] === "event").length);
     check(T("tras rechazar en «Cookies» no hay más eventos"), n1 === n2 && (await p.evaluate(() => window["ga-disable-G-6JRCZVTNDG"])) === true);
     // Visita siguiente con rechazo guardado: nada se carga
@@ -239,7 +261,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("los campos muestran el ejemplo"), /\(\w{3}\)/.test(await p.inputValue("#from")) && /\(\w{3}\)/.test(await p.inputValue("#to")));
     await p.waitForTimeout(3000);
     check(T("la lista se pide sola tras cargar la página"), asked === 1, String(asked));
-    await p.click("#to"); await p.fill("#to", ""); await p.type("#to", "bcn", { delay: 20 });
+    await wiz(p, 2); await p.click("#to"); await p.fill("#to", ""); await p.type("#to", "bcn", { delay: 20 });
     check(T("mientras llega la lista se avisa"), /Cargando|Loading/.test(await p.textContent("#to-list")));
     release(); await p.waitForSelector("#to-list [role=option]");
     check(T("al llegar la lista aparecen las sugerencias"), (await p.textContent("#to-opt-0 .opt-code")) === "BCN");
@@ -278,7 +300,7 @@ async function pickAirport(p, device, id, text, code) {
     await p.keyboard.press("Enter");
     check(T("tras elegir, el foco vuelve al enlace del pie"), await p.evaluate(() => document.activeElement.hasAttribute("data-consent-open")));
     // Autocompletado: anuncios para lectores de pantalla y error ligado al campo
-    await p.fill("#from", ""); await p.type("#from", "valen", { delay: 20 });
+    await wiz(p, 2); await p.fill("#from", ""); await p.type("#from", "valen", { delay: 20 });
     await p.waitForTimeout(700);
     check(T("se anuncia el número de aeropuertos encontrados"), /encontrad/.test(await p.textContent("#from-st")), await p.textContent("#from-st"));
     await p.fill("#to", ""); await p.type("#to", "zzqq", { delay: 20 }); await p.waitForTimeout(700);

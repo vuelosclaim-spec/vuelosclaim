@@ -274,13 +274,15 @@ def calculator(l, airline_slug, dep, arr):
     ] + [f'<option value="otra-ue">{s["al_eu"]}</option>', f'<option value="otra-no-ue">{s["al_noneu"]}</option>']
     return f"""<form class="calc" id="calc" novalidate>
 <h2>{s["calc_h"]}</h2>
-<fieldset class="what"><legend>{s["what"]}</legend><div class="chips chips-what">{chips("what", s["w"], "delay")}</div></fieldset>
+<fieldset class="what" data-step="1"><legend>{s["what"]}</legend><div class="chips chips-what">{chips("what", s["w"], "delay")}</div></fieldset>
+<div class="step" data-step="2">
 <div class="row2">
  <div class="field"><label for="from">{s["from_"]}</label><input type="text" id="from" data-code="{dep}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="from-list" placeholder="{s["ph"]}"><ul class="ac" id="from-list" role="listbox" hidden></ul></div>
  <div class="field"><label for="to">{s["to"]}</label><input type="text" id="to" data-code="{arr}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="{s["ph"]}"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
-<div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
 <fieldset id="grp-via"><legend>{s["via"]}</legend><div class="chips chips-wide">{chips("via", s["v"], "direct")}</div></fieldset>
+</div>
+<div class="step" data-step="3">
 <fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
 <fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
 <fieldset id="grp-reroute" hidden><legend>{s["reroute"]}</legend><div class="chips">{chips("reroute", s["rr"], "unknown")}</div></fieldset>
@@ -290,8 +292,12 @@ def calculator(l, airline_slug, dep, arr):
 <fieldset id="grp-denied" hidden><legend>{s["denied"]}</legend><div class="chips">{chips("denied", s["dn"], "unknown")}</div></fieldset>
 <fieldset id="grp-checkin" hidden><legend>{s["checkin"]}</legend><div class="chips">{chips("checkin", s["ci"], "unknown")}</div></fieldset>
 <fieldset id="grp-dreason" hidden><legend>{s["dreason"]}</legend><div class="chips chips-wide">{chips("dreason", s["dr"], "unknown")}</div></fieldset>
+</div>
+<div class="step" data-step="4">
+<div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
 <fieldset id="grp-fare"><legend>{s["fare"]}</legend><div class="chips chips-wide">{chips("fare", s["fa"], "public")}</div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
+</div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">{s["empty"]}</p>
  <p class="error-msg"><span data-error-text>{s["error"]}</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">{s["retry"]}</button></p>
@@ -303,13 +309,11 @@ def calculator(l, airline_slug, dep, arr):
   </div>
   <div class="ticket-stub"><div class="amount" data-amount>—</div><div class="stub-label">{s["per"]}</div></div>
  </div>
- <div class="care" data-care hidden></div>
  <div class="cta" data-cta>
   <a class="btn btn-sign" href="{e(AFF_URL)}" rel="sponsored nofollow noopener" target="_blank" data-generic="{e(s["cta_generic"])}">{s["cta"]}</a>
   <small data-generic="{e(s["cta_small_generic"])}">{s["cta_small"]} <a href="{"/comparativa-empresas-reclamacion-vuelos/" if l == "es" else "/en/flight-compensation-companies-compared/"}">{s.get("cmp") or ("Compara con reclamar tú gratis" if l == "es" else "Compare with claiming yourself for free")}</a>.</small>
   <button type="button" class="btn btn-ghost" id="letter-open" aria-expanded="false" aria-controls="letter">{s["self"]}</button>
  </div>
- <div class="care" data-where hidden></div>
  <div class="letter" id="letter" hidden>
   <p class="letter-lead">{s["l_lead"]}</p>
   <div class="row2">
@@ -325,6 +329,8 @@ def calculator(l, airline_slug, dep, arr):
   <p class="letter-msg" id="letter-msg" aria-live="polite"></p>
   <ol class="steps small">{"".join(f"<li>{x}</li>" for x in s["steps"])}</ol>
  </div>
+ <div class="care" data-care hidden></div>
+ <div class="care" data-where hidden></div>
 </div>
 </form>"""
 
@@ -991,7 +997,7 @@ def build():
     for l in LANGS:
         title, desc, h1, lede, (dep, arr) = T[l]
         other = "en" if l == "es" else "es"
-        body = hero(l, e(h1), lede, "", dep, arr) + why_cards(l) + reference_sections(l)
+        body = hero(l, e(h1), lede, "", dep, arr) + reference_sections(l)
         p = page(l, title, desc, homes[l], body, homes, homes[other])
         emit(l, homes[l], p)
         if l == "es":

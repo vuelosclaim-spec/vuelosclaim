@@ -146,6 +146,7 @@
       pick: "Elige el aeropuerto en la lista que aparece al escribir.",
       acCount: function (n) { return (n === 1 ? "1 aeropuerto encontrado" : n + " aeropuertos encontrados") + ". Usa las flechas arriba y abajo para elegir y pulsa Intro."; },
       tableScroll: "tabla desplazable",
+      wizNext: "Continuar", wizBack: "Atrás", wizStep: "Paso {n} de {t}", wizSee: "Ver resultado", wizEdit: "Cambiar respuestas", wizResult: "Tu resultado", wizWhy: "Por qué este resultado", wizRoute: "Elige el aeropuerto de origen y el de destino de la lista para continuar.",
       same: "El origen y el destino son el mismo aeropuerto.",
       loadError: "No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.",
       offline: "Parece que no tienes conexión. Cuando vuelva, la lista de aeropuertos se cargará sola.",
@@ -246,6 +247,7 @@
       pick: "Choose the airport from the list that appears as you type.",
       acCount: function (n) { return (n === 1 ? "1 airport found" : n + " airports found") + ". Use the up and down arrows to choose and press Enter."; },
       tableScroll: "scrollable table",
+      wizNext: "Continue", wizBack: "Back", wizStep: "Step {n} of {t}", wizSee: "See result", wizEdit: "Change answers", wizResult: "Your result", wizWhy: "Why this result", wizRoute: "Choose the departure and destination airports from the list to continue.",
       same: "Departure and destination are the same airport.",
       loadError: "The airport list could not load. Check your connection and try again.",
       offline: "You seem to be offline. The airport list will load by itself when you reconnect.",
@@ -346,6 +348,7 @@
       pick: "Scegli l'aeroporto dall'elenco che appare mentre scrivi.",
       acCount: function (n) { return (n === 1 ? "1 aeroporto trovato" : n + " aeroporti trovati") + ". Usa le frecce su e giù per scegliere e premi Invio."; },
       tableScroll: "tabella scorrevole",
+      wizNext: "Continua", wizBack: "Indietro", wizStep: "Passo {n} di {t}", wizSee: "Vedi il risultato", wizEdit: "Modifica le risposte", wizResult: "Il tuo risultato", wizWhy: "Perché questo risultato", wizRoute: "Scegli dall'elenco l'aeroporto di partenza e quello di destinazione per continuare.",
       same: "L'origine e la destinazione sono lo stesso aeroporto.",
       loadError: "Non è stato possibile caricare l'elenco degli aeroporti. Controlla la connessione e riprova.",
       offline: "Sembra che tu sia offline. Quando torna la connessione, l'elenco degli aeroporti si caricherà da solo.",
@@ -446,6 +449,7 @@
       pick: "Wählen Sie den Flughafen aus der Liste, die beim Tippen erscheint.",
       acCount: function (n) { return (n === 1 ? "1 Flughafen gefunden" : n + " Flughäfen gefunden") + ". Mit den Pfeiltasten auswählen und Enter drücken."; },
       tableScroll: "scrollbare Tabelle",
+      wizNext: "Weiter", wizBack: "Zurück", wizStep: "Schritt {n} von {t}", wizSee: "Ergebnis anzeigen", wizEdit: "Antworten ändern", wizResult: "Ihr Ergebnis", wizWhy: "Warum dieses Ergebnis", wizRoute: "Wählen Sie Abflug- und Zielflughafen aus der Liste, um fortzufahren.",
       same: "Start und Ziel sind derselbe Flughafen.",
       loadError: "Die Flughafenliste konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
       offline: "Sie scheinen offline zu sein. Sobald die Verbindung zurück ist, lädt die Flughafenliste von selbst.",
@@ -742,9 +746,11 @@
       if (r.length && (r[0][0].toLowerCase() === q || r.length === 1)) pick(r[0]);
       else { invalid(r.length ? T.pick : T.acNone); run(); }
     }
-    input.addEventListener("input", function () { input.dataset.code = ""; invalid(""); render(); run(); });
-    input.addEventListener("focus", function () { if (!input.dataset.code) render(); else input.select(); });
-    input.addEventListener("blur", function () { setTimeout(function () { close(); autoPick(); }, 150); });
+    // The pending blur check is cancelled if the visitor comes back to the field before it runs
+    var blurT = null;
+    input.addEventListener("input", function () { clearTimeout(blurT); input.dataset.code = ""; invalid(""); render(); run(); });
+    input.addEventListener("focus", function () { clearTimeout(blurT); if (!input.dataset.code) render(); else input.select(); });
+    input.addEventListener("blur", function () { clearTimeout(blurT); blurT = setTimeout(function () { close(); autoPick(); }, 150); });
     input.addEventListener("keydown", function (e) {
       if (e.key === "ArrowDown" && list.hidden) { render(); if (items.length) { active = 0; highlight(); } e.preventDefault(); return; }
       if (list.hidden || !items.length) { if (e.key === "Escape") close(); return; }
@@ -1227,6 +1233,83 @@
       } else if (el.getAttribute("role") === "region") { el.removeAttribute("tabindex"); el.removeAttribute("role"); el.removeAttribute("aria-label"); }
     });
   }
+
+  // ---------- One question per screen ----------
+  // Without JavaScript every question stays visible; with it the form becomes 4 short steps and then the result.
+  var wizGo = null;
+  function wizard() {
+    var steps = form.querySelectorAll("[data-step]"), TOTAL = steps.length;
+    if (TOTAL < 4) return;
+    form.classList.add("wiz");
+    var head = document.createElement("div"); head.className = "wiz-head";
+    head.innerHTML = '<p class="wiz-label" aria-live="polite"></p><div class="wiz-bar"><span></span></div>';
+    var nav = document.createElement("div"); nav.className = "wiz-nav";
+    nav.innerHTML = '<button type="button" class="wiz-back"></button><button type="button" class="btn btn-sign wiz-next"></button>';
+    var note = document.createElement("p"); note.className = "wiz-note field-err"; note.hidden = true;
+    var h = form.querySelector("h2");
+    form.insertBefore(head, h ? h.nextSibling : form.firstChild);
+    form.insertBefore(nav, out);
+    form.insertBefore(note, nav);
+    var label = head.querySelector(".wiz-label"), bar = head.querySelector(".wiz-bar span");
+    var back = nav.querySelector(".wiz-back"), next = nav.querySelector(".wiz-next");
+    back.textContent = "← " + T.wizBack;
+    var at = 1;
+    function routeOk() { return out.dataset.state !== "empty" && out.dataset.state !== "error"; }
+    function go(n, focus) {
+      at = Math.max(1, Math.min(TOTAL + 1, n));
+      form.dataset.at = String(at);
+      for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("wiz-off", +steps[i].dataset.step !== at);
+      var done = at > TOTAL;
+      out.classList.toggle("wiz-off", !done);
+      label.textContent = done ? T.wizResult : T.wizStep.replace("{n}", at).replace("{t}", TOTAL);
+      bar.style.width = (done ? 100 : Math.round((at - 1) / TOTAL * 100 + 100 / TOTAL / 2)) + "%";
+      back.hidden = at === 1; back.textContent = "← " + (done ? T.wizEdit : T.wizBack);
+      next.hidden = at === 1 || done; next.textContent = at === TOTAL ? T.wizSee : T.wizNext;
+      note.hidden = true;
+      if (focus) {
+        var t = done ? out : form.querySelector('[data-step="' + at + '"]');
+        var f = t && t.querySelector(done ? ".ticket-head" : "legend, label");
+        var r = form.getBoundingClientRect();
+        if (r.top < 0) form.scrollIntoView({ block: "start" });
+        if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); }
+      }
+    }
+    wizGo = go;
+    function forward() {
+      if (at === 2 && !routeOk()) {
+        var e1 = document.getElementById("from"), e2 = document.getElementById("to");
+        note.textContent = T.wizRoute; note.hidden = false;
+        var t = !e1.dataset.code ? e1 : e2; setTimeout(function () { t.focus(); }, 200); // after the field's own blur handling
+        return;
+      }
+      run(); go(at + 1, true);
+    }
+    next.addEventListener("click", forward);
+    back.addEventListener("click", function () { go(at > TOTAL ? 1 : at - 1, true); });
+    // Choosing what happened moves on by itself (also when the visitor taps the option already selected)
+    form.querySelector('[data-step="1"]').addEventListener("click", function (e) {
+      var l = e.target.closest && e.target.closest("label");
+      if (l && at === 1) setTimeout(function () { go(2, true); }, 0);
+    });
+    form.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" || e.defaultPrevented || at < 2 || at > TOTAL) return;
+      var t = e.target;
+      if (t.tagName === "BUTTON" || t.tagName === "A" || t.tagName === "TEXTAREA") return;
+      if ((t.id === "from" || t.id === "to") && t.getAttribute("aria-expanded") === "true") return;
+      if (t.closest && t.closest("#letter")) return;
+      e.preventDefault(); forward();
+    });
+    // The legal reasoning behind the result folds away (open by default when data is missing)
+    var lines = out.querySelector("[data-lines]");
+    if (lines && window.HTMLDetailsElement) {
+      var box = document.createElement("details"); box.className = "why-box";
+      var sum = document.createElement("summary"); sum.textContent = T.wizWhy;
+      lines.parentNode.insertBefore(box, lines); box.appendChild(sum); box.appendChild(lines);
+      new MutationObserver(function () { if (out.dataset.state === "insuficiente") box.open = true; }).observe(out, { attributes: true, attributeFilter: ["data-state"] });
+      if (out.dataset.state === "insuficiente") box.open = true;
+    }
+    go(1, false);
+  }
   var msT = null;
   function init() {
     if (window.addEventListener) window.addEventListener("resize", function () { clearTimeout(msT); msT = setTimeout(markScrollables, 200); });
@@ -1253,6 +1336,7 @@
     form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
     form.addEventListener("change", function (e) { if (!e.target.closest || !e.target.closest("#letter")) run(); });
     letterTools();
+    wizard();
     // Blogs embedding the calculator may use their own affiliate link (known claims domains only)
     try {
       var aff = new URLSearchParams(location.search).get("aff");
