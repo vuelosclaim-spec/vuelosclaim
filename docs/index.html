@@ -15,38 +15,41 @@
 </head>
 <body><a class="skip" href="#main">Saltar al contenido</a><div id="ck" role="region" aria-labelledby="ckh" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#111827;color:#fff;border-radius:12px;padding:14px 16px;font:14px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.3)"><span id="ckh" class="sr"></span><span id="ckt"></span> <a id="ckl" href="/privacidad/" style="color:#facc15;display:inline-block;padding:3px 0;min-height:24px"></a><div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end"><button type="button" id="ckn" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button><button type="button" id="cky" style="background:#facc15;color:#111827;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer"></button></div></div><script>(function(){var en=document.documentElement.lang==='en',k='vc_consent',ID='G-6JRCZVTNDG',on=false,b=document.getElementById('ck');function get(){try{return localStorage.getItem(k)}catch(e){return null}}function put(v){try{localStorage.setItem(k,v)}catch(e){}}function add(src){var s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s)}function start(){if(on)return;on=true;window['ga-disable-'+ID]=false;gtag('consent','update',{analytics_storage:'granted'});gtag('js',new Date());gtag('config',ID,{allow_google_signals:false,allow_ad_personalization_signals:false});add('https://www.googletagmanager.com/gtag/js?id='+ID);add('https://emrldtp.cc/NTgyNjYx.js?t=582661');window.vcAnalytics=true}function stop(){window.vcAnalytics=false;window['ga-disable-'+ID]=true;gtag('consent','update',{analytics_storage:'denied'});document.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^_ga/.test(n)){['',location.hostname,'.'+location.hostname.replace(/^www\./,'')].forEach(function(d){document.cookie=n+'=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'+(d?';domain='+d:'')})}})}var opener=null;function hide(){b.style.display='none';document.documentElement.style.scrollPaddingBottom='';if(opener&&opener.focus){opener.focus();opener=null}}function show(focus){document.getElementById('ckh').textContent=en?'Cookie notice':'Aviso de cookies';document.getElementById('ckl').textContent=en?'More info':'Más información';document.getElementById('ckt').textContent=en?'With your permission we use cookies to count visits and see which parts of the calculator are used, including clicks to the claims service. We never send what you type in the calculator or the letter.':'Con tu permiso usamos cookies para contar visitas y saber qué partes de la calculadora se usan, incluidos los clics al servicio de reclamación. Nunca enviamos lo que escribes en la calculadora ni en la carta.';document.getElementById('ckl').href=en?'/en/privacy/':'/privacidad/';document.getElementById('cky').textContent=en?'Accept':'Aceptar';document.getElementById('ckn').textContent=en?'Reject':'Rechazar';var X={"it": ["Avviso sui cookie", "Maggiori informazioni", "Con il tuo permesso usiamo i cookie per contare le visite e sapere quali parti del calcolatore vengono usate, compresi i clic sul servizio di reclamo. Non inviamo mai ciò che scrivi nel calcolatore o nella lettera.", "Accetta", "Rifiuta"], "de": ["Cookie-Hinweis", "Mehr erfahren", "Mit Ihrer Erlaubnis verwenden wir Cookies, um Besuche zu zählen und zu sehen, welche Teile des Rechners genutzt werden, einschließlich Klicks auf den Durchsetzungsdienst. Was Sie in den Rechner oder das Schreiben eingeben, senden wir nie.", "Akzeptieren", "Ablehnen"]}[document.documentElement.lang];if(X){['ckh','ckl','ckt','cky','ckn'].forEach(function(id,i){document.getElementById(id).textContent=X[i]});document.getElementById('ckl').href='/en/privacy/'}b.style.display='block';document.documentElement.style.scrollPaddingBottom=(b.offsetHeight+24)+'px';if(focus)document.getElementById('ckn').focus()}document.getElementById('cky').onclick=function(){put('y');hide();start()};document.getElementById('ckn').onclick=function(){put('n');hide();if(on){stop();on=false}};document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-consent-open]');if(t){e.preventDefault();opener=t;show(true)}var a=e.target.closest&&e.target.closest('[data-ads-consent]');if(a&&window.googlefc&&googlefc.callbackQueue){e.preventDefault();googlefc.callbackQueue.push(googlefc.showRevocationMessage)}});var v=get();if(v==='y')start();else if(!v)show()})();</script>
 
-<style>/* Layout: white header, two-column hero (copy | calculator card with stacked "what happened" buttons), ticket-stub result, reference sections below. Green brand, Noto Sans. */
+<style>/* Layout: white header, two-column hero (copy | calculator card), one question per screen in the calculator, plain result, reference sections below.
+   Quiet by design: 1px lines, no shadows, no pills, one filled button per screen. Green brand, Noto Sans (400/600/800). */
 :root {
   --paper: #f3f7f4;
   --surface: #ffffff;
   --ink: #12261b;
-  --muted: #3d5246;
-  --line: #d3e0d7;
+  --muted: #4a5d51;
+  --line: #d9e3dc;
+  --line-strong: #b9c9be;
   --sign: #0d6b3b;        /* brand green: primary actions */
   --sign-ink: #ffffff;
-  --sign-soft: #e3f1e8;
-  --navy: #12261b;        /* deep green: footer, tables, selected chips */
+  --sign-soft: #eaf4ee;
+  --navy: #12261b;        /* deep green: footer */
   --navy-ink: #f3f7f4;
-  --hi: #7fd6a4;          /* amounts on dark green */
+  --hi: #7fd6a4;
   --ok: #0d6b3b;
   --warn: #9a5800;
   --no: #8a2a2a;
   --focus: #2f6fed;
-  --r: 16px;
+  --r: 12px;
+  --r-s: 8px;
   --f-display: "Noto Sans", "Segoe UI", system-ui, sans-serif;
   --f-body: "Noto Sans", "Segoe UI", system-ui, sans-serif;
   --f-mono: "Noto Sans", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0c1611; --surface: #142219; --ink: #e6f0ea; --muted: #a7bbaf; --line: #2a3d31;
+    --paper: #0c1611; --surface: #142219; --ink: #e6f0ea; --muted: #a7bbaf; --line: #2a3d31; --line-strong: #3d5446;
     --sign: #3fbf7a; --sign-ink: #06140c; --sign-soft: #173226; --navy: #08100b; --navy-ink: #e6f0ea; --hi: #7fd6a4;
     --ok: #5fd394; --warn: #f0a53a; --no: #f08a8a; --focus: #7aa5ff;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0c1611; --surface: #142219; --ink: #e6f0ea; --muted: #a7bbaf; --line: #2a3d31;
+  --paper: #0c1611; --surface: #142219; --ink: #e6f0ea; --muted: #a7bbaf; --line: #2a3d31; --line-strong: #3d5446;
   --sign: #3fbf7a; --sign-ink: #06140c; --sign-soft: #173226; --navy: #08100b; --navy-ink: #e6f0ea; --hi: #7fd6a4;
   --ok: #5fd394; --warn: #f0a53a; --no: #f08a8a; --focus: #7aa5ff;
   color-scheme: dark;
@@ -57,199 +60,234 @@ html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 var(--f-body); }
 a { color: inherit; text-underline-offset: 3px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; }
 
-/* Header: a sign band */
+/* Header */
 .top { background: var(--surface); color: var(--ink); border-bottom: 1px solid var(--line); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
-.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.25rem/1 var(--f-display); letter-spacing: -0.01em; }
-.brand-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--sign); color: var(--sign-ink); }
-.top nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.95rem; font-weight: 600; align-items: center; }
-.top nav a { text-decoration: none; opacity: 0.9; display: inline-block; padding-block: 3px; }
-.top nav a:hover { opacity: 1; text-decoration: underline; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.2rem/1 var(--f-display); letter-spacing: -0.01em; }
+.brand-mark { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--sign); color: var(--sign-ink); }
+.top nav { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 0.95rem; align-items: center; }
+.top nav a { text-decoration: none; color: var(--muted); display: inline-block; padding-block: 3px; }
+.top nav a:hover { color: var(--ink); text-decoration: underline; }
+.top nav .langs { display: inline-flex; gap: 2px; margin-left: 4px; }
+.top nav a.lang { font: 600 0.8rem/1 var(--f-body); letter-spacing: 0.04em; padding: 6px 6px; border-radius: 6px; color: var(--muted); }
+.top nav a.lang:hover { color: var(--ink); background: var(--paper); text-decoration: none; }
 
 /* Hero */
-.hero { padding-block: 48px 64px; }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 40px; align-items: start; }
-.eyebrow { display: inline-block; font: 600 0.8rem/1 var(--f-body); letter-spacing: 0.02em; background: var(--sign-soft); color: var(--ink); padding: 8px 12px; border-radius: 999px; }
-h1 { font: 800 clamp(2rem, 4.4vw, 3.4rem)/1.08 var(--f-display); letter-spacing: -0.02em; margin: 16px 0 16px; text-wrap: balance; }
-.lede { font-size: 1.1rem; color: var(--muted); max-width: 34em; margin: 0 0 24px; }
-.facts { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; max-width: 34em; }
-.facts li { display: grid; gap: 4px; align-content: start; background: var(--surface); border-radius: var(--r); padding: 16px 18px; }
-.facts b { font: 800 1.6rem/1.1 var(--f-display); color: var(--ok); font-variant-numeric: tabular-nums; }
-.facts span { color: var(--muted); font-size: 0.95rem; }
+.hero { padding-block: 56px 72px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 56px; align-items: start; }
+.eyebrow { display: block; font: 600 0.85rem/1.3 var(--f-body); color: var(--ok); }
+h1 { font: 800 clamp(1.9rem, 4vw, 2.75rem)/1.12 var(--f-display); letter-spacing: -0.025em; margin: 10px 0 16px; text-wrap: balance; }
+.lede { font-size: 1.1rem; color: var(--muted); max-width: 32em; margin: 0 0 28px; }
+.facts { list-style: none; padding: 20px 0 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; max-width: 34em; border-top: 1px solid var(--line); }
+.facts li { display: grid; gap: 2px; align-content: start; }
+.facts b { font: 800 1.4rem/1.1 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.facts span { color: var(--muted); font-size: 0.88rem; line-height: 1.4; }
+.facts.facts-wide b { font-size: 1.15rem; }
 
-/* Calculator */
-.calc { background: var(--surface); border-radius: var(--r); padding: 30px; display: grid; gap: 24px; box-shadow: 0 12px 40px rgba(18, 38, 27, 0.10); }
-.calc h2 { font: 800 1.35rem/1.2 var(--f-display); margin: 0; }
+/* Calculator card */
+.calc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; display: grid; gap: 22px; }
+.calc > h2 { font: 600 0.85rem/1.2 var(--f-body); color: var(--muted); margin: 0; letter-spacing: 0.01em; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field { display: grid; gap: 6px; position: relative; min-width: 0; }
-.field > label, fieldset legend { font: 600 0.9rem/1.2 var(--f-body); color: var(--ink); }
-input[type="text"], select { width: 100%; font: 500 1rem/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; }
-input[type="text"]:focus, select:focus { border-color: var(--focus); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent); }
-.ac { position: absolute; z-index: 10; top: 100%; left: 0; right: 0; margin: 4px 0 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.4); max-height: 320px; overflow-y: auto; }
+.field > label, fieldset legend { font: 600 0.9rem/1.3 var(--f-body); color: var(--ink); }
+input[type="text"], select { width: 100%; min-height: 48px; font: 400 1rem/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-s); padding: 12px 14px; }
+input[type="text"]:hover, select:hover { border-color: var(--muted); }
+input[type="text"]:focus, select:focus { border-color: var(--sign); outline: none; box-shadow: 0 0 0 1px var(--sign); }
+input[type="text"]::placeholder { color: color-mix(in srgb, var(--muted) 80%, transparent); }
+.ac { position: absolute; z-index: 10; top: 100%; left: 0; right: 0; margin: 4px 0 0; padding: 4px; list-style: none; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-s); box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.25); max-height: 320px; overflow-y: auto; }
 .ac li { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 6px; cursor: pointer; }
 .ac li:hover, .ac li.on { background: var(--paper); }
 .ac li.ac-msg { cursor: default; color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
 .ac li.ac-msg:hover { background: none; }
 .btn-small { padding: 6px 12px; font-size: 0.9rem; min-height: 0; margin-left: 4px; }
 .result .error-msg { color: var(--no); }
-.opt-code { font: 700 0.85rem/1 var(--f-mono); letter-spacing: 0.04em; background: var(--navy); color: var(--navy-ink); padding: 5px 6px; border-radius: 4px; min-width: 44px; text-align: center; }
+.opt-code { font: 600 0.8rem/1 var(--f-mono); letter-spacing: 0.04em; color: var(--muted); border: 1px solid var(--line); padding: 5px 6px; border-radius: 4px; min-width: 44px; text-align: center; }
 .opt-txt { display: grid; min-width: 0; }
 .opt-txt small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 12px; min-width: 0; }
-.chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 10px; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; min-width: 0; }
+fieldset legend { padding: 0; margin-bottom: 10px; }
+
+/* Answer options: plain rows, text on the left; the chosen one gets a green outline */
+.chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
 .chips label { position: relative; display: flex; min-width: 0; }
 .chips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.chips span { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 48px; padding: 10px 14px; border: 2px solid var(--line); border-radius: 12px; font-size: 0.93rem; line-height: 1.25; background: var(--surface); cursor: pointer; transition: border-color .15s, background .15s; }
-.chips label:hover span { border-color: var(--muted); }
-.chips input:checked + span { background: var(--sign); color: var(--sign-ink); border-color: var(--sign); font-weight: 600; }
+.chips span { flex: 1; display: flex; align-items: center; text-align: left; min-height: 48px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: var(--r-s); font-size: 0.95rem; line-height: 1.3; background: var(--surface); cursor: pointer; transition: border-color .12s, background .12s; }
+.chips label:hover span { border-color: var(--sign); }
+.chips input:checked + span { border-color: var(--sign); box-shadow: inset 0 0 0 1px var(--sign); background: var(--sign-soft); font-weight: 600; }
 .chips input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.chips-wide { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 
-/* Result: a ticket stub */
-.ticket { border-radius: var(--r); background: var(--paper); border: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) auto; overflow: hidden; }
-.ticket-main { padding: 16px 18px; display: grid; gap: 8px; min-width: 0; }
-.ticket-meta { display: flex; gap: 14px; font: 600 0.8rem/1 var(--f-body); letter-spacing: 0.02em; color: var(--muted); flex-wrap: wrap; }
-.ticket-head { font: 700 1.15rem/1.25 var(--f-display); margin: 0; text-wrap: balance; }
-.ticket-stub { border-left: 2px dashed var(--line); padding: 16px 18px; display: grid; place-content: center; text-align: center; min-width: 128px; position: relative; }
-.ticket-stub::before, .ticket-stub::after { content: ""; position: absolute; left: -9px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); }
-.ticket-stub::before { top: -9px; } .ticket-stub::after { bottom: -9px; }
-.amount { font: 800 2.2rem/1 var(--f-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.stub-label { font: 600 0.75rem/1.2 var(--f-body); color: var(--muted); margin-top: 6px; }
-.why { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.92rem; }
+/* "¿Qué le pasó a tu vuelo?": the first screen, three full-width rows */
+.what legend { font: 600 1.25rem/1.3 var(--f-display); letter-spacing: -0.01em; margin-bottom: 14px; }
+.chips.chips-what { grid-template-columns: 1fr; gap: 10px; }
+.chips-what span { justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 18px; font-size: 1.02rem; font-weight: 600; }
+.chips-what span::after { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-top: 2px solid var(--muted); transform: rotate(45deg); flex: none; }
+.chips-what label:hover span::after { border-color: var(--sign); }
+/* In the step-by-step form the first answer is not shown as "selected": tapping any row moves on */
+.calc.wiz .chips-what input:checked + span { background: var(--surface); box-shadow: none; border-color: var(--line-strong); font-weight: 600; }
+.calc.wiz .chips-what label:hover span { border-color: var(--sign); background: var(--sign-soft); }
+
+/* Step-by-step form (added by app.js; without JavaScript every question stays on one page) */
+.wiz-head { display: grid; gap: 8px; }
+.wiz-label { margin: 0; font: 600 0.82rem/1.2 var(--f-body); color: var(--muted); }
+.wiz-bar { height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.wiz-bar span { display: block; height: 100%; width: 0; background: var(--sign); transition: width .2s ease; }
+.calc.wiz > h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.calc.wiz .wiz-off { display: none !important; }
+.calc.wiz .step { display: grid; gap: 22px; }
+/* Messages about the airports ("choose from the list", loading, errors) stay visible outside the result screen */
+.calc.wiz[data-at="2"] .result.wiz-off[data-state="empty"], .calc.wiz .result.wiz-off[data-state="error"] { display: grid !important; }
+.calc.wiz .result.wiz-off .cta, .calc.wiz .result.wiz-off .care, .calc.wiz .result.wiz-off .letter { display: none !important; }
+.wiz-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap-reverse; }
+.wiz-nav .wiz-next { flex: 1 1 180px; border: 0; cursor: pointer; }
+.wiz-back { background: none; border: 0; padding: 10px 2px; font: 600 0.95rem/1 var(--f-body); color: var(--muted); cursor: pointer; min-height: 44px; }
+.wiz-back:hover { color: var(--ink); text-decoration: underline; }
+.wiz-note { margin: 0; }
+.calc.wiz[data-at="1"] .wiz-nav { display: none; }
+.why-box summary { font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+.why-box[open] summary { margin-bottom: 4px; }
+.calc .why-box { border: 0; padding: 0; max-width: none; }
+
+/* Result */
+.result { display: grid; gap: 14px; }
+.ticket { display: flex; flex-direction: column; gap: 4px; }
+.ticket-stub { order: -1; display: grid; gap: 2px; }
+.amount { font: 800 2.5rem/1 var(--f-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stub-label { font: 400 0.9rem/1.3 var(--f-body); color: var(--muted); }
+.ticket-main { display: grid; gap: 8px; min-width: 0; padding-top: 10px; }
+.ticket-meta { display: flex; gap: 6px 14px; font: 400 0.85rem/1.3 var(--f-body); color: var(--muted); flex-wrap: wrap; }
+.ticket-head { font: 600 1.1rem/1.35 var(--f-display); margin: 0; text-wrap: balance; }
+.why { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 0.92rem; color: var(--muted); }
 .why .note { color: var(--muted); }
 .why .missing { color: var(--warn); font-weight: 600; list-style: "? "; }
-.chips-wide { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
 .result[data-state="posible"] .amount { color: var(--ok); }
 .result[data-state="insuficiente"] .amount { color: var(--warn); }
 .result[data-state="no"] .amount { color: var(--no); }
 .result[data-state="empty"] .ticket, .result[data-state="error"] .ticket { display: none; }
 .result .empty-msg, .result .error-msg { display: none; color: var(--muted); font-size: 0.95rem; margin: 0; }
 .result[data-state="empty"] .empty-msg, .result[data-state="error"] .error-msg { display: block; }
-.result { display: grid; gap: 12px; }
-.cta { display: grid; gap: 8px; }
-.btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 48px; padding: 14px 20px; border-radius: 14px; font: 700 1rem/1 var(--f-body); text-decoration: none; text-align: center; }
+.cta { display: grid; gap: 10px; padding-top: 4px; }
+.btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 50px; padding: 14px 20px; border-radius: var(--r-s); font: 600 1rem/1 var(--f-body); text-decoration: none; text-align: center; }
 .btn-sign { background: var(--sign); color: var(--sign-ink); }
 .btn-sign:hover { filter: brightness(1.1); }
-.cta small { color: var(--muted); font-size: 0.82rem; }
+button.btn-sign { border: 0; cursor: pointer; }
+.cta small { color: var(--muted); font-size: 0.82rem; line-height: 1.45; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); cursor: pointer; font-family: var(--f-body); }
+.btn-ghost:hover { border-color: var(--ink); }
 
 /* Content sections */
-main section.ref { padding-block: 48px; border-top: 1px solid var(--line); }
-.ref h2 { font: 800 clamp(1.5rem, 2.6vw, 2rem)/1.15 var(--f-display); letter-spacing: -0.015em; margin: 0 0 12px; text-wrap: balance; }
+main section.ref { padding-block: 56px; border-top: 1px solid var(--line); }
+.ref h2 { font: 800 clamp(1.45rem, 2.4vw, 1.85rem)/1.2 var(--f-display); letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance; }
 .ref p, .ref li { max-width: 65ch; }
 .ref .lead { color: var(--muted); margin-top: 0; }
 .board { overflow-x: auto; }
-.board table { border-collapse: collapse; min-width: 520px; width: 100%; max-width: 760px; background: var(--navy); color: var(--navy-ink); border-radius: var(--r); overflow: hidden; }
-.board th, .board td { padding: 12px 16px; text-align: left; border-bottom: 1px solid color-mix(in srgb, var(--navy-ink) 15%, transparent); }
-.board th { font: 600 0.8rem/1.2 var(--f-body); opacity: 0.8; }
+.board table { border-collapse: collapse; min-width: 520px; width: 100%; max-width: 760px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.board th, .board td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+.board tr:last-child td { border-bottom: 0; }
+.board th { font: 600 0.82rem/1.2 var(--f-body); color: var(--muted); background: var(--paper); }
 .board-text table { min-width: 0; }
 .board-text td:first-child { width: 42%; font-weight: 600; }
-.board td.eur { font: 800 1.25rem/1 var(--f-display); color: var(--hi); font-variant-numeric: tabular-nums; }
+.board td.eur { font: 800 1.15rem/1 var(--f-display); color: var(--ok); font-variant-numeric: tabular-nums; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.two h3 { font: 700 1.05rem/1.3 var(--f-display); margin: 0 0 8px; }
+.two h3 { font: 600 1.05rem/1.3 var(--f-display); margin: 0 0 8px; }
 .steps { padding-left: 22px; display: grid; gap: 10px; }
-.airlines { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
-.airlines a { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; font-size: 0.93rem; }
-.airlines a:hover { border-color: var(--ink); }
-details { background: var(--surface); border-radius: 14px; padding: 18px 22px; max-width: 760px; margin-bottom: 12px; }
-summary { font-weight: 700; cursor: pointer; }
+.airlines { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none; padding: 0; }
+.airlines a { display: inline-block; padding: 4px 0; color: var(--ink); font-size: 0.95rem; text-decoration: underline; text-decoration-color: var(--line-strong); }
+.airlines a:hover { text-decoration-color: var(--ink); }
+details { border-bottom: 1px solid var(--line); padding: 16px 0; max-width: 760px; }
+details:first-of-type { border-top: 1px solid var(--line); }
+summary { font-weight: 600; cursor: pointer; }
 details p { margin: 8px 0 0; color: var(--muted); }
 .foot { background: var(--navy); color: var(--navy-ink); font-size: 0.85rem; }
-.foot .wrap { padding-block: 28px; display: grid; gap: 10px; }
+.foot .wrap { padding-block: 32px; display: grid; gap: 10px; }
 .foot p { margin: 0; max-width: 80ch; opacity: 0.85; }
-.foot nav { display: flex; gap: 16px; flex-wrap: wrap; }
+.foot nav { display: flex; gap: 6px 18px; flex-wrap: wrap; }
 .foot nav a { display: inline-block; padding-block: 4px; min-height: 24px; }
 .prose { padding-block: 40px 64px; max-width: 760px; }
 .prose h1 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
 
 @media (max-width: 860px) {
-  .hero-grid, .two { grid-template-columns: minmax(0, 1fr); }
+  .hero-grid, .two { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .hero { padding-block: 28px 40px; }
-}
-@media (max-width: 420px) {
-  .row2 { grid-template-columns: 1fr; }
-  .ticket { grid-template-columns: 1fr; }
-  .ticket-stub { border-left: 0; border-top: 2px dashed var(--line); }
-  .ticket-stub::before, .ticket-stub::after { display: none; }
+  /* Phones and tablets: headline, short intro, calculator, then the three amounts */
+  .hero-grid { display: flex; flex-direction: column; gap: 0; align-items: stretch; }
+  .hero-grid > div:first-child { display: contents; }
+  .hero-grid > .calc { order: 1; }
+  .hero-grid .facts { order: 2; margin-top: 28px; max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
-.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; font-family: var(--f-body); }
-.btn-ghost:hover { border-color: var(--ink); }
-button.btn-sign { border: 0; cursor: pointer; }
-.letter { display: grid; gap: 12px; border-top: 2px dashed var(--line); padding-top: 16px; }
+/* Claim letter */
+.letter { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
 .letter-lead { margin: 0; color: var(--muted); font-size: 0.92rem; }
 .letter .row2 { grid-template-columns: 1fr 1fr; }
-.letter textarea { width: 100%; font: 0.9rem/1.5 var(--f-mono); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 12px; resize: vertical; }
+.letter textarea { width: 100%; font: 0.9rem/1.5 var(--f-mono); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-s); padding: 12px; resize: vertical; }
 .letter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .letter-msg { margin: 0; font-size: 0.88rem; color: var(--ok); min-height: 1.2em; }
 .steps.small { font-size: 0.9rem; margin: 0; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-input[type="date"], input[type="number"] { width: 100%; font: 500 1rem/1.2 var(--f-body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; }
-@media (max-width: 420px) { .letter .row2 { grid-template-columns: 1fr; } }
+input[type="date"], input[type="number"] { width: 100%; font: 400 1rem/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-s); padding: 11px 12px; }
 
 .embed { padding: 12px; max-width: 560px; margin: 0 auto; display: grid; gap: 8px; }
-.embed .calc { box-shadow: none; }
 .embed-foot { margin: 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
-.prose textarea { width: 100%; font: 0.85rem/1.5 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
-.top nav a.lang { opacity: 1; border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; font: 700 0.8rem/1.4 var(--f-body); letter-spacing: 0.04em; }
-.top nav .langs { display: inline-flex; gap: 4px; }
-@media (max-width: 520px) { .top nav a.lang { padding: 2px 6px; min-height: 24px; display: inline-flex; align-items: center; } }
-@media (max-width: 420px) { .top nav:has(.langs) { gap: 6px 10px; font-size: 0.85rem; } }
-.top nav a.lang:hover { background: var(--sign); color: var(--sign-ink); text-decoration: none; border-color: var(--sign); }
-.facts.facts-wide b { font-size: 1.3rem; }
+.prose textarea { width: 100%; font: 0.85rem/1.5 var(--f-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); padding: 12px; }
 
-.care { margin: 14px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 0.92rem; }
-.care h3 { margin: 0 0 8px; font-size: 0.98rem; }
+/* Care and where-to-claim notes under the result */
+.care { margin: 0; padding: 14px 16px; background: var(--paper); border-radius: var(--r-s); font-size: 0.92rem; }
+.care h3 { margin: 0 0 8px; font-size: 0.95rem; font-weight: 600; }
 .care ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .care .tip { margin: 8px 0 0; color: var(--muted); }
-@media (max-width: 480px) {
-  .calc { padding: 20px; gap: 22px; }
-  .chips { grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 8px; }
-  .chips span { padding: 10px 6px; font-size: 0.88rem; hyphens: auto; overflow-wrap: anywhere; }
-  .chips-wide { grid-template-columns: 1fr 1fr; }
-}
 
 /* Accessibility */
-.skip { position: absolute; left: 12px; top: -60px; z-index: 10000; background: var(--sign, #facc15); color: var(--sign-ink, #111827); padding: 10px 14px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 10000; background: var(--sign, #0d6b3b); color: var(--sign-ink, #fff); padding: 10px 14px; border-radius: 8px; font-weight: 600; text-decoration: none; }
 .skip:focus { top: 12px; }
 main:focus { outline: none; }
 .field-err { margin: 6px 0 0; font-size: 0.88rem; line-height: 1.35; color: var(--no); font-weight: 600; }
 .board[tabindex]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-/* "¿Qué le pasó a tu vuelo?": big stacked buttons first in the card */
-.what legend { font: 800 1.15rem/1.25 var(--f-display); }
-.chips.chips-what { grid-template-columns: 1fr; gap: 10px; }
-.chips-what span { justify-content: space-between; min-height: 58px; padding: 0 20px; border-radius: 14px; font-size: 1.05rem; font-weight: 700; text-align: left; border-color: var(--sign); color: var(--sign); background: var(--surface); }
-.chips-what span::after { content: ""; width: 9px; height: 9px; border-right: 2.5px solid currentColor; border-top: 2.5px solid currentColor; transform: rotate(45deg); flex: none; }
-.chips-what label:hover span { border-color: var(--sign); background: var(--sign-soft); }
-.chips-what input:checked + span { background: var(--sign); color: var(--sign-ink); }
-@media (max-width: 480px) { .chips.chips-what { grid-template-columns: 1fr; } .chips-what span { font-size: 1rem; padding: 0 16px; } }
-
-/* Why us: four cards under the hero (home) */
+/* Why us (kept for other pages that may use it) */
 .why-us { background: var(--surface); padding-block: 56px; }
-.why-us h2 { font: 800 clamp(1.5rem, 2.6vw, 2.1rem)/1.15 var(--f-display); margin: 0 0 28px; text-align: center; }
-.why-us ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
-.why-us li { background: var(--paper); border-radius: var(--r); padding: 22px; color: var(--ink); }
-.why-us svg { color: var(--ok); }
-.why-us h3 { margin: 12px 0 6px; font-size: 1.05rem; }
+.why-us h2 { font: 800 clamp(1.45rem, 2.4vw, 1.85rem)/1.2 var(--f-display); margin: 0 0 24px; }
+.why-us ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 40px; }
+.why-us svg { display: none; }
+.why-us h3 { margin: 0 0 4px; font-size: 1rem; }
 .why-us p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-@media (max-width: 860px) { .why-us ul { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px) { .why-us ul { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .facts li { padding: 12px 10px; } .facts b, .facts.facts-wide b { font-size: 1.15rem; } .facts span { font-size: 0.8rem; } .top nav { gap: 6px 14px; font-size: 0.9rem; } }
-fieldset legend { padding: 0; margin-bottom: 10px; }
-.what legend { margin-bottom: 12px; }
+
+/* Phones */
+@media (max-width: 600px) {
+  .wrap { padding-inline: 16px; }
+  .top .wrap { flex-wrap: nowrap; padding-block: 12px; }
+  .top nav > a:not(.lang) { display: none; }
+  .top nav .langs { margin-left: 0; }
+  h1 { font-size: 1.85rem; margin-top: 6px; }
+  .lede { font-size: 1rem; margin-bottom: 20px; }
+  .facts { gap: 12px; padding-top: 14px; }
+  .facts b, .facts.facts-wide b { font-size: 1.1rem; }
+  .facts span { font-size: 0.78rem; }
+  .calc { padding: 20px; gap: 20px; border-radius: 10px; }
+  .row2, .letter .row2 { grid-template-columns: 1fr; }
+  .chips { grid-template-columns: 1fr 1fr; }
+  .chips span { padding: 10px 12px; font-size: 0.92rem; overflow-wrap: anywhere; hyphens: auto; }
+  .chips-wide { grid-template-columns: 1fr; }
+  .chips.chips-what { grid-template-columns: 1fr; }
+  .why-us ul { grid-template-columns: 1fr; }
+  main section.ref { padding-block: 40px; }
+}
 </style>
 <header class="top"><div class="wrap"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>VuelosClaim</a><nav aria-label="Principal"><a href="/#cuanto">Importes</a><a href="/#aerolineas">Aerolíneas</a><a href="/#preguntas">Preguntas</a><span class="langs"><a class="lang" href="/en/" hreflang="en" lang="en" aria-label="EN – English">EN</a><a class="lang" href="/it/" hreflang="it" lang="it" aria-label="IT – Italiano">IT</a><a class="lang" href="/de/" hreflang="de" lang="de" aria-label="DE – Deutsch">DE</a></span></nav></div></header>
 <main id="main" tabindex="-1"><section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">Reglamento CE 261/2004</span><h1>Reclamar un vuelo retrasado o cancelado: calcula cuánto te corresponde</h1><p class="lede">Si llegaste con 3 horas o más de retraso, te cancelaron el vuelo o no te dejaron embarcar, la aerolínea puede deberte hasta 600 € por pasajero. Introduce los datos de tu vuelo y lo calculamos en segundos.</p><ul class="facts"><li><b>250 €</b><span>vuelos de hasta 1.500 km</span></li><li><b>400 €</b><span>de 1.500 a 3.500 km, o más de 1.500 km dentro de la UE</span></li><li><b>600 €</b><span>más de 3.500 km</span></li></ul></div><form class="calc" id="calc" novalidate>
 <h2>Calcula tu compensación</h2>
-<fieldset class="what"><legend>¿Qué le pasó a tu vuelo?</legend><div class="chips chips-what"><label><input type="radio" name="what" value="delay" checked><span>Retraso</span></label><label><input type="radio" name="what" value="cancel"><span>Cancelación</span></label><label><input type="radio" name="what" value="denied"><span>Overbooking</span></label></div></fieldset>
+<fieldset class="what" data-step="1"><legend>¿Qué le pasó a tu vuelo?</legend><div class="chips chips-what"><label><input type="radio" name="what" value="delay" checked><span>Retraso</span></label><label><input type="radio" name="what" value="cancel"><span>Cancelación</span></label><label><input type="radio" name="what" value="denied"><span>Overbooking</span></label></div></fieldset>
+<div class="step" data-step="2">
 <div class="row2">
  <div class="field"><label for="from">Origen</label><input type="text" id="from" data-code="MAD" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="from-list" placeholder="Ciudad o código"><ul class="ac" id="from-list" role="listbox" hidden></ul></div>
  <div class="field"><label for="to">Destino final</label><input type="text" id="to" data-code="BER" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="Ciudad o código"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
-<div class="field"><label for="airline">Aerolínea</label><select id="airline" name="airline"><option value="">No lo sé / no aparece</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic">Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Otra aerolínea europea</option><option value="otra-no-ue">Otra aerolínea no europea</option></select></div>
 <fieldset id="grp-via"><legend>¿Hiciste escala?</legend><div class="chips chips-wide"><label><input type="radio" name="via" value="direct" checked><span>No, vuelo directo</span></label><label><input type="radio" name="via" value="same"><span>Sí, una reserva y la misma aerolínea</span></label><label><input type="radio" name="via" value="mixed"><span>Sí, una reserva y aerolíneas distintas</span></label><label><input type="radio" name="via" value="separate"><span>Sí, con reservas separadas</span></label></div></fieldset>
+</div>
+<div class="step" data-step="3">
 <fieldset id="grp-delay"><legend>Retraso al llegar al destino final</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Menos de 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>De 3&nbsp;h justas a 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Más de 4&nbsp;h</span></label><label><input type="radio" name="delay" value="unknown"><span>No lo sé</span></label></div></fieldset>
 <fieldset id="grp-notice" hidden><legend>Te avisaron de la cancelación con</legend><div class="chips"><label><input type="radio" name="notice" value="gt14"><span>14 días o más</span></label><label><input type="radio" name="notice" value="7to14"><span>Entre 7 y 13 días</span></label><label><input type="radio" name="notice" value="lt7"><span>Menos de 7 días</span></label><label><input type="radio" name="notice" value="unknown" checked><span>No lo sé</span></label></div></fieldset>
 <fieldset id="grp-reroute" hidden><legend>¿Te ofrecieron un vuelo alternativo?</legend><div class="chips"><label><input type="radio" name="reroute" value="yes"><span>Sí</span></label><label><input type="radio" name="reroute" value="no"><span>No</span></label><label><input type="radio" name="reroute" value="unknown" checked><span>No lo sé</span></label></div></fieldset>
@@ -259,26 +297,28 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
 <fieldset id="grp-denied" hidden><legend>¿Cediste tu plaza?</legend><div class="chips"><label><input type="radio" name="denied" value="invol"><span>No, me la negaron</span></label><label><input type="radio" name="denied" value="vol"><span>Sí, voluntariamente</span></label><label><input type="radio" name="denied" value="unknown" checked><span>No lo tengo claro</span></label></div></fieldset>
 <fieldset id="grp-checkin" hidden><legend>¿Te presentaste a tiempo a facturación y embarque?</legend><div class="chips"><label><input type="radio" name="checkin" value="yes"><span>Sí</span></label><label><input type="radio" name="checkin" value="no"><span>No</span></label><label><input type="radio" name="checkin" value="unknown" checked><span>No lo sé</span></label></div></fieldset>
 <fieldset id="grp-dreason" hidden><legend>Motivo de la denegación</legend><div class="chips chips-wide"><label><input type="radio" name="dreason" value="overbooking"><span>Overbooking u otro motivo de la aerolínea</span></label><label><input type="radio" name="dreason" value="reasonable"><span>Salud, seguridad o documentación</span></label><label><input type="radio" name="dreason" value="unknown" checked><span>No me lo explicaron</span></label></div></fieldset>
+</div>
+<div class="step" data-step="4">
+<div class="field"><label for="airline">Aerolínea</label><select id="airline" name="airline"><option value="">No lo sé / no aparece</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic">Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Otra aerolínea europea</option><option value="otra-no-ue">Otra aerolínea no europea</option></select></div>
 <fieldset id="grp-fare"><legend>El billete</legend><div class="chips chips-wide"><label><input type="radio" name="fare" value="public" checked><span>Lo pagué (también con puntos o en un paquete)</span></label><label><input type="radio" name="fare" value="staff"><span>Gratis o con tarifa no pública (p. ej., de empleado)</span></label></div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">Motivo que te dio la aerolínea</label><select id="cause" name="cause"><option value="unknown">No me lo dijeron</option><option value="tech">Avería técnica</option><option value="crew">Falta o enfermedad de la tripulación</option><option value="strike_own">Huelga del personal de la aerolínea</option><option value="strike_ext">Huelga de controladores o del aeropuerto</option><option value="strike_sub">Huelga de una empresa contratada por la aerolínea (handling, catering…)</option><option value="atc">Restricción de control aéreo (ATC)</option><option value="weather">Meteorología adversa</option><option value="security">Seguridad (amenaza, cierre del espacio aéreo)</option><option value="bird">Choque con un ave u objeto en la pista</option><option value="knock">Retraso del vuelo anterior del avión</option></select></div>
+</div>
 <div class="result" id="result" data-state="empty" aria-live="polite">
  <p class="empty-msg">Elige origen y destino para ver el resultado.</p>
  <p class="error-msg"><span data-error-text>No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">Reintentar</button></p>
  <div class="ticket">
   <div class="ticket-main">
-   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span>Ejemplo editable</span></div>
+   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span data-example>Ejemplo editable</span></div>
    <p class="ticket-head" data-headline></p>
    <ul class="why" data-lines></ul>
   </div>
   <div class="ticket-stub"><div class="amount" data-amount>—</div><div class="stub-label">por pasajero</div></div>
  </div>
- <div class="care" data-care hidden></div>
  <div class="cta" data-cta>
   <a class="btn btn-sign" href="https://airhelp.tpx.gr/Ow8vczQM" rel="sponsored nofollow noopener" target="_blank" data-generic="Reclamar con una empresa">Reclamar con AirHelp</a>
   <small data-generic="Servicio externo de reclamación: cobra una comisión si consigue la compensación y no garantiza el resultado. Enlace de afiliado.">AirHelp es un servicio externo de reclamación: no cobra por adelantado y, si consigue la compensación, se queda un 35 % (IVA incluido), hasta un 50 % si hay que ir a juicio. No garantiza el resultado. Es un enlace de afiliado: VuelosClaim recibe una comisión, sin coste para ti. <a href="/comparativa-empresas-reclamacion-vuelos/">Compara con reclamar tú gratis</a>.</small>
   <button type="button" class="btn btn-ghost" id="letter-open" aria-expanded="false" aria-controls="letter">Prefiero reclamar yo gratis: generar mi carta</button>
  </div>
- <div class="care" data-where hidden></div>
  <div class="letter" id="letter" hidden>
   <p class="letter-lead">Rellena tus datos y te preparamos la carta. Se compone en tu navegador: no la enviamos ni la guardamos. No hace falta poner datos bancarios.</p>
   <div class="row2">
@@ -294,9 +334,10 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
   <p class="letter-msg" id="letter-msg" aria-live="polite"></p>
   <ol class="steps small"><li>Envíala por el formulario de reclamaciones de la web de tu aerolínea o por correo, con la tarjeta de embarque adjunta.</li><li>Guarda el justificante de envío.</li><li>Si en un mes no te pagan o te lo rechazan, reclama gratis ante <a href="https://www.seguridadaerea.gob.es/es/ambitos/derechos-de-los-pasajeros" rel="noopener" target="_blank">AESA</a> (vuelos que salen de España).</li></ol>
  </div>
+ <div class="care" data-care hidden></div>
+ <div class="care" data-where hidden></div>
 </div>
-</form></div></section><section class="why-us"><div class="wrap"><h2>Por qué usar VuelosClaim</h2><ul><li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7M7 11h6M7 13.5h6"/></svg><h3>Gratis de verdad</h3><p>La calculadora y la carta no cuestan nada. Nos financian los anuncios y un enlace de afiliado, siempre señalado.</p></li><li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 19V9M10 19V9M14 19V9M18 19V9M3 9l9-5 9 5"/></svg><h3>Con la ley en la mano</h3><p>Cada resultado cita el artículo del reglamento o la sentencia del TJUE que lo respalda.</p></li><li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><h3>Sin datos para calcular</h3><p>No pedimos nombre, correo ni código de reserva para saber cuánto te corresponde.</p></li><li><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M13 5l7 7-7 7"/></svg><h3>Tú eliges el camino</h3><p>Reclama tú con la carta y quédate el 100 %, o delega en un servicio que cobra solo si ganas.</p></li></ul></div></section>
-<section class="ref" id="cuanto"><div class="wrap">
+</form></div></section><section class="ref" id="cuanto"><div class="wrap">
 <h2>Cuánto te corresponde según la distancia</h2>
 <p class="lead">Es una cantidad fija por pasajero, no depende de lo que pagaste por el billete. Fuente: <a href="https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_es.htm" rel="noopener">Tu Europa, Comisión Europea</a>.</p>
 <div class="board"><table><thead><tr><th>Distancia del vuelo</th><th>Compensación</th></tr></thead><tbody>
@@ -475,6 +516,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       pick: "Elige el aeropuerto en la lista que aparece al escribir.",
       acCount: function (n) { return (n === 1 ? "1 aeropuerto encontrado" : n + " aeropuertos encontrados") + ". Usa las flechas arriba y abajo para elegir y pulsa Intro."; },
       tableScroll: "tabla desplazable",
+      wizNext: "Continuar", wizBack: "Atrás", wizStep: "Paso {n} de {t}", wizSee: "Ver resultado", wizEdit: "Cambiar respuestas", wizResult: "Tu resultado", wizWhy: "Por qué este resultado", wizRoute: "Elige el aeropuerto de origen y el de destino de la lista para continuar.",
       same: "El origen y el destino son el mismo aeropuerto.",
       loadError: "No se ha podido cargar la lista de aeropuertos. Comprueba tu conexión y vuelve a intentarlo.",
       offline: "Parece que no tienes conexión. Cuando vuelva, la lista de aeropuertos se cargará sola.",
@@ -575,6 +617,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       pick: "Choose the airport from the list that appears as you type.",
       acCount: function (n) { return (n === 1 ? "1 airport found" : n + " airports found") + ". Use the up and down arrows to choose and press Enter."; },
       tableScroll: "scrollable table",
+      wizNext: "Continue", wizBack: "Back", wizStep: "Step {n} of {t}", wizSee: "See result", wizEdit: "Change answers", wizResult: "Your result", wizWhy: "Why this result", wizRoute: "Choose the departure and destination airports from the list to continue.",
       same: "Departure and destination are the same airport.",
       loadError: "The airport list could not load. Check your connection and try again.",
       offline: "You seem to be offline. The airport list will load by itself when you reconnect.",
@@ -675,6 +718,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       pick: "Scegli l'aeroporto dall'elenco che appare mentre scrivi.",
       acCount: function (n) { return (n === 1 ? "1 aeroporto trovato" : n + " aeroporti trovati") + ". Usa le frecce su e giù per scegliere e premi Invio."; },
       tableScroll: "tabella scorrevole",
+      wizNext: "Continua", wizBack: "Indietro", wizStep: "Passo {n} di {t}", wizSee: "Vedi il risultato", wizEdit: "Modifica le risposte", wizResult: "Il tuo risultato", wizWhy: "Perché questo risultato", wizRoute: "Scegli dall'elenco l'aeroporto di partenza e quello di destinazione per continuare.",
       same: "L'origine e la destinazione sono lo stesso aeroporto.",
       loadError: "Non è stato possibile caricare l'elenco degli aeroporti. Controlla la connessione e riprova.",
       offline: "Sembra che tu sia offline. Quando torna la connessione, l'elenco degli aeroporti si caricherà da solo.",
@@ -775,6 +819,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       pick: "Wählen Sie den Flughafen aus der Liste, die beim Tippen erscheint.",
       acCount: function (n) { return (n === 1 ? "1 Flughafen gefunden" : n + " Flughäfen gefunden") + ". Mit den Pfeiltasten auswählen und Enter drücken."; },
       tableScroll: "scrollbare Tabelle",
+      wizNext: "Weiter", wizBack: "Zurück", wizStep: "Schritt {n} von {t}", wizSee: "Ergebnis anzeigen", wizEdit: "Antworten ändern", wizResult: "Ihr Ergebnis", wizWhy: "Warum dieses Ergebnis", wizRoute: "Wählen Sie Abflug- und Zielflughafen aus der Liste, um fortzufahren.",
       same: "Start und Ziel sind derselbe Flughafen.",
       loadError: "Die Flughafenliste konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
       offline: "Sie scheinen offline zu sein. Sobald die Verbindung zurück ist, lädt die Flughafenliste von selbst.",
@@ -1071,9 +1116,11 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       if (r.length && (r[0][0].toLowerCase() === q || r.length === 1)) pick(r[0]);
       else { invalid(r.length ? T.pick : T.acNone); run(); }
     }
-    input.addEventListener("input", function () { input.dataset.code = ""; invalid(""); render(); run(); });
-    input.addEventListener("focus", function () { if (!input.dataset.code) render(); else input.select(); });
-    input.addEventListener("blur", function () { setTimeout(function () { close(); autoPick(); }, 150); });
+    // The pending blur check is cancelled if the visitor comes back to the field before it runs
+    var blurT = null;
+    input.addEventListener("input", function () { clearTimeout(blurT); input.dataset.code = ""; invalid(""); render(); run(); });
+    input.addEventListener("focus", function () { clearTimeout(blurT); if (!input.dataset.code) render(); else input.select(); });
+    input.addEventListener("blur", function () { clearTimeout(blurT); blurT = setTimeout(function () { close(); autoPick(); }, 150); });
     input.addEventListener("keydown", function (e) {
       if (e.key === "ArrowDown" && list.hidden) { render(); if (items.length) { active = 0; highlight(); } e.preventDefault(); return; }
       if (list.hidden || !items.length) { if (e.key === "Escape") close(); return; }
@@ -1087,7 +1134,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
   }
 
   // ---------- Form wiring ----------
-  var form, out;
+  var form, out, seedRoute = "";
   var AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa";
   function val(name) { var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('select[name="' + name + '"]'); return el ? el.value : ""; }
   function show(id, on) { var el = form.querySelector("#" + id); if (el) el.hidden = !on; }
@@ -1147,6 +1194,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
     var r = compute(o);
     out.dataset.state = r.verdict;
     out.querySelector("[data-route]").textContent = dep[0] + " → " + arr[0];
+    var ex = out.querySelector("[data-example]"); if (ex) ex.hidden = dep[0] + "-" + arr[0] !== seedRoute; // only the preloaded route is an example
     out.querySelector("[data-km]").textContent = fmt(r.dist || 0) + " km";
     out.querySelector("[data-amount]").textContent = money(r.amount || 0, r.cur);
     out.querySelector("[data-headline]").textContent =
@@ -1556,6 +1604,83 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
       } else if (el.getAttribute("role") === "region") { el.removeAttribute("tabindex"); el.removeAttribute("role"); el.removeAttribute("aria-label"); }
     });
   }
+
+  // ---------- One question per screen ----------
+  // Without JavaScript every question stays visible; with it the form becomes 4 short steps and then the result.
+  var wizGo = null;
+  function wizard() {
+    var steps = form.querySelectorAll("[data-step]"), TOTAL = steps.length;
+    if (TOTAL < 4) return;
+    form.classList.add("wiz");
+    var head = document.createElement("div"); head.className = "wiz-head";
+    head.innerHTML = '<p class="wiz-label" aria-live="polite"></p><div class="wiz-bar"><span></span></div>';
+    var nav = document.createElement("div"); nav.className = "wiz-nav";
+    nav.innerHTML = '<button type="button" class="wiz-back"></button><button type="button" class="btn btn-sign wiz-next"></button>';
+    var note = document.createElement("p"); note.className = "wiz-note field-err"; note.hidden = true;
+    var h = form.querySelector("h2");
+    form.insertBefore(head, h ? h.nextSibling : form.firstChild);
+    form.insertBefore(nav, out);
+    form.insertBefore(note, nav);
+    var label = head.querySelector(".wiz-label"), bar = head.querySelector(".wiz-bar span");
+    var back = nav.querySelector(".wiz-back"), next = nav.querySelector(".wiz-next");
+    back.textContent = "← " + T.wizBack;
+    var at = 1;
+    function routeOk() { return out.dataset.state !== "empty" && out.dataset.state !== "error"; }
+    function go(n, focus) {
+      at = Math.max(1, Math.min(TOTAL + 1, n));
+      form.dataset.at = String(at);
+      for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("wiz-off", +steps[i].dataset.step !== at);
+      var done = at > TOTAL;
+      out.classList.toggle("wiz-off", !done);
+      label.textContent = done ? T.wizResult : T.wizStep.replace("{n}", at).replace("{t}", TOTAL);
+      bar.style.width = (done ? 100 : Math.round((at - 1) / TOTAL * 100 + 100 / TOTAL / 2)) + "%";
+      back.hidden = at === 1; back.textContent = "← " + (done ? T.wizEdit : T.wizBack);
+      next.hidden = at === 1 || done; next.textContent = at === TOTAL ? T.wizSee : T.wizNext;
+      note.hidden = true;
+      if (focus) {
+        var t = done ? out : form.querySelector('[data-step="' + at + '"]');
+        var f = t && t.querySelector(done ? ".ticket-head" : "legend, label");
+        var r = form.getBoundingClientRect();
+        if (r.top < 0) form.scrollIntoView({ block: "start" });
+        if (f) { f.setAttribute("tabindex", "-1"); f.focus({ preventScroll: true }); }
+      }
+    }
+    wizGo = go;
+    function forward() {
+      if (at === 2 && !routeOk()) {
+        var e1 = document.getElementById("from"), e2 = document.getElementById("to");
+        note.textContent = T.wizRoute; note.hidden = false;
+        var t = !e1.dataset.code ? e1 : e2; setTimeout(function () { t.focus(); }, 200); // after the field's own blur handling
+        return;
+      }
+      run(); go(at + 1, true);
+    }
+    next.addEventListener("click", forward);
+    back.addEventListener("click", function () { go(at > TOTAL ? 1 : at - 1, true); });
+    // Choosing what happened moves on by itself (also when the visitor taps the option already selected)
+    form.querySelector('[data-step="1"]').addEventListener("click", function (e) {
+      var l = e.target.closest && e.target.closest("label");
+      if (l && at === 1) setTimeout(function () { go(2, true); }, 0);
+    });
+    form.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" || e.defaultPrevented || at < 2 || at > TOTAL) return;
+      var t = e.target;
+      if (t.tagName === "BUTTON" || t.tagName === "A" || t.tagName === "TEXTAREA") return;
+      if ((t.id === "from" || t.id === "to") && t.getAttribute("aria-expanded") === "true") return;
+      if (t.closest && t.closest("#letter")) return;
+      e.preventDefault(); forward();
+    });
+    // The legal reasoning behind the result folds away (open by default when data is missing)
+    var lines = out.querySelector("[data-lines]");
+    if (lines && window.HTMLDetailsElement) {
+      var box = document.createElement("details"); box.className = "why-box";
+      var sum = document.createElement("summary"); sum.textContent = T.wizWhy;
+      lines.parentNode.insertBefore(box, lines); box.appendChild(sum); box.appendChild(lines);
+      new MutationObserver(function () { if (out.dataset.state === "insuficiente") box.open = true; }).observe(out, { attributes: true, attributeFilter: ["data-state"] });
+      if (out.dataset.state === "insuficiente") box.open = true;
+    }
+    go(1, false);
+  }
   var msT = null;
   function init() {
     if (window.addEventListener) window.addEventListener("resize", function () { clearTimeout(msT); msT = setTimeout(markScrollables, 200); });
@@ -1572,6 +1697,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
     form = document.getElementById("calc");
     out = document.getElementById("result");
     if (!form) return;
+    seedRoute = document.getElementById("from").dataset.code + "-" + document.getElementById("to").dataset.code;
     function touch(e) {
       if (e.target.closest && e.target.closest("#letter")) return;
       touched = true;
@@ -1582,6 +1708,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
     form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
     form.addEventListener("change", function (e) { if (!e.target.closest || !e.target.closest("#letter")) run(); });
     letterTools();
+    wizard();
     // Blogs embedding the calculator may use their own affiliate link (known claims domains only)
     try {
       var aff = new URLSearchParams(location.search).get("aff");
