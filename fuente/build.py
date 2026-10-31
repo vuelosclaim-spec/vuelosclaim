@@ -303,7 +303,7 @@ def calculator(l, airline_slug, dep, arr):
  <p class="error-msg"><span data-error-text>{s["error"]}</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">{s["retry"]}</button></p>
  <div class="ticket">
   <div class="ticket-main">
-   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span>{s["example"]}</span></div>
+   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span data-example>{s["example"]}</span></div>
    <p class="ticket-head" data-headline></p>
    <ul class="why" data-lines></ul>
   </div>

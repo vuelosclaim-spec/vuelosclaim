@@ -79,6 +79,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("distingue aeropuertos de Londres y elige Gatwick"), await pickAirport(p, device, "to", "londres", "LGW"));
     check(T("resultado calculado"), (await state(p)) === "posible", await state(p));
     check(T("distancia mostrada"), /\d km/.test(await p.textContent("[data-km]")));
+    check(T("con una ruta propia ya no pone «Ejemplo editable»"), (await p.getAttribute("[data-example]", "hidden")) !== null);
 
     // 2. Teclado: flechas + Enter, y Tab con texto exacto
     await p.fill("#to", ""); await p.type("#to", "londres", { delay: 10 });

@@ -308,7 +308,7 @@ main:focus { outline: none; }
  <p class="error-msg"><span data-error-text>Die Flughafenliste konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.</span> <button type="button" class="btn btn-ghost btn-small" id="ac-retry">Erneut versuchen</button></p>
  <div class="ticket">
   <div class="ticket-main">
-   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span>Bearbeitbares Beispiel</span></div>
+   <div class="ticket-meta"><span data-route>—</span><span data-km>—</span><span data-example>Bearbeitbares Beispiel</span></div>
    <p class="ticket-head" data-headline></p>
    <ul class="why" data-lines></ul>
   </div>
@@ -1133,7 +1133,7 @@ main:focus { outline: none; }
   }
 
   // ---------- Form wiring ----------
-  var form, out;
+  var form, out, seedRoute = "";
   var AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa";
   function val(name) { var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('select[name="' + name + '"]'); return el ? el.value : ""; }
   function show(id, on) { var el = form.querySelector("#" + id); if (el) el.hidden = !on; }
@@ -1193,6 +1193,7 @@ main:focus { outline: none; }
     var r = compute(o);
     out.dataset.state = r.verdict;
     out.querySelector("[data-route]").textContent = dep[0] + " → " + arr[0];
+    var ex = out.querySelector("[data-example]"); if (ex) ex.hidden = dep[0] + "-" + arr[0] !== seedRoute; // only the preloaded route is an example
     out.querySelector("[data-km]").textContent = fmt(r.dist || 0) + " km";
     out.querySelector("[data-amount]").textContent = money(r.amount || 0, r.cur);
     out.querySelector("[data-headline]").textContent =
@@ -1695,6 +1696,7 @@ main:focus { outline: none; }
     form = document.getElementById("calc");
     out = document.getElementById("result");
     if (!form) return;
+    seedRoute = document.getElementById("from").dataset.code + "-" + document.getElementById("to").dataset.code;
     function touch(e) {
       if (e.target.closest && e.target.closest("#letter")) return;
       touched = true;

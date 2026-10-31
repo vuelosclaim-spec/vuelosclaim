@@ -764,7 +764,7 @@
   }
 
   // ---------- Form wiring ----------
-  var form, out;
+  var form, out, seedRoute = "";
   var AESA_CLAIM = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa";
   function val(name) { var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('select[name="' + name + '"]'); return el ? el.value : ""; }
   function show(id, on) { var el = form.querySelector("#" + id); if (el) el.hidden = !on; }
@@ -824,6 +824,7 @@
     var r = compute(o);
     out.dataset.state = r.verdict;
     out.querySelector("[data-route]").textContent = dep[0] + " → " + arr[0];
+    var ex = out.querySelector("[data-example]"); if (ex) ex.hidden = dep[0] + "-" + arr[0] !== seedRoute; // only the preloaded route is an example
     out.querySelector("[data-km]").textContent = fmt(r.dist || 0) + " km";
     out.querySelector("[data-amount]").textContent = money(r.amount || 0, r.cur);
     out.querySelector("[data-headline]").textContent =
@@ -1326,6 +1327,7 @@
     form = document.getElementById("calc");
     out = document.getElementById("result");
     if (!form) return;
+    seedRoute = document.getElementById("from").dataset.code + "-" + document.getElementById("to").dataset.code;
     function touch(e) {
       if (e.target.closest && e.target.closest("#letter")) return;
       touched = true;
