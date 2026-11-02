@@ -107,8 +107,8 @@ async function pickAirport(p, device, id, text, code) {
 
     // Regresión PR #31: no avanzar si una respuesta visible es obligatoria;
     // al editar el resultado se vuelve al último paso, conservando la ruta.
-    await wiz(p, 3);
-    await p.click("label:has(input[name=what][value=denied])").catch(() => {});
+    await wiz(p, 1);
+    await p.click("label:has(input[name=what][value=denied])");
     await wiz(p, 3);
     const accepted = p.locator("#grp-accepted");
     if (await accepted.isVisible()) {
