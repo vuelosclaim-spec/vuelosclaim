@@ -43,7 +43,7 @@ def S(brand, aesa_url, caa_url):
       l_name="Nome e cognome", l_book="Codice di prenotazione", l_flight="Numero del volo", l_date="Data del volo", l_pax="Passeggeri nella prenotazione",
       l_text="La tua lettera", copy="Copia la lettera", dl="Scarica .txt",
       steps=["Inviala tramite il modulo reclami sul sito della compagnia aerea o per e-mail, allegando la carta d'imbarco.", "Conserva la prova dell'invio.",
-             f'Se entro un mese non pagano o rifiutano: per i voli in partenza dall\'Italia puoi presentare reclamo gratuito all\'<a href="{ENAC_URL}" rel="noopener" target="_blank">ENAC</a>; per i voli dalla Spagna, ad <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
+             f'Se non rispondono dopo sei settimane o la risposta non è soddisfacente: per i voli in partenza dall\'Italia puoi presentare reclamo gratuito all\'<a href="{ENAC_URL}" rel="noopener" target="_blank">ENAC</a>; per i voli dalla Spagna, ad <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
       eyebrow="Regolamento CE 261/2004",
       facts=[("250 €", "voli fino a 1.500 km"), ("400 €", "da 1.500 a 3.500 km, o oltre 1.500 km nell'UE"), ("600 €", "oltre 3.500 km")],
       skip="Vai al contenuto",
