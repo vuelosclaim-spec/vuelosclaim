@@ -3,7 +3,7 @@ Legal pages (about, legal notice, privacy) are linked in English: the owner's le
 """
 
 ENAC_URL = "https://www.enac.gov.it/passeggeri/diritti-dei-passeggeri/modalita-di-reclamo-per-negato-imbarco-cancellazione-ritardo/"
-EVZ_ADR_URL = "https://www.evz.de/einkaufen-internet/odr-adr/schlichtungsstellen-deutschland/fernreise-nahverkehr.html"
+EVZ_ADR_URL = "https://www.bundesregierung.de/breg-de/service/fragen-und-anworten/flugaerger-entschaedigung-2059808"
 EU_URL = {"it": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_it.htm",
           "de": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_de.htm"}
 UPDATED = {"it": "7 ottobre 2026", "de": "7. Oktober 2026"}
@@ -43,7 +43,7 @@ def S(brand, aesa_url, caa_url):
       l_name="Nome e cognome", l_book="Codice di prenotazione", l_flight="Numero del volo", l_date="Data del volo", l_pax="Passeggeri nella prenotazione",
       l_text="La tua lettera", copy="Copia la lettera", dl="Scarica .txt",
       steps=["Inviala tramite il modulo reclami sul sito della compagnia aerea o per e-mail, allegando la carta d'imbarco.", "Conserva la prova dell'invio.",
-             f'Se entro un mese non pagano o rifiutano: per i voli in partenza dall\'Italia puoi presentare reclamo gratuito all\'<a href="{ENAC_URL}" rel="noopener" target="_blank">ENAC</a>; per i voli dalla Spagna, ad <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
+             f'Se non rispondono dopo sei settimane o la risposta non è soddisfacente: per i voli in partenza dall\'Italia puoi presentare reclamo gratuito all\'<a href="{ENAC_URL}" rel="noopener" target="_blank">ENAC</a>; per i voli dalla Spagna, ad <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
       eyebrow="Regolamento CE 261/2004",
       facts=[("250 €", "voli fino a 1.500 km"), ("400 €", "da 1.500 a 3.500 km, o oltre 1.500 km nell'UE"), ("600 €", "oltre 3.500 km")],
       skip="Vai al contenuto",
@@ -78,7 +78,7 @@ def S(brand, aesa_url, caa_url):
       l_name="Vor- und Nachname", l_book="Buchungscode", l_flight="Flugnummer", l_date="Flugdatum", l_pax="Fluggäste in der Buchung",
       l_text="Ihr Schreiben", copy="Schreiben kopieren", dl=".txt herunterladen",
       steps=["Senden Sie es über das Beschwerdeformular auf der Website der Fluggesellschaft oder per E-Mail und fügen Sie die Bordkarte bei.", "Bewahren Sie einen Nachweis über den Versand auf.",
-             f'Zahlt die Fluggesellschaft nicht innerhalb eines Monats oder lehnt sie ab: bei Flügen ab Deutschland kostenlos an die <a href="{EVZ_ADR_URL}" rel="noopener" target="_blank">Schlichtungsstelle (söp oder Bundesamt für Justiz)</a> wenden; bei Flügen ab Spanien an <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
+             f'Zahlt die Fluggesellschaft nicht innerhalb von zwei Monaten oder lehnt sie ab: bei Flügen ab Deutschland kostenlos an die <a href="{EVZ_ADR_URL}" rel="noopener" target="_blank">Schlichtungsstelle (söp oder Bundesamt für Justiz)</a> wenden; bei Flügen ab Spanien an <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
       eyebrow="Verordnung (EG) 261/2004",
       facts=[("250 €", "Flüge bis 1.500 km"), ("400 €", "1.500 bis 3.500 km, oder über 1.500 km in der EU"), ("600 €", "über 3.500 km")],
       skip="Zum Inhalt springen",
@@ -153,7 +153,7 @@ def reference(l, faq_html, e):
 <section class="ref"><div class="wrap"><h2>Come reclamare</h2><ol class="steps">
 <li>Conserva la carta d'imbarco, la prenotazione e, se puoi, una foto del tabellone con il ritardo.</li>
 <li>Reclama prima per iscritto alla compagnia, tramite il suo modulo reclami.</li>
-<li>Se non risponde entro un mese o rifiuta, e il volo è partito dall'Italia, presenta reclamo gratuito all'<a href="{ENAC_URL}" rel="noopener">ENAC</a>.</li>
+<li>Se non risponde dopo sei settimane o fornisce una risposta insoddisfacente, e il volo è partito dall'Italia, presenta reclamo gratuito all'<a href="{ENAC_URL}" rel="noopener">ENAC</a>.</li>
 <li>Se preferisci non farlo da solo, una società di reclami se ne occupa senza costi anticipati e trattiene una percentuale se vince.</li>
 </ol>
 <p>Scioperi in programma in Italia, Spagna e Portogallo: <a href="{STRIKES['it']}">calendario degli scioperi aerei</a>.</p></div></section>
@@ -179,7 +179,7 @@ def reference(l, faq_html, e):
 <section class="ref"><div class="wrap"><h2>So machen Sie Ihren Anspruch geltend</h2><ol class="steps">
 <li>Bewahren Sie Bordkarte, Buchungsbestätigung und möglichst ein Foto der Anzeigetafel mit der Verspätung auf.</li>
 <li>Wenden Sie sich zuerst schriftlich über das Beschwerdeformular an die Fluggesellschaft.</li>
-<li>Antwortet sie nicht innerhalb eines Monats oder lehnt sie ab, können Sie sich bei Flügen ab Deutschland kostenlos an eine <a href="{EVZ_ADR_URL}" rel="noopener">Schlichtungsstelle (söp oder Bundesamt für Justiz)</a> wenden.</li>
+<li>Antwortet sie nicht innerhalb von zwei Monaten oder lehnt sie ab, können Sie sich bei Flügen ab Deutschland kostenlos an eine <a href="{EVZ_ADR_URL}" rel="noopener">Schlichtungsstelle (söp oder Bundesamt für Justiz)</a> wenden.</li>
 <li>Wenn Sie es nicht selbst machen möchten, übernimmt ein Fluggastrechte-Dienstleister das ohne Vorabkosten und behält bei Erfolg einen Anteil ein.</li>
 </ol>
 <p>Geplante Streiks in Italien, Spanien und Portugal: <a href="{STRIKES['de']}">Streikkalender für Flüge</a>.</p></div></section>

@@ -105,6 +105,26 @@ async function pickAirport(p, device, id, text, code) {
     check(T("mismo origen y destino se explica"), /mismo aeropuerto|same airport/.test(await p.textContent(".empty-msg")));
     await pickAirport(p, device, "to", "BCN", "BCN");
 
+    // Regresión PR #31: no avanzar si una respuesta visible es obligatoria;
+    // al editar el resultado se vuelve al último paso, conservando la ruta.
+    await wiz(p, 1);
+    await p.click("label:has(input[name=what][value=denied])");
+    await wiz(p, 3);
+    const accepted = p.locator("#grp-accepted");
+    if (await accepted.isVisible()) {
+      await p.click(".wiz-next");
+      check(T("no avanza sin respuesta de aceptación"), (await p.getAttribute("#calc", "data-at")) === "3" && await p.isVisible(".wiz-note"));
+      await p.locator('#grp-accepted input[type=radio]').first().check({ force: true });
+    }
+    await wiz(p, 5);
+    check(T("advertencia jurídica siempre visible en el resultado"), await p.isVisible(".estimate-note"));
+    await p.click(".wiz-back");
+    check(T("editar resultado vuelve al paso 4"), (await p.getAttribute("#calc", "data-at")) === "4");
+    check(T("editar resultado conserva aeropuertos"), (await p.getAttribute("#from", "data-code")) === "MAD" && (await p.getAttribute("#to", "data-code")) === "BCN");
+    await wiz(p, 1);
+    await p.click("label:has(input[name=what][value=delay])");
+    await wiz(p, 2);
+
     // 4. Carta: sin IBAN, solo para "posible", refleja el resultado, copiar y descargar
     check(T("no existe el campo IBAN"), (await p.$("#l-iban")) === null);
     check(T("el resultado no se ve antes del último paso"), !(await p.isVisible("[data-cta]")));
@@ -217,7 +237,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("calculator_started una sola vez"), names.filter((n) => n === "calculator_started").length === 1);
     const all = JSON.stringify(events);
     check(T("ningún evento contiene datos de la carta"), !/Zz Nombre|Secreto|QQ9ZZ9|IB1234/i.test(all), all.slice(0, 300));
-    const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
+    const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime", "wizard_step"]);
     // Nombres reservados por GA4 (no deben usarse como parámetros propios)
     const reserved = /^(language|page_path|page_location|page_referrer|page_title|screen_resolution|cid|uid|_.*|ga_.*|google_.*|firebase_.*|gtag\..*)$/;
     check(T("ningún parámetro con nombre reservado de GA4"), events.every((e) => Object.keys(e.params || {}).every((k) => !reserved.test(k))), all.slice(0, 200));
