@@ -9,29 +9,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  preparar_docs:
-    if: github.event_name == 'pull_request' && github.head_ref == 'revision-it-de-navegador-20261102'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: revision-it-de-navegador-20261102
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Sincronizar HTML
-        run: |
-          python3 fuente/build.py
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          if ! git diff --cached --quiet; then
-            git commit -m "Regenerar docs para IT/DE"
-            git push origin HEAD:revision-it-de-navegador-20261102
-          fi
   validar:
     runs-on: ubuntu-latest
     steps:
