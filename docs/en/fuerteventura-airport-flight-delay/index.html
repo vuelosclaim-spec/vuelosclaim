@@ -812,7 +812,7 @@ main:focus { outline: none; }
 
   // ---------- Measurement: GA4 events, only after consent and never with personal data ----------
   // Only these parameters, with values from fixed lists (incident type, result, amount band...), ever leave the page.
-  var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1 };
+  var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1, wizard_step: 1 };
   function track(name, params) {
     try {
       if (!window.vcAnalytics || typeof window.gtag !== "function") return false;
@@ -1602,10 +1602,25 @@ main:focus { outline: none; }
     var back = nav.querySelector(".wiz-back"), next = nav.querySelector(".wiz-next");
     back.textContent = "← " + T.wizBack;
     var at = 1;
+    var lastReportedStep = 0;
+    // Keep a short qualification visible when the detailed legal grounds are folded.
+    var ticketHead = out.querySelector(".ticket-head");
+    if (ticketHead && !out.querySelector(".estimate-note")) {
+      var estimate = document.createElement("p");
+      estimate.className = "estimate-note";
+      estimate.textContent = {
+        es: "Estimación orientativa, no un pago garantizado. Depende de las circunstancias y las pruebas del caso.",
+        en: "Indicative estimate, not a guaranteed payment. Eligibility depends on the facts and evidence.",
+        it: "Stima indicativa, non un pagamento garantito. Il diritto dipende dai fatti e dalle prove.",
+        de: "Unverbindliche Schätzung, keine garantierte Zahlung. Der Anspruch hängt vom Einzelfall und den Nachweisen ab."
+      }[LANG];
+      ticketHead.insertAdjacentElement("afterend", estimate);
+    }
     function routeOk() { return out.dataset.state !== "empty" && out.dataset.state !== "error"; }
     function go(n, focus) {
       at = Math.max(1, Math.min(TOTAL + 1, n));
       form.dataset.at = String(at);
+      if (at !== lastReportedStep && track("wizard_step_viewed", { wizard_step: at })) lastReportedStep = at;
       for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("wiz-off", +steps[i].dataset.step !== at);
       var done = at > TOTAL;
       out.classList.toggle("wiz-off", !done);
@@ -1630,10 +1645,30 @@ main:focus { outline: none; }
         var t = !e1.dataset.code ? e1 : e2; setTimeout(function () { t.focus(); }, 200); // after the field's own blur handling
         return;
       }
+      // A visible, unanswered radio group is genuinely incomplete. "Unknown" is
+      // a valid explicit answer and must not be treated as missing.
+      if (at === 3 || at === 4) {
+        var pane = form.querySelector('[data-step="' + at + '"]');
+        var groups = pane ? pane.querySelectorAll("fieldset") : [];
+        for (var j = 0; j < groups.length; j++) {
+          var fieldset = groups[j];
+          if (fieldset.hidden || fieldset.closest("[hidden]")) continue;
+          var radios = fieldset.querySelectorAll('input[type="radio"]');
+          if (!radios.length) continue;
+          var answered = false;
+          for (var k = 0; k < radios.length; k++) if (radios[k].checked) answered = true;
+          if (!answered) {
+            note.textContent = (fieldset.querySelector("legend") || {}).textContent || T.wizRoute;
+            note.hidden = false;
+            radios[0].focus();
+            return;
+          }
+        }
+      }
       run(); go(at + 1, true);
     }
     next.addEventListener("click", forward);
-    back.addEventListener("click", function () { go(at > TOTAL ? 1 : at - 1, true); });
+    back.addEventListener("click", function () { go(at > TOTAL ? TOTAL : at - 1, true); });
     // Choosing what happened moves on by itself (also when the visitor taps the option already selected)
     form.querySelector('[data-step="1"]').addEventListener("click", function (e) {
       var l = e.target.closest && e.target.closest("label");
