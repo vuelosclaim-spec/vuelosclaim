@@ -21,6 +21,9 @@ ROWS = {
     ("2026-11-06", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)"): {
         "it": ("6 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV), sciopero nazionale (Filt CGIL e UGL TA)", "Non confermato: non compare in tutti i calendari; gli stessi sindacati ne hanno proclamato un altro il 21 nov"),
         "de": ("6. Nov., 13:00–17:00", "Italienische Flugsicherung (ENAV), landesweiter Streik (Filt CGIL und UGL TA)", "Nicht bestätigt: nicht in allen Kalendern; dieselben Gewerkschaften haben einen weiteren Streik am 21. Nov. angekündigt")},
+    ("2026-11-06", "easyJet crew in Italy (USB union)"): {
+        "it": ("6 nov, 24 h", "Equipaggi easyJet in Italia (USB)", "Non confermato: un calendario lo indica come proclamato e un altro come revocato; verifica con easyJet"),
+        "de": ("6. Nov., 24 Std.", "easyJet-Besatzungen in Italien (Gewerkschaft USB)", "Nicht bestätigt: ein Kalender führt ihn als angekündigt, ein anderer als abgesagt; bitte bei easyJet nachfragen")},
     ("2026-11-11", "General strike in Spain (CCOO and UGT unions)"): {
         "it": ("11 nov, 24 h", "Sciopero generale in Spagna (CCOO e UGT)", "Proclamato; servizi minimi negli aeroporti non ancora pubblicati"),
         "de": ("11. Nov., 24 Std.", "Generalstreik in Spanien (Gewerkschaften CCOO und UGT)", "Angekündigt; Mindestdienste an Flughäfen noch nicht veröffentlicht")},
