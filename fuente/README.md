@@ -1,12 +1,12 @@
 # VuelosClaim — código fuente
 
-Este directorio genera la web estática de https://vuelosclaim.eu (español en `/`, inglés en `/en/`).
+Este directorio genera la web estática de https://vuelosclaim.eu en español (`/`), inglés (`/en/`), italiano (`/it/`) y alemán (`/de/`). La cobertura de contenidos es parcial en IT/DE.
 La web generada va en `../docs/`, que es la carpeta que publica GitHub Pages.
 
 ## Generar la web
 
 ```bash
-python3 fuente/build.py          # genera docs/ (176 páginas)
+python3 fuente/build.py          # genera docs/ (el número de páginas varía con los contenidos)
 ```
 
 No necesita dependencias: Python 3.10 o superior.
@@ -58,3 +58,6 @@ El archivo original (`airports.csv`, 13 MB) no se guarda en el repositorio porqu
 Historial de cambios: [CAMBIOS.md](CAMBIOS.md). Auditoría y estrategia SEO: [SEO.md](SEO.md). Medición: [MEDICION.md](MEDICION.md).
 
 No cambies sin revisar: el enlace de afiliado (`AFF_URL` en `build.py`), el identificador de Analytics (`G-6JRCZVTNDG`) ni el de AdSense.
+
+
+Revisión del asistente por pasos, idiomas y pendientes: [AUDITORIA_WIZARD_20261102.md](AUDITORIA_WIZARD_20261102.md).
