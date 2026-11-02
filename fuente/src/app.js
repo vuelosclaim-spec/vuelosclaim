@@ -1283,10 +1283,30 @@
         var t = !e1.dataset.code ? e1 : e2; setTimeout(function () { t.focus(); }, 200); // after the field's own blur handling
         return;
       }
+      // A visible, unanswered radio group is genuinely incomplete. "Unknown" is
+      // a valid explicit answer and must not be treated as missing.
+      if (at === 3 || at === 4) {
+        var pane = form.querySelector('[data-step="' + at + '"]');
+        var groups = pane ? pane.querySelectorAll("fieldset") : [];
+        for (var j = 0; j < groups.length; j++) {
+          var fieldset = groups[j];
+          if (fieldset.hidden || fieldset.closest("[hidden]")) continue;
+          var radios = fieldset.querySelectorAll('input[type="radio"]');
+          if (!radios.length) continue;
+          var answered = false;
+          for (var k = 0; k < radios.length; k++) if (radios[k].checked) answered = true;
+          if (!answered) {
+            note.textContent = (fieldset.querySelector("legend") || {}).textContent || T.wizRoute;
+            note.hidden = false;
+            radios[0].focus();
+            return;
+          }
+        }
+      }
       run(); go(at + 1, true);
     }
     next.addEventListener("click", forward);
-    back.addEventListener("click", function () { go(at > TOTAL ? 1 : at - 1, true); });
+    back.addEventListener("click", function () { go(at > TOTAL ? TOTAL : at - 1, true); });
     // Choosing what happened moves on by itself (also when the visitor taps the option already selected)
     form.querySelector('[data-step="1"]').addEventListener("click", function (e) {
       var l = e.target.closest && e.target.closest("label");
