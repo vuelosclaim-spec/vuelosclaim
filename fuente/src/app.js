@@ -465,7 +465,7 @@
 
   // ---------- Measurement: GA4 events, only after consent and never with personal data ----------
   // Only these parameters, with values from fixed lists (incident type, result, amount band...), ever leave the page.
-  var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1 };
+  var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1, wizard_step: 1 };
   function track(name, params) {
     try {
       if (!window.vcAnalytics || typeof window.gtag !== "function") return false;
@@ -1255,6 +1255,7 @@
     var back = nav.querySelector(".wiz-back"), next = nav.querySelector(".wiz-next");
     back.textContent = "← " + T.wizBack;
     var at = 1;
+    var lastReportedStep = 0;
     // Keep a short qualification visible when the detailed legal grounds are folded.
     var ticketHead = out.querySelector(".ticket-head");
     if (ticketHead && !out.querySelector(".estimate-note")) {
@@ -1272,6 +1273,7 @@
     function go(n, focus) {
       at = Math.max(1, Math.min(TOTAL + 1, n));
       form.dataset.at = String(at);
+      if (at !== lastReportedStep && track("wizard_step_viewed", { wizard_step: at })) lastReportedStep = at;
       for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("wiz-off", +steps[i].dataset.step !== at);
       var done = at > TOTAL;
       out.classList.toggle("wiz-off", !done);
