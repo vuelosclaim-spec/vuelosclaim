@@ -1255,6 +1255,19 @@
     var back = nav.querySelector(".wiz-back"), next = nav.querySelector(".wiz-next");
     back.textContent = "← " + T.wizBack;
     var at = 1;
+    // Keep a short qualification visible when the detailed legal grounds are folded.
+    var ticketHead = out.querySelector(".ticket-head");
+    if (ticketHead && !out.querySelector(".estimate-note")) {
+      var estimate = document.createElement("p");
+      estimate.className = "estimate-note";
+      estimate.textContent = {
+        es: "Estimación orientativa, no un pago garantizado. Depende de las circunstancias y las pruebas del caso.",
+        en: "Indicative estimate, not a guaranteed payment. Eligibility depends on the facts and evidence.",
+        it: "Stima indicativa, non un pagamento garantito. Il diritto dipende dai fatti e dalle prove.",
+        de: "Unverbindliche Schätzung, keine garantierte Zahlung. Der Anspruch hängt vom Einzelfall und den Nachweisen ab."
+      }[LANG];
+      ticketHead.insertAdjacentElement("afterend", estimate);
+    }
     function routeOk() { return out.dataset.state !== "empty" && out.dataset.state !== "error"; }
     function go(n, focus) {
       at = Math.max(1, Math.min(TOTAL + 1, n));
