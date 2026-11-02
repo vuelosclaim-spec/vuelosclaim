@@ -237,7 +237,7 @@ async function pickAirport(p, device, id, text, code) {
     check(T("calculator_started una sola vez"), names.filter((n) => n === "calculator_started").length === 1);
     const all = JSON.stringify(events);
     check(T("ningún evento contiene datos de la carta"), !/Zz Nombre|Secreto|QQ9ZZ9|IB1234/i.test(all), all.slice(0, 300));
-    const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime"]);
+    const allowed = new Set(["site_language", "source_page", "incident_type", "result", "compensation_category", "affiliate_id", "placement", "regime", "wizard_step"]);
     // Nombres reservados por GA4 (no deben usarse como parámetros propios)
     const reserved = /^(language|page_path|page_location|page_referrer|page_title|screen_resolution|cid|uid|_.*|ga_.*|google_.*|firebase_.*|gtag\..*)$/;
     check(T("ningún parámetro con nombre reservado de GA4"), events.every((e) => Object.keys(e.params || {}).every((k) => !reserved.test(k))), all.slice(0, 200));
