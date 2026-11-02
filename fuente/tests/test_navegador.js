@@ -105,6 +105,26 @@ async function pickAirport(p, device, id, text, code) {
     check(T("mismo origen y destino se explica"), /mismo aeropuerto|same airport/.test(await p.textContent(".empty-msg")));
     await pickAirport(p, device, "to", "BCN", "BCN");
 
+    // Regresión PR #31: no avanzar si una respuesta visible es obligatoria;
+    // al editar el resultado se vuelve al último paso, conservando la ruta.
+    await wiz(p, 3);
+    await p.click("label:has(input[name=what][value=denied])").catch(() => {});
+    await wiz(p, 3);
+    const accepted = p.locator("#grp-accepted");
+    if (await accepted.isVisible()) {
+      await p.click(".wiz-next");
+      check(T("no avanza sin respuesta de aceptación"), (await p.getAttribute("#calc", "data-at")) === "3" && await p.isVisible(".wiz-note"));
+      await p.locator('#grp-accepted input[type=radio]').first().check({ force: true });
+    }
+    await wiz(p, 5);
+    check(T("advertencia jurídica siempre visible en el resultado"), await p.isVisible(".estimate-note"));
+    await p.click(".wiz-back");
+    check(T("editar resultado vuelve al paso 4"), (await p.getAttribute("#calc", "data-at")) === "4");
+    check(T("editar resultado conserva aeropuertos"), (await p.getAttribute("#from", "data-code")) === "MAD" && (await p.getAttribute("#to", "data-code")) === "BCN");
+    await wiz(p, 1);
+    await p.click("label:has(input[name=what][value=delay])");
+    await wiz(p, 2);
+
     // 4. Carta: sin IBAN, solo para "posible", refleja el resultado, copiar y descargar
     check(T("no existe el campo IBAN"), (await p.$("#l-iban")) === null);
     check(T("el resultado no se ve antes del último paso"), !(await p.isVisible("[data-cta]")));
