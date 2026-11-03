@@ -12,9 +12,6 @@ ROWS = {
     ("2026-10-01", "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00"): {
         "it": ("Fino al 30 nov (lun, gio, ven, sab, dom)", "Sistema bagagli di Barajas (Outsmart), fermate 05:00–07:00 e 13:00–15:00", "Con servizi minimi"),
         "de": ("Bis 30. Nov. (Mo, Do, Fr, Sa, So)", "Gepäcksystem in Barajas (Outsmart), Arbeitsniederlegungen 05:00–07:00 und 13:00–15:00", "Mit Mindestdiensten")},
-    ("2026-10-23", "Airport staff, including air traffic controllers (Unite)"): {
-        "it": ("23 ott – 2 nov", "Personale aeroportuale, compresi i controllori di volo (Unite)", "Sospeso durante le trattative mediate da Acas"),
-        "de": ("23. Okt. – 2. Nov.", "Flughafenpersonal einschließlich Fluglotsen (Unite)", "Ausgesetzt während der Verhandlungen unter Vermittlung von Acas")},
     ("2026-11-06", "Air traffic control (ENAV) at Bari airport"): {
         "it": ("6 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV) all'aeroporto di Bari", "Proclamato"),
         "de": ("6. Nov., 13:00–17:00", "Flugsicherung (ENAV) am Flughafen Bari", "Angekündigt")},
@@ -130,4 +127,4 @@ PAGE = {
              ("Bekomme ich eine Entschädigung bei einem Fluglotsenstreik?", "In der Regel nicht: Fluglotsenstreiks gelten als außergewöhnliche Umstände. Erstattung oder Ersatzflug und Betreuung stehen Ihnen trotzdem zu."),
              ("Und wenn Piloten oder Kabinenpersonal der Fluggesellschaft streiken?", "Dann in der Regel ja: Der Gerichtshof der EU sieht einen Streik des eigenen Personals nicht als außergewöhnlich an, also stehen Ihnen 250, 400 oder 600 € zu, wenn die Mitteilung weniger als 14 Tage vorher kam.")]),
 }
-UPDATED = {"it": "27 ottobre 2026", "de": "27. Oktober 2026"}
+UPDATED = {"it": "3 novembre 2026", "de": "3. November 2026"}
