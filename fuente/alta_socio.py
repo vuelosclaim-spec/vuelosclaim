@@ -9,10 +9,12 @@ Ejemplos:
 
 Qué hace el alta:
   1. Crea el id a partir del nombre (o usa --id) y comprueba que no exista.
-  2. Revisa el logo (PNG, WebP o SVG, máximo 100 KB, sin scripts ni recursos externos) y lo copia como
-     fuente/partners_logos/<id>.<ext>.
+  2. Revisa el logo (PNG o WebP de verdad, máximo 100 KB; SVG no se admite porque puede llevar contenido activo)
+     y lo copia como fuente/partners_logos/<id>.<ext>.
   3. Valida la entrada con las mismas reglas que el resto del registro (partners_registry.validate) y la
      guarda en fuente/partners.json. Si algo falla, no se modifica nada.
+     Nunca sobrescribe un archivo existente. Si falla cualquier paso, incluido el guardado, se retira el logo
+     copiado y el registro queda como estaba.
   4. Imprime el código de inserción para la agencia. Con --compilar regenera docs/ (python3 fuente/build.py).
 No toca el motor de cálculo, la afiliación ni el consentimiento. La marca nunca se toma de la web de la agencia.
 """
@@ -31,7 +33,6 @@ import partners_registry as R  # noqa: E402
 
 SITE = "https://vuelosclaim.eu"
 MAX_LOGO = 100_000
-SVG_BAD = re.compile(r"<\s*script|<\s*foreignObject|\bon[a-z]+\s*=|javascript:|(?:href|src)\s*=\s*[\"']\s*(?:https?:|//|data:)|@import|url\(\s*[\"']?\s*(?:https?:|//)", re.I)
 
 
 def slug(name):
@@ -50,29 +51,21 @@ def check_logo(path):
     size = os.path.getsize(path)
     if size > MAX_LOGO:
         raise ValueError(f"el logo pesa {size // 1024} KB; máximo {MAX_LOGO // 1000} KB")
-    data = open(path, "rb").read()
-    if ext == ".png" and not data.startswith(b"\x89PNG\r\n\x1a\n"):
-        raise ValueError("el archivo .png no es un PNG válido")
-    if ext == ".webp" and not (data[:4] == b"RIFF" and data[8:12] == b"WEBP"):
-        raise ValueError("el archivo .webp no es un WebP válido")
-    if ext == ".svg":
-        try:
-            text = data.decode("utf-8")
-        except UnicodeDecodeError:
-            raise ValueError("el SVG no está en UTF-8")
-        if "<svg" not in text.lower():
-            raise ValueError("el archivo .svg no es un SVG")
-        if SVG_BAD.search(text):
-            raise ValueError("el SVG contiene scripts, eventos o recursos externos; pide una versión limpia")
+    if not R.logo_is_valid(path):
+        raise ValueError(f"el archivo {ext} no es un {ext[1:].upper()} válido")
     return ext
 
 
 def save(partners, data_path):
     tmp = data_path + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(partners, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(tmp, data_path)
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(partners, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        os.replace(tmp, data_path)
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
 
 
 def embed_code(pid, lang):
@@ -93,18 +86,27 @@ def alta(name, color, lang="es", logo=None, accent=None, pid=None, data_path=R.D
     ext = check_logo(logo) if logo else None
     if ext:
         entry["logo"] = pid + ext
-    # Validate against the copied logo in a staging step so a failure leaves everything untouched
+    # Never overwrite an existing file, even one not in the registry (from ChatGPT, PR #40)
     os.makedirs(logo_dir, exist_ok=True)
     dest = os.path.join(logo_dir, entry["logo"]) if ext else None
-    if dest:
-        shutil.copyfile(logo, dest)
+    if dest and os.path.exists(dest):
+        raise ValueError(f"ya existe un archivo para el logo de «{pid}»")
+    copied = False
     try:
+        if dest:
+            with open(logo, "rb") as source, open(dest, "xb") as target:  # 'xb': fails if another process created it
+                copied = True
+                shutil.copyfileobj(source, target)
         R.validate(partners + [entry], logo_dir=logo_dir)
-    except ValueError:
-        if dest and os.path.exists(dest):
-            os.remove(dest)
+        save(partners + [entry], data_path)  # the JSON is replaced atomically
+    except BaseException:
+        # Rollback: only the logo this call created is removed
+        if copied and dest:
+            try:
+                os.remove(dest)
+            except FileNotFoundError:
+                pass
         raise
-    save(partners + [entry], data_path)
     return entry
 
 
@@ -129,7 +131,7 @@ def main(argv=None):
     ap.add_argument("--color", help="color principal #rrggbb (se ajusta solo para mantener el contraste)")
     ap.add_argument("--acento", help="color secundario #rrggbb opcional (borde de la franja de marca)")
     ap.add_argument("--idioma", choices=("es", "en"), default="es")
-    ap.add_argument("--logo", help="ruta a un PNG, WebP o SVG de hasta 100 KB (opcional)")
+    ap.add_argument("--logo", help="ruta a un PNG o WebP de hasta 100 KB (opcional)")
     ap.add_argument("--id", help="id del widget; por defecto, se crea a partir del nombre")
     ap.add_argument("--compilar", action="store_true", help="regenerar docs/ al terminar")
     ap.add_argument("--listar", action="store_true", help="mostrar las agencias registradas")

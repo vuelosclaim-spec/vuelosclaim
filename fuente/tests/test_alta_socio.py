@@ -59,12 +59,16 @@ with tempfile.TemporaryDirectory() as t:
     reg = json.loads(data.read_text(encoding="utf-8"))
     if [p["id"] for p in reg] != ["demo", "viajes-sol-nandu"]:
         errors.append(f"registro inesperado: {[p['id'] for p in reg]}")
-    A.alta("Sun Travel", "#0b5394", "en", str(svg_ok), **kw)
+    webp = t / "logo.webp"; webp.write_bytes(b"RIFF\x10\x00\x00\x00WEBPVP8 " + b"\x00" * 8)
+    A.alta("Sun Travel", "#0b5394", "en", str(webp), **kw)
+    if not (logos / "sun-travel.webp").is_file():
+        errors.append("el logo WebP no se ha copiado")
 
     snapshot = data.read_text(encoding="utf-8"), sorted(os.listdir(logos))
     expect_error(lambda: A.alta("Viajes Sol Ñandú", "#c0392b", **kw), "id repetido")
     expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(fake), **kw), "PNG falso")
     expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(big), **kw), "logo de más de 100 KB")
+    expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(svg_ok), **kw), "SVG (no admitido aunque parezca limpio)")
     expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(svg_bad), **kw), "SVG con script")
     expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(svg_ext), **kw), "SVG con recurso externo")
     expect_error(lambda: A.alta("Otra", "#c0392b", logo=str(svg_on), **kw), "SVG con evento")
@@ -78,6 +82,39 @@ with tempfile.TemporaryDirectory() as t:
     expect_error(lambda: A.baja("no-existe", **kw), "baja inexistente")
     if (data.read_text(encoding="utf-8"), sorted(os.listdir(logos))) != snapshot:
         errors.append("un alta fallida ha dejado cambios en el registro o en los logos")
+
+    # Fallo al guardar el registro después de copiar el logo: no debe quedar nada
+    real_save = A.save
+    def broken_save(*_a, **_k):
+        raise OSError("disco lleno (simulado)")
+    A.save = broken_save
+    try:
+        A.alta("Guardado Roto", "#c0392b", logo=str(good), **kw)
+        errors.append("un fallo al guardar debería propagarse")
+    except OSError:
+        pass
+    finally:
+        A.save = real_save
+    if (logos / "guardado-roto.png").exists() or "guardado-roto" in data.read_text(encoding="utf-8"):
+        errors.append("un fallo al guardar ha dejado el logo o la entrada")
+    # No se sobrescriben archivos ajenos al registro (prueba de ChatGPT, PR #40)
+    orphan = logos / "logo-reservado.png"
+    orphan.write_bytes(b"contenido existente")
+    expect_error(lambda: A.alta("Logo Reservado", "#c0392b", logo=str(good), **kw), "logo preexistente")
+    if orphan.read_bytes() != b"contenido existente" or "logo-reservado" in data.read_text(encoding="utf-8"):
+        errors.append("se sobrescribió un logo preexistente o se dio de alta igualmente")
+    orphan.unlink()
+    # PNG truncado: firma correcta pero sin bloque IHDR
+    trunc = t / "trunc.png"; trunc.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 4)
+    expect_error(lambda: A.alta("Png Truncado", "#c0392b", logo=str(trunc), **kw), "PNG sin IHDR")
+    # Un logo manipulado después del alta se detecta al compilar
+    tampered = logos / "sun-travel.webp"; saved = tampered.read_bytes(); tampered.write_bytes(b"<svg onload=alert(1)>")
+    try:
+        A.R.validate(A.R.load(str(data)), logo_dir=str(logos))
+        errors.append("el registro acepta un logo cuyo contenido no es WebP")
+    except ValueError:
+        pass
+    tampered.write_bytes(saved)
 
     A.baja("viajes-sol-nandu", **kw)
     if "viajes-sol-nandu" in data.read_text(encoding="utf-8") or (logos / "viajes-sol-nandu.png").exists():

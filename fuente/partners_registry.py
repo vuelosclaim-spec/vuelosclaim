@@ -13,7 +13,8 @@ Fields
          buttons and links keep WCAG AA contrast (4.5:1) in light and dark mode.
 - accent: optional second brand colour (#rrggbb) for the decorative edge of the brand strip; null = color.
 - lang:  "es" or "en".
-- logo:  optional file name inside fuente/partners_logos/ (.png, .svg or .webp, max 100 KB),
+- logo:  optional file name inside fuente/partners_logos/ (.png or .webp, max 100 KB; SVG is not accepted
+         because it can carry active content),
          reviewed by us before adding it.
 - demo:  True only for the public demonstration entry (shows a "Demostración" badge).
 """
@@ -36,7 +37,7 @@ PARTNERS = load()
 ID_RE = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$")
 HEX_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 NAME_RE = re.compile(r"^[^<>&\"'`{}\\\x00-\x1f]{1,40}$")
-LOGO_EXT = (".png", ".svg", ".webp")
+LOGO_EXT = (".png", ".webp")  # raster only: an SVG can carry scripts or external references
 LIGHT_SURFACE, DARK_SURFACE = "#ffffff", "#142219"
 LIGHT_INK, DARK_INK = "#ffffff", "#06140c"
 
@@ -86,6 +87,17 @@ def palette(color):
     }
 
 
+def logo_is_valid(path):
+    """The file content must match its extension (checked again at build time, not only on upload)."""
+    with open(path, "rb") as f:
+        head = f.read(33)
+    if path.lower().endswith(".png"):  # signature + IHDR chunk first (stricter check from ChatGPT, PR #40)
+        return len(head) >= 33 and head.startswith(b"\x89PNG\r\n\x1a\n") and head[12:16] == b"IHDR"
+    if path.lower().endswith(".webp"):
+        return len(head) >= 16 and head[:4] == b"RIFF" and head[8:12] == b"WEBP"
+    return False
+
+
 def validate(partners=None, logo_dir=None):
     """Return the validated list or raise ValueError describing every problem."""
     partners = PARTNERS if partners is None else partners
@@ -120,6 +132,8 @@ def validate(partners=None, logo_dir=None):
                 errors.append(f"{pid}: logo no encontrado o formato no admitido ({', '.join(LOGO_EXT)})")
             elif os.path.getsize(path) > 100_000:
                 errors.append(f"{pid}: logo de más de 100 KB")
+            elif not logo_is_valid(path):
+                errors.append(f"{pid}: el logo no es un PNG o WebP válido")
         if not isinstance(p.get("demo", False), bool):
             errors.append(f"{pid}: demo debe ser True o False")
         extra = set(p) - {"id", "name", "color", "accent", "lang", "logo", "demo"}

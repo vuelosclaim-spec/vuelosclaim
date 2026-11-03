@@ -24,7 +24,11 @@ Los eventos que ya existían (`calculator_started`, `wizard_step_viewed`, `calcu
 3. Fórmulas:
    - Inicio = `widget_start / widget_view`
    - Finalización = `widget_result / widget_start`
-   - Conversión = `affiliate_click / widget_view`
+   - Clics por carga = `affiliate_click / widget_view`
+
+   Ojo: es una **ratio de clics por carga del widget**, no un porcentaje de personas que reclaman. Un mismo visitante puede pulsar varias veces o recargar, así que puede superar el 100 %. La empresa de reclamaciones informa aparte de las reclamaciones reales que se presentan.
+
+Para medir qué parte de las cargas tiene al menos un clic haría falta otro evento, único por carga y sin identificadores personales. El cociente actual no debe presentarse como ventas ni como reclamaciones completadas.
 
 No existe todavía un panel privado para las agencias. Los informes se preparan desde GA4.
 
