@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from unittest import mock
 import zlib
 import struct
 
@@ -59,7 +60,24 @@ with tempfile.TemporaryDirectory() as t:
     reg = json.loads(data.read_text(encoding="utf-8"))
     if [p["id"] for p in reg] != ["demo", "viajes-sol-nandu"]:
         errors.append(f"registro inesperado: {[p['id'] for p in reg]}")
-    A.alta("Sun Travel", "#0b5394", "en", str(svg_ok), **kw)
+    expect_error(lambda: A.alta("Sun Travel", "#0b5394", "en", str(svg_ok), **kw), "SVG no admitido")
+
+    # Simular fallo al guardar después de copiar: el logo nuevo debe desaparecer.
+    with mock.patch.object(A, "save", side_effect=OSError("disco lleno")):
+        try:
+            A.alta("Error Guardado", "#c0392b", logo=str(good), **kw)
+            errors.append("el guardado simulado debía fallar")
+        except OSError:
+            pass
+    if (logos / "error-guardado.png").exists() or "error-guardado" in data.read_text(encoding="utf-8"):
+        errors.append("fallo al guardar dejó alta o logo huérfano")
+
+    # No se deben sobrescribir archivos ajenos al registro.
+    orphan = logos / "logo-reservado.png"
+    orphan.write_bytes(b"contenido existente")
+    expect_error(lambda: A.alta("Logo Reservado", "#c0392b", logo=str(good), **kw), "logo preexistente")
+    if orphan.read_bytes() != b"contenido existente":
+        errors.append("se sobrescribió un logo preexistente")
 
     snapshot = data.read_text(encoding="utf-8"), sorted(os.listdir(logos))
     expect_error(lambda: A.alta("Viajes Sol Ñandú", "#c0392b", **kw), "id repetido")
