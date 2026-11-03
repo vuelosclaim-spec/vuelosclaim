@@ -66,6 +66,9 @@ jobs:
       - name: Registro de socios y widget con marca
         run: python3 fuente/tests/test_partners_widget.py
 
+      - name: Alta de agencias (comando alta_socio.py)
+        run: python3 fuente/tests/test_alta_socio.py
+
   navegador:
     runs-on: ubuntu-latest
     steps:

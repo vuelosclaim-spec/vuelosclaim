@@ -1,6 +1,8 @@
 """VuelosClaim Partners: registry of agencies/blogs with a branded widget (pilot).
 
-Only partners added here by the VuelosClaim team get a branded widget. Nothing comes from the
+The data lives in fuente/partners.json and is edited with fuente/alta_socio.py (new partner, list, removal);
+there is no need to touch this file or build.py to add an agency.
+Only partners added by the VuelosClaim team get a branded widget. Nothing comes from the
 embedding site at runtime: no URL parameters, HTML or CSS from the client are ever applied.
 Each entry is validated when the site is built (validate()); an invalid entry stops the build.
 
@@ -9,20 +11,27 @@ Fields
 - name:  plain text shown as "Ofrecida por <name>" (max 40 characters, no markup characters).
 - color: brand colour as #rrggbb. It is darkened/lightened automatically if needed so that
          buttons and links keep WCAG AA contrast (4.5:1) in light and dark mode.
+- accent: optional second brand colour (#rrggbb) for the decorative edge of the brand strip; null = color.
 - lang:  "es" or "en".
 - logo:  optional file name inside fuente/partners_logos/ (.png, .svg or .webp, max 100 KB),
          reviewed by us before adding it.
 - demo:  True only for the public demonstration entry (shows a "Demostración" badge).
 """
+import json
 import os
 import re
 
-LOGO_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "partners_logos")
+HERE = os.path.dirname(os.path.abspath(__file__))
+LOGO_DIR = os.path.join(HERE, "partners_logos")
+DATA = os.path.join(HERE, "partners.json")
 
-PARTNERS = [
-    # Public demonstration for the /partners/ landing. Not a customer.
-    {"id": "demo", "name": "Agencia de ejemplo", "color": "#1f4e8c", "lang": "es", "logo": None, "demo": True},
-]
+
+def load(path=DATA):
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+PARTNERS = load()
 
 ID_RE = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$")
 HEX_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
@@ -77,11 +86,17 @@ def palette(color):
     }
 
 
-def validate(partners=None):
+def validate(partners=None, logo_dir=None):
     """Return the validated list or raise ValueError describing every problem."""
     partners = PARTNERS if partners is None else partners
+    logo_dir = logo_dir or LOGO_DIR
+    if not isinstance(partners, list):
+        raise ValueError("Registro de socios no válido: debe ser una lista")
     errors, seen = [], set()
     for p in partners:
+        if not isinstance(p, dict):
+            errors.append(f"entrada no válida: {p!r}")
+            continue
         pid = p.get("id", "")
         if not isinstance(pid, str) or not ID_RE.match(pid):
             errors.append(f"id no válido: {pid!r}")
@@ -93,11 +108,13 @@ def validate(partners=None):
             errors.append(f"{pid}: nombre no válido (texto plano, 1–40 caracteres, sin < > & comillas ni llaves)")
         if not isinstance(p.get("color"), str) or not HEX_RE.match(p["color"]):
             errors.append(f"{pid}: color no válido, usa #rrggbb")
+        if p.get("accent") is not None and (not isinstance(p["accent"], str) or not HEX_RE.match(p["accent"])):
+            errors.append(f"{pid}: color secundario no válido, usa #rrggbb")
         if p.get("lang") not in ("es", "en"):
             errors.append(f"{pid}: idioma no válido, usa es o en")
         logo = p.get("logo")
         if logo is not None:
-            path = os.path.join(LOGO_DIR, logo) if isinstance(logo, str) else ""
+            path = os.path.join(logo_dir, logo) if isinstance(logo, str) else ""
             if (not isinstance(logo, str) or os.path.basename(logo) != logo or not logo.lower().endswith(LOGO_EXT)
                     or not os.path.isfile(path)):
                 errors.append(f"{pid}: logo no encontrado o formato no admitido ({', '.join(LOGO_EXT)})")
@@ -105,7 +122,7 @@ def validate(partners=None):
                 errors.append(f"{pid}: logo de más de 100 KB")
         if not isinstance(p.get("demo", False), bool):
             errors.append(f"{pid}: demo debe ser True o False")
-        extra = set(p) - {"id", "name", "color", "lang", "logo", "demo"}
+        extra = set(p) - {"id", "name", "color", "accent", "lang", "logo", "demo"}
         if extra:
             errors.append(f"{pid}: campos no admitidos {sorted(extra)}")
     if errors:

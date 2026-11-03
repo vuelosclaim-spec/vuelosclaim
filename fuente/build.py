@@ -950,9 +950,11 @@ def build_partner_widgets():
         pal = partners_registry.palette(pt["color"])
         light = ";".join(f"{k}:{v}" for k, v in pal["light"].items())
         dark = ";".join(f"{k}:{v}" for k, v in pal["dark"].items())
+        if pt.get("accent"):
+            light += f";--brand-accent:{pt['accent']}"  # decorative edge only: no contrast requirement
         pcss = (f":root{{{light}}}@media (prefers-color-scheme: dark){{:root:not([data-theme=\"light\"]){{{dark}}}}}:root[data-theme=\"dark\"]{{{dark}}}"
                 ".embed-brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0;padding:10px 12px;border:1px solid var(--line);"
-                "border-left:4px solid var(--sign);border-radius:var(--r-s);background:var(--surface);color:var(--ink);font-size:.95rem}"
+                "border-left:4px solid var(--brand-accent,var(--sign));border-radius:var(--r-s);background:var(--surface);color:var(--ink);font-size:.95rem}"
                 ".embed-brand img{max-height:36px;max-width:140px;width:auto;height:auto}"
                 ".embed-badge{font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--sign-soft);color:var(--ink);border:1px solid var(--line)}")
         out = os.path.join(root, pid)
