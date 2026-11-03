@@ -787,12 +787,17 @@ o.textContent=msg;});})();
   // ---------- Measurement: GA4 events, only after consent and never with personal data ----------
   // Only these parameters, with values from fixed lists (incident type, result, amount band...), ever leave the page.
   var TRACK_KEYS = { incident_type: 1, result: 1, compensation_category: 1, affiliate_id: 1, placement: 1, regime: 1, wizard_step: 1 };
+  // Partner widgets (VuelosClaim Partners, /widget/p/<id>/): the registered partner id is added to every event and,
+  // by agreement with partners, nothing derived from the visitor's answers is sent (no incident type, result or amount).
+  var PARTNER = typeof cfg.partner === "string" && /^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/.test(cfg.partner) ? cfg.partner : "";
+  var PARTNER_KEYS = { affiliate_id: 1, placement: 1, wizard_step: 1 };
   function track(name, params) {
     try {
       if (!window.vcAnalytics || typeof window.gtag !== "function") return false;
       // site_language/source_page: "language" and "page_path" are reserved by GA4 and would overwrite the browser language and page path
-      var q = { site_language: LANG, source_page: location.pathname };
-      for (var k in params) if (TRACK_KEYS[k] && params[k] != null && params[k] !== "") q[k] = String(params[k]).replace(/[^\w.-]/g, "_").slice(0, 40);
+      var q = { site_language: LANG, source_page: location.pathname }, keys = PARTNER ? PARTNER_KEYS : TRACK_KEYS;
+      if (PARTNER) q.partner_id = PARTNER;
+      for (var k in params) if (keys[k] && params[k] != null && params[k] !== "") q[k] = String(params[k]).replace(/[^\w.-]/g, "_").slice(0, 40);
       window.gtag("event", name, q);
       return true;
     } catch (e) { return false; /* measurement must never break the page */ }
@@ -1597,6 +1602,7 @@ o.textContent=msg;});})();
       if (at !== lastReportedStep && track("wizard_step_viewed", { wizard_step: at })) lastReportedStep = at;
       for (var i = 0; i < steps.length; i++) steps[i].classList.toggle("wiz-off", +steps[i].dataset.step !== at);
       var done = at > TOTAL;
+      if (done) partnerResult();
       out.classList.toggle("wiz-off", !done);
       label.textContent = done ? T.wizResult : T.wizStep.replace("{n}", at).replace("{t}", TOTAL);
       bar.style.width = (done ? 100 : Math.round((at - 1) / TOTAL * 100 + 100 / TOTAL / 2)) + "%";
@@ -1668,7 +1674,22 @@ o.textContent=msg;});})();
     go(1, false);
   }
   var msT = null;
+  // Partner funnel: one widget_view and one widget_result per page load. The view is retried on the first interaction
+  // because the visitor may accept cookies after the page has loaded (the consent banner itself is not modified).
+  // widget_start: first click, key or answer inside the calculator (choosing the preselected answer also counts,
+  // unlike calculator_started, which needs a changed answer).
+  var viewed = false, begun = false, resulted = false;
+  function partnerView() { if (PARTNER && !viewed) viewed = track("widget_view", {}); return viewed; }
+  function partnerStart(e) {
+    if (!PARTNER || begun || (e && e.target && e.target.closest && e.target.closest("#letter"))) return;
+    if (partnerView()) begun = track("widget_start", {});
+  }
+  function partnerResult() { if (PARTNER && !resulted && partnerView()) { partnerStart(); resulted = track("widget_result", {}); } }
   function init() {
+    if (PARTNER) {
+      partnerView();
+      ["click", "keydown", "focusin"].forEach(function (ev) { document.addEventListener(ev, partnerView); });
+    }
     if (window.addEventListener) window.addEventListener("resize", function () { clearTimeout(msT); msT = setTimeout(markScrollables, 200); });
     markScrollables();
     // Clicks on affiliate links anywhere on the site (calculator button, comparison page...)
@@ -1684,9 +1705,11 @@ o.textContent=msg;});})();
     out = document.getElementById("result");
     if (!form) return;
     seedRoute = document.getElementById("from").dataset.code + "-" + document.getElementById("to").dataset.code;
+    if (PARTNER) ["click", "keydown", "input", "change"].forEach(function (ev) { form.addEventListener(ev, partnerStart); });
     function touch(e) {
       if (e.target.closest && e.target.closest("#letter")) return;
       touched = true;
+      partnerView();
       if (!started) started = track("calculator_started", { incident_type: val("what") }); // sent once consent exists
     }
     form.addEventListener("input", touch, true);
