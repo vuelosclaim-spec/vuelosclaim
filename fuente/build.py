@@ -10,6 +10,7 @@ import uk_airports
 import strikes
 import compare
 import guides
+import partners
 import i18n
 
 SITE_URL = os.environ.get("SITE_URL", "https://vuelosclaim.eu")
@@ -1097,6 +1098,7 @@ def build():
     strike_urls = strikes.build({"emit": emit, "page": page})
     cmp_urls = compare.build({"emit": emit, "page": page, "AFF_URL": AFF_URL})
     cmp_urls += guides.build({"emit": emit, "page": page})
+    partners.build({"emit": emit, "head": head, "header": header, "footer": footer, "brand": BRAND})
 
     # Widget for blogs (ES) + page explaining how to embed it
     wcfg = {"lang": "es", "dataUrl": "/data/airports.min.json", "seed": seed_airports(calculator('es', '', 'MAD', 'BER')), "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"], "claim": a.get("claim_es"), "note": a.get("note_es"), "adr": a.get("adr_uk")} for a in AIRLINES]}
@@ -1112,7 +1114,7 @@ def build():
 <h2>Cómo insertarla</h2><p>Copia este código y pégalo en tu página, en modo HTML:</p>
 <label class="sr" for="embed-code">Código para insertar</label><textarea id="embed-code" rows="5" readonly onclick="this.select()">{e(code_snip)}</textarea>
 <h2>¿Tienes enlace de afiliado de una empresa de reclamaciones?</h2><p>Puedes usar el tuyo en el botón "Reclámalo sin coste". Añade al final de la dirección del iframe <code>?aff=</code> seguido de tu enlace (AirHelp, AirAdvisor, Compensair, Flightright, Skyrefund o Reclamador). Las comisiones de tus lectores son tuyas.</p>
-<p>¿Dudas o quieres una versión con tus colores? Escríbenos a <strong>vuelosclaim@gmail.com</strong>.</p></div>"""
+<p>¿Te interesa personalizar la calculadora para tu agencia? Consulta los <a href="/partners/">planes piloto de VuelosClaim Partners</a>. La versión de pago todavía no está disponible. También puedes escribir a <strong>vuelosclaim@gmail.com</strong>.</p></div>"""
     emit("es", "/insertar-calculadora/", f"{head('es', 'Inserta la calculadora en tu web · ' + BRAND, 'Inserta gratis en tu blog la calculadora de compensación por retraso o cancelación de vuelos.', '/insertar-calculadora/')}\n{header('es', None)}<main id=\"main\" tabindex=\"-1\">{ins_body}</main>{footer('es')}")
 
     # 404 page (GitHub Pages serves docs/404.html with status 404): useful links instead of the generic GitHub page
