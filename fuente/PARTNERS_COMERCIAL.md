@@ -29,8 +29,8 @@ Un saludo, equipo VuelosClaim
 - Alta de un socio con un solo comando, sin editar archivos a mano:
   `python3 fuente/alta_socio.py --nombre "Viajes Sol" --color "#c0392b" [--acento "#f1c232"] [--idioma es|en] [--logo ruta.png] [--compilar]`
   - El id se crea a partir del nombre (o se elige con `--id`).
-  - El logo (PNG, WebP o SVG, máximo 100 KB) se revisa: formato real, y en un SVG que no tenga scripts, eventos ni recursos externos. Se guarda como `fuente/partners_logos/<id>.<ext>`.
-  - La entrada se valida con las mismas reglas del registro y se guarda en `fuente/partners.json`. Si algo falla, no se cambia nada.
+  - El logo nuevo debe ser PNG o WebP (máximo 100 KB); convierte antes los SVG a PNG para no publicar contenido vectorial activo. Se comprueba su cabecera. Se guarda como `fuente/partners_logos/<id>.<ext>`.
+  - La entrada se valida con las mismas reglas del registro y se guarda en `fuente/partners.json`. Si falla la validación o el guardado, se retira el logo recién copiado; nunca se sobrescribe un archivo existente.
   - El comando imprime el código de inserción para la agencia.
   - Otras opciones: `--listar` muestra las agencias y `--baja <id>` da de baja una (se puede recuperar desde git).
   - Después: abrir una PR con CI en verde antes de publicar.
