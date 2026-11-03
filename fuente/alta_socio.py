@@ -9,7 +9,7 @@ Ejemplos:
 
 Qué hace el alta:
   1. Crea el id a partir del nombre (o usa --id) y comprueba que no exista.
-  2. Revisa el logo (PNG, WebP o SVG, máximo 100 KB, sin scripts ni recursos externos) y lo copia como
+  2. Revisa el logo (PNG o WebP, máximo 100 KB) y lo copia como
      fuente/partners_logos/<id>.<ext>.
   3. Valida la entrada con las mismas reglas que el resto del registro (partners_registry.validate) y la
      guarda en fuente/partners.json. Si algo falla, no se modifica nada.
@@ -31,7 +31,6 @@ import partners_registry as R  # noqa: E402
 
 SITE = "https://vuelosclaim.eu"
 MAX_LOGO = 100_000
-SVG_BAD = re.compile(r"<\s*script|<\s*foreignObject|\bon[a-z]+\s*=|javascript:|(?:href|src)\s*=\s*[\"']\s*(?:https?:|//|data:)|@import|url\(\s*[\"']?\s*(?:https?:|//)", re.I)
 
 
 def slug(name):
@@ -45,25 +44,18 @@ def check_logo(path):
     if not os.path.isfile(path):
         raise ValueError(f"no encuentro el logo: {path}")
     ext = os.path.splitext(path)[1].lower()
-    if ext not in R.LOGO_EXT:
-        raise ValueError(f"formato de logo no admitido ({ext or 'sin extensión'}); usa {', '.join(R.LOGO_EXT)}")
+    if ext not in (".png", ".webp"):
+        raise ValueError("logo no admitido: usa PNG o WebP; convierte los SVG a PNG antes de subirlos")
     size = os.path.getsize(path)
     if size > MAX_LOGO:
         raise ValueError(f"el logo pesa {size // 1024} KB; máximo {MAX_LOGO // 1000} KB")
-    data = open(path, "rb").read()
-    if ext == ".png" and not data.startswith(b"\x89PNG\r\n\x1a\n"):
-        raise ValueError("el archivo .png no es un PNG válido")
-    if ext == ".webp" and not (data[:4] == b"RIFF" and data[8:12] == b"WEBP"):
-        raise ValueError("el archivo .webp no es un WebP válido")
-    if ext == ".svg":
-        try:
-            text = data.decode("utf-8")
-        except UnicodeDecodeError:
-            raise ValueError("el SVG no está en UTF-8")
-        if "<svg" not in text.lower():
-            raise ValueError("el archivo .svg no es un SVG")
-        if SVG_BAD.search(text):
-            raise ValueError("el SVG contiene scripts, eventos o recursos externos; pide una versión limpia")
+    with open(path, "rb") as f:
+        data = f.read()
+    if ext == ".png":
+        if not data.startswith(b"\x89PNG\r\n\x1a\n") or len(data) < 33 or data[12:16] != b"IHDR":
+            raise ValueError("el archivo .png no tiene una cabecera PNG válida")
+    if ext == ".webp" and not (len(data) >= 16 and data[:4] == b"RIFF" and data[8:12] == b"WEBP"):
+        raise ValueError("el archivo .webp no tiene una cabecera WebP válida")
     return ext
 
 
@@ -93,18 +85,27 @@ def alta(name, color, lang="es", logo=None, accent=None, pid=None, data_path=R.D
     ext = check_logo(logo) if logo else None
     if ext:
         entry["logo"] = pid + ext
-    # Validate against the copied logo in a staging step so a failure leaves everything untouched
+    # No sobrescribir logos existentes, aunque todavía no figuren en el registro.
     os.makedirs(logo_dir, exist_ok=True)
     dest = os.path.join(logo_dir, entry["logo"]) if ext else None
-    if dest:
-        shutil.copyfile(logo, dest)
+    if dest and os.path.exists(dest):
+        raise ValueError(f"ya existe un archivo para el logo de «{pid}»")
+    copied = False
     try:
+        if dest:
+            # 'xb' evita sobrescribir un archivo creado por otro proceso.
+            with open(logo, "rb") as source, open(dest, "xb") as target:
+                copied = True
+                shutil.copyfileobj(source, target)
         R.validate(partners + [entry], logo_dir=logo_dir)
-    except ValueError:
-        if dest and os.path.exists(dest):
-            os.remove(dest)
+        save(partners + [entry], data_path)
+    except Exception:
+        if copied and dest:
+            try:
+                os.remove(dest)
+            except FileNotFoundError:
+                pass
         raise
-    save(partners + [entry], data_path)
     return entry
 
 
@@ -129,7 +130,7 @@ def main(argv=None):
     ap.add_argument("--color", help="color principal #rrggbb (se ajusta solo para mantener el contraste)")
     ap.add_argument("--acento", help="color secundario #rrggbb opcional (borde de la franja de marca)")
     ap.add_argument("--idioma", choices=("es", "en"), default="es")
-    ap.add_argument("--logo", help="ruta a un PNG, WebP o SVG de hasta 100 KB (opcional)")
+    ap.add_argument("--logo", help="ruta a un PNG o WebP de hasta 100 KB (opcional)")
     ap.add_argument("--id", help="id del widget; por defecto, se crea a partir del nombre")
     ap.add_argument("--compilar", action="store_true", help="regenerar docs/ al terminar")
     ap.add_argument("--listar", action="store_true", help="mostrar las agencias registradas")
