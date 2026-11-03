@@ -185,14 +185,15 @@ G = [
     {
         "paths": {"es": "/huelga-general-11-noviembre-vuelos/", "en": "/en/spain-general-strike-11-november-flights/"},
         "es": {
-            "title": "Huelga general 11 noviembre: vuelos cancelados y tus derechos",
-            "desc": "Huelga general del 11 de noviembre de 2026 en España: si te cancelan o retrasan el vuelo, reembolso, asistencia y cuándo hay compensación de 250–600 €.",
+            "title": "Huelga 11 noviembre: vuelos, servicios mínimos y tus derechos",
+            "desc": "¿Vuelas el 11N? Servicios mínimos en aeropuertos, qué hacer si cancelan tu vuelo y cuándo te corresponden 250–600 €. Actualizado el 3 de noviembre.",
             "h1": "Huelga general del 11 de noviembre: qué pasa con tu vuelo",
             "lead": "CCOO y UGT han convocado una huelga general de 24 horas en toda España el miércoles 11 de noviembre de 2026. Si vuelas ese día, esto es lo que te corresponde si tu vuelo se cancela o se retrasa.",
-            "body": """<h2>Lo que se sabe (actualizado el 26 de octubre)</h2>
+            "body": """<h2>Lo que se sabe (actualizado el 3 de noviembre)</h2>
 <ul><li><strong>Fecha:</strong> miércoles 11 de noviembre de 2026, 24 horas, en toda España.</li>
-<li><strong>Convocan:</strong> CCOO y UGT, con el apoyo de otros sindicatos.</li>
-<li><strong>Servicios mínimos en aeropuertos:</strong> aún sin publicar. Los fija el Ministerio de Transportes, normalmente pocos días antes. Como referencia, en la huelga general de 2012 se garantizó el 10 % de los vuelos peninsulares, el 50 % de los enlaces con Baleares y Canarias, el 20 % de los vuelos a la UE y el 40 % del resto de internacionales. Los de 2026 pueden ser distintos.</li></ul>
+<li><strong>Convocan:</strong> CCOO y UGT, con el apoyo de otros sindicatos. Han pedido al Ministerio de Transportes negociar los servicios mínimos tomando como base los de las huelgas generales de 2010 y 2012.</li>
+<li><strong>Cancelaciones anunciadas:</strong> a 3 de noviembre no hemos encontrado cancelaciones anunciadas por Aena ni por las aerolíneas para ese día. Si tu aerolínea cancela tu vuelo a partir de ahora, ya será con menos de 14 días de aviso.</li>
+<li><strong>Servicios mínimos en aeropuertos:</strong> a 3 de noviembre, aún sin publicar en la <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">página oficial del Ministerio de Transportes</a>. Los fija el Ministerio de Transportes, normalmente pocos días antes. Como referencia, en la huelga general de 2012 se garantizó el 10 % de los vuelos peninsulares, el 50 % de los enlaces con Baleares y Canarias, el 20 % de los vuelos a la UE y el 40 % del resto de internacionales. Los de 2026 pueden ser distintos.</li></ul>
 <p>Sigue el <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>: lo actualizamos con fuentes oficiales.</p>
 <h2>Si te cancelan el vuelo: siempre tienes estos derechos</h2>
 <ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004).</li>
@@ -209,22 +210,24 @@ G = [
 <li>Elige reembolso o vuelo alternativo y guarda todos los tickets de gastos.</li>
 <li><a href="/">Comprueba gratis si te corresponde compensación</a> y genera la carta para reclamar tú mismo.</li>
 <li>Si la aerolínea no responde en un mes o lo rechaza, reclama gratis en <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li></ol>
-<p>Más detalle: <a href="/vuelo-cancelado-que-hacer/">vuelo cancelado, qué hacer</a> y <a href="/circunstancias-extraordinarias-vuelo/">circunstancias extraordinarias</a>.</p>""",
+<p>Más detalle: <a href="/vuelo-cancelado-que-hacer/">vuelo cancelado, qué hacer</a>, <a href="/circunstancias-extraordinarias-vuelo/">circunstancias extraordinarias</a> y <a href="/huelga-vueling/">¿hay huelga de Vueling?</a></p>""",
             "faq": [
-                ("¿Hay vuelos el 11 de noviembre de 2026?", "Sí, la huelga no cierra los aeropuertos, pero puede haber cancelaciones y retrasos. Los servicios mínimos aún no se han publicado."),
+                ("¿Hay vuelos el 11 de noviembre de 2026?", "Sí, la huelga no cierra los aeropuertos, pero puede haber cancelaciones y retrasos. A 3 de noviembre, los servicios mínimos aún no se han publicado."),
+                ("¿Cuándo se publican los servicios mínimos?", "Los fija el Ministerio de Transportes, normalmente pocos días antes de la huelga, y los publica en su página de resoluciones de servicios mínimos."),
                 ("¿Me compensan si me cancelan el vuelo por la huelga general?", "Depende de cuándo te avisaron y de qué personal hizo huelga. Con aviso de 14 días o más, no. Si fue el personal de la propia aerolínea y te avisaron con menos, normalmente sí. El reembolso o vuelo alternativo y la asistencia te corresponden siempre."),
                 ("¿Qué día es el límite de los 14 días para el 11 de noviembre?", "El 28 de octubre. Una cancelación comunicada ese día o antes no da derecho a compensación fija."),
             ],
         },
         "en": {
-            "title": "Spain general strike 11 November: flights and your rights",
-            "desc": "Spain's 24-hour general strike on 11 November 2026: refunds, meals and hotels, and when €250–600 / £220–520 compensation applies if your flight is cancelled.",
+            "title": "Spain strike 11 November: flights, minimum services, rights",
+            "desc": "Flying on Wednesday 11 November? Status of Spain's airport minimum services, what to do if your flight is cancelled and when €250–600 applies. Updated 3 November.",
             "h1": "Spain general strike on 11 November: what it means for your flight",
             "lead": "Spain's two main unions, CCOO and UGT, have called a 24-hour nationwide general strike for Wednesday 11 November 2026. If you're flying that day, here's what you're entitled to if your flight is cancelled or delayed.",
-            "body": """<h2>What we know (updated 26 October)</h2>
+            "body": """<h2>What we know (updated 3 November)</h2>
 <ul><li><strong>Date:</strong> Wednesday 11 November 2026, 24 hours, across Spain.</li>
-<li><strong>Called by:</strong> CCOO and UGT, backed by other unions.</li>
-<li><strong>Airport minimum services:</strong> not published yet. Spain's Ministry of Transport sets them, usually a few days before. For reference, the 2012 general strike guaranteed 10% of mainland domestic flights, 50% of flights to and between the Balearic and Canary Islands, 20% of flights to the EU and 40% of other international flights. This year's may differ.</li></ul>
+<li><strong>Called by:</strong> CCOO and UGT, backed by other unions. They have asked the Ministry of Transport to negotiate minimum services based on those of the 2010 and 2012 general strikes.</li>
+<li><strong>Announced cancellations:</strong> as of 3 November we haven't found any cancellations announced by Aena or airlines for that day. If your airline cancels from now on, it will be with less than 14 days' notice.</li>
+<li><strong>Airport minimum services:</strong> as of 3 November, not yet published on the <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">Ministry of Transport's official page</a>. Spain's Ministry of Transport sets them, usually a few days before. For reference, the 2012 general strike guaranteed 10% of mainland domestic flights, 50% of flights to and between the Balearic and Canary Islands, 20% of flights to the EU and 40% of other international flights. This year's may differ.</li></ul>
 <p>Keep an eye on our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>, updated from official sources.</p>
 <h2>If your flight is cancelled: you always get this</h2>
 <ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261; the same applies under UK261).</li>
@@ -241,9 +244,10 @@ G = [
 <li>Choose a refund or a new flight and keep every receipt.</li>
 <li><a href="/en/">Check for free whether compensation applies</a> and generate a claim letter to send yourself.</li>
 <li>If the airline refuses or doesn't reply, escalate for free: AESA for flights from Spain, or the airline's ADR scheme or the <a href="https://www.caa.co.uk/passengers-and-public/resolving-travel-problems/" rel="noopener">CAA</a> for UK flights.</li></ol>
-<p>More detail: <a href="/en/flight-cancelled-what-to-do/">flight cancelled, what to do</a> and <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstances</a>.</p>""",
+<p>More detail: <a href="/en/flight-cancelled-what-to-do/">flight cancelled, what to do</a>, <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstances</a> and <a href="/en/vueling-strike/">is there a Vueling strike?</a></p>""",
             "faq": [
-                ("Will there be flights on 11 November 2026?", "Yes, the strike doesn't close airports, but cancellations and delays are possible. Minimum services haven't been published yet."),
+                ("Will there be flights on 11 November 2026?", "Yes, the strike doesn't close airports, but cancellations and delays are possible. As of 3 November, minimum services haven't been published yet."),
+                ("When are minimum services published?", "Spain's Ministry of Transport sets them, usually a few days before the strike, and publishes them on its minimum services page."),
                 ("Do I get compensation if my flight is cancelled because of the general strike?", "It depends on when you were told and which staff went on strike. With 14 days' notice or more, no. If it was the airline's own staff and you were told with less notice, usually yes. A refund or new flight and care while you wait always apply."),
                 ("What is the 14-day cut-off date for 11 November flights?", "28 October. A cancellation notified on or before that day carries no fixed compensation."),
             ],
@@ -323,6 +327,67 @@ G = [
                 ("When is the easyJet strike in Portugal?", "From Saturday 19 to Wednesday 23 December 2026. SNPVAC called it for cabin crew based in Lisbon, Porto and Faro."),
                 ("Will I get compensation if easyJet cancels my flight because of the strike?", "Usually yes, if you're told less than 14 days before: an airline's own staff strike is not extraordinary (CJEU, C-28/20). It's €250, €400 or €600 depending on distance, on top of a refund or new flight."),
                 ("What if I'm told more than 14 days before?", "Then there's no fixed compensation, but you can still choose a full refund or a new flight. For a 19 December flight, the cut-off is 5 December."),
+            ],
+        },
+    },
+    {
+        "paths": {"es": "/huelga-vueling/", "en": "/en/vueling-strike/"},
+        "es": {
+            "title": "Huelga Vueling 2026: ¿hay huelga convocada? Tus derechos",
+            "desc": "¿Hay huelga de Vueling en 2026? Estado a 3 de noviembre según Transportes, cómo afecta la huelga general del 11N y qué te corresponde si cancelan tu vuelo.",
+            "h1": "¿Hay huelga de Vueling en 2026?",
+            "lead": "A 3 de noviembre de 2026 no hay ninguna huelga de la plantilla de Vueling (pilotos ni tripulantes de cabina) con servicios mínimos publicados por el Ministerio de Transportes. Pero hay otras huelgas que sí pueden afectar a tu vuelo de Vueling.",
+            "body": """<h2>Lo que se sabe (actualizado el 3 de noviembre)</h2>
+<ul><li><strong>Huelga de la plantilla de Vueling:</strong> no figura ninguna en las <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">resoluciones de servicios mínimos del Ministerio de Transportes</a>, que es donde se publican todas las huelgas del sector aéreo en España. Si se convoca, la añadiremos al <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>.</li>
+<li><strong>Huelga general del 11 de noviembre:</strong> afecta a todo el país, también a los vuelos de Vueling. Mira <a href="/huelga-general-11-noviembre-vuelos/">qué pasa con tu vuelo el 11N</a>.</li>
+<li><strong>Otras huelgas en aeropuertos hasta el 30 de noviembre:</strong> el handling de Groundforce en El Prat (CGT) y el control de torre de SAERCO (USCA y CCOO) tienen huelgas indefinidas con servicios mínimos. Afectan a las aerolíneas y aeropuertos que trabajan con esas empresas; pregunta a Vueling si tu vuelo puede verse afectado.</li></ul>
+<p>Un precedente: entre noviembre de 2022 y enero de 2023, los tripulantes de cabina de Vueling (sindicato Stavla) convocaron huelga los viernes, domingos, lunes y festivos.</p>
+<h2>Si Vueling cancela tu vuelo: siempre tienes estos derechos</h2>
+<ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004).</li>
+<li><strong>Asistencia mientras esperas:</strong> comida, bebida y, si hay que pasar la noche, hotel y traslado (art. 9). Si no te lo dan, guarda los tickets y reclámalos.</li></ul>
+<h2>¿Y la compensación de 250–600 €?</h2>
+<ul><li><strong>Huelga de pilotos o tripulantes de Vueling:</strong> normalmente sí, si te avisan con menos de 14 días. El Tribunal de Justicia de la UE dice que la huelga de la propia plantilla no es una circunstancia extraordinaria (asunto C-28/20).</li>
+<li><strong>Huelga de controladores o de empresas ajenas a Vueling:</strong> normalmente no, porque se considera circunstancia extraordinaria.</li>
+<li><strong>Huelga general:</strong> no hay una sentencia específica. Depende de qué personal paró y por qué se canceló tu vuelo. Pide el motivo por escrito.</li>
+<li><strong>Retraso de más de 3 horas</strong> por una huelga de la propia plantilla: mismos importes que una cancelación.</li></ul>
+<h2>Qué hacer</h2>
+<ol><li>Revisa la app y el correo de Vueling los días previos al vuelo.</li>
+<li>Si te cancelan, haz captura del aviso, anota la fecha y pide el motivo por escrito.</li>
+<li><a href="/">Comprueba gratis si te corresponde compensación</a> y genera la carta para reclamar tú mismo (mira también <a href="/compensacion-retraso-vueling/">cómo reclamar a Vueling</a>).</li>
+<li>Si Vueling no responde en un mes o lo rechaza, reclama gratis en <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li></ol>""",
+            "faq": [
+                ("¿Hay huelga de Vueling en noviembre o diciembre de 2026?", "A 3 de noviembre de 2026 no hay ninguna huelga de la plantilla de Vueling con servicios mínimos publicados por el Ministerio de Transportes. Sí hay una huelga general en toda España el 11 de noviembre y otras huelgas en aeropuertos hasta el 30 de noviembre."),
+                ("¿Me paga Vueling si cancela mi vuelo por la huelga general del 11N?", "Depende de cuándo te avisaron y de qué personal paró. El reembolso o vuelo alternativo y la asistencia te corresponden siempre. La compensación de 250–600 € depende del motivo concreto de la cancelación."),
+                ("¿Y si hacen huelga los tripulantes o pilotos de Vueling?", "Entonces normalmente sí te corresponde compensación si te avisan con menos de 14 días: la huelga de la propia plantilla no es circunstancia extraordinaria (TJUE, C-28/20)."),
+            ],
+        },
+        "en": {
+            "title": "Vueling strike 2026: is one called? Your rights",
+            "desc": "Is there a Vueling strike in 2026? Status on 3 November from Spain's Ministry of Transport, how the 11 November general strike affects flights, and what you're owed.",
+            "h1": "Is there a Vueling strike in 2026?",
+            "lead": "As of 3 November 2026, there is no strike by Vueling's own staff (pilots or cabin crew) with minimum services published by Spain's Ministry of Transport. But other strikes can still affect your Vueling flight.",
+            "body": """<h2>What we know (updated 3 November)</h2>
+<ul><li><strong>Strike by Vueling staff:</strong> none appears in the <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">Ministry of Transport's minimum services orders</a>, where every aviation strike in Spain is published. If one is called, we'll add it to our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>.</li>
+<li><strong>General strike on 11 November:</strong> it covers the whole country, Vueling flights included. See <a href="/en/spain-general-strike-11-november-flights/">what it means for your flight</a>.</li>
+<li><strong>Other airport strikes until 30 November:</strong> Groundforce ground handling at Barcelona El Prat (CGT) and SAERCO control tower staff (USCA and CCOO) have open-ended strikes with minimum services. They affect the airlines and airports that use those companies; ask Vueling whether your flight could be affected.</li></ul>
+<p>A precedent: between November 2022 and January 2023, Vueling cabin crew (Stavla union) went on strike on Fridays, Sundays, Mondays and public holidays.</p>
+<h2>If Vueling cancels your flight: you always get this</h2>
+<ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261).</li>
+<li><strong>Care while you wait:</strong> meals, drinks and, if you're stuck overnight, a hotel and transfers (Art. 9). Keep your receipts if the airline doesn't provide it.</li></ul>
+<h2>What about €250–600 compensation?</h2>
+<ul><li><strong>Vueling pilots or cabin crew on strike:</strong> usually yes, with less than 14 days' notice. The EU Court of Justice says an airline's own staff strike is not an extraordinary circumstance (case C-28/20).</li>
+<li><strong>Air traffic control or outside companies on strike:</strong> usually no, as it's treated as extraordinary.</li>
+<li><strong>General strike:</strong> there's no specific ruling. It depends on which staff stopped work and why your flight was cancelled. Ask for the reason in writing.</li>
+<li><strong>Delays over 3 hours</strong> caused by the airline's own staff striking: the same amounts as a cancellation.</li></ul>
+<h2>What to do</h2>
+<ol><li>Check the Vueling app and your emails in the days before you fly.</li>
+<li>If you're cancelled, screenshot the notice, note the date and ask for the reason in writing.</li>
+<li><a href="/en/">Check for free whether compensation applies</a> and generate a claim letter to send yourself (see also <a href="/en/vueling-delay-compensation/">how to claim from Vueling</a>).</li>
+<li>If Vueling refuses or doesn't reply, escalate for free to AESA for flights from Spain, or to the airline's ADR scheme or the CAA for flights from the UK.</li></ol>""",
+            "faq": [
+                ("Is there a Vueling strike in November or December 2026?", "As of 3 November 2026, there is no strike by Vueling's own staff with minimum services published by Spain's Ministry of Transport. There is a nationwide general strike on 11 November and other airport strikes until 30 November."),
+                ("Will Vueling compensate me if my flight is cancelled by the 11 November general strike?", "It depends on when you were told and which staff stopped work. A refund or new flight and care while you wait always apply. €250–600 compensation depends on the actual reason for the cancellation."),
+                ("What if Vueling's cabin crew or pilots strike?", "Then you're usually owed compensation if you're told less than 14 days before: an airline's own staff strike is not extraordinary (CJEU, C-28/20)."),
             ],
         },
     },
