@@ -11,6 +11,7 @@ import strikes
 import compare
 import guides
 import partners
+import partners_registry
 import i18n
 
 SITE_URL = os.environ.get("SITE_URL", "https://vuelosclaim.eu")
@@ -933,6 +934,47 @@ ADSENSE = ('<meta name="msvalidate.01" content="D3B289B2220FF34999D4248924B46B3C
            'ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true,once:true})});'
            'addEventListener("load",function(){(window.requestIdleCallback||function(f){setTimeout(f,1)})(function(){setTimeout(go,1500)},{timeout:3000})})})();</script>\n')
 
+def build_partner_widgets():
+    """Branded widgets for registered partners (VuelosClaim Partners pilot): one static, noindex page per partner.
+    Branding comes only from the validated registry (fuente/partners_registry.py), never from the embedding site."""
+    seeds = {"es": ("MAD", "BER"), "en": ("LHR", "MAD")}
+    txt = {"es": {"by": "Calculadora ofrecida por", "demo": "Demostración", "h1": "Calculadora de compensación por retraso de vuelo",
+                  "foot": "Calculadora de", "law": "Reglamento CE 261/2004", "aff": "Estimación orientativa. Puede contener enlaces de afiliación."},
+           "en": {"by": "Calculator provided by", "demo": "Demo", "h1": "Flight delay compensation calculator",
+                  "foot": "Calculator by", "law": "EU261 / UK261", "aff": "Indicative estimate. May contain affiliate links."}}
+    root = os.path.join(OUT, "widget", "p")
+    if os.path.isdir(root):
+        shutil.rmtree(root)
+    for pt in partners_registry.validate():
+        l, t, pid = pt["lang"], txt[pt["lang"]], pt["id"]
+        pal = partners_registry.palette(pt["color"])
+        light = ";".join(f"{k}:{v}" for k, v in pal["light"].items())
+        dark = ";".join(f"{k}:{v}" for k, v in pal["dark"].items())
+        pcss = (f":root{{{light}}}@media (prefers-color-scheme: dark){{:root:not([data-theme=\"light\"]){{{dark}}}}}:root[data-theme=\"dark\"]{{{dark}}}"
+                ".embed-brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0;padding:10px 12px;border:1px solid var(--line);"
+                "border-left:4px solid var(--sign);border-radius:var(--r-s);background:var(--surface);color:var(--ink);font-size:.95rem}"
+                ".embed-brand img{max-height:36px;max-width:140px;width:auto;height:auto}"
+                ".embed-badge{font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--sign-soft);color:var(--ink);border:1px solid var(--line)}")
+        out = os.path.join(root, pid)
+        logo = ""
+        if pt.get("logo"):
+            ext = os.path.splitext(pt["logo"])[1].lower()
+            os.makedirs(out, exist_ok=True)
+            shutil.copyfile(os.path.join(partners_registry.LOGO_DIR, pt["logo"]), os.path.join(out, "logo" + ext))
+            logo = f'<img src="logo{ext}" alt="" width="140" height="36">'
+        badge = f'<span class="embed-badge">{t["demo"]}</span>' if pt.get("demo") else ""
+        brand = (f'<p class="embed-brand" data-partner="{e(pid)}">{logo}<span>{t["by"]} <strong>{e(pt["name"])}</strong></span>{badge}</p>')
+        calc = calculator(l, "", *seeds[l])
+        cfg = {"lang": l, "dataUrl": "/data/airports.min.json", "seed": seed_airports(calc), "partner": pid,
+               "airlines": [{"slug": a["slug"], "eu": a["eu"], "uk": a["uk"], "ukcomm": a.get("ukcomm", True), "name": a["name"],
+                             "claim": a.get("claim_" + l) or a.get("claim_en"), "note": a.get("note_" + l), "adr": a.get("adr_uk")} for a in AIRLINES]}
+        inner = (f"<title>{e(t['h1'])} · {e(pt['name'])}</title><meta name=\"robots\" content=\"noindex\">{FONTS}<style>{CSS}{pcss}</style>"
+                 f"<main class=\"embed\" id=\"main\" tabindex=\"-1\"><h1 class=\"sr\">{e(t['h1'])}</h1>{brand}{calc}"
+                 f"<p class=\"embed-foot\">{t['foot']} <a href=\"{SITE_URL}/{'' if l == 'es' else 'en/'}\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · {t['law']}<br>{t['aff']}</p></main>"
+                 f"<script>window.CTT={json.dumps(cfg, ensure_ascii=False)};</script><script>{JS}</script>")
+        write(os.path.join(out, "index.html"), full_doc(inner, l, ads=False))
+
+
 def write(path, content):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     open(path, "w", encoding="utf-8").write(content)
@@ -1106,6 +1148,7 @@ def build():
               f"<main class=\"embed\" id=\"main\" tabindex=\"-1\"><h1 class=\"sr\">Calculadora de compensación por retraso de vuelo</h1>{calculator('es', '', 'MAD', 'BER')}<p class=\"embed-foot\">Calculadora de <a href=\"{SITE_URL}/\" target=\"_blank\" rel=\"noopener\">{BRAND}</a> · Reglamento CE 261/2004</p></main>"
               f"<script>window.CTT={json.dumps(wcfg, ensure_ascii=False)};</script><script>{JS}</script>")
     write(os.path.join(OUT, "widget", "index.html"), full_doc(winner, "es", ads=False))
+    build_partner_widgets()
     code_snip = (f'<iframe src="{SITE_URL}/widget/" title="Calculadora de compensación por retraso de vuelo" '
                  f'style="width:100%;max-width:560px;height:960px;border:0" loading="lazy"></iframe>\n'
                  f'<p><a href="{SITE_URL}/">Calculadora de compensación por retraso de vuelo</a> de {BRAND}</p>')

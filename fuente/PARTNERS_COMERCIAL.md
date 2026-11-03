@@ -25,3 +25,11 @@ Hola, he visto vuestra sección de [sección real]. Tenemos una calculadora grat
 Se puede insertar en vuestra web sin coste, con mención a VuelosClaim. Si os interesa la demostración, puedo facilitar el código. Estamos estudiando una versión futura con vuestra marca, todavía sin suscripción activa.
 
 Un saludo, equipo VuelosClaim
+## Widget con marca (hito 1, Claude Code)
+- Alta de un socio: añadir una entrada en `fuente/partners_registry.py`, con id, nombre en texto plano, color `#rrggbb` e idioma `es` o `en`. El logo es opcional y va en `fuente/partners_logos/`, en PNG, SVG o WebP de hasta 100 KB, revisado antes de subirlo. Después se ejecuta `python3 fuente/build.py`.
+- Resultado: `https://vuelosclaim.eu/widget/p/<id>/`, una página `noindex` que queda fuera del sitemap. Código para el socio: el mismo iframe del widget gratuito, cambiando `/widget/` por `/widget/p/<id>/`.
+- La marca solo sale del registro. La web anfitriona no puede cambiarla con parámetros, HTML ni CSS. La atribución a VuelosClaim y el aviso de afiliación son siempre visibles.
+- El color se ajusta solo para mantener un contraste AA (4,5:1) en modo claro y oscuro.
+- `?aff=` funciona igual que en el widget gratuito. Motor, consentimiento y GA4 sin cambios.
+- Pendiente para el siguiente hito: estadísticas por socio con consentimiento. `window.CTT.partner` ya lleva el id para usarlo sin datos personales.
+- Pruebas: `fuente/tests/test_partners_widget.py` (registro, contraste y páginas) y `fuente/tests/test_widget_partners.js` (Playwright, con el widget incrustado en una web de otro origen, en escritorio y móvil).

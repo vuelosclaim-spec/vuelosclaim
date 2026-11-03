@@ -30,8 +30,8 @@ def build(ctx):
              "Widget estándar y enlace de atribución. Sin personalización de marca." if es else
              "Standard widget with attribution link. No custom branding."),
             ("Pro", "9,90 €", "Precio objetivo · piloto" if es else "Target price · pilot",
-             "Se estudia logo, colores e integración guiada. Aún no se aceptan pagos." if es else
-             "Planned logo, colours and guided installation. Payments are not yet accepted."),
+             "Nombre, color y logo de tu agencia en el widget: lo configuramos nosotros durante el piloto. Aún no se aceptan pagos." if es else
+             "Your agency's name, colour and logo in the widget: we set it up for you during the pilot. Payments are not yet accepted."),
             ("Premium", "19,90 €", "Precio objetivo · piloto" if es else "Target price · pilot",
              "Se estudian estadísticas agregadas y soporte prioritario. Sin panel activo." if es else
              "Planned aggregate statistics and priority support. No live dashboard."),
@@ -58,6 +58,9 @@ def build(ctx):
 <h2>{'Prueba el widget que ya funciona' if es else 'Try the working widget'}</h2>
 <p>{'Esta es la calculadora gratuita real. No incluye marca blanca ni estadísticas por empresa.' if es else 'This is the existing free calculator. White-label features and agency analytics are not available yet.'}</p>
 <div class="partner-demo"><iframe title="{'Demostración de la calculadora' if es else 'Calculator demo'}" src="/widget/" loading="lazy"></iframe></div>
+<h2>{'Ejemplo con la marca de una agencia' if es else 'Example with an agency brand'}</h2>
+<p>{'Así se ve el widget con el nombre y el color de una agencia. «Agencia de ejemplo» es una demostración, no un cliente. La marca la damos de alta nosotros: tu web no puede cambiarla ni ocultar la atribución a VuelosClaim.' if es else 'This is how the widget looks with an agency name and colour. "Agencia de ejemplo" is a demo, not a customer. We set up the branding for you; the embedding site cannot change it or hide the VuelosClaim attribution.'}</p>
+<div class="partner-demo"><iframe title="{'Demostración del widget con marca' if es else 'Branded widget demo'}" src="/widget/p/demo/" loading="lazy"></iframe></div>
 <h2>{'Código para tu web' if es else 'Embed code for your site'}</h2>
 <p>{'Copia este HTML para insertar la versión gratuita.' if es else 'Copy this HTML to embed the free version.'}</p>
 <label for="partners-code">{'Código de inserción' if es else 'Embed HTML'}</label>
