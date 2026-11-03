@@ -24,9 +24,11 @@ Los eventos que ya existían (`calculator_started`, `wizard_step_viewed`, `calcu
 3. Fórmulas:
    - Inicio = `widget_start / widget_view`
    - Finalización = `widget_result / widget_start`
-   - Conversión = `affiliate_click / widget_view`
+   - Clics por carga = `affiliate_click / widget_view` (puede superar el 100 % si una persona hace varios clics; **no** es una tasa de usuarios convertidos)
 
 No existe todavía un panel privado para las agencias. Los informes se preparan desde GA4.
+
+Para medir una tasa de cargas con al menos un clic, se necesitaría un evento adicional único por carga, sin identificadores personales. No debe presentarse el cociente actual como ventas ni reclamaciones completadas.
 
 ## Limitaciones conocidas
 - Solo cuenta a los visitantes que aceptan cookies, así que las cifras son un mínimo.
