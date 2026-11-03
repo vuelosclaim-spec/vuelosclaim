@@ -13,7 +13,8 @@ Qué hace el alta:
      y lo copia como fuente/partners_logos/<id>.<ext>.
   3. Valida la entrada con las mismas reglas que el resto del registro (partners_registry.validate) y la
      guarda en fuente/partners.json. Si algo falla, no se modifica nada.
-     Si falla cualquier paso, incluido el guardado, se retira el logo copiado y el registro queda como estaba.
+     Nunca sobrescribe un archivo existente. Si falla cualquier paso, incluido el guardado, se retira el logo
+     copiado y el registro queda como estaba.
   4. Imprime el código de inserción para la agencia. Con --compilar regenera docs/ (python3 fuente/build.py).
 No toca el motor de cálculo, la afiliación ni el consentimiento. La marca nunca se toma de la web de la agencia.
 """
@@ -85,18 +86,26 @@ def alta(name, color, lang="es", logo=None, accent=None, pid=None, data_path=R.D
     ext = check_logo(logo) if logo else None
     if ext:
         entry["logo"] = pid + ext
-    # Validate against the copied logo in a staging step so a failure leaves everything untouched
+    # Never overwrite an existing file, even one not in the registry (from ChatGPT, PR #40)
     os.makedirs(logo_dir, exist_ok=True)
     dest = os.path.join(logo_dir, entry["logo"]) if ext else None
-    if dest:
-        shutil.copyfile(logo, dest)
+    if dest and os.path.exists(dest):
+        raise ValueError(f"ya existe un archivo para el logo de «{pid}»")
+    copied = False
     try:
+        if dest:
+            with open(logo, "rb") as source, open(dest, "xb") as target:  # 'xb': fails if another process created it
+                copied = True
+                shutil.copyfileobj(source, target)
         R.validate(partners + [entry], logo_dir=logo_dir)
-        save(partners + [entry], data_path)
+        save(partners + [entry], data_path)  # the JSON is replaced atomically
     except BaseException:
-        # Rollback: nothing is left behind if validation or saving fails (the JSON is replaced atomically)
-        if dest and os.path.exists(dest):
-            os.remove(dest)
+        # Rollback: only the logo this call created is removed
+        if copied and dest:
+            try:
+                os.remove(dest)
+            except FileNotFoundError:
+                pass
         raise
     return entry
 

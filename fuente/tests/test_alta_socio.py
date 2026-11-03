@@ -97,6 +97,16 @@ with tempfile.TemporaryDirectory() as t:
         A.save = real_save
     if (logos / "guardado-roto.png").exists() or "guardado-roto" in data.read_text(encoding="utf-8"):
         errors.append("un fallo al guardar ha dejado el logo o la entrada")
+    # No se sobrescriben archivos ajenos al registro (prueba de ChatGPT, PR #40)
+    orphan = logos / "logo-reservado.png"
+    orphan.write_bytes(b"contenido existente")
+    expect_error(lambda: A.alta("Logo Reservado", "#c0392b", logo=str(good), **kw), "logo preexistente")
+    if orphan.read_bytes() != b"contenido existente" or "logo-reservado" in data.read_text(encoding="utf-8"):
+        errors.append("se sobrescribió un logo preexistente o se dio de alta igualmente")
+    orphan.unlink()
+    # PNG truncado: firma correcta pero sin bloque IHDR
+    trunc = t / "trunc.png"; trunc.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 4)
+    expect_error(lambda: A.alta("Png Truncado", "#c0392b", logo=str(trunc), **kw), "PNG sin IHDR")
     # Un logo manipulado después del alta se detecta al compilar
     tampered = logos / "sun-travel.webp"; saved = tampered.read_bytes(); tampered.write_bytes(b"<svg onload=alert(1)>")
     try:

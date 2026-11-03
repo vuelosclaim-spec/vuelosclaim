@@ -90,11 +90,11 @@ def palette(color):
 def logo_is_valid(path):
     """The file content must match its extension (checked again at build time, not only on upload)."""
     with open(path, "rb") as f:
-        head = f.read(12)
-    if path.lower().endswith(".png"):
-        return head.startswith(b"\x89PNG\r\n\x1a\n")
+        head = f.read(33)
+    if path.lower().endswith(".png"):  # signature + IHDR chunk first (stricter check from ChatGPT, PR #40)
+        return len(head) >= 33 and head.startswith(b"\x89PNG\r\n\x1a\n") and head[12:16] == b"IHDR"
     if path.lower().endswith(".webp"):
-        return head[:4] == b"RIFF" and head[8:12] == b"WEBP"
+        return len(head) >= 16 and head[:4] == b"RIFF" and head[8:12] == b"WEBP"
     return False
 
 
