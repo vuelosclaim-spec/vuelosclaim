@@ -83,5 +83,6 @@ jobs:
       - name: Ejecutar pruebas de navegador
         run: |
           python3 -m http.server 8765 -d docs > /tmp/vuelosclaim-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8765/ > /dev/null && break; sleep 1; done
           node fuente/tests/test_navegador.js
           node fuente/tests/test_widget_partners.js
