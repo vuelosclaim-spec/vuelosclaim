@@ -1,0 +1,11 @@
+[
+  {
+    "id": "demo",
+    "name": "Agencia de ejemplo",
+    "color": "#1f4e8c",
+    "accent": null,
+    "lang": "es",
+    "logo": null,
+    "demo": true
+  }
+]

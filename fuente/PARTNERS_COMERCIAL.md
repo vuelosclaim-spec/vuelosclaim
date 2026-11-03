@@ -26,7 +26,14 @@ Se puede insertar en vuestra web sin coste, con mención a VuelosClaim. Si os in
 
 Un saludo, equipo VuelosClaim
 ## Widget con marca (hito 1, Claude Code)
-- Alta de un socio: añadir una entrada en `fuente/partners_registry.py`, con id, nombre en texto plano, color `#rrggbb` e idioma `es` o `en`. El logo es opcional y va en `fuente/partners_logos/`, en PNG, SVG o WebP de hasta 100 KB, revisado antes de subirlo. Después se ejecuta `python3 fuente/build.py`.
+- Alta de un socio con un solo comando, sin editar archivos a mano:
+  `python3 fuente/alta_socio.py --nombre "Viajes Sol" --color "#c0392b" [--acento "#f1c232"] [--idioma es|en] [--logo ruta.png] [--compilar]`
+  - El id se crea a partir del nombre (o se elige con `--id`).
+  - El logo (PNG, WebP o SVG, máximo 100 KB) se revisa: formato real, y en un SVG que no tenga scripts, eventos ni recursos externos. Se guarda como `fuente/partners_logos/<id>.<ext>`.
+  - La entrada se valida con las mismas reglas del registro y se guarda en `fuente/partners.json`. Si algo falla, no se cambia nada.
+  - El comando imprime el código de inserción para la agencia.
+  - Otras opciones: `--listar` muestra las agencias y `--baja <id>` da de baja una (se puede recuperar desde git).
+  - Después: abrir una PR con CI en verde antes de publicar.
 - Resultado: `https://vuelosclaim.eu/widget/p/<id>/`, una página `noindex` que queda fuera del sitemap. Código para el socio: el mismo iframe del widget gratuito, cambiando `/widget/` por `/widget/p/<id>/`.
 - La marca solo sale del registro. La web anfitriona no puede cambiarla con parámetros, HTML ni CSS. La atribución a VuelosClaim y el aviso de afiliación son siempre visibles.
 - El color se ajusta solo para mantener un contraste AA (4,5:1) en modo claro y oscuro.
