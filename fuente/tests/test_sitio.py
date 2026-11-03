@@ -16,6 +16,11 @@ FUENTE = os.path.dirname(HERE)
 SITE = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(os.path.dirname(FUENTE), "docs")
 BASE = "https://vuelosclaim.eu"
 NOINDEX_OK = {"/widget/", "/404.html"}  # widget para incrustar: noindex a propósito, sin H1 ni canonical
+WIDGET_PARTNER = "/widget/p/"  # widgets con marca de socios (Partners): mismas reglas que /widget/
+
+
+def noindex_ok(url):
+    return url in NOINDEX_OK or url.startswith(WIDGET_PARTNER)
 
 errors, warnings = [], []
 
@@ -55,7 +60,7 @@ def check_site():
                 err(f"La calculadora de {url} apunta a una lista de aeropuertos inexistente: {m.group(1) if m else 'ninguna'}")
             if 'id="ac-retry"' not in s:
                 err(f"La calculadora de {url} no tiene botón para reintentar la carga")
-        if url in NOINDEX_OK:
+        if noindex_ok(url):
             continue
         t = re.search(r"<title>(.*?)</title>", s, re.S)
         d = re.search(r'<meta name="description" content="([^"]*)"', s)
@@ -176,7 +181,7 @@ def check_site():
     # AdSense: nunca en el widget (se inserta en webs ajenas) ni en la 404; donde se carga, enlace para gestionar el consentimiento publicitario
     for url, s in pages.items():
         has_ads = "adsbygoogle.js" in s
-        if url in ("/widget/", "/404.html") and has_ads:
+        if (url in ("/widget/", "/404.html") or url.startswith(WIDGET_PARTNER)) and has_ads:
             err(f"{url} no debe cargar AdSense")
         if has_ads and "data-ads-consent" not in s:
             err(f"{url} carga AdSense sin enlace para gestionar el consentimiento publicitario")

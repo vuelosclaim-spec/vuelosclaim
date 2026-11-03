@@ -63,6 +63,9 @@ jobs:
       - name: Páginas VuelosClaim Partners
         run: python3 fuente/tests/test_partners.py
 
+      - name: Registro de socios y widget con marca
+        run: python3 fuente/tests/test_partners_widget.py
+
   navegador:
     runs-on: ubuntu-latest
     steps:
@@ -81,3 +84,4 @@ jobs:
         run: |
           python3 -m http.server 8765 -d docs > /tmp/vuelosclaim-http.log 2>&1 &
           node fuente/tests/test_navegador.js
+          node fuente/tests/test_widget_partners.js
