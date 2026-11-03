@@ -60,6 +60,9 @@ jobs:
       - name: Enlaces de afiliación y seguimiento de conversiones
         run: python3 fuente/tests/test_monetizacion.py
 
+      - name: Páginas VuelosClaim Partners
+        run: python3 fuente/tests/test_partners.py
+
   navegador:
     runs-on: ubuntu-latest
     steps:
