@@ -1,18 +1,27 @@
 # VuelosClaim Partners — lanzamiento y coordinación
 
-Estado: piloto; aún no hay suscripciones ni marca blanca. Coordinación con Claude Code: https://github.com/vuelosclaim-spec/vuelosclaim/issues/34
+Estado: piloto; hay widget con marca y eventos agregados con consentimiento, pero no panel privado, alta autoservicio ni suscripciones activas. Coordinación con Claude Code: https://github.com/vuelosclaim-spec/vuelosclaim/issues/34
 
 ## Precios propuestos (IVA no incluido)
 - Gratis: 0 €, widget estándar ya existente y atribuible.
-- Pro: 9,90 €/mes, propuesta futura de logo/colores e integración asistida.
-- Premium: 19,90 €/mes, propuesta futura de estadísticas agregadas y soporte.
+- Pro: 9,90 €/mes, precio objetivo futuro; el widget con logo/colores y la integración asistida ya se pueden probar.
+- Premium: 19,90 €/mes, precio objetivo futuro; se pueden preparar informes agregados de GA4, pero aún no existe panel privado ni soporte prioritario contratado.
 
-## Trabajo pendiente propuesto para Claude Code
-1. Revisar la PR de landing enlazada desde el issue #34. No sobrescribir cambios de ChatGPT.
-2. Widget real personalizable, con identificador de cliente validado, valores de marca seguros y aviso visible de atribución y afiliación; no aceptar HTML/CSS arbitrarios.
-3. Estadísticas agregadas con consentimiento y segregación por cliente; no exponer identificadores privados ni respuestas personales.
-4. Prueba de integración en navegador móvil, teclado y consentimiento en terceros sitios.
-5. Cobros recurrentes, facturación y gestión de cancelaciones solamente cuando el propietario conecte la pasarela y valide condiciones comerciales.
+## Pendientes reales antes de aceptar suscripciones
+1. Configurar la dimensión de evento `partner_id` en GA4 y comprobar datos consentidos de un piloto de prueba.
+2. Probar una alta completa mediante `alta_socio.py`, PR, CI, publicación y código iframe entregado al socio.
+3. Aprobar condiciones comerciales, prestación de soporte, cancelación, facturación e impuestos; elegir pasarela y configurar cobros cuando el propietario lo decida.
+4. Revisar con el socio la responsabilidad por avisos legales, afiliación y consentimiento de su propia web.
+5. No prometer un panel privado ni habilitar cobros hasta que existan y se hayan probado.
+
+## Procedimiento para un piloto (sin cobro)
+1. Recibir solicitud voluntaria del interesado en `vuelosclaim@gmail.com` con URL de su web y objetivo de integración.
+2. Confirmar por escrito que es una prueba sin cuota, sin garantía de indemnizaciones ni de resultados de afiliación, y que la atribución a VuelosClaim queda visible.
+3. Solicitar nombre comercial, color principal `#rrggbb`, idioma ES/EN y, opcionalmente, logo PNG/WebP de hasta 100 KB. No solicitar datos de pasajeros.
+4. Ejecutar `python3 fuente/alta_socio.py --nombre "Agencia Piloto" --color "#1f4e8c" --idioma es --logo ruta.png --compilar` (omitir `--logo` si no hay), abrir PR, revisar los cambios y esperar CI verde antes de fusionar.
+5. Verificar la página `/widget/p/<id>/` publicada, su comportamiento incrustado en móvil, consentimiento y aviso de afiliación. Enviar únicamente entonces el iframe al interesado.
+6. Registrar fecha de alta, web, modalidad de prueba, incidencia técnica y próxima revisión en un registro interno privado; no subir correos ni datos personales a GitHub.
+7. Tras dos semanas, preguntar si la herramienta le aporta valor y qué funciones justificarían 9,90 o 19,90 €/mes. No inferir ventas de los clics de afiliación.
 
 ## Captación comercial
 Identificar 15 agencias de viajes pequeñas y 15 blogs públicos con nombre, URL, necesidad real y canal autorizado. No inventar datos ni recopilar contactos privados. Validar tres pilotos y si alguien acepta contratar antes de desarrollar un panel complejo.

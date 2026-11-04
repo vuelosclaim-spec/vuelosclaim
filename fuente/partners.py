@@ -1,6 +1,6 @@
 """Commercial pilot landing for VuelosClaim Partners (ES/EN).
 
-No sign-up, checkout, customer tracking or unimplemented customization is offered as live.
+Branded widgets and consented aggregate events exist; checkout and self-service do not.
 """
 from html import escape as e
 from urllib.parse import quote
@@ -16,14 +16,14 @@ def build(ctx):
         title = ("VuelosClaim para agencias y blogs de viajes" if es else
                  "VuelosClaim for travel agencies and blogs")
         desc = ("Integra gratuitamente una calculadora de derechos aéreos. "
-                "Solicita información de una futura versión con tu marca." if es else
-                "Embed a free flight compensation calculator. Ask about a future branded version.")
+                "Solicita una prueba piloto con la marca de tu agencia." if es else
+                "Embed a free flight compensation calculator or request a branded pilot.")
         h1 = ("Una calculadora útil para tus viajeros" if es else
               "A useful calculator for your travellers")
         lead = ("Pon nuestra calculadora en tu web y ayuda a tus visitantes a conocer sus posibles derechos ante retrasos y cancelaciones. "
-                "El widget estándar ya está disponible gratis. La personalización y las estadísticas están en fase piloto." if es else
+                "El widget estándar es gratis. También preparamos pilotos con marca y métricas agregadas, sin cobros activos." if es else
                 "Add our calculator to your website and help visitors understand possible rights after delays or cancellations. "
-                "The standard widget is already available for free. Branding and statistics are pilot features, not yet live.")
+                "The standard widget is free. Branded pilots and aggregated usage events are available on request, with no paid checkout yet.")
         mail = "mailto:vuelosclaim@gmail.com?subject=" + quote("Piloto VuelosClaim Partners" if es else "VuelosClaim Partners pilot")
         plans = [
             ("Gratis", "0 €", "Disponible" if es else "Available",
@@ -33,8 +33,8 @@ def build(ctx):
              "Nombre, color y logo de tu agencia en el widget: lo configuramos nosotros durante el piloto. Aún no se aceptan pagos." if es else
              "Your agency's name, colour and logo in the widget: we set it up for you during the pilot. Payments are not yet accepted."),
             ("Premium", "19,90 €", "Precio objetivo · piloto" if es else "Target price · pilot",
-             "Se estudian estadísticas agregadas y soporte prioritario. Sin panel activo." if es else
-             "Planned aggregate statistics and priority support. No live dashboard."),
+             "Métricas agregadas disponibles durante el piloto mediante informes preparados por nosotros. Sin panel privado ni soporte prioritario garantizado." if es else
+             "Aggregated event reports can be prepared during the pilot. No private dashboard or guaranteed priority support."),
         ]
         cards = "".join(
             '<article class="partner-plan"><h3>' + e(name) + '</h3><p class="partner-price">' + e(price) +
@@ -54,9 +54,9 @@ def build(ctx):
 <a href="{link}">{'Usar el widget gratuito' if es else 'Get the free widget'}</a></p>
 <h2>{'Planes previstos' if es else 'Planned plans'}</h2>
 <div class="partner-plans">{cards}</div>
-<p><small>{'Precios orientativos, no se ofrece contratación ni pago todavía. Las características de pago requieren desarrollo y validación comercial.' if es else 'Indicative prices only; no paid subscription or checkout is available yet. Paid features require development and commercial validation.'}</small></p>
+<p><small>{'Precios orientativos para una futura suscripción. Los pilotos se acuerdan individualmente; no hay contratación ni pago online. Las métricas requieren consentimiento de analítica y configuración de GA4.' if es else 'Indicative prices for future subscriptions. Pilots are agreed individually; no online checkout or payment is available. Analytics requires consent and GA4 configuration.'}</small></p>
 <h2>{'Prueba el widget que ya funciona' if es else 'Try the working widget'}</h2>
-<p>{'Esta es la calculadora gratuita real. No incluye marca blanca ni estadísticas por empresa.' if es else 'This is the existing free calculator. White-label features and agency analytics are not available yet.'}</p>
+<p>{'Esta es la calculadora gratuita real, sin marca de agencia. Las versiones con marca se habilitan bajo solicitud.' if es else 'This is the standard free calculator without agency branding. Branded versions are set up on request.'}</p>
 <div class="partner-demo"><iframe title="{'Demostración de la calculadora' if es else 'Calculator demo'}" src="/widget/" loading="lazy"></iframe></div>
 <h2>{'Ejemplo con la marca de una agencia' if es else 'Example with an agency brand'}</h2>
 <p>{'Así se ve el widget con el nombre y el color de una agencia. «Agencia de ejemplo» es una demostración, no un cliente. La marca la damos de alta nosotros: tu web no puede cambiarla ni ocultar la atribución a VuelosClaim.' if es else 'This is how the widget looks with an agency name and colour. "Agencia de ejemplo" is a demo, not a customer. We set up the branding for you; the embedding site cannot change it or hide the VuelosClaim attribution.'}</p>
