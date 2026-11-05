@@ -20,13 +20,15 @@ export function configuration(env = process.env) {
   return { secret: env.STRIPE_SECRET_KEY, prices };
 }
 
-export async function createTestCheckout({ plan, partnerId, successUrl, cancelUrl }, env = process.env, fetchImpl = fetch) {
+export async function createTestCheckout({ plan, partnerId, requestId, successUrl, cancelUrl }, env = process.env, fetchImpl = fetch) {
   const { secret, prices } = configuration(env);
   if (!Object.hasOwn(prices, plan)) throw new Error('unknown-plan');
   // Only an approved partner ID from a private onboarding process may be used.
   if (!/^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/.test(partnerId || '')) throw new Error('invalid-partner');
   const approved = (env.STRIPE_APPROVED_PARTNERS || '').split(',').map(s => s.trim());
   if (!approved.includes(partnerId)) throw new Error('partner-not-approved');
+  // The authenticated backend must persist this ID and reuse it on retries.
+  if (!/^[A-Za-z0-9_-]{16,80}$/.test(requestId || '')) throw new Error('invalid-request-id');
   for (const url of [successUrl, cancelUrl]) {
     const parsed = new URL(url);
     if (parsed.protocol !== 'https:' || parsed.origin !== 'https://vuelosclaim.eu' || parsed.username || parsed.password) {
@@ -43,7 +45,7 @@ export async function createTestCheckout({ plan, partnerId, successUrl, cancelUr
   const response = await fetchImpl(`${API}/checkout/sessions`, {
     method: 'POST', headers: {
       Authorization: `Bearer ${secret}`, 'Content-Type': 'application/x-www-form-urlencoded',
-      'Idempotency-Key': `pilot-${partnerId}-${plan}-${cryptoId()}`,
+      'Idempotency-Key': `pilot-${partnerId}-${plan}-${requestId}`,
     }, body: body.toString(),
   });
   const data = await response.json();
@@ -52,8 +54,6 @@ export async function createTestCheckout({ plan, partnerId, successUrl, cancelUr
   }
   return { id: data.id, url: data.url }; // Never return the Stripe secret.
 }
-
-function cryptoId() { return globalThis.crypto.randomUUID(); }
 
 /** Verify Stripe's signature against the *raw* request body; reject replayed timestamps. */
 export function verifyWebhook(rawBody, header, secret, nowSeconds = Math.floor(Date.now() / 1000)) {
@@ -72,8 +72,10 @@ export function verifyWebhook(rawBody, header, secret, nowSeconds = Math.floor(D
     return timingSafeEqual(expected, Buffer.from(sig, 'hex'));
   });
   if (!match) throw new Error('webhook-signature-invalid');
-  const event = JSON.parse(rawBody.toString('utf8'));
-  if (typeof event.id !== 'string' || !/^evt_[A-Za-z0-9]+$/.test(event.id)) throw new Error('invalid-event');
+  let event;
+  try { event = JSON.parse(rawBody.toString('utf8')); }
+  catch { throw new Error('invalid-event'); }
+  if (!event || typeof event !== 'object' || typeof event.id !== 'string' || !/^evt_[A-Za-z0-9]+$/.test(event.id)) throw new Error('invalid-event');
   // These are notifications to reconcile against Stripe and a durable database,
   // NOT authorizations to activate a license from the browser or this module.
   return { eventId: event.id, type: EVENT_TYPES.has(event.type) ? event.type : 'ignored',
