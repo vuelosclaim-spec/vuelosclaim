@@ -23,8 +23,9 @@ EU_URL = {"es": "https://europa.eu/youreurope/citizens/travel/passenger-rights/a
           "en": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm"}
 UPDATED = {"es": "7 de octubre de 2026", "en": "7 October 2026", **i18n.UPDATED}
 EU_URL.update(i18n.EU_URL)
-LANGS = ("es", "en", "it", "de")
-LANG_NAMES = {"es": "Español", "en": "English", "it": "Italiano", "de": "Deutsch"}
+LANGS = ("es", "en", "it", "de", "pt")
+XL = ("it", "de", "pt")  # languages with only home + strike pages (texts in i18n.py)
+LANG_NAMES = {"es": "Español", "en": "English", "it": "Italiano", "de": "Deutsch", "pt": "Português"}
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(ROOT)
@@ -121,8 +122,8 @@ UKC = {"GB", "GG", "JE", "IM"}
 def u_home(l): return {"es": "/", "en": "/en/", **i18n.HOME}[l]
 def u_airline(l, a): return f"/compensacion-retraso-{a['slug']}/" if l == "es" else f"/en/{a['slug']}-delay-compensation/"
 def u_airport(l, ap): return f"/retraso-vuelo-aeropuerto-{ap[1]}/" if l == "es" else f"/en/{slugify(ap[3])}-airport-flight-delay/"
-LEGAL = {"about": {"es": "/quienes-somos/", "en": "/en/about/", "it": "/en/about/", "de": "/en/about/"}, "legal": {"es": "/aviso-legal/", "en": "/en/legal-notice/", "it": "/en/legal-notice/", "de": "/en/legal-notice/"},
-         "privacy": {"es": "/privacidad/", "en": "/en/privacy/", "it": "/en/privacy/", "de": "/en/privacy/"}}
+LEGAL = {"about": {"es": "/quienes-somos/", "en": "/en/about/", "it": "/en/about/", "de": "/en/about/", "pt": "/en/about/"}, "legal": {"es": "/aviso-legal/", "en": "/en/legal-notice/", "it": "/en/legal-notice/", "de": "/en/legal-notice/", "pt": "/en/legal-notice/"},
+         "privacy": {"es": "/privacidad/", "en": "/en/privacy/", "it": "/en/privacy/", "de": "/en/privacy/", "pt": "/en/privacy/"}}
 
 # ---------------------------------------------------------------- strings
 S = {
@@ -232,11 +233,11 @@ def header(l, alt_path, alts=None):
     s, h = S[l], u_home(l)
     if alts and len(alts) > 2:  # pages in more than two languages: one link per other language
         sw = '<span class="langs">' + "".join(f'<a class="lang" href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{k.upper()} – {LANG_NAMES[k]}">{k.upper()}</a>' for k in LANGS if k in alts and k != l) + "</span>"
-    elif l in ("it", "de"):
+    elif l in XL:
         sw = f'<a class="lang" href="{alt_path}" hreflang="es" aria-label="ES – Español">ES</a>' if alt_path else ""
     else:
         sw = f'<a class="lang" href="{alt_path}" hreflang="{"en" if l == "es" else "es"}" aria-label="{s["switch"]} – {s["switch_label"]}">{s["switch"]}</a>' if alt_path else ""
-    if l in ("it", "de"):
+    if l in XL:
         return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>{BRAND}</a>'
                 f'<nav aria-label="{s["nav"]}"><a href="{h}#cuanto">{s["nav_amounts"]}</a><a href="{i18n.STRIKES[l]}">{s["nav_airlines"]}</a><a href="{h}#preguntas">{s["nav_faq"]}</a>{sw}</nav></div></header>')
     return (f'<header class="top"><div class="wrap"><a class="brand" href="{h}"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>{BRAND}</a>'
@@ -246,8 +247,8 @@ def header(l, alt_path, alts=None):
 def footer(l):
     s = S[l]
     links = []
-    if l in ("it", "de"):
-        lab = {"it": ("Scioperi aerei", "Cookie di analisi", "Privacy degli annunci"), "de": ("Streiks bei Flügen", "Analyse-Cookies", "Datenschutz bei Anzeigen")}[l]
+    if l in XL:
+        lab = {"it": ("Scioperi aerei", "Cookie di analisi", "Privacy degli annunci"), "de": ("Streiks bei Flügen", "Analyse-Cookies", "Datenschutz bei Anzeigen"), "pt": ("Greves nos voos", "Cookies de análise", "Privacidade dos anúncios")}[l]
         links = [f'<a href="{i18n.STRIKES[l]}">{lab[0]}</a>', f'<a href="{LEGAL["about"][l]}">{s["f_about"]}</a>', f'<a href="{LEGAL["legal"][l]}">{s["f_legal"]}</a>',
                  f'<a href="{LEGAL["privacy"][l]}">{s["f_privacy"]}</a>', f'<a href="{LEGAL["privacy"][l]}#cookies" data-consent-open>{lab[1]}</a>',
                  f'<a href="{LEGAL["privacy"][l]}#publicidad" data-ads-consent>{lab[2]}</a>']
@@ -384,7 +385,7 @@ def faq_jsonld(l):
 
 
 def reference_sections(l, compact=False):
-    if l in ("it", "de"):
+    if l in XL:
         return i18n.reference(l, faq_html(l), e)
     full = _reference_sections(l)
     if not compact:
@@ -856,7 +857,7 @@ def airport_claim(l, name, code):
 def extra_jsonld(l, title, path):
     home = u_home(l)
     if path == home:
-        data = [{"@context": "https://schema.org", "@type": "WebApplication", "name": {"es": "Calculadora de compensación por retraso de vuelo", "en": "Flight delay compensation calculator", "it": "Calcolatore della compensazione per voli in ritardo", "de": "Rechner für Entschädigung bei Flugverspätung"}[l],
+        data = [{"@context": "https://schema.org", "@type": "WebApplication", "name": {"es": "Calculadora de compensación por retraso de vuelo", "en": "Flight delay compensation calculator", "it": "Calcolatore della compensazione per voli in ritardo", "de": "Rechner für Entschädigung bei Flugverspätung", "pt": "Calculadora de indemnização por atraso de voo"}[l],
                  "url": SITE_URL + home, "applicationCategory": "TravelApplication", "operatingSystem": "Any", "inLanguage": l,
                  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}]
     else:

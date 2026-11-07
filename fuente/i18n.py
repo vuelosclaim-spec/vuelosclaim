@@ -1,14 +1,16 @@
-"""Italian and German texts for the home page, header, footer and calculator (ES/EN stay in build.py).
+"""Italian, German and Portuguese texts for the home page, header, footer and calculator (ES/EN stay in build.py).
 Legal pages (about, legal notice, privacy) are linked in English: the owner's legal information is not translated.
 """
 
 ENAC_URL = "https://www.enac.gov.it/passeggeri/diritti-dei-passeggeri/modalita-di-reclamo-per-negato-imbarco-cancellazione-ritardo/"
+ANAC_URL = "https://www.anac.pt/vPT/Passageiros/DireitosPassageiro/comoapresentarumaqueixa/Paginas/Comoapresentarumareclamacao.aspx"
 EVZ_ADR_URL = "https://www.bundesregierung.de/breg-de/service/fragen-und-anworten/flugaerger-entschaedigung-2059808"
 EU_URL = {"it": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_it.htm",
-          "de": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_de.htm"}
-UPDATED = {"it": "7 ottobre 2026", "de": "7. Oktober 2026"}
-HOME = {"it": "/it/", "de": "/de/"}
-STRIKES = {"it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/"}
+          "de": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_de.htm",
+          "pt": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_pt.htm"}
+UPDATED = {"it": "7 ottobre 2026", "de": "7. Oktober 2026", "pt": "7 de novembro de 2026"}
+HOME = {"it": "/it/", "de": "/de/", "pt": "/pt/"}
+STRIKES = {"it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/", "pt": "/pt/greves-voos/"}
 
 
 def S(brand, aesa_url, caa_url):
@@ -83,6 +85,41 @@ def S(brand, aesa_url, caa_url):
       facts=[("250 €", "Flüge bis 1.500 km"), ("400 €", "1.500 bis 3.500 km, oder über 1.500 km in der EU"), ("600 €", "über 3.500 km")],
       skip="Zum Inhalt springen",
      ),
+     "pt": dict(
+      locale="pt_PT", nav="Principal", nav_amounts="Montantes", nav_airlines="Greves", nav_faq="Perguntas", switch="PT", switch_label="Português",
+      foot1=f'{brand} é uma calculadora indicativa baseada no <a href="{EU_URL["pt"]}" rel="noopener">Regulamento (CE) n.º 261/2004</a>. Não é aconselhamento jurídico nem substitui um advogado.',
+      foot2="Algumas ligações são de afiliado: se utilizar um serviço através delas, recebemos uma comissão sem qualquer custo para si. Isto nunca altera o resultado da calculadora.",
+      foot3="Última revisão dos montantes e das regras: {d}.", f_embed="", f_about="Quem somos e fontes (em inglês)", f_legal="Aviso legal (em inglês)", f_privacy="Privacidade (em inglês)",
+      calc_h="Calcule a sua indemnização", from_="Partida", to="Destino final", ph="Cidade ou código", airline="Companhia aérea",
+      al_unknown="Não sei / não está na lista", al_eu="Outra companhia europeia", al_noneu="Outra companhia não europeia",
+      via="Fez escala?", v=[("direct", "Não, voo direto"), ("same", "Sim, uma reserva e a mesma companhia"), ("mixed", "Sim, uma reserva e companhias diferentes"), ("separate", "Sim, com reservas separadas")],
+      fare="O bilhete", fa=[("public", "Paguei-o (também com pontos ou numa viagem organizada)"), ("staff", "Gratuito ou com tarifa não pública (p. ex., de funcionário)")],
+      what="O que aconteceu ao seu voo?", w=[("delay", "Atraso"), ("cancel", "Cancelamento"), ("denied", "Overbooking")],
+      delay="Atraso na chegada ao destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h exatas a 4 h"), ("gt4", "Mais de 4 h"), ("unknown", "Não sei")],
+      notice="Foi informado do cancelamento com", n=[("gt14", "14 dias ou mais"), ("7to14", "Entre 7 e 13 dias"), ("lt7", "Menos de 7 dias"), ("unknown", "Não sei")],
+      reroute="Ofereceram-lhe um voo alternativo?", rr=[("yes", "Sim"), ("no", "Não"), ("unknown", "Não sei")],
+      rdep="Em relação ao original, o voo alternativo partia…", rd=[("le1", "No máximo 1 h antes, ou mais tarde"), ("1to2", "Entre 1 e 2 h antes"), ("gt2", "Mais de 2 h antes"), ("unknown", "Não sei")],
+      rarr="…e chegava ao destino", ra=[("lt2", "Menos de 2 h depois"), ("2to4", "Entre 2 e 4 h depois"), ("ge4", "4 h ou mais depois"), ("unknown", "Não sei")],
+      accepted="Aceitou o voo alternativo?", ac=[("yes", "Sim"), ("no", "Não, pedi o reembolso")],
+      denied="Cedeu o seu lugar?", dn=[("invol", "Não, recusaram-me o embarque"), ("vol", "Sim, voluntariamente"), ("unknown", "Não tenho a certeza")],
+      checkin="Apresentou-se a tempo no check-in e no embarque?", ci=[("yes", "Sim"), ("no", "Não"), ("unknown", "Não sei")],
+      dreason="Motivo da recusa de embarque", dr=[("overbooking", "Overbooking ou outro motivo da companhia"), ("reasonable", "Saúde, segurança ou documentos"), ("unknown", "Não me explicaram")],
+      cause="Motivo indicado pela companhia", c=[("unknown", "Não me disseram"), ("tech", "Avaria técnica"), ("crew", "Falta ou doença da tripulação"),
+        ("strike_own", "Greve do pessoal da companhia"), ("strike_ext", "Greve dos controladores aéreos ou do aeroporto"), ("strike_sub", "Greve de uma empresa que trabalha para a companhia (assistência em escala, catering…)"), ("atc", "Restrição do controlo de tráfego aéreo (ATC)"),
+        ("weather", "Mau tempo"), ("security", "Segurança (ameaça, encerramento do espaço aéreo)"), ("bird", "Colisão com uma ave ou objeto na pista"),
+        ("knock", "Atraso do voo anterior do mesmo avião")],
+      empty="Escolha a partida e o destino para ver o resultado.", error="Não foi possível carregar a lista de aeroportos. Verifique a ligação e tente de novo.", retry="Tentar de novo",
+      example="Exemplo editável", per="por passageiro", cta="Reclamar com a AirHelp", cta_small="A AirHelp é um serviço externo de reclamação: não cobra nada adiantado e, se obtiver a indemnização, fica com uma percentagem (até 50 % se for preciso ir a tribunal). Não garante o resultado. É uma ligação de afiliado: a VuelosClaim recebe uma comissão sem custo para si.", cta_generic="Reclamar com uma empresa", cta_small_generic="Serviço externo de reclamação: fica com uma comissão se obtiver a indemnização e não garante o resultado. Ligação de afiliado.",
+      cmp="Comparar com reclamar sozinho, de graça",
+      self="Prefiro reclamar sozinho, de graça: gerar a minha carta", l_lead="Preencha os seus dados e preparamos a carta. É criada no seu navegador: não a enviamos nem a guardamos. Não são precisos dados bancários.",
+      l_name="Nome completo", l_book="Código de reserva", l_flight="Número do voo", l_date="Data do voo", l_pax="Passageiros na reserva",
+      l_text="A sua carta", copy="Copiar a carta", dl="Descarregar .txt",
+      steps=["Envie-a pelo formulário de reclamações do site da companhia aérea ou por e-mail, juntando o cartão de embarque.", "Guarde a prova do envio.",
+             f'Se não responderem em 6 semanas ou a resposta não for satisfatória: nos voos com partida de Portugal pode reclamar gratuitamente à <a href="{ANAC_URL}" rel="noopener" target="_blank">ANAC</a>; nos voos com partida de Espanha, à <a href="{aesa_url}" rel="noopener" target="_blank">AESA</a>.'],
+      eyebrow="Regulamento (CE) 261/2004",
+      facts=[("250 €", "voos até 1500 km"), ("400 €", "de 1500 a 3500 km, ou mais de 1500 km dentro da UE"), ("600 €", "mais de 3500 km")],
+      skip="Saltar para o conteúdo",
+     ),
     }
 
 
@@ -101,6 +138,13 @@ FAQ = {
   ("Wie lange habe ich Zeit?", "Die Verordnung nennt keine Frist; es gilt die Verjährung des Landes, in dem geklagt wird. In Deutschland sind es 3 Jahre ab Ende des Jahres, in dem der Flug stattfand. Je früher Sie den Anspruch geltend machen, desto leichter sind Belege zu bekommen."),
   ("Und wenn ich umgestiegen bin?", "Bei einer einzigen Buchung zählt die Verspätung am Endziel und die Luftlinie zwischen Abflugort und Endziel, nicht die Summe der Teilstrecken (Gerichtshof der EU, Rechtssache C-559/16)."),
  ],
+ "pt": [
+  ("A indemnização é por pessoa ou por reserva?", "Por passageiro. Se viajaram quatro pessoas num voo até 1500 km que chegou com mais de 3 horas de atraso, são 4 × 250 € = 1000 €."),
+  ("O atraso conta na partida ou na chegada?", "Na chegada: quando se abre pelo menos uma porta do avião no destino final."),
+  ("Tenho direito mesmo que o bilhete tenha sido barato?", "Sim. O montante depende da distância, não do preço do bilhete."),
+  ("Quanto tempo tenho para reclamar?", "O regulamento não fixa prazo. Para reclamar junto da ANAC, nos voos com partida de Portugal, tem até 3 anos a contar da data do voo. Reclame o quanto antes: também é mais fácil reunir as provas."),
+  ("E se tive uma escala?", "Se era uma única reserva, conta o atraso com que chegou ao destino final e a distância em linha reta entre a partida e o destino final, não a soma dos troços (Tribunal de Justiça da UE, processo C-559/16)."),
+ ],
 }
 
 WHY = {
@@ -114,6 +158,11 @@ WHY = {
         ("law", "Mit dem Gesetz in der Hand", "Jedes Ergebnis nennt den Artikel der Verordnung oder das Urteil des Gerichtshofs der EU, auf dem es beruht."),
         ("lock", "Keine Daten zum Berechnen", "Wir fragen weder Name noch E-Mail noch Buchungscode, um Ihnen zu sagen, was Ihnen zusteht."),
         ("way", "Sie entscheiden", "Machen Sie den Anspruch mit dem Schreiben selbst geltend und behalten Sie 100 %, oder beauftragen Sie einen Dienst, der nur im Erfolgsfall kassiert.")]),
+    "pt": ("Porquê usar a VuelosClaim", [
+        ("eur", "Gratuito a sério", "A calculadora e a carta não custam nada. Financiamo-nos com publicidade e uma ligação de afiliado, sempre assinalada."),
+        ("law", "Com a lei na mão", "Cada resultado cita o artigo do regulamento ou o acórdão do Tribunal de Justiça da UE em que se baseia."),
+        ("lock", "Sem dados para calcular", "Não pedimos nome, e-mail nem código de reserva para lhe dizer quanto lhe é devido."),
+        ("way", "Escolhe o caminho", "Reclame sozinho com a carta e fique com 100 %, ou recorra a um serviço que só cobra se ganhar.")]),
 }
 
 HOME_TEXT = {
@@ -127,10 +176,17 @@ HOME_TEXT = {
            "Flug verspätet oder annulliert? Berechnen Sie Ihre Entschädigung",
            "Sind Sie mit 3 Stunden oder mehr Verspätung angekommen, wurde Ihr Flug annulliert oder wurden Sie nicht befördert, schuldet Ihnen die Fluggesellschaft womöglich bis zu 600 € pro Fluggast. Geben Sie Ihren Flug ein, und wir berechnen es in Sekunden.",
            ("FRA", "PMI")),
+    "pt": ("Voo atrasado ou cancelado: calcule a indemnização até 600 €",
+           "Calculadora gratuita para voos atrasados, cancelados ou com overbooking: 250, 400 ou 600 € por passageiro (Regulamento 261/2004) e carta de reclamação.",
+           "Voo atrasado ou cancelado? Calcule a indemnização a que tem direito",
+           "Se chegou com 3 horas ou mais de atraso, o voo foi cancelado ou não o deixaram embarcar, a companhia pode dever-lhe até 600 € por passageiro. Introduza os dados do voo e calculamos em segundos.",
+           ("LIS", "LGW")),
 }
 
 
 def reference(l, faq_html, e):
+    if l == "pt":
+        return _reference_pt(faq_html)
     if l == "it":
         return f"""<section class="ref" id="cuanto"><div class="wrap">
 <h2>Quanto ti spetta in base alla distanza</h2>
@@ -186,7 +242,37 @@ def reference(l, faq_html, e):
 <section class="ref" id="preguntas"><div class="wrap"><h2>Häufige Fragen</h2>{faq_html}</div></section>"""
 
 
+def _reference_pt(faq_html):
+    return f"""<section class="ref" id="cuanto"><div class="wrap">
+<h2>Quanto lhe é devido consoante a distância</h2>
+<p class="lead">É um montante fixo por passageiro e não depende do preço do bilhete. Fonte: <a href="{EU_URL['pt']}" rel="noopener">A sua Europa, Comissão Europeia</a>.</p>
+<div class="board"><table><thead><tr><th>Distância do voo</th><th>Indemnização</th></tr></thead><tbody>
+<tr><td>Até 1500 km (Lisboa–Madrid, Porto–Paris)</td><td class="eur">250 €</td></tr>
+<tr><td>Mais de 1500 km dentro da UE, ou de 1500 a 3500 km (Lisboa–Londres, Porto–Berlim)</td><td class="eur">400 €</td></tr>
+<tr><td>Mais de 3500 km fora da UE (Lisboa–Nova Iorque)</td><td class="eur">600 €</td></tr>
+<tr><td>Mais de 3500 km fora da UE com 3–4 horas de atraso</td><td class="eur">300 €</td></tr>
+</tbody></table></div></div></section>
+<section class="ref"><div class="wrap two">
+<div><h3>Quando lhe pagam</h3><ul>
+<li>Chega ao destino final com 3 horas ou mais de atraso.</li><li>O voo é cancelado com menos de 14 dias de aviso.</li><li>Recusam-lhe o embarque por overbooking.</li>
+<li>O voo parte de um aeroporto da UE, da Islândia, da Noruega ou da Suíça, ou chega lá com uma companhia europeia.</li></ul></div>
+<div><h3>Quando não lhe pagam</h3><ul>
+<li>Circunstâncias extraordinárias que a companhia consiga provar: mau tempo, greve dos controladores aéreos ou riscos de segurança.</li>
+<li>Foi informado do cancelamento com 14 dias ou mais de antecedência.</li><li>O atraso na chegada foi inferior a 3 horas.</li>
+<li>As avarias técnicas e as greves do pessoal da própria companhia não a isentam de pagar.</li></ul></div>
+</div></section>
+<section class="ref"><div class="wrap"><h2>Como reclamar</h2><ol class="steps">
+<li>Guarde o cartão de embarque, a reserva e, se puder, uma fotografia do painel com o atraso.</li>
+<li>Reclame primeiro por escrito à companhia, através do formulário de reclamações.</li>
+<li>Se não responder em 6 semanas ou a resposta não for satisfatória, e o voo partiu de Portugal, reclame gratuitamente à <a href="{ANAC_URL}" rel="noopener">ANAC</a>. Tem até 3 anos a contar da data do voo.</li>
+<li>Se preferir não o fazer sozinho, uma empresa de reclamações trata do processo sem custos adiantados e fica com uma percentagem se ganhar.</li>
+</ol>
+<p>Greves previstas em Portugal, Espanha e Itália: <a href="{STRIKES['pt']}">calendário de greves nos voos</a>. Greve da easyJet em dezembro: <a href="/pt/greve-easyjet-portugal-dezembro/">datas e direitos</a>.</p></div></section>
+<section class="ref" id="preguntas"><div class="wrap"><h2>Perguntas frequentes</h2>{faq_html}</div></section>"""
+
+
 CONSENT_TXT = {
     "it": ("Avviso sui cookie", "Maggiori informazioni", "Con il tuo permesso usiamo i cookie per contare le visite e sapere quali parti del calcolatore vengono usate, compresi i clic sul servizio di reclamo. Non inviamo mai ciò che scrivi nel calcolatore o nella lettera.", "Accetta", "Rifiuta"),
+    "pt": ("Aviso de cookies", "Mais informações", "Com a sua autorização, usamos cookies para contar as visitas e saber que partes da calculadora são usadas, incluindo os cliques no serviço de reclamação. Nunca enviamos o que escreve na calculadora ou na carta.", "Aceitar", "Rejeitar"),
     "de": ("Cookie-Hinweis", "Mehr erfahren", "Mit Ihrer Erlaubnis verwenden wir Cookies, um Besuche zu zählen und zu sehen, welche Teile des Rechners genutzt werden, einschließlich Klicks auf den Durchsetzungsdienst. Was Sie in den Rechner oder das Schreiben eingeben, senden wir nie.", "Akzeptieren", "Ablehnen"),
 }

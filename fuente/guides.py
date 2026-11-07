@@ -254,7 +254,7 @@ G = [
         },
     },
     {
-        "paths": {"es": "/huelga-easyjet-portugal-diciembre/", "en": "/en/easyjet-portugal-strike-december/"},
+        "paths": {"es": "/huelga-easyjet-portugal-diciembre/", "en": "/en/easyjet-portugal-strike-december/", "pt": "/pt/greve-easyjet-portugal-dezembro/"},
         "es": {
             "title": "Huelga easyJet Portugal 19–23 diciembre: tus derechos",
             "desc": "Huelga de tripulantes de easyJet en Lisboa, Oporto y Faro del 19 al 23 de diciembre de 2026: reembolso, asistencia y cuándo te corresponden 250–600 €.",
@@ -290,6 +290,42 @@ G = [
                 ("¿Cuándo es la huelga de easyJet en Portugal?", "Del sábado 19 al miércoles 23 de diciembre de 2026. La convoca el SNPVAC para los tripulantes de cabina con base en Lisboa, Oporto y Faro."),
                 ("¿Me pagan compensación si easyJet cancela mi vuelo por la huelga?", "Normalmente sí, si te avisan con menos de 14 días: la huelga de la propia plantilla no es circunstancia extraordinaria (TJUE, C-28/20). Son 250, 400 o 600 € según la distancia, además del reembolso o vuelo alternativo."),
                 ("¿Y si me avisan con más de 14 días?", "Entonces no hay compensación fija, pero sí puedes elegir el reembolso completo o un vuelo alternativo. Para un vuelo el 19 de diciembre, el límite es el 5 de diciembre."),
+            ],
+        },
+        "pt": {
+            "title": "Greve easyJet 19–23 dezembro: os seus direitos e indemnização",
+            "desc": "Greve dos tripulantes da easyJet em Lisboa, Porto e Faro de 19 a 23 de dezembro de 2026: reembolso, assistência e quando tem direito a 250–600 €.",
+            "h1": "Greve da easyJet de 19 a 23 de dezembro: o que lhe devem",
+            "lead": "O SNPVAC convocou greve dos tripulantes de cabine da easyJet com base em Portugal de sábado, 19, a quarta-feira, 23 de dezembro de 2026, em pleno Natal. Como é uma greve do pessoal da própria companhia, se o seu voo for cancelado com pouco aviso, em regra tem direito a indemnização.",
+            "body": """<h2>O que se sabe (atualizado a 7 de novembro)</h2>
+<ul><li><strong>Datas:</strong> de 19 a 23 de dezembro de 2026, inclusive.</li>
+<li><strong>Quem:</strong> tripulantes de cabine da easyJet com base em <strong>Lisboa, Porto e Faro</strong>, convocados pelo SNPVAC.</li>
+<li><strong>Serviços mínimos:</strong> fixados pelo Governo (<a href="https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro" rel="noopener">despacho da DGERT</a>), com proteção reforçada para as deslocações de Natal e para as ligações à Madeira. O despacho não publica uma lista de voos garantidos.</li>
+<li><strong>Precedente:</strong> na greve de 2 a 6 de outubro, o sindicato falou em 370 voos cancelados, a maioria antes de a greve começar (<a href="https://www.rtp.pt/noticias/economia/greve-dos-tripulantes-da-easyjet-originou-o-cancelamento-de-370-voos-diz-sindicato_n1769960" rel="noopener">RTP</a>). A easyJet disse que cancelou de forma preventiva para dar mais previsibilidade aos passageiros.</li></ul>
+<p>Afeta sobretudo os voos operados por tripulações destas três bases, ou seja, os que partem de Lisboa, Porto ou Faro ou regressam a estes aeroportos. Os voos da easyJet com tripulações de outras bases, como as do Reino Unido ou de Espanha, em princípio não estão abrangidos. Confirme sempre a sua reserva. A greve pode mudar ou ser desconvocada: acompanhe o <a href="/pt/greves-voos/">calendário de greves</a>.</p>
+<h2>Se o voo for cancelado: tem sempre estes direitos</h2>
+<ul><li><strong>Reembolso no prazo de 7 dias ou voo alternativo</strong>, à sua escolha (art. 8.º do Regulamento 261/2004).</li>
+<li><strong>Assistência durante a espera:</strong> refeições, bebidas e, se tiver de passar a noite, hotel e transporte (art. 9.º). Se não lhe derem nada, guarde os recibos e reclame-os.</li></ul>
+<h2>A indemnização de 250–600 €: aqui, em regra, sim</h2>
+<p>O Tribunal de Justiça da UE decidiu que a greve do pessoal da própria companhia <strong>não é uma circunstância extraordinária</strong> (processo C-28/20, Airhelp contra SAS). Por isso, se o voo for cancelado com menos de 14 dias de aviso ou chegar com mais de 3 horas de atraso por causa da greve, em regra tem direito a:</p>
+<ul><li><strong>250 €</strong> até 1500 km (por exemplo, Lisboa–Madrid ou Porto–Paris).</li>
+<li><strong>400 €</strong> entre 1500 e 3500 km, ou qualquer voo mais longo dentro da UE (por exemplo, Lisboa–Londres ou Faro–Berlim).</li>
+<li><strong>600 €</strong> a partir de 3500 km fora da UE.</li></ul>
+<h2>A data-chave: 14 dias antes do voo</h2>
+<p>Se a easyJet o avisar do cancelamento com 14 dias ou mais de antecedência, não há indemnização fixa (mas tem direito a reembolso ou voo alternativo):</p>
+<ul><li>Voo a <strong>19 de dezembro</strong>: um aviso até 5 de dezembro, inclusive, não dá indemnização.</li>
+<li>Voo a <strong>23 de dezembro</strong>: um aviso até 9 de dezembro, inclusive, não dá indemnização.</li></ul>
+<p>Guarde o e-mail ou a SMS do aviso, com a data: é isso que decide se recebe.</p>
+<h2>O que fazer se voar com a easyJet nesses dias</h2>
+<ol><li>Consulte a aplicação e o e-mail da easyJet nas semanas anteriores.</li>
+<li>Se o voo for cancelado, faça uma captura do aviso e anote a data em que foi informado.</li>
+<li>Escolha o reembolso ou o voo alternativo e guarde todos os recibos de despesas.</li>
+<li><a href="/pt/">Calcule gratuitamente quanto lhe é devido</a> com a distância do seu percurso e gere a carta para reclamar sozinho.</li>
+<li>Reclame à easyJet pelo formulário da companhia. Se não responder em 6 semanas ou recusar, reclame gratuitamente à <a href="https://www.anac.pt/vPT/Passageiros/DireitosPassageiro/comoapresentarumaqueixa/Paginas/Comoapresentarumareclamacao.aspx" rel="noopener">ANAC</a> (voos com partida de Portugal; até 3 anos a contar da data do voo) ou à <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a> se o voo partiu de Espanha.</li></ol>""",
+            "faq": [
+                ("Quando é a greve da easyJet em Portugal?", "De sábado, 19, a quarta-feira, 23 de dezembro de 2026. Foi convocada pelo SNPVAC para os tripulantes de cabine com base em Lisboa, Porto e Faro."),
+                ("Recebo indemnização se a easyJet cancelar o meu voo por causa da greve?", "Em regra, sim, se for avisado com menos de 14 dias: a greve do pessoal da própria companhia não é uma circunstância extraordinária (TJUE, C-28/20). São 250, 400 ou 600 € consoante a distância, além do reembolso ou do voo alternativo."),
+                ("E se me avisarem com mais de 14 dias?", "Nesse caso não há indemnização fixa, mas pode escolher o reembolso total ou um voo alternativo. Para um voo a 19 de dezembro, o limite é 5 de dezembro."),
             ],
         },
         "en": {
@@ -398,17 +434,18 @@ def build(ctx):
     urls = []
     for g in G:
         P = g["paths"]
-        for l, other in (("es", "en"), ("en", "es")):
+        for l in [x for x in ("es", "en", "pt") if x in g]:
+            other = "en" if l == "es" else "es"
             t = g[l]
             faq_html = "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in t["faq"])
             ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]]}
-            home = "/" if l == "es" else "/en/"
-            cta = "Calcular mi compensación" if l == "es" else "Work out my compensation"
+            home = {"es": "/", "en": "/en/", "pt": "/pt/"}[l]
+            cta = {"es": "Calcular mi compensación", "en": "Work out my compensation", "pt": "Calcular a minha indemnização"}[l]
             body = f"""<div class="wrap prose"><h1>{t['h1']}</h1><p class="lead">{t['lead']}</p>
 <p><a class="btn btn-sign" href="{home}">{cta}</a></p>
 {t['body']}
-<h2>{'Preguntas frecuentes' if l == 'es' else 'Common questions'}</h2>{faq_html}</div>
+<h2>{ {"es": "Preguntas frecuentes", "en": "Common questions", "pt": "Perguntas frequentes"}[l] }</h2>{faq_html}</div>
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>"""
             ctx["emit"](l, P[l], ctx["page"](l, t["title"], t["desc"], P[l], body, P, P[other]))
             urls.append(P[l])

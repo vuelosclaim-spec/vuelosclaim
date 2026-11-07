@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "3 de noviembre de 2026", "en": "3 November 2026", "iso": "2026-11-03"}
+UPDATED = {"es": "7 de noviembre de 2026", "en": "7 November 2026", "iso": "2026-11-07"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -23,10 +23,6 @@ STRIKES = [
      "Barcelona-El Prat", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-10-01", "Hasta el 30 nov (lun, jue, vie, sáb, dom)", "Until 30 Nov (Mon, Thu, Fri, Sat, Sun)", "Sistema de equipajes de Barajas (Outsmart), paros de 05:00–07:00 y 13:00–15:00",
      "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00", "Madrid-Barajas", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
-    ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo (ENAV) en el aeropuerto de Bari", "Air traffic control (ENAV) at Bari airport",
-     "Bari (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
-    ("2026-11-06", "6 nov, 13:00–17:00", "6 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
-     "Toda Italia", "atc", "Sin confirmar: no figura en todos los calendarios; los mismos sindicatos tienen convocada otra el 21 nov", "Not confirmed: not in every calendar; the same unions have one called for 21 Nov", SRC_IT),
     ("2026-11-11", "11 nov, 24 h", "11 Nov, 24 h", "Huelga general en España (CCOO y UGT)", "General strike in Spain (CCOO and UGT unions)",
      "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos aún sin publicar", "Called; airport minimum services not yet published", SRC_GEN),
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
@@ -145,7 +141,7 @@ def _rows(l):
     out = []
     for s in sorted(STRIKES, key=lambda x: x[0]):
         _, wes, wen, des, den, where, kind, ses, sen, src = s[:10]
-        if l in ("it", "de"):
+        if l in ("it", "de", "pt"):
             when, what, st = X.ROWS[(s[0], den)][l]
             out.append(f"<tr data-end=\"{end_date(s)}\"><td>{e(when)}</td><td>{e(what)}<br><small>{e(X.WHERE[l][where])}</small></td><td>{X.KIND[l][kind]}</td><td>{X.COMP[l][kind]}</td>"
                        f"<td>{e(st)} · <a href=\"{src}\" rel=\"noopener\">{X.PAGE[l]['source']}</a></td></tr>")
@@ -227,28 +223,29 @@ def build(ctx):
 <style>.sk{{display:grid;gap:12px;max-width:520px;margin:12px 0}}.sk label{{display:grid;gap:4px;font-weight:600}}.sk input,.sk select{{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit}}</style>
 <script type="application/ld+json">{json.dumps(faq_ld, ensure_ascii=False)}</script>
 <script>{CHECKER_JS}</script>"""
-        alts = {**paths, "it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/"}
+        alts = {**paths, "it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/", "pt": "/pt/greves-voos/"}
         ctx["emit"](l, paths[l], ctx["page"](l, title, desc, paths[l], body, alts, paths[other]))
     return list(paths.values()) + build_x(ctx)
 
 
 MESI = {"it": ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
-        "de": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]}
+        "de": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+        "pt": ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]}
 
 
 def build_x(ctx):
-    """Italian and German calendars (same rows and sources; texts in strikes_i18n.py)."""
-    paths = {"it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/"}
+    """Italian, German and Portuguese calendars (same rows and sources; texts in strikes_i18n.py)."""
+    paths = {"it": "/it/scioperi-aerei/", "de": "/de/streik-fluege/", "pt": "/pt/greves-voos/"}
     y, m, d = (int(x) for x in UPDATED["iso"].split("-"))
-    upd = {"it": f"{d} {MESI['it'][m - 1]} {y}", "de": f"{d}. {MESI['de'][m - 1]} {y}"}
-    for l in ("it", "de"):
+    upd = {"it": f"{d} {MESI['it'][m - 1]} {y}", "de": f"{d}. {MESI['de'][m - 1]} {y}", "pt": f"{d} de {MESI['pt'][m - 1]} de {y}"}
+    for l in ("it", "de", "pt"):
         P = X.PAGE[l]
         srcs = (SRC_MIN, SRC_IT, SRC_GEN, SRC_LBA, SRC_DGERT)
         src = f"<p><small>{P['sources']}: " + " · ".join(f'<a href="{u}">{n}</a>' for u, n in zip(srcs, P["src_names"])) + "</small></p>"
         faq_html = "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in P["faq"])
         faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in P["faq"]]}
-        home = "/it/" if l == "it" else "/de/"
+        home = f"/{l}/"
         body = f"""<div class="wrap prose"><h1>{P['h1']}</h1><p class="lead">{P['lead'].format(u=upd[l])}</p>
 <div class="board"><table><thead><tr>{P['th']}</tr></thead><tbody>{_rows(l)}</tbody></table></div>
 <p id="sk-none" class="lead" hidden>{P['none']}</p>

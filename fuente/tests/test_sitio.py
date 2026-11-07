@@ -136,7 +136,7 @@ def check_site():
             if not vis_label.startswith(txt.strip()):
                 err(f"{url}: el nombre accesible del selector de idioma no incluye el texto visible «{txt}»")
     # Diseño sobrio: sin el bloque de tarjetas «Por qué usar VuelosClaim» en las portadas (era el elemento más genérico)
-    for url in ("/", "/en/", "/it/", "/de/"):
+    for url in ("/", "/en/", "/it/", "/de/", "/pt/"):
         if url in pages and 'class="why-us"' in pages[url]:
             err(f"{url}: ha vuelto el bloque de tarjetas «Por qué usar VuelosClaim»")
     # Páginas de aeropuerto: bloque propio con datos de Aena y listas de enlaces recortadas (evita páginas casi duplicadas)
