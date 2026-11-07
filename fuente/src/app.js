@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   var cfg = window.CTT || {};
-  var LANG = ["en", "it", "de"].indexOf(cfg.lang) >= 0 ? cfg.lang : "es";
+  var LANG = ["en", "it", "de", "pt"].indexOf(cfg.lang) >= 0 ? cfg.lang : "es";
   var AIRLINES = cfg.airlines || [];
   var ALIAS_ES = {
     LHR: "Londres", LGW: "Londres", STN: "Londres", LTN: "Londres", LCY: "Londres", AMS: "Ámsterdam",
@@ -52,7 +52,17 @@
     SVQ: "Sevilla", PMI: "Palma de Mallorca", TFS: "Teneriffa Süd", TFN: "Teneriffa Nord", LPA: "Gran Canaria",
     AGP: "Málaga", CPH: "Kopenhagen", ARN: "Stockholm", WAW: "Warschau", PRG: "Prag", JFK: "New York", EWR: "New York"
   };
-  var ALIAS = { es: ALIAS_ES, en: ALIAS_EN, it: ALIAS_IT, de: ALIAS_DE }[LANG];
+  var ALIAS_PT = {
+    LHR: "Londres", LGW: "Londres", STN: "Londres", LTN: "Londres", LCY: "Londres", LIS: "Lisboa", OPO: "Porto", FAO: "Faro",
+    FNC: "Funchal", PDL: "Ponta Delgada", TER: "Terceira", PXO: "Porto Santo", HOR: "Horta", CDG: "Paris", ORY: "Paris", BVA: "Paris",
+    BRU: "Bruxelas", CRL: "Bruxelas", MUC: "Munique", BER: "Berlim", FRA: "Frankfurt", GVA: "Genebra", ZRH: "Zurique",
+    FCO: "Roma", CIA: "Roma", MXP: "Milão", BGY: "Milão", LIN: "Milão", VCE: "Veneza", NAP: "Nápoles", FLR: "Florença",
+    ATH: "Atenas", IST: "Istambul", SAW: "Istambul", MAD: "Madrid", BCN: "Barcelona", SVQ: "Sevilha", PMI: "Palma de Maiorca",
+    TFS: "Tenerife Sul", TFN: "Tenerife Norte", LPA: "Gran Canária", IBZ: "Ibiza", AGP: "Málaga", VLC: "Valência", ALC: "Alicante",
+    CPH: "Copenhaga", ARN: "Estocolmo", VIE: "Viena", WAW: "Varsóvia", PRG: "Praga", DUB: "Dublin", EDI: "Edimburgo",
+    AMS: "Amesterdão", LUX: "Luxemburgo", GRU: "São Paulo", GIG: "Rio de Janeiro", JFK: "Nova Iorque", EWR: "Nova Iorque"
+  };
+  var ALIAS = { es: ALIAS_ES, en: ALIAS_EN, it: ALIAS_IT, de: ALIAS_DE, pt: ALIAS_PT }[LANG];
   var T = {
     es: {
       regEU: "El vuelo sale de la UE, el EEE (Noruega, Islandia, Liechtenstein) o Suiza: se aplica el Reglamento (CE) 261/2004, sea cual sea la aerolínea.",
@@ -357,6 +367,107 @@
       downloaded: "Lettera scaricata.", dlFail: "Download non riuscito. Usa il pulsante per copiare.",
       file: "reclamo-volo.txt"
     },
+    pt: {
+      regEU: "O voo parte da UE, do EEE (Noruega, Islândia, Listenstaine) ou da Suíça: aplica-se o Regulamento (CE) n.º 261/2004, seja qual for a companhia aérea.",
+      reg3EU: "O voo chega à UE vindo de fora e foi operado por uma companhia europeia: aplica-se o Regulamento (CE) n.º 261/2004.",
+      reg3EUuk: "O voo chega à UE vindo de fora com uma companhia britânica: o regulamento europeu não o abrange, mas aplica-se a norma britânica UK261 (em libras).",
+      regUK: "O voo parte do Reino Unido: aplica-se a norma britânica UK261, em libras, seja qual for a companhia aérea.",
+      regUKin: "O voo chega ao Reino Unido vindo de fora com uma companhia britânica ou europeia: aplica-se o UK261, em libras.",
+      notIn: "O voo chega de fora da Europa com uma companhia que não é europeia nem britânica: nem o regulamento europeu nem o UK261 o abrangem.",
+      not3: "A viagem não parte nem chega à UE, ao EEE, à Suíça ou ao Reino Unido: estas normas não a abrangem, mesmo que a companhia seja europeia ou haja escala na Europa (TJUE, C-451/20).",
+      carrierUnknown: "O voo chega de fora da Europa: só está abrangido se tiver sido operado por uma companhia europeia (ou britânica, se chegar ao Reino Unido ou à UE com o UK261).",
+      mCarrier: "que companhia operou o voo (consta do cartão de embarque; pode não ser a que lhe vendeu o bilhete)",
+      mixed: "Esta companhia tem empresas europeias e britânicas. Se o voo foi operado pela britânica, aplica-se o UK261 em libras em vez do regulamento europeu.",
+      operating: "Conta a companhia que operou o voo, não a que lhe vendeu o bilhete.",
+      alsoUK: "Ao chegar ao Reino Unido com uma companhia britânica ou europeia, também pode aplicar-se o UK261. A indemnização só se recebe uma vez.",
+      alsoEU: "Ao chegar à UE com uma companhia europeia, também pode aplicar-se o regulamento europeu (em euros). A indemnização só se recebe uma vez.",
+      special: "Com estes dados, nem o regulamento europeu nem o UK261 o abrangeriam, mas não o podemos excluir: depende da licença da companhia que operou o voo e de normas locais que não conseguimos verificar.",
+      mSpecial: "que companhia operou o voo e quem lhe emitiu a licença (a UE, o Reino Unido ou uma autoridade local); pergunte também à autoridade de aviação local",
+      crown: "Jersey, Guernsey, a Ilha de Man e Gibraltar não fazem parte nem do Reino Unido nem da UE: para ambas as normas contam como origem ou destino externo (art. 3.º).",
+      gib: "Desde 15-07-2026 aplica-se o acordo UE–Reino Unido sobre Gibraltar. Não conseguimos confirmar se altera os direitos dos passageiros no seu aeroporto.",
+      lyr: "Svalbard está excluído do Acordo sobre o Espaço Económico Europeu (Protocolo 40): conta como origem ou destino fora do EEE.",
+      ecn: "O direito da UE não se aplica no norte de Chipre (Protocolo 10 do Ato de Adesão de 2003): o aeroporto de Ercan conta como fora da UE.",
+      notUKcomm: "O voo chega ao Reino Unido vindo de fora com uma companhia licenciada na Suíça, Noruega ou Islândia: para o UK261 não é comunitária nem britânica, por isso não o abrange.",
+      ukcommUnknown: "O voo chega ao Reino Unido vindo de fora: o UK261 só o abrange se a companhia tiver licença britânica ou de um país da UE, e esta companhia tem empresas licenciadas fora da UE.",
+      mLicence: "que empresa do grupo operou o voo e que país lhe emitiu a licença",
+      viaMixed: "A viagem chega à Europa vinda de fora com escalas em companhias diferentes: nenhum tribunal esclareceu qual a companhia que determina a cobertura neste caso.",
+      mViaMixed: "que companhia operou cada troço da viagem",
+      viaSingle: "Com escalas numa única reserva, a viagem conta como um todo: o atraso mede-se à chegada ao destino final e a distância é a linha reta entre a origem e o destino final (TJUE, C-11/11, C-559/16 e C-451/20).",
+      viaSeparate: "Com reservas separadas, cada voo reclama-se à parte: indique a origem e o destino do voo atrasado ou cancelado.",
+      fareStaff: "Os bilhetes gratuitos ou com tarifa reduzida não acessível ao público (por exemplo, de funcionário) estão excluídos do regulamento (art. 3.º, n.º 3). Os bilhetes com pontos ou integrados numa viagem organizada estão abrangidos.",
+      mStrikeSub: "quem contratou a empresa em greve e se a companhia podia ter evitado o atraso (pergunte por escrito à companhia)",
+      exact3: "3 horas exatas contam: o regulamento exige «três horas ou mais», medidas na abertura das portas no destino final (TJUE, C-402/07 e C-452/13). Com 2 h 59 min não há indemnização.",
+      bands: ["até 1500 km", "mais de 1500 km dentro da UE", "entre 1500 e 3500 km", "mais de 3500 km"],
+      dist: function (d, band, base) { return "Distância: " + d + " km (" + band + ") → até " + base + " por passageiro."; },
+      lt3: "Chegou ao destino final com menos de 3 horas de atraso: não há indemnização em dinheiro.",
+      lt3note: "Ainda assim, consoante a distância, a partir de 2, 3 ou 4 horas de atraso na partida a companhia deve dar-lhe refeições e bebidas.",
+      mDelay: "com quanto atraso chegou ao destino final",
+      full: "Chegou ao destino final com 3 horas ou mais de atraso: em regra tem direito a indemnização (TJUE, Sturgeon, C-402/07).",
+      half: function (m) { return "Nos voos de mais de 3500 km que não sejam dentro da UE, com atraso entre 3 e 4 horas, a indemnização reduz-se a metade: " + m + " (art. 7.º, n.º 2)."; },
+      arrival: "O atraso mede-se no destino final, quando se abrem as portas do avião (TJUE, C-452/13).",
+      gt14: "Foi informado do cancelamento com 14 dias ou mais de antecedência: não há indemnização (art. 5.º, n.º 1, alínea c), subalínea i)).",
+      gt14note: "Continua a ter direito a escolher entre o reembolso do bilhete e um voo alternativo.",
+      mNotice: "com quantos dias de antecedência foi informado do cancelamento",
+      n7to14: "Aviso entre 7 e 13 dias: a companhia só não paga se lhe ofereceu um voo alternativo com partida no máximo 2 horas antes e chegada menos de 4 horas depois do original (art. 5.º, n.º 1, alínea c), subalínea ii)).",
+      nlt7: "Aviso com menos de 7 dias: a companhia só não paga se lhe ofereceu um voo alternativo com partida no máximo 1 hora antes e chegada menos de 2 horas depois do original (art. 5.º, n.º 1, alínea c), subalínea iii)).",
+      rerouteNo: "Não lhe ofereceram um voo alternativo: esta exceção não se aplica.",
+      mReroute: "se lhe ofereceram um voo alternativo",
+      mRerouteTimes: "a que horas partia e chegava o voo alternativo em relação ao original",
+      exempt: "O voo alternativo que lhe ofereceram cumpre estes limites: não há indemnização.",
+      exemptNote: "Mantém o direito ao reembolso ou ao voo alternativo, e à assistência durante a espera.",
+      notExempt: "O voo alternativo que lhe ofereceram não cumpre estes limites: a exceção não se aplica.",
+      accepted: "Aceitou o voo alternativo: isso não lhe retira a indemnização.",
+      rejected: "Recusou o voo alternativo: pode pedir o reembolso do bilhete além da indemnização.",
+      reduced: function (m) { return "Como o voo alternativo chegou com pouco atraso, a companhia pode reduzir a indemnização a metade: " + m + " (art. 7.º, n.º 2)."; },
+      reduceMaybe: function (m) { return "Se o voo alternativo chegou no máximo 3 horas depois do original, a companhia pode reduzi-la a metade: " + m + " (art. 7.º, n.º 2)."; },
+      vol: "Cedeu o lugar voluntariamente: não há indemnização fixa. Tem direito ao que combinou com a companhia, mais o reembolso ou um voo alternativo (art. 4.º, n.º 1).",
+      mVol: "se cedeu o lugar voluntariamente ou se lhe recusaram o embarque contra a sua vontade",
+      checkinNo: "Para ter direito, é preciso apresentar-se a tempo no check-in e no embarque (art. 3.º, n.º 2). Se chegou tarde, não há indemnização.",
+      mCheckin: "se se apresentou a tempo no check-in e no embarque, com os documentos em ordem",
+      reasonable: "Se lhe recusaram o embarque por motivos razoáveis (saúde, segurança ou documentos de viagem inválidos), não há indemnização (art. 2.º, alínea j)).",
+      overbook: "Recusaram-lhe o embarque contra a sua vontade por overbooking ou outro motivo operacional: tem direito a indemnização (art. 4.º, n.º 3).",
+      reasonUnknown: "Não lhe explicaram o motivo: a recusa de embarque dá direito a indemnização, salvo motivos razoáveis de saúde, segurança ou documentos (TJUE, C-321/11).",
+      deniedNoExtra: "Na recusa de embarque a companhia não pode invocar circunstâncias extraordinárias (TJUE, C-22/11).",
+      c: {
+        unknown: "Não lhe deram um motivo. A companhia só não paga se provar uma circunstância extraordinária que não podia evitar com medidas razoáveis (art. 5.º, n.º 3).",
+        tech: "As avarias do avião detetadas na manutenção ou na operação normal não isentam do pagamento (TJUE, C-549/07). Só um defeito oculto de fabrico reconhecido pelo fabricante ou pelas autoridades o poderia fazer (C-257/14).",
+        crew: "A falta de tripulação ou a doença súbita de um tripulante não é uma circunstância extraordinária (TJUE, C-156/22 a C-158/22).",
+        strike_own: "A greve do pessoal da própria companhia não a isenta de pagar (TJUE, C-28/20).",
+        strike_ext: "Uma greve dos controladores aéreos ou do pessoal do aeroporto pode ser uma circunstância extraordinária (Orientações da Comissão de 2024, ponto 5.2.3).",
+        strike_sub: "Não está esclarecido se a greve de uma empresa que trabalha para a companhia (assistência em escala, catering, limpeza) é uma circunstância extraordinária: nem o TJUE nem as orientações da Comissão o precisam.",
+        weather: "Condições meteorológicas incompatíveis com a segurança do voo podem ser uma circunstância extraordinária.",
+        atc: "Uma restrição do controlo de tráfego aéreo não isenta por si só: a companhia tem de indicar a causa de fundo e provar que era extraordinária, e só pode descontar o atraso devido a ela (TJUE, C-108/26, 2026).",
+        security: "Os riscos de segurança (ameaças, encerramento do espaço aéreo, instabilidade política) são circunstâncias extraordinárias.",
+        bird: "A colisão com uma ave ou com um objeto na pista é considerada uma circunstância extraordinária (TJUE, C-315/15 e C-501/17).",
+        knock: "Se o atraso vem de um voo anterior do mesmo avião, só isenta se nesse voo houve uma circunstância extraordinária que causou diretamente o seu atraso, e não uma decisão da companhia, como esperar por passageiros de outro voo (TJUE, C-74/19; Tribunal Geral, T-656/24, 2026).",
+        extra: "A companhia invoca uma circunstância extraordinária. Se a provar, não tem de pagar."
+      },
+      strikeOwnNote: "Exceção: que as reivindicações da greve só pudessem ser satisfeitas pelas autoridades públicas.",
+      mAtc: "o que causou a restrição do controlo aéreo (pergunte por escrito à companhia)",
+      mKnock: "o que causou o atraso do voo anterior (pergunte por escrito à companhia)",
+      extraNote: function (m) { return "A companhia tem de o provar e demonstrar que tomou todas as medidas razoáveis. Se não o conseguir (por exemplo, outros voos partiram normalmente), pode ter direito a " + m + " por passageiro."; },
+      hPos: function (m) { return "Possível direito a indemnização: até " + m + " por passageiro"; },
+      hNo: "A indemnização não parece ser devida",
+      hIns: "Informação insuficiente para o determinar",
+      insAmt: function (m) { return "Se os dados em falta lhe forem favoráveis, pode ter direito a até " + m + " por passageiro."; },
+      missing: "Falta saber: ",
+      letterLater: "Quando completar os dados em falta, poderá gerar uma carta de reclamação.",
+      loading: "A carregar a lista de aeroportos…",
+      acLoading: "A carregar os aeroportos… um momento.",
+      acError: "Não foi possível carregar a lista de aeroportos. Carregue em «Tentar de novo» abaixo.",
+      acNone: "Não encontramos este aeroporto. Experimente a cidade, o nome ou o código de 3 letras (LIS, OPO…).",
+      pick: "Escolha o aeroporto na lista que aparece enquanto escreve.",
+      acCount: function (n) { return (n === 1 ? "1 aeroporto encontrado" : n + " aeroportos encontrados") + ". Use as setas para cima e para baixo para escolher e prima Enter."; },
+      tableScroll: "tabela com deslocamento",
+      wizNext: "Continuar", wizBack: "Voltar", wizStep: "Passo {n} de {t}", wizSee: "Ver o resultado", wizEdit: "Alterar respostas", wizResult: "O seu resultado", wizWhy: "Porquê este resultado", wizRoute: "Escolha na lista o aeroporto de partida e o de destino para continuar.",
+      same: "A origem e o destino são o mesmo aeroporto.",
+      loadError: "Não foi possível carregar a lista de aeroportos. Verifique a ligação e tente de novo.",
+      offline: "Parece estar sem ligação. Quando a ligação voltar, a lista de aeroportos carrega automaticamente.",
+      copied: "Carta copiada. Cole-a no formulário ou no e-mail da companhia.",
+      selected: "Texto selecionado: copie-o com Ctrl+C ou com um toque prolongado.",
+      downloaded: "Carta descarregada.", dlFail: "Não foi possível descarregar. Use o botão para copiar.",
+      file: "reclamacao-voo.txt"
+    },
     de: {
       regEU: "Der Flug startet in der EU, im EWR (Norwegen, Island, Liechtenstein) oder in der Schweiz: Es gilt die Verordnung (EG) Nr. 261/2004, egal mit welcher Fluggesellschaft.",
       reg3EU: "Der Flug kommt von außerhalb in die EU und wurde von einer europäischen Fluggesellschaft durchgeführt: Es gilt die Verordnung (EG) Nr. 261/2004.",
@@ -497,7 +608,7 @@
     var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a[4] * r) * Math.cos(b[4] * r) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
     return Math.round(2 * R * Math.asin(Math.sqrt(h)));
   }
-  function fmt(n) { return n.toLocaleString({ en: "en-GB", es: "es-ES", it: "it-IT", de: "de-DE" }[LANG]); }
+  function fmt(n) { return n.toLocaleString({ en: "en-GB", es: "es-ES", it: "it-IT", de: "de-DE", pt: "pt-PT" }[LANG]); }
   function money(n, cur) {
     if (LANG === "en") return (cur === "GBP" ? "£" : "€") + fmt(n);
     return fmt(n) + (cur === "GBP" ? " £" : " €");
@@ -669,7 +780,7 @@
   // Accepts IATA codes, city names (also Spanish/English aliases) and airport names, accents and case ignored.
   // Every airport is scored before sorting, so an exact code is never lost among many partial matches.
   var loadState = "loading"; // loading | ready | error
-  function haystack(a) { return a._h || (a._h = norm([a[0], a[1], a[2], ALIAS_ES[a[0]] || "", ALIAS_EN[a[0]] || "", ALIAS_IT[a[0]] || "", ALIAS_DE[a[0]] || ""].join(" "))); }
+  function haystack(a) { return a._h || (a._h = norm([a[0], a[1], a[2], ALIAS_ES[a[0]] || "", ALIAS_EN[a[0]] || "", ALIAS_IT[a[0]] || "", ALIAS_DE[a[0]] || "", ALIAS_PT[a[0]] || ""].join(" "))); }
   function search(q) {
     q = norm(q.trim()).replace(/[()]/g, " ").replace(/\s+/g, " ").trim();
     if (!q) return [];
@@ -686,7 +797,7 @@
       else if (words.length > 1 && words[words.length - 1] === code && haystack(a).indexOf(words[0]) >= 0) score = 90; // "Madrid (MAD)" typed back
       else if (haystack(a).indexOf(q) >= 0) score = 50;
       else if (words.length > 1 && words.every(function (w) { return haystack(a).indexOf(w) >= 0; })) score = 40;
-      var home = LANG === "en" ? (a[3] === "ES" || UK[a[3]]) : LANG === "it" ? (a[3] === "IT" || a[3] === "ES") : LANG === "de" ? (a[3] === "DE" || a[3] === "AT" || a[3] === "CH" || a[3] === "ES") : a[3] === "ES";
+      var home = LANG === "en" ? (a[3] === "ES" || UK[a[3]]) : LANG === "it" ? (a[3] === "IT" || a[3] === "ES") : LANG === "de" ? (a[3] === "DE" || a[3] === "AT" || a[3] === "CH" || a[3] === "ES") : LANG === "pt" ? (a[3] === "PT" || a[3] === "ES") : a[3] === "ES";
       if (score >= 0) out.push([score + (home ? 5 : 0) + (a[6] ? 2 : 0), a]);
     }
     out.sort(function (x, y) { return y[0] - x[0] || (x[1][0] < y[1][0] ? -1 : 1); });
@@ -930,6 +1041,7 @@
   // ---------- Claim letter (runs only in the browser; only for "posible") ----------
   // ---------- Italian and German: care, where to claim and claim letter ----------
   var ENAC_CLAIM = "https://www.enac.gov.it/passeggeri/diritti-dei-passeggeri/modalita-di-reclamo-per-negato-imbarco-cancellazione-ritardo/";
+  var ANAC_CLAIM = "https://www.anac.pt/vPT/Passageiros/DireitosPassageiro/comoapresentarumaqueixa/Paginas/Comoapresentarumareclamacao.aspx";
   var EVZ_ADR = "https://www.evz.de/einkaufen-internet/odr-adr/schlichtungsstellen-deutschland/fernreise-nahverkehr.html";
   var CARE_X = {
     it: {
@@ -943,6 +1055,12 @@
       delay: function (h) { return ["Mahlzeiten und Getränke, wenn der Flug " + h + " Stunden oder mehr verspätet startet (bei dieser Entfernung).", "Hotel und Transfer, wenn sich der Abflug auf den nächsten Tag verschiebt.", "Mehr als 5 Stunden Verspätung? Sie können auf die Reise verzichten und die volle Erstattung verlangen."]; },
       cancel: ["Nach Ihrer Wahl: volle Erstattung innerhalb von 7 Tagen oder ein Ersatzflug.", "Mahlzeiten und Getränke, während Sie auf den Ersatzflug warten.", "Hotel und Transfer, wenn Sie übernachten müssen."],
       tip: "Nichts bekommen und selbst bezahlt? Bewahren Sie die Belege auf: Die Fluggesellschaft muss Ihnen die Kosten erstatten, auch bei außergewöhnlichen Umständen."
+    },
+    pt: {
+      head: "Seja qual for o resultado, durante a espera tem direito a:",
+      delay: function (h) { return ["Refeições e bebidas se o voo partir com " + h + " horas ou mais de atraso (para esta distância).", "Hotel e transporte se a partida passar para o dia seguinte.", "Mais de 5 horas de atraso? Pode desistir da viagem e pedir o reembolso total."]; },
+      cancel: ["À sua escolha: reembolso total no prazo de 7 dias ou um voo alternativo.", "Refeições e bebidas enquanto espera pelo voo alternativo.", "Hotel e transporte se tiver de passar a noite."],
+      tip: "Não lhe deram nada e pagou do seu bolso? Guarde os recibos: a companhia tem de lhe reembolsar, mesmo que a causa tenha sido extraordinária."
     }
   };
   var WHERE_X = {
@@ -952,7 +1070,9 @@
       es: '<a href="' + AESA_CLAIM + '" rel="noopener" target="_blank">AESA, l\'autorità spagnola dell\'aviazione (gratis)</a>',
       it: '<a href="' + ENAC_CLAIM + '" rel="noopener" target="_blank">l\'ENAC, l\'autorità italiana dell\'aviazione civile (gratis)</a>',
       de: '<a href="' + EVZ_ADR + '" rel="noopener" target="_blank">la conciliazione tedesca söp o l\'Ufficio federale di giustizia (gratis)</a>',
+      pt: '<a href="' + ANAC_CLAIM + '" rel="noopener" target="_blank">l\'ANAC, l\'autorità portoghese dell\'aviazione civile (gratis)</a>',
       lead: "Se rifiutano o non rispondono entro un mese: ",
+      ptLead: "Se rifiutano o non rispondono entro 6 settimane: ",
       other: function (dep) { return "Se rifiutano o non rispondono: l'organismo nazionale dell'aviazione del paese di " + (dep ? "partenza" : "arrivo") + ", gratis."; }
     },
     de: {
@@ -961,8 +1081,21 @@
       es: '<a href="' + AESA_CLAIM + '" rel="noopener" target="_blank">AESA, die spanische Luftfahrtbehörde (kostenlos)</a>',
       it: '<a href="' + ENAC_CLAIM + '" rel="noopener" target="_blank">ENAC, die italienische Luftfahrtbehörde (kostenlos)</a>',
       de: '<a href="' + EVZ_ADR + '" rel="noopener" target="_blank">die Schlichtungsstelle söp oder das Bundesamt für Justiz (kostenlos)</a>',
+      pt: '<a href="' + ANAC_CLAIM + '" rel="noopener" target="_blank">ANAC, die portugiesische Luftfahrtbehörde (kostenlos)</a>',
       lead: "Bei Ablehnung oder ohne Antwort innerhalb eines Monats: ",
+      ptLead: "Bei Ablehnung oder ohne Antwort innerhalb von 6 Wochen: ",
       other: function (dep) { return "Bei Ablehnung oder ohne Antwort: die nationale Durchsetzungsstelle des " + (dep ? "Abflug" : "Ankunfts") + "landes, kostenlos."; }
+    },
+    pt: {
+      h: "Onde reclamar", claim: function (n) { return "Reclame gratuitamente à " + n + ": "; }, page: "página oficial de reclamações",
+      uk: function (adr) { return "Se recusarem ou não responderem em 8 semanas: " + (adr && adr !== "CAA" ? adr + " (mediação gratuita)" : "o serviço de reclamações gratuito da CAA britânica") + "."; },
+      es: '<a href="' + AESA_CLAIM + '" rel="noopener" target="_blank">AESA, a autoridade espanhola da aviação (grátis)</a>',
+      it: '<a href="' + ENAC_CLAIM + '" rel="noopener" target="_blank">ENAC, a autoridade italiana da aviação civil (grátis)</a>',
+      de: '<a href="' + EVZ_ADR + '" rel="noopener" target="_blank">a entidade de conciliação alemã söp ou o Departamento Federal de Justiça (grátis)</a>',
+      pt: '<a href="' + ANAC_CLAIM + '" rel="noopener" target="_blank">ANAC, a Autoridade Nacional da Aviação Civil (grátis)</a>',
+      lead: "Se recusarem ou não responderem no prazo de um mês: ",
+      ptLead: "Se recusarem ou não responderem no prazo de 6 semanas: ",
+      other: function (dep) { return "Se recusarem ou não responderem: o organismo nacional de aviação do país de " + (dep ? "partida" : "chegada") + ", gratuitamente."; }
     }
   };
   function whereX(box, al, r, dep, arr, X) {
@@ -972,6 +1105,7 @@
     else if (nc === "ES") esc = X.lead + X.es + ".";
     else if (nc === "IT") esc = X.lead + X.it + ".";
     else if (nc === "DE") esc = X.lead + X.de + ".";
+    else if (nc === "PT") esc = X.ptLead + X.pt + ".";
     else esc = X.other(dep[6] === 1);
     h += "<p class=\"tip\">" + esc + "</p>";
     box.innerHTML = "<h3>" + X.h + "</h3>" + h;
@@ -1002,7 +1136,7 @@
       legal: { delay: "degli articoli 6 e 7 del Regolamento (CE) n. 261/2004 e della sentenza della Corte di giustizia dell'UE del 19 novembre 2009 (cause riunite C-402/07 e C-432/07, Sturgeon), che riconosce il diritto alla compensazione per ritardi all'arrivo di 3 ore o più",
                cancel: "degli articoli 5 e 7 del Regolamento (CE) n. 261/2004", denied: "degli articoli 4 e 7 del Regolamento (CE) n. 261/2004" },
       ukLegal: ["Regolamento (CE) n. 261/2004", "Regolamento (CE) n. 261/2004 nella versione vigente nel Regno Unito (UK261)"],
-      neb: { UK: "l'Autorità dell'aviazione civile del Regno Unito (CAA) o l'organismo di risoluzione delle controversie della compagnia", ES: "l'Agenzia statale per la sicurezza aerea spagnola (AESA)", IT: "l'Ente nazionale per l'aviazione civile (ENAC)", DE: "l'organismo di conciliazione competente (söp o Ufficio federale di giustizia) o l'Ufficio federale dell'aviazione civile (LBA)", other: "l'organismo nazionale competente in materia di diritti dei passeggeri" },
+      neb: { UK: "l'Autorità dell'aviazione civile del Regno Unito (CAA) o l'organismo di risoluzione delle controversie della compagnia", ES: "l'Agenzia statale per la sicurezza aerea spagnola (AESA)", IT: "l'Ente nazionale per l'aviazione civile (ENAC)", PT: "l'Autorità nazionale dell'aviazione civile portoghese (ANAC)", DE: "l'organismo di conciliazione competente (söp o Ufficio federale di giustizia) o l'Ufficio federale dell'aviazione civile (LBA)", other: "l'organismo nazionale competente in materia di diritti dei passeggeri" },
       text: function (d, f, legal, amt, total, km, reduced, neb) {
         return "Oggetto: Richiesta di compensazione pecuniaria, volo " + d.flight + " del " + d.date + "\n\n" +
           "Alla cortese attenzione del servizio clienti di " + d.airline + ",\n\n" +
@@ -1041,7 +1175,7 @@
       legal: { delay: "Artikel 6 und 7 der Verordnung (EG) Nr. 261/2004 sowie dem Urteil des Gerichtshofs der EU vom 19. November 2009 (verbundene Rechtssachen C-402/07 und C-432/07, Sturgeon), das bei einer Ankunftsverspätung von 3 Stunden oder mehr einen Anspruch auf Ausgleichszahlung anerkennt",
                cancel: "Artikel 5 und 7 der Verordnung (EG) Nr. 261/2004", denied: "Artikel 4 und 7 der Verordnung (EG) Nr. 261/2004" },
       ukLegal: ["Verordnung (EG) Nr. 261/2004", "Verordnung (EG) Nr. 261/2004 in der im Vereinigten Königreich geltenden Fassung (UK261)"],
-      neb: { UK: "die britische Luftfahrtbehörde (CAA) oder die Schlichtungsstelle der Fluggesellschaft", ES: "die spanische Agentur für Flugsicherheit (AESA)", IT: "die italienische Luftfahrtbehörde (ENAC)", DE: "die zuständige Schlichtungsstelle (söp oder Bundesamt für Justiz) oder das Luftfahrt-Bundesamt (LBA)", other: "die zuständige nationale Durchsetzungsstelle für Fluggastrechte" },
+      neb: { UK: "die britische Luftfahrtbehörde (CAA) oder die Schlichtungsstelle der Fluggesellschaft", ES: "die spanische Agentur für Flugsicherheit (AESA)", IT: "die italienische Luftfahrtbehörde (ENAC)", PT: "die portugiesische Luftfahrtbehörde (ANAC)", DE: "die zuständige Schlichtungsstelle (söp oder Bundesamt für Justiz) oder das Luftfahrt-Bundesamt (LBA)", other: "die zuständige nationale Durchsetzungsstelle für Fluggastrechte" },
       text: function (d, f, legal, amt, total, km, reduced, neb) {
         return "Betreff: Anspruch auf Ausgleichszahlung, Flug " + d.flight + " vom " + d.date + "\n\n" +
           "An den Kundenservice von " + d.airline + "\n\nSehr geehrte Damen und Herren,\n\n" +
@@ -1054,6 +1188,45 @@
           "Erhalte ich keine zufriedenstellende Antwort, werde ich mich an " + neb + " wenden und gegebenenfalls den Rechtsweg beschreiten.\n\n" +
           "Bordkarte und Buchungsbestätigung füge ich bei.\n\n" +
           "Mit freundlichen Grüßen\n" + d.name + "\n" + d.today + "\n";
+      }
+    },
+    pt: {
+      ph: { name: "[nome completo]", flight: "[número do voo]", booking: "[código de reserva]", date: "[data do voo]", airline: "[companhia aérea]" }, to: " para ",
+      cause: {
+        unknown: "A companhia não me comunicou o motivo.",
+        tech: "Foi-me indicado que o motivo foi um problema técnico, o que, segundo o Tribunal de Justiça da UE, não constitui por si só uma circunstância extraordinária (processo C-549/07).",
+        crew: "Foi-me indicado que o motivo foi a falta ou a indisposição da tripulação, o que não constitui uma circunstância extraordinária (processos C-156/22 a C-158/22).",
+        strike_own: "Foi-me indicado que o motivo foi uma greve do pessoal da própria companhia, o que não constitui uma circunstância extraordinária (processo C-28/20)."
+      },
+      delay: function (o) { return "O voo chegou ao destino final com um atraso " + (o.delay === "3to4" ? "entre 3 e 4 horas" : "superior a 4 horas") + "."; },
+      denied: "Foi-me recusado o embarque contra a minha vontade, apesar de me ter apresentado a tempo no check-in e no embarque com os documentos em ordem.",
+      deniedOver: " A companhia invocou overbooking ou outro motivo operacional.",
+      deniedNone: " Não me foi indicado qualquer motivo de saúde, segurança ou documentação.",
+      cancel: function (o) {
+        var n = o.notice === "7to14" ? "entre 7 e 13 dias" : "menos de 7 dias";
+        var s = "O voo foi cancelado e o cancelamento foi-me comunicado com " + n + " de antecedência. ";
+        if (o.reroute === "no") return s + "Não me foi oferecido um reencaminhamento.";
+        var dep = { le1: "no máximo 1 hora antes do original, ou depois,", "1to2": "entre 1 e 2 horas antes do original", gt2: "mais de 2 horas antes do original" }[o.rdep];
+        var arr = { lt2: "menos de 2 horas depois do original", "2to4": "entre 2 e 4 horas depois do original", ge4: "4 horas ou mais depois do original" }[o.rarr];
+        var acc = o.accepted === "yes" ? " Aceitei-o." : o.accepted === "no" ? " Não o aceitei e pedi o reembolso." : "";
+        return s + "O voo alternativo oferecido partia " + dep + " e chegava " + arr + ", fora dos limites do artigo 5.º, n.º 1, alínea c)." + acc;
+      },
+      legal: { delay: "dos artigos 6.º e 7.º do Regulamento (CE) n.º 261/2004 e do acórdão do Tribunal de Justiça da UE de 19 de novembro de 2009 (processos apensos C-402/07 e C-432/07, Sturgeon), que reconhece o direito a indemnização por atrasos na chegada de 3 horas ou mais",
+               cancel: "dos artigos 5.º e 7.º do Regulamento (CE) n.º 261/2004", denied: "dos artigos 4.º e 7.º do Regulamento (CE) n.º 261/2004" },
+      ukLegal: ["Regulamento (CE) n.º 261/2004", "Regulamento (CE) n.º 261/2004 na versão em vigor no Reino Unido (UK261)"],
+      neb: { UK: "a Autoridade de Aviação Civil do Reino Unido (CAA) ou a entidade de resolução de litígios da companhia", ES: "a Agência Estatal de Segurança Aérea de Espanha (AESA)", IT: "o Ente Nacional para a Aviação Civil de Itália (ENAC)", DE: "a entidade de conciliação competente (söp ou Departamento Federal de Justiça) ou o Departamento Federal de Aviação (LBA)", PT: "a Autoridade Nacional da Aviação Civil (ANAC)", other: "o organismo nacional competente em matéria de direitos dos passageiros" },
+      text: function (d, f, legal, amt, total, km, reduced, neb) {
+        return "Assunto: Pedido de indemnização, voo " + d.flight + " de " + d.date + "\n\n" +
+          "Ao serviço de apoio ao cliente da " + d.airline + ",\n\n" +
+          "Eu, " + d.name + ", viajei " + (d.n === 2 ? "juntamente com outro passageiro " : d.n > 2 ? "juntamente com outros " + (d.n - 1) + " passageiros " : "") +
+          "com a reserva " + d.booking + " no voo " + d.flight + " de " + d.date + ", de " + d.route + ".\n\n" + f + "\n\n" +
+          "Considero que, nos termos " + legal + ", tenho direito a uma indemnização de " + amt + " por passageiro" +
+          (total ? " (" + total + " no total para " + d.n + " passageiros)" : "") + ", correspondente a um voo de " + km + " km" + (reduced ? ", montante já reduzido nos termos do artigo 7.º, n.º 2" : "") + ", e solicito o respetivo pagamento.\n\n" +
+          "Caso considerem que ocorreu uma circunstância extraordinária que não poderia ter sido evitada mesmo que tivessem sido tomadas todas as medidas razoáveis, peço que me indiquem qual e me enviem a documentação que o comprove.\n\n" +
+          "Peço que me informem, no prazo de 30 dias, como e quando irão pagar a indemnização. Recordo que deve ser paga em numerário, por transferência bancária ou por cheque, e que só aceitarei vales ou outros serviços com o meu acordo por escrito (artigo 7.º, n.º 3).\n\n" +
+          "Na falta de uma resposta satisfatória, apresentarei reclamação perante " + neb + " e, se necessário, recorrerei aos tribunais.\n\n" +
+          "Junto o cartão de embarque e a confirmação da reserva.\n\n" +
+          "Com os melhores cumprimentos,\n" + d.name + "\n" + d.today + "\n";
       }
     }
   };
@@ -1068,7 +1241,7 @@
       route: cityOf(L.dep) + " (" + L.dep[0] + ")" + X.to + cityOf(L.arr) + " (" + L.arr[0] + ")",
       today: ("0" + today.getDate()).slice(-2) + "." + ("0" + (today.getMonth() + 1)).slice(-2) + "." + today.getFullYear()
     };
-    if (lang === "it") d.today = d.today.replace(/\./g, "/");
+    if (lang === "it" || lang === "pt") d.today = d.today.replace(/\./g, "/");
     d.airline = L.airline || X.ph.airline;
     if (o.what === "delay") f = X.delay(o);
     else if (o.what === "cancel") f = X.cancel(o);
@@ -1198,7 +1371,7 @@
     if (LETTER_X[LANG]) { box.value = letterX(L, LETTER_X[LANG], LANG); return; }
     box.value = en ? letterEN(L, d) : letterES(L, d);
   }
-  window.CTT_letters = { es: letterES, en: letterEN, it: function (L, d) { return letterX(L, LETTER_X.it, "it", d); }, de: function (L, d) { return letterX(L, LETTER_X.de, "de", d); } }; // exposed for tests
+  window.CTT_letters = { es: letterES, en: letterEN, it: function (L, d) { return letterX(L, LETTER_X.it, "it", d); }, de: function (L, d) { return letterX(L, LETTER_X.de, "de", d); }, pt: function (L, d) { return letterX(L, LETTER_X.pt, "pt", d); } }; // exposed for tests
   function letterTools() {
     var panel = document.getElementById("letter");
     if (!panel) return;
@@ -1270,7 +1443,8 @@
         es: "Estimación orientativa, no un pago garantizado. Depende de las circunstancias y las pruebas del caso.",
         en: "Indicative estimate, not a guaranteed payment. Eligibility depends on the facts and evidence.",
         it: "Stima indicativa, non un pagamento garantito. Il diritto dipende dai fatti e dalle prove.",
-        de: "Unverbindliche Schätzung, keine garantierte Zahlung. Der Anspruch hängt vom Einzelfall und den Nachweisen ab."
+        de: "Unverbindliche Schätzung, keine garantierte Zahlung. Der Anspruch hängt vom Einzelfall und den Nachweisen ab.",
+        pt: "Estimativa indicativa, não um pagamento garantido. O direito depende dos factos e das provas do caso."
       }[LANG];
       ticketHead.insertAdjacentElement("afterend", estimate);
     }

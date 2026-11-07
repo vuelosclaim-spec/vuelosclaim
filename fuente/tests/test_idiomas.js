@@ -1,4 +1,4 @@
-// Pruebas de los idiomas añadidos (italiano y alemán) de la calculadora: `node fuente/tests/test_idiomas.js`.
+// Pruebas de los idiomas añadidos (italiano, alemán y portugués) de la calculadora: `node fuente/tests/test_idiomas.js`.
 // 1) Cada idioma tiene exactamente los mismos textos que el español (ni uno de más ni de menos, mismas funciones).
 // 2) El motor da el mismo veredicto, importe y moneda en todos los idiomas para miles de casos aleatorios.
 // 3) Las cartas en italiano y alemán se generan sin huecos ("undefined", "NaN") y citan el artículo correcto.
@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, "..");
 const airports = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "airports.min.json"), "utf8"));
 const airlines = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "airlines.json"), "utf8"));
 const byCode = Object.fromEntries(airports.map((a) => [a[0], a]));
-const LANGS = ["es", "en", "it", "de"];
+const LANGS = ["es", "en", "it", "de", "pt"];
 
 function load(lang) {
   const window = { CTT: { lang, airlines: airlines.map((a) => ({ slug: a.slug, eu: a.eu, uk: a.uk, ukcomm: a.ukcomm === undefined ? true : a.ukcomm })) } };
@@ -36,10 +36,10 @@ function shape(o, p) {
   return out;
 }
 const TT = W.es.CTT_strings;
-ok(TT && TT.it && TT.de, "app.js debe exponer los textos (window.CTT_strings) con it y de");
+ok(TT && TT.it && TT.de && TT.pt, "app.js debe exponer los textos (window.CTT_strings) con it, de y pt");
 if (TT) {
   const ref = shape(TT.es);
-  for (const l of ["en", "it", "de"]) {
+  for (const l of ["en", "it", "de", "pt"]) {
     const s = shape(TT[l]);
     for (const k of Object.keys(ref)) ok(s[k] === ref[k], `${l}: falta o cambia de tipo ${k}`);
     for (const k of Object.keys(s)) ok(k in ref, `${l}: sobra ${k}`);
@@ -67,7 +67,7 @@ for (let i = 0; i < 3000; i++) {
   const o = { dep, arr, airline: pick(alist, rnd(alist.length)) };
   for (const [k, v] of Object.entries(OPTS)) o[k] = pick(v, rnd(v.length));
   const base = W.es.CTT_compute(o);
-  for (const l of ["en", "it", "de"]) {
+  for (const l of ["en", "it", "de", "pt"]) {
     const r = W[l].CTT_compute(o);
     ok(r.verdict === base.verdict && r.amount === base.amount && r.cur === base.cur && r.potential === base.potential,
       `${l}: resultado distinto en ${dep[0]}-${arr[0]} ${JSON.stringify({ what: o.what, delay: o.delay, notice: o.notice, cause: o.cause })}`);
@@ -75,16 +75,17 @@ for (let i = 0; i < 3000; i++) {
   }
 }
 
-// 3) Cartas en italiano y alemán
+// 3) Cartas en italiano, alemán y portugués
 const d = { n: 2, name: "Maria Rossi", flight: "AZ123", booking: "ABC123", date: "01/11/2026", route: "Roma (FCO) a Madrid (MAD)", today: "02.11.2026" };
-for (const l of ["it", "de"]) {
+const ART = { it: ["articoli 6 e 7", "articoli 5 e 7", "articoli 4 e 7", "Regolamento (CE) n. 261/2004"], de: ["Artikel 6 und 7", "Artikel 5 und 7", "Artikel 4 und 7", "Verordnung (EG) Nr. 261/2004"], pt: ["artigos 6.º e 7.º", "artigos 5.º e 7.º", "artigos 4.º e 7.º", "Regulamento (CE) n.º 261/2004"] };
+for (const l of ["it", "de", "pt"]) {
   const letters = W[l].CTT_letters;
   ok(letters && typeof letters[l] === "function", `${l}: falta la carta`);
   if (!letters || !letters[l]) continue;
   const cases = [
-    ["delay", { what: "delay", delay: "gt4", cause: "tech" }, l === "it" ? "articoli 6 e 7" : "Artikel 6 und 7"],
-    ["cancel", { what: "cancel", notice: "lt7", reroute: "yes", rdep: "gt2", rarr: "ge4", accepted: "no", cause: "crew" }, l === "it" ? "articoli 5 e 7" : "Artikel 5 und 7"],
-    ["denied", { what: "denied", denied: "invol", checkin: "yes", dreason: "overbooking" }, l === "it" ? "articoli 4 e 7" : "Artikel 4 und 7"],
+    ["delay", { what: "delay", delay: "gt4", cause: "tech" }, ART[l][0]],
+    ["cancel", { what: "cancel", notice: "lt7", reroute: "yes", rdep: "gt2", rarr: "ge4", accepted: "no", cause: "crew" }, ART[l][1]],
+    ["denied", { what: "denied", denied: "invol", checkin: "yes", dreason: "overbooking" }, ART[l][2]],
   ];
   for (const [name, o, art] of cases) {
     const L = { o, r: { regime: "EU", amount: 250, full: 250, cur: "EUR", dist: 1365 }, dep: byCode.FCO, arr: byCode.MAD, airline: "ITA Airways" };
@@ -93,7 +94,7 @@ for (const l of ["it", "de"]) {
     ok(t.includes(art), `${l}/${name}: no cita ${art}`);
     ok(t.includes("Maria Rossi") && t.includes("AZ123") && t.includes("ABC123"), `${l}/${name}: faltan los datos del pasajero`);
     ok(/250\s?€/.test(t) && /500\s?€/.test(t), `${l}/${name}: importe por pasajero o total incorrecto`);
-    ok(t.includes(l === "it" ? "Regolamento (CE) n. 261/2004" : "Verordnung (EG) Nr. 261/2004"), `${l}/${name}: no cita el reglamento`);
+    ok(t.includes(ART[l][3]), `${l}/${name}: no cita el reglamento`);
   }
 }
 

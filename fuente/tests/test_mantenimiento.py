@@ -55,13 +55,13 @@ for i, item in enumerate(strikes.STRIKES, 1):
     if last < today:
         warnings.append(f"Entrada {i}: huelga vencida el {last}; comprobar limpieza editorial")
 
-# Calendario en italiano y alemán: cada fila y cada lugar tienen traducción (strikes_i18n.py)
+# Calendario en italiano, alemán y portugués: cada fila y cada lugar tienen traducción (strikes_i18n.py)
 import strikes_i18n
 for i, item in enumerate(strikes.STRIKES, 1):
     tr = strikes_i18n.ROWS.get((item[0], item[4]))
-    if not tr or set(tr) != {"it", "de"} or not all(all(x.strip() for x in tr[l]) for l in tr):
-        errors.append(f"Entrada {i}: falta la traducción al italiano o al alemán en strikes_i18n.ROWS")
-    for l in ("it", "de"):
+    if not tr or set(tr) != {"it", "de", "pt"} or not all(all(x.strip() for x in tr[l]) for l in tr):
+        errors.append(f"Entrada {i}: falta la traducción al italiano, al alemán o al portugués en strikes_i18n.ROWS")
+    for l in ("it", "de", "pt"):
         if item[5] not in strikes_i18n.WHERE[l]:
             errors.append(f"Entrada {i}: ubicación sin traducción ({l}): {item[5]}")
 stale = set(strikes_i18n.ROWS) - {(s[0], s[4]) for s in strikes.STRIKES}
