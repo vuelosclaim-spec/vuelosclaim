@@ -16,9 +16,9 @@ ROWS = {
         "de": ("Bis 30. Nov. (Mo, Do, Fr, Sa, So)", "Gepäcksystem in Barajas (Outsmart), Arbeitsniederlegungen 05:00–07:00 und 13:00–15:00", "Mit Mindestdiensten"),
         "pt": ("Até 30 nov (seg, qui, sex, sáb, dom)", "Sistema de bagagens de Barajas (Outsmart), paragens 05:00–07:00 e 13:00–15:00", "Com serviços mínimos")},
     ("2026-11-11", "General strike in Spain (CCOO and UGT unions)"): {
-        "it": ("11 nov, 24 h", "Sciopero generale in Spagna (CCOO e UGT)", "Proclamato; servizi minimi negli aeroporti non ancora pubblicati"),
-        "de": ("11. Nov., 24 Std.", "Generalstreik in Spanien (Gewerkschaften CCOO und UGT)", "Angekündigt; Mindestdienste an Flughäfen noch nicht veröffentlicht"),
-        "pt": ("11 nov, 24 h", "Greve geral em Espanha (sindicatos CCOO e UGT)", "Convocada; serviços mínimos nos aeroportos ainda não publicados")},
+        "it": ("11 nov, 24 h", "Sciopero generale in Spagna (CCOO e UGT)", "Proclamato; servizi minimi negli aeroporti pubblicati"),
+        "de": ("11. Nov., 24 Std.", "Generalstreik in Spanien (Gewerkschaften CCOO und UGT)", "Angekündigt; Mindestdienste an Flughäfen veröffentlicht"),
+        "pt": ("11 nov, 24 h", "Greve geral em Espanha (sindicatos CCOO e UGT)", "Convocada; serviços mínimos nos aeroportos já publicados")},
     ("2026-11-20", "General strike in Italy (CGIL union)"): {
         "it": ("20 nov, intera giornata", "Sciopero generale in Italia (CGIL)", "Proclamato; non compare nel calendario del trasporto aereo, effetto sui voli non confermato"),
         "de": ("20. Nov., ganztägig", "Generalstreik in Italien (Gewerkschaft CGIL)", "Angekündigt; nicht im Kalender für den Luftverkehr, Auswirkung auf Flüge nicht bestätigt"),
@@ -170,4 +170,4 @@ PAGE = {
              ("Recebo indemnização se os controladores aéreos fizerem greve?", "Em regra, não: as greves do controlo aéreo são consideradas circunstâncias extraordinárias. Mantém o direito ao reembolso ou a um voo alternativo e à assistência."),
              ("E se fizerem greve os pilotos ou os tripulantes da companhia?", "Então, em regra, sim: o Tribunal de Justiça da UE considera que a greve do pessoal da própria companhia não é extraordinária, por isso tem direito a 250, 400 ou 600 € se for avisado com menos de 14 dias.")]),
 }
-UPDATED = {"it": "7 novembre 2026", "de": "7. November 2026", "pt": "7 de novembro de 2026"}
+UPDATED = {"it": "8 novembre 2026", "de": "8. November 2026", "pt": "8 de novembro de 2026"}
