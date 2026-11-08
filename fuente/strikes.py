@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "7 de noviembre de 2026", "en": "7 November 2026", "iso": "2026-11-07"}
+UPDATED = {"es": "8 de noviembre de 2026", "en": "8 November 2026", "iso": "2026-11-08"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -24,7 +24,7 @@ STRIKES = [
     ("2026-10-01", "Hasta el 30 nov (lun, jue, vie, sáb, dom)", "Until 30 Nov (Mon, Thu, Fri, Sat, Sun)", "Sistema de equipajes de Barajas (Outsmart), paros de 05:00–07:00 y 13:00–15:00",
      "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00", "Madrid-Barajas", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-11-11", "11 nov, 24 h", "11 Nov, 24 h", "Huelga general en España (CCOO y UGT)", "General strike in Spain (CCOO and UGT unions)",
-     "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos aún sin publicar", "Called; airport minimum services not yet published", SRC_GEN),
+     "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos ya publicados", "Called; airport minimum services published", SRC_GEN),
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
      "Toda Italia", "general", "Convocada; no consta en el calendario del transporte aéreo, efecto en los vuelos sin confirmar", "Called; not listed in the air transport calendar, effect on flights not confirmed", SRC_IT),
     ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
