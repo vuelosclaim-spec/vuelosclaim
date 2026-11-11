@@ -186,16 +186,19 @@ G = [
         "paths": {"es": "/huelga-general-11-noviembre-vuelos/", "en": "/en/spain-general-strike-11-november-flights/"},
         "es": {
             "title": "Huelga 11 noviembre: vuelos, servicios mínimos y tus derechos",
-            "desc": "¿Vuelas el 11N? Ya hay servicios mínimos en aeropuertos: qué vuelos se protegen, qué hacer si cancelan el tuyo y cuándo te pagan 250–600 €.",
+            "desc": "¿Te cancelaron o retrasaron el vuelo por la huelga del 11N? Qué hacer ahora: reembolso, gastos de comida y hotel y cuándo te corresponden 250–600 €.",
             "h1": "Huelga general del 11 de noviembre: qué pasa con tu vuelo",
-            "lead": "CCOO y UGT han convocado una huelga general de 24 horas en toda España el miércoles 11 de noviembre de 2026. Si vuelas ese día, esto es lo que te corresponde si tu vuelo se cancela o se retrasa.",
-            "body": """<div class="why" role="note" style="border-left:4px solid #c0392b;padding:.8em 1em;background:#fdecea"><p><strong>⚠️ Faltan pocos días: la huelga es este miércoles 11 de noviembre.</strong> Ya hay servicios mínimos, pero no todos los vuelos están protegidos. Revisa hoy tu reserva y no canceles tú el billete: si lo cancelas tú, puedes perder el reembolso y la compensación.</p></div>
-<h2>Lo que se sabe (actualizado el 8 de noviembre)</h2>
+            "lead": "CCOO y UGT convocaron una huelga general de 24 horas en toda España el miércoles 11 de noviembre de 2026. Si tu vuelo de ese día se canceló o se retrasó, esto es lo que te corresponde y lo que puedes hacer ahora.",
+            "body": """<div class="why" role="note" style="border-left:4px solid #0d6b3b;padding:.8em 1em;background:#e8f4ec"><p><strong>¿Te cancelaron o retrasaron el vuelo el 11N? Esto es lo que puedes hacer ahora:</strong></p>
+<ol><li><strong>Reembolso u otro vuelo.</strong> Si te cancelaron el vuelo, eliges entre el reembolso del billete (en un máximo de 7 días) u otro vuelo lo antes posible. No aceptes un bono si prefieres el dinero.</li>
+<li><strong>Gastos de asistencia.</strong> Si esperaste y la aerolínea no te dio comida, bebida u hotel, reclámale esos gastos con los tiques (art. 9 del Reglamento 261/2004).</li>
+<li><strong>Compensación de 250–600 €: depende de quién hizo huelga.</strong> Si la cancelación se debió a la huelga del personal de la propia aerolínea, normalmente te corresponde (Tribunal de Justicia de la UE, C-28/20). Si se debió a la de controladores o personal del aeropuerto, la aerolínea puede alegar circunstancias extraordinarias. Pide por escrito a la aerolínea el motivo exacto y <a href="/">comprueba tu caso gratis</a>.</li>
+<li><strong>Guarda todo:</strong> tarjeta de embarque, el aviso de cancelación o retraso y los tiques.</li></ol></div>
+<h2>Cómo fue la huelga (actualizado el 11 de noviembre)</h2>
 <ul><li><strong>Fecha:</strong> miércoles 11 de noviembre de 2026, de 00:00 a 24:00, en toda España. En empresas con turnos, el primer turno puede empezar antes de medianoche.</li>
 <li><strong>Convocan:</strong> CCOO y UGT, con el apoyo de otros sindicatos.</li>
 <li><strong>Servicios mínimos en aeropuertos: ya publicados.</strong> El Ministerio de Transportes ha publicado la resolución para la huelga general del 11 de noviembre en su <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">página oficial de servicios mínimos</a>. Según los resúmenes publicados, protege más los vuelos con las islas, Ceuta y Melilla (entre el 52 % y el 85 % según el aeropuerto) que los internacionales y peninsulares largos (39–64 %) y, sobre todo, que los peninsulares con alternativa por tierra de menos de 5 horas (en torno al 32 % en la mayoría de aeropuertos). Es decir: <strong>en un vuelo nacional corto, la mayoría de vuelos no está garantizada.</strong> Consulta las cifras de tu aeropuerto en la resolución oficial.</li>
-<li><strong>Aerolíneas:</strong> según la información publicada a 8 de noviembre, Iberia, Iberia Express y Air Nostrum permiten cambiar la fecha de los vuelos del 11 o pedir el reembolso. Otras aerolíneas aún no han publicado avisos. Mira la web o la app de la tuya.</li>
-<li><strong>Para llegar al aeropuerto:</strong> metro, tren y autobús funcionarán con servicios mínimos. Calcula más tiempo.</li></ul>
+<li><strong>Aerolíneas:</strong> según la información publicada a 8 de noviembre, Iberia, Iberia Express y Air Nostrum permiten cambiar la fecha de los vuelos del 11 o pedir el reembolso. Otras aerolíneas aún no han publicado avisos. Mira la web o la app de la tuya.</li></ul>
 <p>Sigue el <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>: lo actualizamos con fuentes oficiales.</p>
 <h2>Si te cancelan el vuelo: siempre tienes estos derechos</h2>
 <ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004).</li>
@@ -223,16 +226,19 @@ G = [
         },
         "en": {
             "title": "Spain strike 11 November: flights, minimum services, rights",
-            "desc": "Flying on 11 Nov? Spain's airport minimum services are out: which flights are protected, what to do if cancelled and when you're owed €250–600.",
+            "desc": "Was your flight cancelled or delayed by Spain's 11 November strike? What to do now: refund, meals and hotel costs, and when you're owed €250–600.",
             "h1": "Spain general strike on 11 November: what it means for your flight",
-            "lead": "Spain's two main unions, CCOO and UGT, have called a 24-hour nationwide general strike for Wednesday 11 November 2026. If you're flying that day, here's what you're entitled to if your flight is cancelled or delayed.",
-            "body": """<div class="why" role="note" style="border-left:4px solid #c0392b;padding:.8em 1em;background:#fdecea"><p><strong>⚠️ Only days left: the strike is this Wednesday, 11 November.</strong> Minimum services are out, but not every flight is protected. Check your booking today and don't cancel it yourself: if you do, you can lose your refund and compensation.</p></div>
-<h2>What we know (updated 8 November)</h2>
+            "lead": "Spain's two main unions, CCOO and UGT, called a 24-hour nationwide general strike on Wednesday 11 November 2026. If your flight that day was cancelled or delayed, here's what you're entitled to and what to do now.",
+            "body": """<div class="why" role="note" style="border-left:4px solid #0d6b3b;padding:.8em 1em;background:#e8f4ec"><p><strong>Was your flight cancelled or delayed on 11 November? Here's what you can do now:</strong></p>
+<ol><li><strong>Refund or another flight.</strong> If your flight was cancelled, you choose between a refund (within 7 days) or rerouting as soon as possible. Don't accept a voucher if you'd rather have the money.</li>
+<li><strong>Care costs.</strong> If you had to wait and the airline didn't give you meals, drinks or a hotel, claim those costs back with your receipts (Art. 9 of Regulation 261/2004).</li>
+<li><strong>€250–600 compensation: it depends on who was on strike.</strong> If the cancellation was caused by the airline's own staff striking, you're usually owed it (CJEU, C-28/20). If it was air traffic control or airport staff, the airline may claim extraordinary circumstances. Ask the airline in writing for the exact reason and <a href="/en/">check your case for free</a>.</li>
+<li><strong>Keep everything:</strong> boarding pass, the cancellation or delay notice and your receipts.</li></ol></div>
+<h2>How the strike went (updated 11 November)</h2>
 <ul><li><strong>Date:</strong> Wednesday 11 November 2026, 00:00 to 24:00, across Spain. Shift workers may start before midnight.</li>
 <li><strong>Called by:</strong> CCOO and UGT, backed by other unions.</li>
 <li><strong>Airport minimum services: now published.</strong> Spain's Ministry of Transport has published its decision for the 11 November general strike on its <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">official minimum services page</a>. According to published summaries, flights to the islands, Ceuta and Melilla are better protected (52–85% depending on the airport) than international and long domestic flights (39–64%) and, above all, domestic flights with a land alternative under 5 hours (around 32% at most airports). In short: <strong>most short domestic flights are not guaranteed.</strong> Check your airport's figures in the official decision.</li>
-<li><strong>Airlines:</strong> according to information published on 8 November, Iberia, Iberia Express and Air Nostrum let you change the date of 11 November flights or get a refund. Other airlines haven't posted notices yet. Check your airline's website or app.</li>
-<li><strong>Getting to the airport:</strong> metro, trains and buses will run minimum services. Allow extra time.</li></ul>
+<li><strong>Airlines:</strong> according to information published on 8 November, Iberia, Iberia Express and Air Nostrum let you change the date of 11 November flights or get a refund. Other airlines haven't posted notices yet. Check your airline's website or app.</li></ul>
 <p>Keep an eye on our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>, updated from official sources.</p>
 <h2>If your flight is cancelled: you always get this</h2>
 <ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261; the same applies under UK261).</li>
