@@ -15,10 +15,6 @@ ROWS = {
         "it": ("Fino al 30 nov (lun, gio, ven, sab, dom)", "Sistema bagagli di Barajas (Outsmart), fermate 05:00–07:00 e 13:00–15:00", "Con servizi minimi"),
         "de": ("Bis 30. Nov. (Mo, Do, Fr, Sa, So)", "Gepäcksystem in Barajas (Outsmart), Arbeitsniederlegungen 05:00–07:00 und 13:00–15:00", "Mit Mindestdiensten"),
         "pt": ("Até 30 nov (seg, qui, sex, sáb, dom)", "Sistema de bagagens de Barajas (Outsmart), paragens 05:00–07:00 e 13:00–15:00", "Com serviços mínimos")},
-    ("2026-11-11", "General strike in Spain (CCOO and UGT unions)"): {
-        "it": ("11 nov, 24 h", "Sciopero generale in Spagna (CCOO e UGT)", "Proclamato; servizi minimi negli aeroporti pubblicati"),
-        "de": ("11. Nov., 24 Std.", "Generalstreik in Spanien (Gewerkschaften CCOO und UGT)", "Angekündigt; Mindestdienste an Flughäfen veröffentlicht"),
-        "pt": ("11 nov, 24 h", "Greve geral em Espanha (sindicatos CCOO e UGT)", "Convocada; serviços mínimos nos aeroportos já publicados")},
     ("2026-11-20", "General strike in Italy (CGIL union)"): {
         "it": ("20 nov, intera giornata", "Sciopero generale in Italia (CGIL)", "Proclamato; non compare nel calendario del trasporto aereo, effetto sui voli non confermato"),
         "de": ("20. Nov., ganztägig", "Generalstreik in Italien (Gewerkschaft CGIL)", "Angekündigt; nicht im Kalender für den Luftverkehr, Auswirkung auf Flüge nicht bestätigt"),
@@ -35,6 +31,10 @@ ROWS = {
         "it": ("22 nov, 24 h", "Personale di sicurezza aeroportuale (Sicuritalia IVRI)", "Proclamato"),
         "de": ("22. Nov., 24 Std.", "Sicherheitspersonal des Flughafens (Sicuritalia IVRI)", "Angekündigt"),
         "pt": ("22 nov, 24 h", "Pessoal de segurança do aeroporto (Sicuritalia IVRI)", "Convocada")},
+    ("2026-11-22", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)"): {
+        "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Proclamato"),
+        "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Angekündigt"),
+        "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Convocada")},
     ("2026-12-19", "easyJet cabin crew based in Portugal (SNPVAC)"): {
         "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Proclamato; servizi minimi fissati dal governo portoghese"),
         "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Angekündigt; Mindestdienste von der portugiesischen Regierung festgelegt"),
@@ -46,21 +46,21 @@ WHERE = {
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
                "Jerez, A Coruña, Siviglia, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Spagna)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Regno Unito)", "Bari (Italia)": "Bari", "Toda Italia": "Tutta Italia",
-           "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia",
+           "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia", "Pisa y Florencia (Italia)": "Pisa e Firenze",
            "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Tutta la Spagna: possibile impatto a terra e sui trasporti per l'aeroporto"},
     "de": {"Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
                "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Spanien)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Vereinigtes Königreich)", "Bari (Italia)": "Bari (Italien)", "Toda Italia": "Ganz Italien",
-           "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)",
+           "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)", "Pisa y Florencia (Italia)": "Pisa und Florenz (Italien)",
            "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Ganz Spanien: mögliche Auswirkungen am Boden und auf die Anreise zum Flughafen"},
     "pt": {"Barcelona-El Prat": "Barcelona-El Prat (Espanha)", "Madrid-Barajas": "Madrid-Barajas (Espanha)",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
                "Jerez, Corunha, Sevilha, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Espanha)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Reino Unido)", "Bari (Italia)": "Bari (Itália)", "Toda Italia": "Toda a Itália",
-           "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)",
+           "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)", "Pisa y Florencia (Italia)": "Pisa e Florença (Itália)",
            "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Toda a Espanha: possível impacto em terra e no transporte para o aeroporto"},
 }
@@ -170,4 +170,4 @@ PAGE = {
              ("Recebo indemnização se os controladores aéreos fizerem greve?", "Em regra, não: as greves do controlo aéreo são consideradas circunstâncias extraordinárias. Mantém o direito ao reembolso ou a um voo alternativo e à assistência."),
              ("E se fizerem greve os pilotos ou os tripulantes da companhia?", "Então, em regra, sim: o Tribunal de Justiça da UE considera que a greve do pessoal da própria companhia não é extraordinária, por isso tem direito a 250, 400 ou 600 € se for avisado com menos de 14 dias.")]),
 }
-UPDATED = {"it": "8 novembre 2026", "de": "8. November 2026", "pt": "8 de novembro de 2026"}
+UPDATED = {"it": "12 novembre 2026", "de": "12. November 2026", "pt": "12 de novembro de 2026"}
