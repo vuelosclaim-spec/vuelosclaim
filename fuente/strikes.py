@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "8 de noviembre de 2026", "en": "8 November 2026", "iso": "2026-11-08"}
+UPDATED = {"es": "12 de noviembre de 2026", "en": "12 November 2026", "iso": "2026-11-12"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -23,8 +23,6 @@ STRIKES = [
      "Barcelona-El Prat", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-10-01", "Hasta el 30 nov (lun, jue, vie, sáb, dom)", "Until 30 Nov (Mon, Thu, Fri, Sat, Sun)", "Sistema de equipajes de Barajas (Outsmart), paros de 05:00–07:00 y 13:00–15:00",
      "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00", "Madrid-Barajas", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
-    ("2026-11-11", "11 nov, 24 h", "11 Nov, 24 h", "Huelga general en España (CCOO y UGT)", "General strike in Spain (CCOO and UGT unions)",
-     "Toda España: posible impacto en tierra y en el transporte al aeropuerto", "general", "Convocada; servicios mínimos en aeropuertos ya publicados", "Called; airport minimum services published", SRC_GEN),
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
      "Toda Italia", "general", "Convocada; no consta en el calendario del transporte aéreo, efecto en los vuelos sin confirmar", "Called; not listed in the air transport calendar, effect on flights not confirmed", SRC_IT),
     ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
@@ -33,6 +31,8 @@ STRIKES = [
      "Milán-Malpensa (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
      "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
+    ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
+     "Pisa y Florencia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-19", "19–23 dic", "19–23 Dec", "Tripulantes de cabina de easyJet con base en Portugal (SNPVAC)", "easyJet cabin crew based in Portugal (SNPVAC)",
      "Lisboa, Oporto y Faro (Portugal)", "airline", "Convocada; servicios mínimos fijados por el Gobierno portugués", "Called; minimum services set by the Portuguese government", SRC_DGERT,
      ("/huelga-easyjet-portugal-diciembre/", "/en/easyjet-portugal-strike-december/")),
@@ -44,7 +44,7 @@ WHERE_EN = {
     "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
         "Jerez, A Coruña, Seville, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos",
     "Leeds Bradford (Reino Unido)": "Leeds Bradford (UK)", "Bari (Italia)": "Bari (Italy)", "Toda Italia": "All of Italy",
-    "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)",
+    "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)", "Pisa y Florencia (Italia)": "Pisa and Florence (Italy)",
     "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)",
     "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
 }
