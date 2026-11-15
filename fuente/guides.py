@@ -387,7 +387,7 @@ G = [
             "lead": "A 3 de noviembre de 2026 no hay ninguna huelga de la plantilla de Vueling (pilotos ni tripulantes de cabina) con servicios mínimos publicados por el Ministerio de Transportes. Pero hay otras huelgas que sí pueden afectar a tu vuelo de Vueling.",
             "body": """<h2>Lo que se sabe (actualizado el 3 de noviembre)</h2>
 <ul><li><strong>Huelga de la plantilla de Vueling:</strong> no figura ninguna en las <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">resoluciones de servicios mínimos del Ministerio de Transportes</a>, que es donde se publican todas las huelgas del sector aéreo en España. Si se convoca, la añadiremos al <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>.</li>
-<li><strong>Huelga general del 11 de noviembre:</strong> afecta a todo el país, también a los vuelos de Vueling. Mira <a href="/huelga-general-11-noviembre-vuelos/">qué pasa con tu vuelo el 11N</a>.</li>
+<li><strong>Huelga general del 11 de noviembre:</strong> ya pasó. Si tu vuelo de Vueling se canceló o se retrasó ese día, mira <a href="/huelga-general-11-noviembre-vuelos/">qué puedes hacer ahora</a>.</li>
 <li><strong>Otras huelgas en aeropuertos hasta el 30 de noviembre:</strong> el handling de Groundforce en El Prat (CGT) y el control de torre de SAERCO (USCA y CCOO) tienen huelgas indefinidas con servicios mínimos. Afectan a las aerolíneas y aeropuertos que trabajan con esas empresas; pregunta a Vueling si tu vuelo puede verse afectado.</li></ul>
 <p>Un precedente: entre noviembre de 2022 y enero de 2023, los tripulantes de cabina de Vueling (sindicato Stavla) convocaron huelga los viernes, domingos, lunes y festivos.</p>
 <h2>Si Vueling cancela tu vuelo: siempre tienes estos derechos</h2>
@@ -416,7 +416,7 @@ G = [
             "lead": "As of 3 November 2026, there is no strike by Vueling's own staff (pilots or cabin crew) with minimum services published by Spain's Ministry of Transport. But other strikes can still affect your Vueling flight.",
             "body": """<h2>What we know (updated 3 November)</h2>
 <ul><li><strong>Strike by Vueling staff:</strong> none appears in the <a href="https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos" rel="noopener">Ministry of Transport's minimum services orders</a>, where every aviation strike in Spain is published. If one is called, we'll add it to our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>.</li>
-<li><strong>General strike on 11 November:</strong> it covers the whole country, Vueling flights included. See <a href="/en/spain-general-strike-11-november-flights/">what it means for your flight</a>.</li>
+<li><strong>General strike on 11 November:</strong> it's over. If your Vueling flight was cancelled or delayed that day, see <a href="/en/spain-general-strike-11-november-flights/">what you can do now</a>.</li>
 <li><strong>Other airport strikes until 30 November:</strong> Groundforce ground handling at Barcelona El Prat (CGT) and SAERCO control tower staff (USCA and CCOO) have open-ended strikes with minimum services. They affect the airlines and airports that use those companies; ask Vueling whether your flight could be affected.</li></ul>
 <p>A precedent: between November 2022 and January 2023, Vueling cabin crew (Stavla union) went on strike on Fridays, Sundays, Mondays and public holidays.</p>
 <h2>If Vueling cancels your flight: you always get this</h2>
@@ -440,6 +440,82 @@ G = [
         },
     },
 ]
+
+
+MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
+AESA = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa"
+def es_page(air, slug_comp, status_extra, precedent, faq_extra):
+    return {
+        "title": f"Huelga {air} 2026: ¿hay huelga convocada? Tus derechos",
+        "desc": f"¿Hay huelga de {air} en 2026? Estado a 12 de noviembre, otras huelgas que pueden afectar a tu vuelo y qué te corresponde si {air} lo cancela.",
+        "h1": f"¿Hay huelga de {air} en 2026?",
+        "lead": f"A 12 de noviembre de 2026 no consta ninguna huelga convocada de la plantilla de {air} en España (pilotos, tripulantes de cabina o personal de tierra). Pero hay otras huelgas en aeropuertos que sí pueden afectar a tu vuelo.",
+        "body": f"""<h2>Lo que se sabe (actualizado el 12 de noviembre)</h2>
+<ul><li><strong>Huelga de la plantilla de {air}:</strong> no consta ninguna convocada. Todas las huelgas del sector aéreo en España llevan servicios mínimos que publica el <a href="{MIN}" rel="noopener">Ministerio de Transportes</a>; si se convoca una, la añadiremos al <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>.</li>
+<li><strong>Otras huelgas hasta el 30 de noviembre:</strong> controladores de torre de SAERCO (Lanzarote, Fuerteventura, La Palma, El Hierro, Sevilla, Jerez, Vigo, A Coruña y Madrid-Cuatro Vientos), handling de Groundforce en El Prat y sistema de equipajes de Barajas. Pueden afectar a vuelos de {air} en esos aeropuertos.</li>{status_extra}</ul>
+<p>{precedent}</p>
+<h2>Si {air} cancela tu vuelo: siempre tienes estos derechos</h2>
+<ul><li><strong>Reembolso en 7 días o vuelo alternativo</strong>, a tu elección (art. 8 del Reglamento 261/2004). No aceptes un bono si prefieres el dinero.</li>
+<li><strong>Asistencia mientras esperas:</strong> comida, bebida y, si hay que pasar la noche, hotel y traslado (art. 9). Si no te lo dan, guarda los tiques y reclámalos.</li></ul>
+<h2>¿Y la compensación de 250–600 €?</h2>
+<ul><li><strong>Huelga de pilotos, tripulantes o personal propio de {air}:</strong> normalmente sí, si te avisan con menos de 14 días. El Tribunal de Justicia de la UE dice que la huelga de la propia plantilla no es una circunstancia extraordinaria (asunto C-28/20).</li>
+<li><strong>Huelga de controladores aéreos o de empresas ajenas a {air}:</strong> normalmente no, porque se considera circunstancia extraordinaria.</li>
+<li><strong>Retraso de más de 3 horas</strong> por una huelga de la propia plantilla: los mismos importes que una cancelación.</li></ul>
+<h2>Qué hacer</h2>
+<ol><li>Revisa la app y el correo de {air} los días previos al vuelo.</li>
+<li>Si te cancelan, haz captura del aviso, anota la fecha y pide el motivo por escrito.</li>
+<li><a href="/">Comprueba gratis si te corresponde compensación</a> y genera la carta para reclamar tú mismo (mira también <a href="/{slug_comp}/">cómo reclamar a {air}</a>).</li>
+<li>Si {air} no responde en un mes o lo rechaza, reclama gratis en <a href="{AESA}" rel="noopener">AESA</a>.</li></ol>""",
+        "faq": [
+            (f"¿Hay huelga de {air} en noviembre o diciembre de 2026?", f"A 12 de noviembre de 2026 no consta ninguna huelga convocada de la plantilla de {air} en España. Sí hay huelgas en aeropuertos hasta el 30 de noviembre (controladores de torre de SAERCO, handling en El Prat y equipajes en Barajas) que pueden afectar a algunos vuelos."),
+            (f"¿Me paga {air} si cancela mi vuelo por una huelga?", f"Siempre tienes derecho al reembolso u otro vuelo y a la asistencia. La compensación de 250–600 € normalmente te corresponde si la huelga es de la propia plantilla de {air} y te avisan con menos de 14 días; si es de controladores o de empresas ajenas, normalmente no."),
+        ] + faq_extra,
+    }
+def en_page(air, slug_comp, status_extra, precedent, faq_extra):
+    return {
+        "title": f"{air} strike 2026: is one called? Your rights",
+        "desc": f"Is there a {air} strike in 2026? Status on 12 November, other strikes that can affect your flight, and what you're owed if {air} cancels it.",
+        "h1": f"Is there a {air} strike in 2026?",
+        "lead": f"As of 12 November 2026, no strike has been called by {air}'s own staff in Spain (pilots, cabin crew or ground staff). But other airport strikes can still affect your flight.",
+        "body": f"""<h2>What we know (updated 12 November)</h2>
+<ul><li><strong>Strike by {air} staff:</strong> none has been called. Every aviation strike in Spain gets minimum services published by the <a href="{MIN}" rel="noopener">Ministry of Transport</a>; if one is called, we'll add it to our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>.</li>
+<li><strong>Other strikes until 30 November:</strong> SAERCO control tower staff (Lanzarote, Fuerteventura, La Palma, El Hierro, Seville, Jerez, Vigo, A Coruña and Madrid-Cuatro Vientos), Groundforce ground handling at Barcelona El Prat and the Madrid-Barajas baggage system. They can affect {air} flights at those airports.</li>{status_extra}</ul>
+<p>{precedent}</p>
+<h2>If {air} cancels your flight: you always get this</h2>
+<ul><li><strong>A refund within 7 days or a new flight</strong>, your choice (Art. 8 of EU261). Don't accept a voucher if you'd rather have the money.</li>
+<li><strong>Care while you wait:</strong> meals, drinks and, if you're stuck overnight, a hotel and transfers (Art. 9). Keep your receipts if the airline doesn't provide it.</li></ul>
+<h2>What about €250–600 compensation?</h2>
+<ul><li><strong>{air}'s own pilots, cabin crew or staff on strike:</strong> usually yes, with less than 14 days' notice. The EU Court of Justice says an airline's own staff strike is not an extraordinary circumstance (case C-28/20).</li>
+<li><strong>Air traffic control or outside companies on strike:</strong> usually no, as it's treated as extraordinary.</li>
+<li><strong>Delays over 3 hours</strong> caused by the airline's own staff striking: the same amounts as a cancellation.</li></ul>
+<h2>What to do</h2>
+<ol><li>Check the {air} app and your emails in the days before you fly.</li>
+<li>If you're cancelled, screenshot the notice, note the date and ask for the reason in writing.</li>
+<li><a href="/en/">Check for free whether compensation applies</a> and generate a claim letter to send yourself (see also <a href="/en/{slug_comp}/">how to claim from {air}</a>).</li>
+<li>If {air} refuses or doesn't reply, escalate for free to AESA for flights from Spain, or to the airline's ADR scheme or the CAA for flights from the UK.</li></ol>""",
+        "faq": [
+            (f"Is there a {air} strike in November or December 2026?", f"As of 12 November 2026, no strike has been called by {air}'s own staff in Spain. There are airport strikes until 30 November (SAERCO control towers, El Prat ground handling and the Barajas baggage system) that can affect some flights."),
+            (f"Will {air} compensate me if a strike cancels my flight?", f"A refund or new flight and care while you wait always apply. €250–600 compensation is usually owed if {air}'s own staff are on strike and you're told less than 14 days before; for air traffic control or outside companies, usually not."),
+        ] + faq_extra,
+    }
+RYAN_ES_PREC = "Precedentes: en 2022, los tripulantes de cabina de Ryanair en España (sindicatos USO y SITCPLA) hicieron huelga varios días a la semana entre junio y diciembre; y en agosto de 2025, UGT convocó huelga del personal de handling de Ryanair (Azul Handling) en sus bases españolas."
+RYAN_EN_PREC = "Precedents: in 2022, Ryanair cabin crew in Spain (USO and SITCPLA unions) struck several days a week between June and December; and in August 2025, UGT called a strike by Ryanair's ground handling staff (Azul Handling) at its Spanish bases."
+IB_ES_PREC = "Precedente: del 5 al 8 de enero de 2024, el personal de tierra (handling) de Iberia hizo huelga y la aerolínea canceló 444 vuelos, con más de 45.600 viajeros afectados."
+IB_EN_PREC = "Precedent: from 5 to 8 January 2024, Iberia's ground handling staff went on strike and the airline cancelled 444 flights, affecting more than 45,600 passengers."
+RYAN_ES_FAQ = [("¿La huelga del handling de Ryanair (Azul Handling) da derecho a compensación?", "No hay una sentencia específica. Azul Handling es una filial de Ryanair, así que conviene pedir por escrito el motivo de la cancelación y comprobar tu caso. El reembolso u otro vuelo y la asistencia te corresponden siempre.")]
+RYAN_EN_FAQ = [("Does a strike by Ryanair's ground handling (Azul Handling) mean compensation?", "There is no specific ruling. Azul Handling is a Ryanair subsidiary, so ask for the reason for the cancellation in writing and check your case. A refund or new flight and care while you wait always apply.")]
+IB_ES_FAQ = [("¿Afecta a Iberia Express o Air Nostrum?", "Son aerolíneas distintas, cada una con su plantilla. Una huelga de Iberia no afecta automáticamente a Iberia Express ni a Air Nostrum (que opera vuelos de Iberia Regional); mira quién opera tu vuelo en la tarjeta de embarque.")]
+IB_EN_FAQ = [("Does it affect Iberia Express or Air Nostrum?", "They are separate airlines with their own staff. An Iberia strike doesn't automatically affect Iberia Express or Air Nostrum (which operates Iberia Regional flights); check who operates your flight on your boarding pass.")]
+NEW = [
+ {"paths": {"es": "/huelga-ryanair/", "en": "/en/ryanair-strike/"},
+  "es": es_page("Ryanair","compensacion-retraso-ryanair","",RYAN_ES_PREC,RYAN_ES_FAQ),
+  "en": en_page("Ryanair","ryanair-delay-compensation","",RYAN_EN_PREC,RYAN_EN_FAQ)},
+ {"paths": {"es": "/huelga-iberia/", "en": "/en/iberia-strike/"},
+  "es": es_page("Iberia","compensacion-retraso-iberia","",IB_ES_PREC,IB_ES_FAQ),
+  "en": en_page("Iberia","iberia-delay-compensation","",IB_EN_PREC,IB_EN_FAQ)},
+]
+
+G = G + NEW
 
 
 def build(ctx):
