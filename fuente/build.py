@@ -6,6 +6,7 @@ Cambia aquí el dominio y el enlace de afiliado cuando los tengas:
 """
 import html, json, math, os, re, shutil, unicodedata
 import uk_deep
+import airline_notes
 import uk_airports
 import strikes
 import compare
@@ -628,10 +629,10 @@ EURLEX = {"es": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32004
 UK_ADR_OK = {"AviationADR", "CEDR"}  # schemes approved by the CAA for airline disputes
 GUIDES = {
     "es": [("/vuelo-cancelado-que-hacer/", "Vuelo cancelado: qué hacer"), ("/overbooking-compensacion/", "Overbooking"),
-           ("/circunstancias-extraordinarias-vuelo/", "Circunstancias extraordinarias"), ("/huelgas-vuelos-espana/", "Huelgas"), ("/huelga-general-11-noviembre-vuelos/", "Huelga general 11 de noviembre"), ("/huelga-easyjet-portugal-diciembre/", "Huelga easyJet Portugal diciembre"), ("/retraso-vuelo-reclamar/", "Reclamar un retraso"), ("/conexion-perdida-vuelo/", "Conexión perdida"), ("/equipaje-perdido-retrasado/", "Equipaje perdido"), ("/huelga-vueling/", "Huelga Vueling"), ("/huelga-ryanair/", "Huelga Ryanair"), ("/huelga-iberia/", "Huelga Iberia"),
+           ("/circunstancias-extraordinarias-vuelo/", "Circunstancias extraordinarias"), ("/huelgas-vuelos-espana/", "Huelgas"), ("/huelga-general-11-noviembre-vuelos/", "Huelga general 11 de noviembre"), ("/huelga-easyjet-portugal-diciembre/", "Huelga easyJet Portugal diciembre"), ("/retraso-vuelo-reclamar/", "Reclamar un retraso"), ("/conexion-perdida-vuelo/", "Conexión perdida"), ("/equipaje-perdido-retrasado/", "Equipaje perdido"), ("/huelga-vueling/", "Huelga Vueling"), ("/huelga-ryanair/", "Huelga Ryanair"), ("/huelga-iberia/", "Huelga Iberia"), ("/huelgas-vuelos-navidad/", "Huelgas Navidad"),
            ("/comparativa-empresas-reclamacion-vuelos/", "Reclamar tú o con una empresa"), ("/#preguntas", "Preguntas frecuentes")],
     "en": [("/en/flight-cancelled-what-to-do/", "Flight cancelled: what to do"), ("/en/denied-boarding-overbooking-compensation/", "Overbooking"),
-           ("/en/extraordinary-circumstances-flight-delay/", "Extraordinary circumstances"), ("/en/flight-strikes-spain-europe/", "Strikes"), ("/en/spain-general-strike-11-november-flights/", "Spain general strike 11 November"), ("/en/easyjet-portugal-strike-december/", "easyJet Portugal strike December"), ("/en/flight-delay-compensation-how-to-claim/", "Claim a delay"), ("/en/missed-connecting-flight-compensation/", "Missed connection"), ("/en/lost-delayed-baggage-compensation/", "Lost baggage"), ("/en/vueling-strike/", "Vueling strike"), ("/en/ryanair-strike/", "Ryanair strike"), ("/en/iberia-strike/", "Iberia strike"),
+           ("/en/extraordinary-circumstances-flight-delay/", "Extraordinary circumstances"), ("/en/flight-strikes-spain-europe/", "Strikes"), ("/en/spain-general-strike-11-november-flights/", "Spain general strike 11 November"), ("/en/easyjet-portugal-strike-december/", "easyJet Portugal strike December"), ("/en/flight-delay-compensation-how-to-claim/", "Claim a delay"), ("/en/missed-connecting-flight-compensation/", "Missed connection"), ("/en/lost-delayed-baggage-compensation/", "Lost baggage"), ("/en/vueling-strike/", "Vueling strike"), ("/en/ryanair-strike/", "Ryanair strike"), ("/en/iberia-strike/", "Iberia strike"), ("/en/christmas-flight-strikes/", "Christmas strikes"),
            ("/en/flight-compensation-companies-compared/", "Claim yourself or use a company"), ("/en/uk-airports-to-spain-flight-delay-compensation/", "UK airports to Spain"),
            ("/en/#preguntas", "FAQ")],
 }
@@ -1087,7 +1088,7 @@ def build():
                 m = uk_deep.META[a["slug"]]
                 title, desc, h1 = m["title"], m["desc"], e(m["h1"])
                 deep = uk_deep.section(a, AIRPORTS, km, NAMES["en"], AESA_URL, CAA_URL)
-            body = hero(l, h1, lede, a["slug"], dep, arr) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l, airline=a["slug"])
+            body = hero(l, h1, lede, a["slug"], dep, arr) + airline_notes.section(l, a["slug"]) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l, airline=a["slug"])
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
     # Airports

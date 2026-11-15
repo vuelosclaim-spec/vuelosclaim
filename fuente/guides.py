@@ -706,7 +706,75 @@ EVERGREEN = [
    ]}},
 ]
 
-G = G + NEW + EVERGREEN
+MIN_G = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
+IT_G = "https://www.mit.gov.it/come-fare-per/trasporti/calendario-scioperi-trasporti"
+DGERT_G = "https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro"
+NAVIDAD = [
+ {"paths": {"es": "/huelgas-vuelos-navidad/", "en": "/en/christmas-flight-strikes/"},
+  "es": {
+   "title": "Huelgas de vuelos en Navidad 2026: fechas y tus derechos",
+   "desc": "Qué huelgas de aviones hay convocadas para Navidad 2026 en España y Europa, cuáles dan derecho a 250–600 € y qué hacer si te cancelan el vuelo.",
+   "h1": "Huelgas de aviones en Navidad 2026: qué hay convocado y qué te deben",
+   "lead": "Si vuelas entre mediados de diciembre y Reyes, esto es lo que hay convocado a 15 de noviembre de 2026, con su fuente oficial, y lo que te corresponde si una huelga te cancela o retrasa el vuelo.",
+   "body": f"""<h2>Lo convocado para Navidad (actualizado el 15 de noviembre)</h2>
+<ul><li><strong>easyJet en Portugal, del 19 al 23 de diciembre:</strong> tripulantes de cabina con base en Lisboa, Oporto y Faro (sindicato SNPVAC). El Gobierno portugués ha fijado servicios mínimos (<a href="{DGERT_G}" rel="noopener">despacho de la DGERT</a>). Afecta sobre todo a vuelos desde o hacia esos aeropuertos. Todo el detalle en <a href="/huelga-easyjet-portugal-diciembre/">huelga de easyJet en Portugal</a>.</li>
+<li><strong>España:</strong> a 15 de noviembre no hay ninguna huelga del sector aéreo convocada para las fechas de Navidad. Las huelgas abiertas (control de torre de SAERCO, handling de Groundforce en El Prat y equipajes de Barajas) están convocadas hasta el 30 de noviembre. Si se prorrogan, el <a href="{MIN_G}" rel="noopener">Ministerio de Transportes</a> publicará los servicios mínimos y lo añadiremos al <a href="/huelgas-vuelos-espana/">calendario de huelgas</a>.</li>
+<li><strong>Italia:</strong> hay huelgas locales de aeropuertos y de control aéreo casi todos los meses. Antes de volar a Italia en diciembre, revisa el <a href="{IT_G}" rel="noopener">calendario oficial del Ministerio de Transportes italiano</a>.</li></ul>
+<p>Las huelgas se convocan y desconvocan con pocos días de margen. En España la ley exige avisar con al menos 10 días en servicios públicos, así que lo que se convoque para Navidad debería conocerse como tarde a mediados de diciembre.</p>
+<h2>¿Te pagan 250–600 € si una huelga te cancela el vuelo?</h2>
+<ul><li><strong>Huelga de la plantilla de tu aerolínea</strong> (pilotos, tripulantes): normalmente <strong>sí</strong>, si te avisan con menos de 14 días. El Tribunal de Justicia de la UE dice que no es una circunstancia extraordinaria (asunto C-28/20).</li>
+<li><strong>Huelga de controladores aéreos, seguridad o personal del aeropuerto:</strong> normalmente <strong>no</strong>, porque la aerolínea no la controla.</li>
+<li><strong>En los dos casos</strong> te corresponden siempre el reembolso o un vuelo alternativo (art. 8) y comida, bebida y hotel si hace falta (art. 9).</li></ul>
+<h2>Lo que cambia en Navidad</h2>
+<ul><li><strong>Los vuelos van llenos.</strong> Si te cancelan, la aerolínea tiene que llevarte a destino «lo más rápidamente posible». Si solo te ofrece un vuelo días después, pide por escrito que te recoloque en otro vuelo, aunque sea de otra compañía, y guarda su respuesta.</li>
+<li><strong>Niebla y nieve:</strong> el mal tiempo suele ser circunstancia extraordinaria, así que no hay compensación. Pero la asistencia (comida, hotel) sí te la deben, y la aerolínea tiene que demostrar que fue el tiempo y no otra cosa.</li>
+<li><strong>Conexiones:</strong> si pierdes un enlace con todo en la misma reserva, cuenta el retraso con el que llegas al destino final. Más en <a href="/conexion-perdida-vuelo/">conexión perdida</a>.</li>
+<li><strong>Si renuncias al viaje</strong> porque ya no tiene sentido llegar después de Nochebuena o Nochevieja, tienes derecho a que te devuelvan el billete (art. 8.1.a).</li></ul>
+<h2>Qué hacer antes de volar</h2>
+<ol><li>Revisa el correo y la app de la aerolínea en los días previos y el mismo día.</li>
+<li>Si puedes elegir, vuela por la mañana: si algo falla, quedan más vuelos ese día para recolocarte.</li>
+<li>Guarda tarjetas de embarque, avisos y tickets de lo que pagues.</li>
+<li>Si te cancelan o llegas con más de 3 horas de retraso, <a href="/">calcula gratis si te corresponde compensación</a> y genera la carta para reclamar tú mismo.</li></ol>""",
+   "faq": [
+    ("¿Hay huelga de aviones en Navidad 2026?", "A 15 de noviembre de 2026, la única convocada en fechas navideñas que afecta a vuelos con España es la de tripulantes de easyJet en Portugal, del 19 al 23 de diciembre. En España no hay ninguna huelga del sector aéreo convocada para Navidad; las actuales acaban el 30 de noviembre salvo prórroga."),
+    ("Si me cancelan el vuelo por huelga en Navidad, ¿qué me deben?", "Siempre el reembolso o un vuelo alternativo y asistencia mientras esperas. Además, 250–600 € si la huelga es de la plantilla de tu aerolínea y te avisan con menos de 14 días; si es de controladores o del aeropuerto, normalmente no."),
+    ("¿Puedo pedir que me lleven en otra aerolínea?", "Puedes pedirlo. El reglamento obliga a llevarte a destino lo antes posible en condiciones comparables; si la aerolínea solo ofrece un vuelo muy posterior, pídelo por escrito y guarda la respuesta por si reclamas después."),
+   ],
+  },
+  "en": {
+   "title": "Christmas 2026 flight strikes: dates and your rights",
+   "desc": "Which flight strikes are called for Christmas 2026 in Spain and Europe, which ones mean €250–600 compensation, and what to do if your flight is cancelled.",
+   "h1": "Christmas 2026 flight strikes: what's called and what you're owed",
+   "lead": "Flying between mid-December and early January? This is what has been called as of 15 November 2026, with official sources, and what you're owed if a strike cancels or delays your flight.",
+   "body": f"""<h2>What's called for Christmas (updated 15 November)</h2>
+<ul><li><strong>easyJet in Portugal, 19 to 23 December:</strong> cabin crew based in Lisbon, Porto and Faro (SNPVAC union). The Portuguese government has set minimum services (<a href="{DGERT_G}" rel="noopener">DGERT order</a>). It mainly affects flights to and from those airports. Full details in <a href="/en/easyjet-portugal-strike-december/">easyJet Portugal strike</a>.</li>
+<li><strong>Spain:</strong> as of 15 November, no aviation strike has been called for the Christmas dates. The open-ended strikes (SAERCO control towers, Groundforce ground handling at El Prat and the Barajas baggage system) are called until 30 November. If they are extended, Spain's <a href="{MIN_G}" rel="noopener">Ministry of Transport</a> will publish minimum services and we'll add them to our <a href="/en/flight-strikes-spain-europe/">strike calendar</a>.</li>
+<li><strong>Italy:</strong> there are local airport and air traffic control strikes almost every month. Before flying to Italy in December, check the <a href="{IT_G}" rel="noopener">Italian Transport Ministry's official calendar</a>.</li></ul>
+<p>Strikes are called and called off at short notice. In Spain, public-service strikes need at least 10 days' notice, so anything for Christmas should be known by mid-December at the latest.</p>
+<h2>Do you get €250–600 if a strike cancels your flight?</h2>
+<ul><li><strong>Your airline's own staff on strike</strong> (pilots, cabin crew): normally <strong>yes</strong>, if you're told less than 14 days before. The EU Court of Justice says it is not an extraordinary circumstance (case C-28/20).</li>
+<li><strong>Air traffic control, security or airport staff on strike:</strong> normally <strong>no</strong>, because the airline can't control it.</li>
+<li><strong>Either way</strong> you always get a refund or a new flight (Art. 8) and meals, drinks and a hotel if needed (Art. 9).</li></ul>
+<h2>What's different at Christmas</h2>
+<ul><li><strong>Flights are full.</strong> If you're cancelled, the airline must get you to your destination "at the earliest opportunity". If it only offers a flight days later, ask in writing to be rebooked on another flight, even with another airline, and keep its reply.</li>
+<li><strong>Fog and snow:</strong> bad weather is usually an extraordinary circumstance, so no compensation. But care (meals, hotel) is still owed, and the airline has to prove it was the weather and not something else.</li>
+<li><strong>Connections:</strong> if you miss a connection on a single booking, what counts is your delay at the final destination. More in <a href="/en/missed-connecting-flight-compensation/">missed connection</a>.</li>
+<li><strong>If you give up the trip</strong> because arriving after Christmas Eve or New Year's Eve no longer makes sense, you're entitled to a ticket refund (Art. 8(1)(a)).</li></ul>
+<h2>Before you fly</h2>
+<ol><li>Check your emails and the airline app in the days before and on the day.</li>
+<li>If you can choose, fly in the morning: if something goes wrong, there are more flights left that day to rebook you.</li>
+<li>Keep boarding passes, notices and receipts for anything you pay.</li>
+<li>If you're cancelled or arrive more than 3 hours late, <a href="/en/">check for free whether compensation applies</a> and generate a letter to claim yourself.</li></ol>""",
+   "faq": [
+    ("Are there flight strikes at Christmas 2026?", "As of 15 November 2026, the only strike called over Christmas that affects flights to and from Spain is easyJet cabin crew in Portugal, 19 to 23 December. No aviation strike has been called in Spain for Christmas; the current ones end on 30 November unless extended."),
+    ("What am I owed if a strike cancels my Christmas flight?", "Always a refund or a new flight and care while you wait. On top of that, €250–600 if your airline's own staff are on strike and you're told less than 14 days before; for air traffic control or airport staff, normally not."),
+    ("Can I ask to be rebooked with another airline?", "You can ask. The Regulation requires the airline to get you to your destination as soon as possible under comparable conditions; if it only offers a much later flight, ask in writing and keep the reply in case you claim later."),
+   ],
+  },
+ },
+]
+
+G = G + NEW + EVERGREEN + NAVIDAD
 
 
 def build(ctx):
