@@ -533,7 +533,180 @@ NEW = [
   "en": en_page("Iberia","iberia-delay-compensation","",IB_EN_PREC,IB_EN_FAQ)},
 ]
 
-G = G + NEW
+AESA_URL_G = "https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa"
+EVERGREEN = [
+ {"paths": {"es": "/retraso-vuelo-reclamar/", "en": "/en/flight-delay-compensation-how-to-claim/"},
+  "es": {
+   "title": "Retraso de vuelo: cuánto te pagan y cómo reclamar (2026)",
+   "desc": "Si tu vuelo llega con 3 horas o más de retraso te corresponden 250, 400 o 600 €. Cuándo pagan, cuándo no, qué asistencia te deben y cómo reclamar gratis.",
+   "h1": "Retraso de vuelo: cuánto te pagan y cómo reclamarlo",
+   "lead": "Si tu vuelo llega a destino con 3 horas o más de retraso, normalmente te corresponde la misma compensación que si te lo cancelaran: 250, 400 o 600 € por pasajero, además de asistencia durante la espera. Aquí tienes cuándo se paga, cuándo no y cómo reclamarlo tú mismo.",
+   "body": f"""<h2>Cuánto te corresponde</h2>
+<ul><li><strong>250 €</strong> en vuelos de hasta 1.500 km.</li>
+<li><strong>400 €</strong> entre 1.500 y 3.500 km, y en todos los vuelos dentro de la UE de más de 1.500 km.</li>
+<li><strong>600 €</strong> en vuelos de más de 3.500 km. Si el retraso es de 3 a 4 horas en esos vuelos largos, la aerolínea puede pagar la mitad (300 €).</li></ul>
+<p>Es una cantidad fija por persona, menores con billete incluidos, y no depende de lo que pagaste por el billete. <a href="/">Calcula tu caso con la distancia real de tu ruta</a>.</p>
+<h2>Las tres condiciones</h2>
+<ol><li><strong>El retraso se mide al llegar.</strong> Cuentan las horas de retraso en el destino final, y la hora de llegada es cuando se abre al menos una puerta del avión, no cuando aterriza (Tribunal de Justicia de la UE, asunto C-452/13).</li>
+<li><strong>3 horas o más.</strong> El reglamento 261/2004 no habla de compensación por retraso, pero el Tribunal de Justicia la reconoció a partir de 3 horas (asuntos Sturgeon, C-402/07, y Nelson, C-581/10).</li>
+<li><strong>El vuelo está cubierto:</strong> sale de un aeropuerto de la UE (con cualquier aerolínea), o llega a la UE con una aerolínea europea. Para vuelos que salen del Reino Unido se aplica una norma equivalente (UK261) con 220, 350 y 520 £.</li></ol>
+<h2>Cuándo no te pagan</h2>
+<p>La aerolínea queda libre si demuestra una <a href="/circunstancias-extraordinarias-vuelo/">circunstancia extraordinaria</a> que no pudo evitar: meteorología que impide volar, huelga de controladores o de personal ajeno a la aerolínea, decisiones de control aéreo o el choque con un ave (C-315/15). Un fallo técnico normal del avión <strong>no</strong> lo es (C-549/07), ni la huelga de la propia plantilla (C-28/20). Si te dicen «motivos operativos», pide el motivo exacto por escrito.</p>
+<h2>Asistencia mientras esperas</h2>
+<p>Aunque no haya compensación, si el retraso en la salida es de 2 horas o más (vuelos de hasta 1.500 km), 3 horas o más (hasta 3.500 km) o 4 horas o más (resto), la aerolínea tiene que darte comida y bebida, dos llamadas o correos y, si hay que dormir allí, hotel y traslado (art. 9). Si el retraso llega a 5 horas, puedes renunciar a volar y pedir el reembolso del billete.</p>
+<h2>Cómo reclamar paso a paso</h2>
+<ol><li><strong>Guarda las pruebas:</strong> tarjeta de embarque, captura del retraso en la app o en la pantalla del aeropuerto y los tiques de lo que hayas pagado.</li>
+<li><strong>Reclama a la aerolínea por escrito</strong>, en su formulario de compensación (no en el de reembolso). Indica número de vuelo, fecha, horas de retraso e importe. Puedes <a href="/">generar la carta gratis</a>.</li>
+<li><strong>Si no contestan en un mes o lo rechazan</strong>, reclama gratis en <a href="{AESA_URL_G}" rel="noopener">AESA</a> si el vuelo salía de España o era de una aerolínea española.</li>
+<li><strong>Último paso:</strong> la vía judicial. En España, para reclamaciones de hasta 2.000 € no hace falta abogado ni procurador.</li></ol>
+<p>Plazo: en España se suelen aplicar <strong>5 años</strong> desde el vuelo; en el Reino Unido, 6 años. Cuanto antes reclames, más fácil es probarlo.</p>
+<h2>¿Reclamar tú o con una empresa?</h2>
+<p>Reclamar tú es gratis y suele bastar con la carta y, si hace falta, AESA. Las empresas de reclamación se quedan normalmente entre el 25 % y el 50 % de lo que cobran. <a href="/comparativa-empresas-reclamacion-vuelos/">Compara las opciones</a>.</p>""",
+   "faq": [
+    ("¿Cuántas horas de retraso hacen falta para cobrar?", "3 horas o más de retraso en la llegada al destino final. Con menos de 3 horas no hay compensación, aunque sí puede haber derecho a asistencia (comida, bebida y hotel) según la distancia."),
+    ("¿El retraso se cuenta desde la salida o la llegada?", "Desde la llegada. Y la hora de llegada es cuando se abre al menos una puerta del avión, no cuando aterriza (Tribunal de Justicia de la UE, asunto C-452/13)."),
+    ("¿Me pagan si el retraso fue por una avería?", "Normalmente sí. Un problema técnico surgido durante el funcionamiento normal del avión no es una circunstancia extraordinaria (asunto C-549/07)."),
+    ("¿Cuánto tiempo tengo para reclamar un retraso?", "En España se suelen aplicar 5 años desde la fecha del vuelo, y en el Reino Unido 6 años. Conviene reclamar cuanto antes."),
+   ]},
+  "en": {
+   "title": "Flight delay compensation: how much and how to claim (2026)",
+   "desc": "Flight 3+ hours late? You're usually owed €250, €400 or €600. When airlines pay, when they don't, the care you're owed and how to claim free.",
+   "h1": "Flight delayed? How much you're owed and how to claim",
+   "lead": "If your flight reaches its final destination 3 hours or more late, you're usually owed the same compensation as for a cancellation: €250, €400 or €600 per passenger, plus care while you wait. Here's when it's paid, when it isn't, and how to claim it yourself.",
+   "body": f"""<h2>How much you're owed</h2>
+<ul><li><strong>€250</strong> for flights up to 1,500 km.</li>
+<li><strong>€400</strong> for 1,500–3,500 km, and for all intra-EU flights over 1,500 km.</li>
+<li><strong>€600</strong> for flights over 3,500 km. If those long flights are 3 to 4 hours late, the airline can pay half (€300).</li></ul>
+<p>It's a fixed amount per passenger, including children with a ticket, and doesn't depend on your fare. <a href="/en/">Work out your case using the real distance of your route</a>.</p>
+<h2>The three conditions</h2>
+<ol><li><strong>Delay is measured on arrival.</strong> What counts is the delay at your final destination, and arrival time is when at least one aircraft door opens, not touchdown (EU Court of Justice, case C-452/13).</li>
+<li><strong>3 hours or more.</strong> Regulation 261/2004 doesn't mention compensation for delays, but the EU Court of Justice recognised it from 3 hours (Sturgeon, C-402/07, and Nelson, C-581/10).</li>
+<li><strong>The flight is covered:</strong> it departs from an EU airport (any airline), or lands in the EU on an EU airline. Flights from the UK are covered by an equivalent rule (UK261) with £220, £350 and £520.</li></ol>
+<h2>When you won't be paid</h2>
+<p>The airline is off the hook if it proves an <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstance</a> it couldn't avoid: weather that makes flying unsafe, air traffic control or outside staff strikes, air traffic decisions or a bird strike (C-315/15). An ordinary technical fault is <strong>not</strong> one (C-549/07), nor is a strike by the airline's own staff (C-28/20). If they just say "operational reasons", ask for the exact reason in writing.</p>
+<h2>Care while you wait</h2>
+<p>Even without compensation, if departure is delayed 2 hours or more (flights up to 1,500 km), 3 hours or more (up to 3,500 km) or 4 hours or more (others), the airline must give you meals and drinks, two calls or emails and, if you're stuck overnight, a hotel and transfers (Art. 9). If the delay reaches 5 hours, you can choose not to fly and get a refund.</p>
+<h2>How to claim, step by step</h2>
+<ol><li><strong>Keep the evidence:</strong> boarding pass, a screenshot of the delay in the app or on the airport screens, and receipts for anything you paid.</li>
+<li><strong>Claim from the airline in writing</strong>, using its compensation form (not the refund form). Include flight number, date, hours of delay and amount. You can <a href="/en/">generate the letter for free</a>.</li>
+<li><strong>If they don't reply within a month or refuse</strong>, escalate for free: AESA for flights from Spain or on Spanish airlines; the CAA or an approved ADR scheme for UK flights.</li>
+<li><strong>Last resort:</strong> court. In Spain, claims up to €2,000 don't need a lawyer.</li></ol>
+<p>Time limit: in Spain, usually <strong>5 years</strong> from the flight; in the UK, 6 years. The sooner you claim, the easier it is to prove.</p>
+<h2>Claim yourself or use a company?</h2>
+<p>Claiming yourself is free and the letter, plus a regulator complaint if needed, is often enough. Claim companies usually keep 25% to 50% of what they recover. <a href="/en/flight-compensation-companies-compared/">Compare the options</a>.</p>""",
+   "faq": [
+    ("How many hours of delay do I need to be paid?", "3 hours or more on arrival at your final destination. Under 3 hours there's no compensation, though you may still be owed care (meals, drinks and a hotel) depending on distance."),
+    ("Is the delay counted from departure or arrival?", "From arrival. And arrival time is when at least one aircraft door opens, not touchdown (EU Court of Justice, case C-452/13)."),
+    ("Do I get paid if the delay was caused by a technical fault?", "Usually yes. A technical problem arising from the normal operation of the aircraft is not an extraordinary circumstance (case C-549/07)."),
+    ("How long do I have to claim?", "Usually 5 years from the flight date in Spain and 6 years in the UK. It's best to claim as soon as possible."),
+   ]}},
+ {"paths": {"es": "/conexion-perdida-vuelo/", "en": "/en/missed-connecting-flight-compensation/"},
+  "es": {
+   "title": "Conexión perdida por retraso: compensación y qué hacer",
+   "desc": "Si pierdes la conexión por un retraso y llegas 3 h tarde al destino final, pueden corresponderte 250–600 €. Cuándo cuenta y cómo reclamar.",
+   "h1": "Conexión perdida: qué te corresponde si llegas tarde por un retraso",
+   "lead": "Si el primer vuelo se retrasa, pierdes la conexión y llegas a tu destino final con 3 horas o más de retraso, normalmente te corresponde compensación por todo el viaje. La clave es que los vuelos estén en una misma reserva.",
+   "body": """<h2>Cuándo te corresponde compensación</h2>
+<ul><li><strong>Misma reserva:</strong> los dos vuelos se compraron juntos, con un único código de reserva. Si los compraste por separado, cada vuelo cuenta por su cuenta y la aerolínea del primero no responde de la conexión perdida.</li>
+<li><strong>Retraso de 3 horas o más en el destino final</strong>, aunque el primer vuelo solo se retrasara un poco. Lo que cuenta es la llegada final (Tribunal de Justicia de la UE, asunto C-11/11).</li>
+<li><strong>Sin circunstancia extraordinaria</strong> en el vuelo que causó el retraso.</li>
+<li><strong>El viaje está cubierto:</strong> sale de la UE o llega a la UE con una aerolínea europea. Un viaje con una sola reserva que sale de la UE está cubierto aunque la escala sea fuera de Europa (asunto C-537/17).</li></ul>
+<h2>Cuánto</h2>
+<p>La distancia se calcula en línea recta entre el aeropuerto de origen y el destino final, sin sumar las escalas (asunto C-559/16): 250 € hasta 1.500 km, 400 € hasta 3.500 km (o más dentro de la UE) y 600 € a partir de ahí. <a href="/">Calcula tu caso</a>.</p>
+<h2>Si te dieron tu plaza a otro</h2>
+<p>Si la aerolínea, al ver que llegabas tarde, dio tu asiento del segundo vuelo a otro pasajero, eso es una denegación de embarque y también te corresponde compensación (asunto C-321/11). Mira la guía de <a href="/overbooking-compensacion/">overbooking</a>.</p>
+<h2>Qué hacer en el aeropuerto</h2>
+<ol><li>Ve al mostrador de transferencias de tu aerolínea: con una sola reserva te tienen que reubicar en el siguiente vuelo disponible sin coste.</li>
+<li>Pide comida y bebida y, si tienes que dormir allí, hotel y traslado.</li>
+<li>Guarda las tarjetas de embarque de todos los vuelos y anota la hora real de llegada al destino final.</li>
+<li>Reclama a la aerolínea que operaba el vuelo retrasado y, si no responde en un mes, a <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li></ol>
+<p>Más detalles en la guía de <a href="/retraso-vuelo-reclamar/">cómo reclamar un retraso</a>.</p>""",
+   "faq": [
+    ("¿Me compensan si compré los vuelos por separado?", "Normalmente no por la conexión perdida: cada vuelo cuenta por separado. Solo podrías reclamar el primer vuelo si él mismo llegó con 3 horas o más de retraso."),
+    ("¿Qué distancia se usa para calcular la compensación?", "La línea recta entre el aeropuerto de origen y el destino final, sin sumar las escalas (Tribunal de Justicia de la UE, asunto C-559/16)."),
+    ("¿A qué aerolínea reclamo?", "A la que operaba el vuelo que se retrasó y te hizo perder la conexión."),
+   ]},
+  "en": {
+   "title": "Missed connection due to a delay: compensation and what to do",
+   "desc": "Missed a connection due to a delay and arrived 3+ hours late? You may be owed €250–600. When it counts, why one booking matters, how to claim.",
+   "h1": "Missed connection: what you're owed if a delay makes you late",
+   "lead": "If your first flight is delayed, you miss your connection and reach your final destination 3 hours or more late, you're usually owed compensation for the whole journey. The key is that the flights are on one booking.",
+   "body": """<h2>When you're owed compensation</h2>
+<ul><li><strong>One booking:</strong> both flights were bought together under a single booking reference. If you bought them separately, each flight counts on its own and the first airline isn't responsible for the missed connection.</li>
+<li><strong>3 hours or more late at your final destination</strong>, even if the first flight was only slightly late. What counts is the final arrival (EU Court of Justice, case C-11/11).</li>
+<li><strong>No extraordinary circumstance</strong> on the flight that caused the delay.</li>
+<li><strong>The journey is covered:</strong> it starts in the EU, or lands in the EU on an EU airline. A single-booking journey from the EU is covered even if the connection is outside Europe (case C-537/17).</li></ul>
+<h2>How much</h2>
+<p>Distance is measured in a straight line between your origin and final destination, without adding the stops (case C-559/16): €250 up to 1,500 km, €400 up to 3,500 km (or more within the EU) and €600 beyond. <a href="/en/">Work out your case</a>.</p>
+<h2>If your seat was given away</h2>
+<p>If the airline, seeing you'd be late, gave your seat on the second flight to someone else, that's denied boarding and you're owed compensation too (case C-321/11). See the <a href="/en/denied-boarding-overbooking-compensation/">overbooking guide</a>.</p>
+<h2>What to do at the airport</h2>
+<ol><li>Go to your airline's transfer desk: on one booking they must rebook you on the next available flight at no cost.</li>
+<li>Ask for meals and drinks and, if you have to stay overnight, a hotel and transfers.</li>
+<li>Keep the boarding passes for every flight and note the actual arrival time at your final destination.</li>
+<li>Claim from the airline that operated the delayed flight and, if they don't reply within a month, escalate to the national enforcement body (AESA in Spain, the CAA or an approved ADR scheme in the UK).</li></ol>
+<p>More in the guide on <a href="/en/flight-delay-compensation-how-to-claim/">how to claim for a delay</a>.</p>""",
+   "faq": [
+    ("Am I compensated if I bought the flights separately?", "Usually not for the missed connection: each flight counts separately. You could only claim for the first flight if it was itself 3 hours or more late."),
+    ("What distance is used to work out compensation?", "The straight line between your origin and final destination, without adding the stops (EU Court of Justice, case C-559/16)."),
+    ("Which airline do I claim from?", "The one that operated the flight that was delayed and made you miss your connection."),
+   ]}},
+ {"paths": {"es": "/equipaje-perdido-retrasado/", "en": "/en/lost-delayed-baggage-compensation/"},
+  "es": {
+   "title": "Equipaje perdido o retrasado: plazos e indemnización",
+   "desc": "Maleta perdida, retrasada o rota: el parte en el aeropuerto, los plazos de 7 y 21 días, el límite de indemnización del Convenio de Montreal y cómo reclamar.",
+   "h1": "Equipaje perdido, retrasado o dañado: qué hacer y cuánto te pagan",
+   "lead": "El equipaje no lo regula el reglamento 261/2004, sino el Convenio de Montreal, y sus plazos son muy cortos. Si tu maleta no aparece, llega tarde o llega rota, esto es lo que tienes que hacer.",
+   "body": """<h2>Antes de salir del aeropuerto: el parte (PIR)</h2>
+<p>Ve al mostrador de equipajes de la aerolínea o de su agente en la sala de recogida y pide el <strong>parte de irregularidad de equipaje (PIR)</strong>. Te darán un código para seguir la maleta. Hazlo antes de salir de la zona de recogida: después es mucho más difícil.</p>
+<h2>Los plazos (son cortos)</h2>
+<ul><li><strong>Equipaje dañado:</strong> reclamación por escrito a la aerolínea en un máximo de <strong>7 días</strong> desde que lo recibes.</li>
+<li><strong>Equipaje retrasado:</strong> reclamación por escrito en un máximo de <strong>21 días</strong> desde que te lo entregan, con los gastos que te ha causado.</li>
+<li><strong>Equipaje perdido:</strong> si no aparece en 21 días, se considera perdido y puedes reclamar su valor.</li>
+<li><strong>Para ir a juicio</strong>, el plazo es de 2 años desde la llegada.</li></ul>
+<h2>Cuánto te pueden pagar</h2>
+<p>El Convenio de Montreal fija un límite por pasajero expresado en derechos especiales de giro (DEG), una unidad del FMI. Tras la revisión de finales de 2024 el límite es de <strong>1.519 DEG</strong>, unos 1.800–1.900 € según el cambio. No es una cantidad fija: te pagan lo que demuestres hasta ese límite. Si llevas objetos de mucho valor, puedes declararlos al facturar para ampliar la responsabilidad.</p>
+<h2>Gastos por maleta retrasada</h2>
+<p>Mientras esperas la maleta, puedes comprar lo imprescindible (ropa, aseo, cargador) y reclamar esos gastos. Guarda los tiques y compra lo razonable: la aerolínea no paga una ropa nueva completa si la maleta llega al día siguiente.</p>
+<h2>Cómo reclamar</h2>
+<ol><li>Parte PIR en el aeropuerto.</li>
+<li>Reclamación por escrito a la aerolínea dentro de plazo, con el código del parte, la tarjeta de embarque, la etiqueta de la maleta y los tiques. Guarda la confirmación de envío.</li>
+<li>Si no responde o no estás de acuerdo, reclama a la oficina de consumo, al sistema de resolución alternativa de conflictos de la aerolínea si lo tiene o, en último término, en el juzgado (en España, sin abogado hasta 2.000 €).</li></ol>
+<p>Si además tu vuelo se retrasó o se canceló, eso se reclama aparte: mira <a href="/retraso-vuelo-reclamar/">cómo reclamar un retraso</a>.</p>""",
+   "faq": [
+    ("¿Cuánto tiempo tengo para reclamar una maleta rota?", "7 días desde que la recibes, por escrito a la aerolínea. Y conviene hacer el parte (PIR) en el aeropuerto antes de salir."),
+    ("¿Cuándo se considera perdida una maleta?", "Si no aparece en 21 días desde la fecha en que debía llegar. A partir de entonces puedes reclamar su valor."),
+    ("¿Cuál es la indemnización máxima por equipaje?", "Hasta 1.519 derechos especiales de giro por pasajero (unos 1.800–1.900 € según el cambio), según el Convenio de Montreal. Te pagan lo que demuestres hasta ese límite."),
+   ]},
+  "en": {
+   "title": "Lost or delayed baggage: deadlines and compensation",
+   "desc": "Lost, delayed or damaged suitcase: the airport report, the 7- and 21-day deadlines, the Montreal Convention compensation limit and how to claim.",
+   "h1": "Lost, delayed or damaged baggage: what to do and what you're owed",
+   "lead": "Baggage isn't covered by Regulation 261/2004 but by the Montreal Convention, and its deadlines are very short. If your bag is missing, late or damaged, here's what to do.",
+   "body": """<h2>Before you leave the airport: the report (PIR)</h2>
+<p>Go to the airline's baggage desk (or its handling agent) in the reclaim hall and ask for a <strong>Property Irregularity Report (PIR)</strong>. You'll get a reference to track your bag. Do it before you leave the reclaim area: it's much harder afterwards.</p>
+<h2>The deadlines (they're short)</h2>
+<ul><li><strong>Damaged baggage:</strong> written complaint to the airline within <strong>7 days</strong> of receiving it.</li>
+<li><strong>Delayed baggage:</strong> written complaint within <strong>21 days</strong> of getting it back, including the costs it caused you.</li>
+<li><strong>Lost baggage:</strong> if it hasn't turned up after 21 days, it's treated as lost and you can claim its value.</li>
+<li><strong>To go to court</strong>, the limit is 2 years from arrival.</li></ul>
+<h2>How much you can get</h2>
+<p>The Montreal Convention sets a limit per passenger in special drawing rights (SDR), an IMF unit. Since the review at the end of 2024 the limit is <strong>1,519 SDR</strong>, roughly €1,800–1,900 depending on the exchange rate. It isn't a fixed amount: you're paid what you can prove, up to that limit. If you carry high-value items, you can declare them at check-in to raise the airline's liability.</p>
+<h2>Costs while your bag is delayed</h2>
+<p>While you wait, you can buy essentials (clothes, toiletries, a charger) and claim them back. Keep the receipts and buy what's reasonable: the airline won't pay for a whole new wardrobe if the bag arrives the next day.</p>
+<h2>How to claim</h2>
+<ol><li>PIR at the airport.</li>
+<li>Written claim to the airline within the deadline, with the PIR reference, boarding pass, bag tag and receipts. Keep proof that you sent it.</li>
+<li>If they don't reply or you disagree, go to consumer services, the airline's alternative dispute resolution scheme if it has one, or as a last resort, the courts.</li></ol>
+<p>If your flight was also delayed or cancelled, that's claimed separately: see <a href="/en/flight-delay-compensation-how-to-claim/">how to claim for a delay</a>.</p>""",
+   "faq": [
+    ("How long do I have to claim for a damaged bag?", "7 days from receiving it, in writing to the airline. And it's best to file a PIR at the airport before you leave."),
+    ("When is a bag considered lost?", "If it hasn't arrived 21 days after it should have. From then you can claim its value."),
+    ("What's the maximum baggage compensation?", "Up to 1,519 special drawing rights per passenger (roughly €1,800–1,900 depending on the exchange rate) under the Montreal Convention. You're paid what you can prove, up to that limit."),
+   ]}},
+]
+
+G = G + NEW + EVERGREEN
 
 
 def build(ctx):
