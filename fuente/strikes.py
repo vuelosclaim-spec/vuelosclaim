@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "12 de noviembre de 2026", "en": "12 November 2026", "iso": "2026-11-12"}
+UPDATED = {"es": "15 de noviembre de 2026", "en": "15 November 2026", "iso": "2026-11-15"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -23,6 +23,8 @@ STRIKES = [
      "Barcelona-El Prat", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-10-01", "Hasta el 30 nov (lun, jue, vie, sáb, dom)", "Until 30 Nov (Mon, Thu, Fri, Sat, Sun)", "Sistema de equipajes de Barajas (Outsmart), paros de 05:00–07:00 y 13:00–15:00",
      "Barajas baggage system (Outsmart), stoppages 05:00–07:00 and 13:00–15:00", "Madrid-Barajas", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
+    ("2026-11-17", "17–20 nov, toda la jornada", "17–20 Nov, all day", "Limpieza del aeropuerto (huelga del sector de limpieza de Bizkaia, ELA)", "Airport cleaning staff (Bizkaia cleaning sector strike, ELA union)",
+     "Bilbao", "airport", "Con servicios mínimos", "Minimum services set", SRC_MIN),
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
      "Toda Italia", "general", "Convocada; no consta en el calendario del transporte aéreo, efecto en los vuelos sin confirmar", "Called; not listed in the air transport calendar, effect on flights not confirmed", SRC_IT),
     ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
@@ -40,7 +42,7 @@ STRIKES = [
 
 # English for the "where" column (the table above keeps it in Spanish); every place must have a translation (test_mantenimiento.py)
 WHERE_EN = {
-    "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
+    "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas", "Bilbao": "Bilbao",
     "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
         "Jerez, A Coruña, Seville, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos",
     "Leeds Bradford (Reino Unido)": "Leeds Bradford (UK)", "Bari (Italia)": "Bari (Italy)", "Toda Italia": "All of Italy",
@@ -51,11 +53,11 @@ WHERE_EN = {
 
 # Internal links from the calendar to the airport and airline pages (more useful pages per visit). Keys are the names as shown.
 LINKS = {
-    "es": {"Barcelona-El Prat": "/retraso-vuelo-aeropuerto-barcelona-el-prat/", "Madrid-Barajas": "/retraso-vuelo-aeropuerto-madrid-barajas/",
+    "es": {"Barcelona-El Prat": "/retraso-vuelo-aeropuerto-barcelona-el-prat/", "Bilbao": "/retraso-vuelo-aeropuerto-bilbao/", "Madrid-Barajas": "/retraso-vuelo-aeropuerto-madrid-barajas/",
            "Jerez": "/retraso-vuelo-aeropuerto-jerez/", "Sevilla": "/retraso-vuelo-aeropuerto-sevilla/", "Vigo": "/retraso-vuelo-aeropuerto-vigo/",
            "Fuerteventura": "/retraso-vuelo-aeropuerto-fuerteventura/", "Lanzarote": "/retraso-vuelo-aeropuerto-lanzarote/",
            "La Palma": "/retraso-vuelo-aeropuerto-la-palma/", "easyJet": "/compensacion-retraso-easyjet/"},
-    "en": {"Barcelona-El Prat": "/en/barcelona-el-prat-airport-flight-delay/", "Madrid-Barajas": "/en/madrid-barajas-airport-flight-delay/",
+    "en": {"Barcelona-El Prat": "/en/barcelona-el-prat-airport-flight-delay/", "Bilbao": "/en/bilbao-airport-flight-delay/", "Madrid-Barajas": "/en/madrid-barajas-airport-flight-delay/",
            "Jerez": "/en/jerez-airport-flight-delay/", "Seville": "/en/seville-airport-flight-delay/", "Vigo": "/en/vigo-airport-flight-delay/",
            "Fuerteventura": "/en/fuerteventura-airport-flight-delay/", "Lanzarote": "/en/lanzarote-airport-flight-delay/",
            "La Palma": "/en/la-palma-airport-flight-delay/", "easyJet": "/en/easyjet-delay-compensation/"},
