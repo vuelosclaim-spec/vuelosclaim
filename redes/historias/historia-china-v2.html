@@ -104,7 +104,7 @@ function render(t){bg(t);
   const bs=1+0.05*Math.sin(t*6)*cl(lt-2);x.save();x.translate(W/2,1120);x.scale(bs*eb((lt-1.8)/0.4),bs*eb((lt-1.8)/0.4));x.fillStyle=C.g;rr(-390,-80,780,160,40);x.fill();txt('Compruébalo gratis →',0,4,900,64,'#fff');x.restore();
   txt('Calculadora gratuita en vuelosclaim.eu',W/2,1270,600,44,C.m,cl((lt-2.2)/0.3));
   x.restore()}
- if(t>0.6)pill(t);
+ pill(t);
 }
 window.render=render;
 </script></body></html>
