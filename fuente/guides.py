@@ -84,6 +84,15 @@ G = [
 <li>Que no te nieguen el embarque por motivos justificados (salud, seguridad o documentación de viaje inadecuada, según el art. 2.j del reglamento).</li></ul>
 <h2>¿Ser voluntario o no?</h2>
 <p>Antes de denegar el embarque, la aerolínea tiene que pedir voluntarios. Si te ofreces, cobras lo que negocies (dinero, vale, puntos) más reembolso o vuelo alternativo, <strong>pero no la compensación fija</strong>. Solo merece la pena si lo que te ofrecen supera lo que te correspondería si te dejaran en tierra, y mejor en dinero que en vale.</p>
+<h2>Qué hacer en el aeropuerto, paso a paso</h2>
+<ol><li><strong>No firmes nada ni aceptes un vale</strong> sin saber si te tratan como voluntario: si firmas como voluntario, pierdes la compensación fija.</li>
+<li><strong>Pide en el mostrador un documento o un correo</strong> que diga que te han denegado el embarque y por qué. Haz foto de la tarjeta de embarque y de la pantalla de salidas.</li>
+<li><strong>Elige</strong> entre el reembolso del billete o el vuelo alternativo más próximo, y pide la asistencia (comida, bebida, llamadas y hotel si toca dormir allí).</li>
+<li><strong>Pide la compensación en el momento.</strong> Si no te la pagan, reclámala por escrito a la aerolínea y, si no responde en un mes, a AESA.</li></ol>
+<h2>Un ejemplo</h2>
+<p>Tienes un vuelo Madrid–Londres (unos 1.250 km) y te quedas en tierra por overbooking. Te corresponden <strong>250 €</strong>. Si la aerolínea te reubica en un vuelo que llega a Londres como máximo 2 horas después de tu hora prevista, puede pagarte la mitad, <strong>125 €</strong> (art. 7.2 del reglamento). Si llegas más tarde, cobras los 250 € enteros. En un Madrid–Nueva York (más de 3.500 km) el importe es de 600 €, o 300 € si te reubican y llegas como máximo 4 horas tarde.</p>
+<h2>Overbooking en un vuelo de conexión</h2>
+<p>Si pierdes el segundo vuelo porque la aerolínea dio tu plaza a otro pasajero al ver que el primero llegaba con retraso, también cuenta como denegación de embarque y te corresponde compensación (Tribunal de Justicia de la UE, asunto C-321/11).</p>
 <h2>Si te bajan de clase</h2>
 <p>Si te sientan en una clase inferior a la que pagaste, te deben devolver el 30, 50 o 75% del precio de ese trayecto según la distancia.</p>
 <p><a href="/">Calcula cuánto te corresponde por tu ruta</a> o compara <a href="/comparativa-empresas-reclamacion-vuelos/">reclamar tú o con una empresa</a>.</p>""",
@@ -109,6 +118,15 @@ G = [
 <li>Not being refused for valid reasons (health, safety, security or inadequate travel documents, Article 2(j)).</li></ul>
 <h2>Should you volunteer?</h2>
 <p>Before bumping anyone, the airline must ask for volunteers. If you volunteer you get whatever you agree (cash, vouchers, points) plus a refund or new flight, <strong>but not the fixed compensation</strong>. Only worth it if the offer beats what you'd get if bumped, and cash is better than a voucher.</p>
+<h2>What to do at the airport, step by step</h2>
+<ol><li><strong>Don't sign anything or accept a voucher</strong> until you know whether you're being treated as a volunteer: if you sign as a volunteer, you give up the fixed compensation.</li>
+<li><strong>Ask the desk for a document or email</strong> stating that you were denied boarding and why. Take photos of your boarding pass and the departures screen.</li>
+<li><strong>Choose</strong> between a refund and the earliest alternative flight, and ask for care (meals, drinks, calls and a hotel if you have to stay overnight).</li>
+<li><strong>Ask for compensation on the spot.</strong> If you don't get it, claim it from the airline in writing and, if they don't reply within a month, escalate to the national enforcement body (AESA in Spain, the CAA or an approved ADR scheme in the UK).</li></ol>
+<h2>An example</h2>
+<p>You're booked Madrid–London (about 1,250 km) and are bumped because of overbooking. You're owed <strong>€250</strong>. If the airline reroutes you on a flight that reaches London no more than 2 hours after your original arrival time, it can pay half, <strong>€125</strong> (Art. 7.2 of the Regulation). If you arrive later, you get the full €250. On Madrid–New York (over 3,500 km) it's €600, or €300 if you're rerouted and arrive no more than 4 hours late.</p>
+<h2>Overbooking on a connecting flight</h2>
+<p>If you miss your second flight because the airline gave your seat to someone else when it saw your first flight was running late, that also counts as denied boarding and you're owed compensation (EU Court of Justice, case C-321/11).</p>
 <h2>Downgraded?</h2>
 <p>If you're seated in a lower class than you paid for, you're owed 30%, 50% or 75% of that flight's price back depending on distance.</p>
 <p><a href="/en/">Work out what you're owed for your route</a> or compare <a href="/en/flight-compensation-companies-compared/">claiming yourself vs a claims company</a>.</p>""",
