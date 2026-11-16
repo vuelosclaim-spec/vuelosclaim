@@ -774,7 +774,8 @@ NAVIDAD = [
  },
 ]
 
-G = G + NEW + EVERGREEN + NAVIDAD
+from guides_navidad import NAVIDAD2
+G = G + NEW + EVERGREEN + NAVIDAD + NAVIDAD2
 
 
 def build(ctx):
