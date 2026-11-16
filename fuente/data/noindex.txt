@@ -17,7 +17,6 @@
 /compensacion-retraso-iberojet/
 /compensacion-retraso-icelandair/
 /compensacion-retraso-ita-airways/
-/compensacion-retraso-jet2/
 /compensacion-retraso-klm/
 /compensacion-retraso-level/
 /compensacion-retraso-loganair/
@@ -30,7 +29,6 @@
 /compensacion-retraso-swiss/
 /compensacion-retraso-tap/
 /compensacion-retraso-transavia/
-/compensacion-retraso-tui/
 /compensacion-retraso-virgin-atlantic/
 /compensacion-retraso-volotea/
 /compensacion-retraso-wamos-air/
@@ -67,7 +65,6 @@
 /en/icelandair-delay-compensation/
 /en/ita-airways-delay-compensation/
 /en/jerez-airport-flight-delay/
-/en/jet2-delay-compensation/
 /en/klm-delay-compensation/
 /en/la-palma-airport-flight-delay/
 /en/lanzarote-airport-flight-delay/
@@ -92,7 +89,6 @@
 /en/tap-delay-compensation/
 /en/tenerife-north-airport-flight-delay/
 /en/transavia-delay-compensation/
-/en/tui-delay-compensation/
 /en/turkish-airlines-delay-compensation/
 /en/vigo-airport-flight-delay/
 /en/virgin-atlantic-delay-compensation/

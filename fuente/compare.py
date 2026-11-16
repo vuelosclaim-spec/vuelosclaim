@@ -24,7 +24,7 @@ VAT = {"es": 0.21, "en": 0.20}
 
 T = {
     "es": {
-        "title": "AirHelp, Reclamador o Flightright: comisiones comparadas (2026)",
+        "title": "¿AirHelp o reclamar tú? Comisiones comparadas (2026)",
         "desc": "Cuánto se queda cada empresa de reclamación de vuelos: AirHelp 35%, Reclamador 25% + IVA, Flightright 20–30% + IVA. Y cuánto te queda si reclamas tú gratis.",
         "h1": "AirHelp, Reclamador, Flightright o reclamar tú: cuánto te queda de verdad",
         "lead": "Actualizado el {u}. Las empresas de reclamación cobran solo si ganan, pero se quedan entre una cuarta parte y la mitad de tu compensación. Aquí están sus comisiones, sacadas de sus propias webs, y lo que te llega a ti en cada caso.",
@@ -63,7 +63,7 @@ T = {
         "src": "Fuentes: <a href=\"{a}\">tarifas de AirHelp</a> (versión del 11 de agosto de 2026) · <a href=\"{r}\">condiciones generales de Reclamador</a> · <a href=\"{f}\">costes de Flightright</a>. El IVA se calcula al 21%.",
     },
     "en": {
-        "title": "AirHelp vs Flightright vs claiming yourself: fees compared (2026)",
+        "title": "AirHelp vs doing it yourself: who gets you more? (2026)",
         "desc": "How much each flight compensation company keeps: AirHelp 35%, Flightright 20–30% + VAT, Reclamador 25% + VAT. And what you keep if you claim yourself for free.",
         "h1": "AirHelp, Flightright, Reclamador or DIY: what you actually keep",
         "lead": "Updated {u}. Claims companies only charge if they win, but they keep between a quarter and half of your compensation. Here are their fees, taken from their own websites, and what reaches your bank account.",
