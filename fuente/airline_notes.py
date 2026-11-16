@@ -63,12 +63,48 @@ NOTES = {
     },
 }
 
+NOTES["jet2"] = {
+ "es": """<h2>Lo que conviene saber si vuelas con Jet2</h2>
+<ul>
+<li><strong>Jet2 es una aerolínea británica, así que según el sentido del vuelo cambia la norma y la moneda.</strong> Si sales de España, se aplica el Reglamento europeo 261/2004 y la compensación va en euros (250, 400 o 600 €). Si sales del Reino Unido, se aplica la norma británica UK261 y va en libras (220, 350 o 520 £).</li>
+<li><strong>Ejemplo:</strong> un Manchester–Tenerife Sur (unos 3.050 km) que llega 4 horas tarde da derecho a 350 £ por pasajero a la ida y a 400 € a la vuelta (Tenerife–Manchester), si no hay circunstancias extraordinarias.</li>
+<li><strong>Cuenta el retraso a la llegada</strong>, no a la salida, y copia los datos tal cual aparecen en la confirmación: Jet2 no tramita reclamaciones con datos incorrectos.</li>
+<li><strong>Si Jet2 te dice que no:</strong> Jet2 no está adherida a un organismo de resolución alternativa, así que en vuelos con el Reino Unido puedes acudir a la autoridad británica de aviación (CAA), y en vuelos que salen de España, a AESA.</li>
+</ul>""",
+ "en": """<h2>What to know if you fly Jet2</h2>
+<ul>
+<li><strong>Jet2 is a UK airline, so the rules and the currency depend on the direction of travel.</strong> Flying out of Spain or another EU country, EU Regulation 261/2004 applies and compensation is in euros (€250, €400 or €600). Flying out of the UK, UK261 applies and it's paid in pounds (£220, £350 or £520).</li>
+<li><strong>Example:</strong> a Manchester–Tenerife South flight (about 3,050 km) arriving 4 hours late means £350 per passenger on the way out and €400 on the way back (Tenerife–Manchester), unless there were extraordinary circumstances.</li>
+<li><strong>What counts is your arrival delay</strong>, not the departure. Copy the details exactly as on your booking confirmation: Jet2 won't process claims with wrong details.</li>
+<li><strong>If Jet2 says no:</strong> Jet2 isn't signed up to an ADR scheme, so for UK flights you can escalate to the CAA, and for flights departing Spain, to AESA, the Spanish regulator.</li>
+</ul>""",
+}
+NOTES["tui"] = {
+ "es": """<h2>Lo que conviene saber si vuelas con TUI</h2>
+<ul>
+<li><strong>«TUI» son varias aerolíneas.</strong> TUI Airways es británica; TUI fly Deutschland, TUI fly Belgium y TUI fly Netherlands son de la UE. Reclamas a la que operó el vuelo, que aparece en la confirmación o en la tarjeta de embarque. El formulario de TUI Airways es solo para sus vuelos (números TOM, BY u OR).</li>
+<li><strong>Libras o euros según el sentido del vuelo.</strong> Saliendo del Reino Unido se aplica la norma británica UK261 (220, 350 o 520 £); saliendo de España, el Reglamento europeo 261/2004 (250, 400 o 600 €).</li>
+<li><strong>Ejemplo:</strong> un Londres Gatwick–Palma (unos 1.300 km) que llega 3 horas tarde da derecho a 220 £ por pasajero a la ida y a 250 € a la vuelta, si no hay circunstancias extraordinarias.</li>
+<li><strong>Aunque el vuelo fuera parte de un paquete vacacional,</strong> la compensación por retraso o cancelación se reclama a la aerolínea.</li>
+<li><strong>Si TUI Airways rechaza tu reclamación,</strong> puedes acudir gratis a AviationADR, el organismo de resolución alternativa al que está adherida.</li>
+</ul>""",
+ "en": """<h2>What to know if you fly TUI</h2>
+<ul>
+<li><strong>"TUI" is several airlines.</strong> TUI Airways is British; TUI fly Deutschland, TUI fly Belgium and TUI fly Netherlands are EU airlines. You claim from the one that operated your flight, shown on your confirmation or boarding pass. TUI Airways' form is only for its own flights (flight numbers starting TOM, BY or OR).</li>
+<li><strong>Pounds or euros depending on direction.</strong> Departing the UK, UK261 applies (£220, £350 or £520); departing Spain or another EU country, EU Regulation 261/2004 applies (€250, €400 or €600).</li>
+<li><strong>Example:</strong> a London Gatwick–Palma flight (about 1,300 km) arriving 3 hours late means £220 per passenger on the way out and €250 on the way back, unless there were extraordinary circumstances.</li>
+<li><strong>Even if the flight was part of a package holiday,</strong> delay or cancellation compensation is claimed from the airline.</li>
+<li><strong>If TUI Airways rejects your claim,</strong> you can go to AviationADR for free, the dispute scheme it belongs to.</li>
+</ul>""",
+}
+
 
 def section(l, slug):
     n = NOTES.get(slug)
     if not n:
         return ""
-    src = ('<p class="lead">Fuente: <a href="%s" rel="noopener">Reglamento (CE) 261/2004</a> y sentencias del Tribunal de Justicia de la UE citadas.</p>' % R261["es"]
+    uk = slug in ("jet2", "tui")
+    src = ('<p class="lead">Fuente: <a href="%s" rel="noopener">Reglamento (CE) 261/2004</a>%s.</p>' % (R261["es"], " y la norma británica UK261 (Reglamento 261/2004 tal como se mantuvo en el Reino Unido)" if uk else " y sentencias del Tribunal de Justicia de la UE citadas")
            if l == "es" else
-           '<p class="lead">Source: <a href="%s" rel="noopener">Regulation (EC) 261/2004</a> and the EU Court of Justice rulings cited.</p>' % R261["en"])
+           '<p class="lead">Source: <a href="%s" rel="noopener">Regulation (EC) 261/2004</a>%s.</p>' % (R261["en"], " and UK261 (Regulation 261/2004 as retained in UK law)" if uk else " and the EU Court of Justice rulings cited"))
     return '<section class="ref"><div class="wrap">' + n[l] + src + "</div></section>"
