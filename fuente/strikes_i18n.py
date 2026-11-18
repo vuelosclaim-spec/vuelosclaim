@@ -24,9 +24,9 @@ ROWS = {
         "de": ("20. Nov., ganztägig", "Generalstreik in Italien (Gewerkschaft CGIL)", "Angekündigt; nicht im Kalender für den Luftverkehr, Auswirkung auf Flüge nicht bestätigt"),
         "pt": ("20 nov, todo o dia", "Greve geral em Itália (sindicato CGIL)", "Convocada; não consta do calendário do transporte aéreo, efeito nos voos não confirmado")},
     ("2026-11-21", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)"): {
-        "it": ("21 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV), sciopero nazionale (Filt CGIL e UGL TA)", "Proclamato"),
-        "de": ("21. Nov., 13:00–17:00", "Italienische Flugsicherung (ENAV), landesweiter Streik (Filt CGIL und UGL TA)", "Angekündigt"),
-        "pt": ("21 nov, 13:00–17:00", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (Filt CGIL e UGL TA)", "Convocada")},
+        "it": ("21 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV), sciopero nazionale (Filt CGIL e UGL TA)", "Revocato dai sindacati"),
+        "de": ("21. Nov., 13:00–17:00", "Italienische Flugsicherung (ENAV), landesweiter Streik (Filt CGIL und UGL TA)", "Von den Gewerkschaften abgesagt"),
+        "pt": ("21 nov, 13:00–17:00", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (Filt CGIL e UGL TA)", "Desconvocada pelos sindicatos")},
     ("2026-11-22", "Air traffic control (ENAV) at Malpensa"): {
         "it": ("22 nov, 24 h", "Controllo del traffico aereo (ENAV) a Malpensa", "Proclamato"),
         "de": ("22. Nov., 24 Std.", "Flugsicherung (ENAV) in Mailand-Malpensa", "Angekündigt"),
@@ -36,9 +36,9 @@ ROWS = {
         "de": ("22. Nov., 24 Std.", "Sicherheitspersonal des Flughafens (Sicuritalia IVRI)", "Angekündigt"),
         "pt": ("22 nov, 24 h", "Pessoal de segurança do aeroporto (Sicuritalia IVRI)", "Convocada")},
     ("2026-11-22", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)"): {
-        "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Proclamato"),
-        "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Angekündigt"),
-        "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Convocada")},
+        "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato dai sindacati"),
+        "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Von den Gewerkschaften abgesagt"),
+        "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada pelos sindicatos")},
     ("2026-12-19", "easyJet cabin crew based in Portugal (SNPVAC)"): {
         "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Proclamato; servizi minimi fissati dal governo portoghese"),
         "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Angekündigt; Mindestdienste von der portugiesischen Regierung festgelegt"),
