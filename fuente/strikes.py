@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "18 de noviembre de 2026", "en": "18 November 2026", "iso": "2026-11-18"}
+UPDATED = {"es": "19 de noviembre de 2026", "en": "19 November 2026", "iso": "2026-11-19"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -28,16 +28,25 @@ STRIKES = [
     ("2026-11-20", "20 nov, toda la jornada", "20 Nov, all day", "Huelga general en Italia (CGIL)", "General strike in Italy (CGIL union)",
      "Toda Italia", "general", "Convocada; no consta en el calendario del transporte aéreo, efecto en los vuelos sin confirmar", "Called; not listed in the air transport calendar, effect on flights not confirmed", SRC_IT),
     ("2026-11-21", "21 nov, 13:00–17:00", "21 Nov, 13:00–17:00", "Control aéreo de Italia (ENAV), huelga nacional (Filt CGIL y UGL TA)", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)",
-     "Toda Italia", "atc", "Desconvocada por los sindicatos", "Called off by the unions", SRC_IT),
-    ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Control aéreo (ENAV) en Malpensa", "Air traffic control (ENAV) at Malpensa",
-     "Milán-Malpensa (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
+     "Toda Italia", "atc", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
+    ("2026-11-22", "22 nov, 13:00–17:00", "22 Nov, 13:00–17:00", "Control aéreo (ENAV) en Malpensa", "Air traffic control (ENAV) at Malpensa",
+     "Milán-Malpensa (Italia)", "atc", "Convocada; reducida de 24 h a 4 h", "Scheduled; cut from 24 h to 4 h", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
      "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
-     "Pisa y Florencia (Italia)", "airport", "Desconvocada por los sindicatos", "Called off by the unions", SRC_IT),
+     "Pisa y Florencia (Italia)", "airport", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
+    ("2026-12-14", "14 dic, 24 h", "14 Dec, 24 h", "Handling de Aviation Services (FAST-CONFSAL)", "Aviation Services ground handling (FAST-CONFSAL)",
+     "Roma-Fiumicino (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
+    ("2026-12-15", "15 dic, 24 h", "15 Dec, 24 h", "Control aéreo (ENAV) en Bolonia (UILT-UIL)", "Air traffic control (ENAV) at Bologna (UILT-UIL)",
+     "Bolonia (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-19", "19–23 dic", "19–23 Dec", "Tripulantes de cabina de easyJet con base en Portugal (SNPVAC)", "easyJet cabin crew based in Portugal (SNPVAC)",
      "Lisboa, Oporto y Faro (Portugal)", "airline", "Convocada; servicios mínimos fijados por el Gobierno portugués", "Called; minimum services set by the Portuguese government", SRC_DGERT,
      ("/huelga-easyjet-portugal-diciembre/", "/en/easyjet-portugal-strike-december/")),
+    ("2027-01-15", "15 ene 2027, 24 h", "15 Jan 2027, 24 h", "Control aéreo de Italia (ENAV), huelga nacional (UILT-UIL)", "Italian air traffic control (ENAV), national strike (UILT-UIL)",
+     "Toda Italia", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2027-01-15", "15 ene 2027, 24 h (Padua: 13:00–17:00)", "15 Jan 2027, 24 h (Padua: 13:00–17:00)", "Control aéreo (ENAV) en Nápoles, Bari, Linate y el centro de control de Padua (UILT-UIL)",
+     "Air traffic control (ENAV) at Naples, Bari, Linate and the Padua control centre (UILT-UIL)",
+     "Nápoles, Bari, Milán-Linate y Padua (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
 ]
 
 # English for the "where" column (the table above keeps it in Spanish); every place must have a translation (test_mantenimiento.py)
@@ -47,6 +56,8 @@ WHERE_EN = {
         "Jerez, A Coruña, Seville, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos",
     "Leeds Bradford (Reino Unido)": "Leeds Bradford (UK)", "Bari (Italia)": "Bari (Italy)", "Toda Italia": "All of Italy",
     "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)", "Pisa y Florencia (Italia)": "Pisa and Florence (Italy)",
+    "Roma-Fiumicino (Italia)": "Rome Fiumicino (Italy)", "Bolonia (Italia)": "Bologna (Italy)",
+    "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Naples, Bari, Milan Linate and Padua (Italy)",
     "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)",
     "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
 }

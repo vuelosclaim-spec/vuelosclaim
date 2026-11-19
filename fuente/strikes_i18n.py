@@ -24,25 +24,41 @@ ROWS = {
         "de": ("20. Nov., ganztägig", "Generalstreik in Italien (Gewerkschaft CGIL)", "Angekündigt; nicht im Kalender für den Luftverkehr, Auswirkung auf Flüge nicht bestätigt"),
         "pt": ("20 nov, todo o dia", "Greve geral em Itália (sindicato CGIL)", "Convocada; não consta do calendário do transporte aéreo, efeito nos voos não confirmado")},
     ("2026-11-21", "Italian air traffic control (ENAV), national strike (Filt CGIL and UGL TA)"): {
-        "it": ("21 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV), sciopero nazionale (Filt CGIL e UGL TA)", "Revocato dai sindacati"),
-        "de": ("21. Nov., 13:00–17:00", "Italienische Flugsicherung (ENAV), landesweiter Streik (Filt CGIL und UGL TA)", "Von den Gewerkschaften abgesagt"),
-        "pt": ("21 nov, 13:00–17:00", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (Filt CGIL e UGL TA)", "Desconvocada pelos sindicatos")},
+        "it": ("21 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV), sciopero nazionale (Filt CGIL e UGL TA)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
+        "de": ("21. Nov., 13:00–17:00", "Italienische Flugsicherung (ENAV), landesweiter Streik (Filt CGIL und UGL TA)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
+        "pt": ("21 nov, 13:00–17:00", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (Filt CGIL e UGL TA)", "Desconvocada segundo os sindicatos; o calendário oficial do MIT ainda a inclui")},
     ("2026-11-22", "Air traffic control (ENAV) at Malpensa"): {
-        "it": ("22 nov, 24 h", "Controllo del traffico aereo (ENAV) a Malpensa", "Proclamato"),
-        "de": ("22. Nov., 24 Std.", "Flugsicherung (ENAV) in Mailand-Malpensa", "Angekündigt"),
-        "pt": ("22 nov, 24 h", "Controlo de tráfego aéreo (ENAV) em Malpensa", "Convocada")},
+        "it": ("22 nov, 13:00–17:00", "Controllo del traffico aereo (ENAV) a Malpensa", "Proclamato; ridotto da 24 a 4 ore"),
+        "de": ("22. Nov., 13:00–17:00", "Flugsicherung (ENAV) in Mailand-Malpensa", "Angekündigt; von 24 auf 4 Std. verkürzt"),
+        "pt": ("22 nov, 13:00–17:00", "Controlo de tráfego aéreo (ENAV) em Malpensa", "Convocada; reduzida de 24 h para 4 h")},
     ("2026-11-22", "Airport security staff (Sicuritalia IVRI)"): {
         "it": ("22 nov, 24 h", "Personale di sicurezza aeroportuale (Sicuritalia IVRI)", "Proclamato"),
         "de": ("22. Nov., 24 Std.", "Sicherheitspersonal des Flughafens (Sicuritalia IVRI)", "Angekündigt"),
         "pt": ("22 nov, 24 h", "Pessoal de segurança do aeroporto (Sicuritalia IVRI)", "Convocada")},
     ("2026-11-22", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)"): {
-        "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato dai sindacati"),
-        "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Von den Gewerkschaften abgesagt"),
-        "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada pelos sindicatos")},
+        "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
+        "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
+        "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada segundo os sindicatos; o calendário oficial do MIT ainda a inclui")},
+    ("2026-12-14", "Aviation Services ground handling (FAST-CONFSAL)"): {
+        "it": ("14 dic, 24 h", "Handling di Aviation Services (FAST-CONFSAL)", "Proclamato"),
+        "de": ("14. Dez., 24 Std.", "Bodenabfertigung von Aviation Services (FAST-CONFSAL)", "Angekündigt"),
+        "pt": ("14 dez, 24 h", "Assistência em escala da Aviation Services (FAST-CONFSAL)", "Convocada")},
+    ("2026-12-15", "Air traffic control (ENAV) at Bologna (UILT-UIL)"): {
+        "it": ("15 dic, 24 h", "Controllo del traffico aereo (ENAV) a Bologna (UILT-UIL)", "Proclamato"),
+        "de": ("15. Dez., 24 Std.", "Flugsicherung (ENAV) in Bologna (UILT-UIL)", "Angekündigt"),
+        "pt": ("15 dez, 24 h", "Controlo de tráfego aéreo (ENAV) em Bolonha (UILT-UIL)", "Convocada")},
     ("2026-12-19", "easyJet cabin crew based in Portugal (SNPVAC)"): {
         "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Proclamato; servizi minimi fissati dal governo portoghese"),
         "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Angekündigt; Mindestdienste von der portugiesischen Regierung festgelegt"),
         "pt": ("19–23 dez", "Tripulantes de cabine da easyJet com base em Portugal (SNPVAC)", "Convocada; serviços mínimos fixados pelo Governo português")},
+    ("2027-01-15", "Italian air traffic control (ENAV), national strike (UILT-UIL)"): {
+        "it": ("15 gen 2027, 24 h", "Controllo del traffico aereo (ENAV), sciopero nazionale (UILT-UIL)", "Proclamato"),
+        "de": ("15. Jan. 2027, 24 Std.", "Italienische Flugsicherung (ENAV), landesweiter Streik (UILT-UIL)", "Angekündigt"),
+        "pt": ("15 jan 2027, 24 h", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (UILT-UIL)", "Convocada")},
+    ("2027-01-15", "Air traffic control (ENAV) at Naples, Bari, Linate and the Padua control centre (UILT-UIL)"): {
+        "it": ("15 gen 2027, 24 h (Padova: 13:00–17:00)", "Controllo del traffico aereo (ENAV) a Napoli, Bari, Linate e centro di controllo di Padova (UILT-UIL)", "Proclamato"),
+        "de": ("15. Jan. 2027, 24 Std. (Padua: 13:00–17:00)", "Flugsicherung (ENAV) in Neapel, Bari, Linate und im Kontrollzentrum Padua (UILT-UIL)", "Angekündigt"),
+        "pt": ("15 jan 2027, 24 h (Pádua: 13:00–17:00)", "Controlo de tráfego aéreo (ENAV) em Nápoles, Bari, Linate e no centro de controlo de Pádua (UILT-UIL)", "Convocada")},
 }
 
 WHERE = {
@@ -51,6 +67,7 @@ WHERE = {
                "Jerez, A Coruña, Siviglia, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Spagna)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Regno Unito)", "Bari (Italia)": "Bari", "Toda Italia": "Tutta Italia",
            "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia", "Pisa y Florencia (Italia)": "Pisa e Firenze",
+           "Roma-Fiumicino (Italia)": "Roma Fiumicino", "Bolonia (Italia)": "Bologna", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Napoli, Bari, Milano Linate e Padova",
            "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Tutta la Spagna: possibile impatto a terra e sui trasporti per l'aeroporto"},
     "de": {"Bilbao": "Bilbao (Spanien)", "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
@@ -58,6 +75,7 @@ WHERE = {
                "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Spanien)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Vereinigtes Königreich)", "Bari (Italia)": "Bari (Italien)", "Toda Italia": "Ganz Italien",
            "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)", "Pisa y Florencia (Italia)": "Pisa und Florenz (Italien)",
+           "Roma-Fiumicino (Italia)": "Rom-Fiumicino (Italien)", "Bolonia (Italia)": "Bologna (Italien)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Neapel, Bari, Mailand-Linate und Padua (Italien)",
            "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Ganz Spanien: mögliche Auswirkungen am Boden und auf die Anreise zum Flughafen"},
     "pt": {"Bilbao": "Bilbao (Espanha)", "Barcelona-El Prat": "Barcelona-El Prat (Espanha)", "Madrid-Barajas": "Madrid-Barajas (Espanha)",
@@ -65,6 +83,7 @@ WHERE = {
                "Jerez, Corunha, Sevilha, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos (Espanha)",
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Reino Unido)", "Bari (Italia)": "Bari (Itália)", "Toda Italia": "Toda a Itália",
            "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)", "Pisa y Florencia (Italia)": "Pisa e Florença (Itália)",
+           "Roma-Fiumicino (Italia)": "Roma-Fiumicino (Itália)", "Bolonia (Italia)": "Bolonha (Itália)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Nápoles, Bari, Milão-Linate e Pádua (Itália)",
            "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Toda a Espanha: possível impacto em terra e no transporte para o aeroporto"},
 }
