@@ -32,13 +32,15 @@ STRIKES = [
     ("2026-11-22", "22 nov, 13:00–17:00", "22 Nov, 13:00–17:00", "Control aéreo (ENAV) en Malpensa", "Air traffic control (ENAV) at Malpensa",
      "Milán-Malpensa (Italia)", "atc", "Convocada; reducida de 24 h a 4 h", "Scheduled; cut from 24 h to 4 h", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Personal de seguridad del aeropuerto (Sicuritalia IVRI)", "Airport security staff (Sicuritalia IVRI)",
-     "Venecia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
+     "Venecia (Italia)", "airport", "Desconvocada (revocación publicada el 19 nov)", "Called off (revocation published 19 Nov)", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
      "Pisa y Florencia (Italia)", "airport", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
     ("2026-12-14", "14 dic, 24 h", "14 Dec, 24 h", "Handling de Aviation Services (FAST-CONFSAL)", "Aviation Services ground handling (FAST-CONFSAL)",
      "Roma-Fiumicino (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-15", "15 dic, 24 h", "15 Dec, 24 h", "Control aéreo (ENAV) en Bolonia (UILT-UIL)", "Air traffic control (ENAV) at Bologna (UILT-UIL)",
      "Bolonia (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2026-12-16", "16 dic, 11:00–15:00", "16 Dec, 11:00–15:00", "Limpieza del aeropuerto de Bolonia", "Bologna airport cleaning staff",
+     "Bolonia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-19", "19–23 dic", "19–23 Dec", "Tripulantes de cabina de easyJet con base en Portugal (SNPVAC)", "easyJet cabin crew based in Portugal (SNPVAC)",
      "Lisboa, Oporto y Faro (Portugal)", "airline", "Convocada; servicios mínimos fijados por el Gobierno portugués", "Called; minimum services set by the Portuguese government", SRC_DGERT,
      ("/huelga-easyjet-portugal-diciembre/", "/en/easyjet-portugal-strike-december/")),
@@ -47,6 +49,8 @@ STRIKES = [
     ("2027-01-15", "15 ene 2027, 24 h (Padua: 13:00–17:00)", "15 Jan 2027, 24 h (Padua: 13:00–17:00)", "Control aéreo (ENAV) en Nápoles, Bari, Linate y el centro de control de Padua (UILT-UIL)",
      "Air traffic control (ENAV) at Naples, Bari, Linate and the Padua control centre (UILT-UIL)",
      "Nápoles, Bari, Milán-Linate y Padua (Italia)", "atc", "Convocada", "Scheduled", SRC_IT),
+    ("2027-01-15", "15 ene 2027, 24 h", "15 Jan 2027, 24 h", "Mantenimiento de los sistemas de control aéreo (Techno Sky, grupo ENAV)", "Air traffic control systems maintenance staff (Techno Sky, ENAV group)",
+     "Toda Italia", "atc", "Convocada", "Scheduled", SRC_IT),
 ]
 
 # English for the "where" column (the table above keeps it in Spanish); every place must have a translation (test_mantenimiento.py)

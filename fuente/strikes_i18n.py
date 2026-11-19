@@ -32,9 +32,9 @@ ROWS = {
         "de": ("22. Nov., 13:00–17:00", "Flugsicherung (ENAV) in Mailand-Malpensa", "Angekündigt; von 24 auf 4 Std. verkürzt"),
         "pt": ("22 nov, 13:00–17:00", "Controlo de tráfego aéreo (ENAV) em Malpensa", "Convocada; reduzida de 24 h para 4 h")},
     ("2026-11-22", "Airport security staff (Sicuritalia IVRI)"): {
-        "it": ("22 nov, 24 h", "Personale di sicurezza aeroportuale (Sicuritalia IVRI)", "Proclamato"),
-        "de": ("22. Nov., 24 Std.", "Sicherheitspersonal des Flughafens (Sicuritalia IVRI)", "Angekündigt"),
-        "pt": ("22 nov, 24 h", "Pessoal de segurança do aeroporto (Sicuritalia IVRI)", "Convocada")},
+        "it": ("22 nov, 24 h", "Personale di sicurezza aeroportuale (Sicuritalia IVRI)", "Revocato (revoca pubblicata il 19 nov)"),
+        "de": ("22. Nov., 24 Std.", "Sicherheitspersonal des Flughafens (Sicuritalia IVRI)", "Abgesagt (Absage am 19. Nov. veröffentlicht)"),
+        "pt": ("22 nov, 24 h", "Pessoal de segurança do aeroporto (Sicuritalia IVRI)", "Desconvocada (revogação publicada a 19 nov)")},
     ("2026-11-22", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)"): {
         "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
         "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
@@ -47,6 +47,10 @@ ROWS = {
         "it": ("15 dic, 24 h", "Controllo del traffico aereo (ENAV) a Bologna (UILT-UIL)", "Proclamato"),
         "de": ("15. Dez., 24 Std.", "Flugsicherung (ENAV) in Bologna (UILT-UIL)", "Angekündigt"),
         "pt": ("15 dez, 24 h", "Controlo de tráfego aéreo (ENAV) em Bolonha (UILT-UIL)", "Convocada")},
+    ("2026-12-16", "Bologna airport cleaning staff"): {
+        "it": ("16 dic, 11:00–15:00", "Personale delle pulizie dell'aeroporto di Bologna", "Proclamato"),
+        "de": ("16. Dez., 11:00–15:00", "Reinigungspersonal des Flughafens Bologna", "Angekündigt"),
+        "pt": ("16 dez, 11:00–15:00", "Pessoal de limpeza do aeroporto de Bolonha", "Convocada")},
     ("2026-12-19", "easyJet cabin crew based in Portugal (SNPVAC)"): {
         "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Proclamato; servizi minimi fissati dal governo portoghese"),
         "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Angekündigt; Mindestdienste von der portugiesischen Regierung festgelegt"),
@@ -55,6 +59,10 @@ ROWS = {
         "it": ("15 gen 2027, 24 h", "Controllo del traffico aereo (ENAV), sciopero nazionale (UILT-UIL)", "Proclamato"),
         "de": ("15. Jan. 2027, 24 Std.", "Italienische Flugsicherung (ENAV), landesweiter Streik (UILT-UIL)", "Angekündigt"),
         "pt": ("15 jan 2027, 24 h", "Controlo de tráfego aéreo de Itália (ENAV), greve nacional (UILT-UIL)", "Convocada")},
+    ("2027-01-15", "Air traffic control systems maintenance staff (Techno Sky, ENAV group)"): {
+        "it": ("15 gen 2027, 24 h", "Personale di manutenzione dei sistemi di controllo del traffico aereo (Techno Sky, gruppo ENAV)", "Proclamato"),
+        "de": ("15. Jan. 2027, 24 Std.", "Wartungspersonal der Flugsicherungssysteme (Techno Sky, ENAV-Gruppe)", "Angekündigt"),
+        "pt": ("15 jan 2027, 24 h", "Pessoal de manutenção dos sistemas de controlo de tráfego aéreo (Techno Sky, grupo ENAV)", "Convocada")},
     ("2027-01-15", "Air traffic control (ENAV) at Naples, Bari, Linate and the Padua control centre (UILT-UIL)"): {
         "it": ("15 gen 2027, 24 h (Padova: 13:00–17:00)", "Controllo del traffico aereo (ENAV) a Napoli, Bari, Linate e centro di controllo di Padova (UILT-UIL)", "Proclamato"),
         "de": ("15. Jan. 2027, 24 Std. (Padua: 13:00–17:00)", "Flugsicherung (ENAV) in Neapel, Bari, Linate und im Kontrollzentrum Padua (UILT-UIL)", "Angekündigt"),
