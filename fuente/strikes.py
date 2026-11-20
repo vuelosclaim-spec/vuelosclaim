@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "19 de noviembre de 2026", "en": "19 November 2026", "iso": "2026-11-19"}
+UPDATED = {"es": "20 de noviembre de 2026", "en": "20 November 2026", "iso": "2026-11-20"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -42,7 +42,7 @@ STRIKES = [
     ("2026-12-16", "16 dic, 11:00–15:00", "16 Dec, 11:00–15:00", "Limpieza del aeropuerto de Bolonia", "Bologna airport cleaning staff",
      "Bolonia (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-19", "19–23 dic", "19–23 Dec", "Tripulantes de cabina de easyJet con base en Portugal (SNPVAC)", "easyJet cabin crew based in Portugal (SNPVAC)",
-     "Lisboa, Oporto y Faro (Portugal)", "airline", "Convocada; servicios mínimos fijados por el Gobierno portugués", "Called; minimum services set by the Portuguese government", SRC_DGERT,
+     "Lisboa, Oporto y Faro (Portugal)", "airline", "Desconvocada por el sindicato el 18 nov; puede convocar nuevas acciones", "Called off by the union on 18 Nov; it may call new action", SRC_DGERT,
      ("/huelga-easyjet-portugal-diciembre/", "/en/easyjet-portugal-strike-december/")),
     ("2027-01-15", "15 ene 2027, 24 h", "15 Jan 2027, 24 h", "Control aéreo de Italia (ENAV), huelga nacional (UILT-UIL)", "Italian air traffic control (ENAV), national strike (UILT-UIL)",
      "Toda Italia", "atc", "Convocada", "Scheduled", SRC_IT),
@@ -179,7 +179,7 @@ def build(ctx):
         other = "en" if l == "es" else "es"
         if l == "es":
             title = "Huelgas de vuelos noviembre y diciembre 2026: calendario"
-            desc = "Huelga general del 11N, control aéreo en Italia y easyJet en Portugal del 19 al 23 de diciembre: calendario con fuentes oficiales y cuándo te pagan 250–600 €."
+            desc = "Huelgas de aviones en España, Italia y Portugal (easyJet 19–23 dic, desconvocada): calendario con fuentes oficiales y cuándo te pagan 250–600 €."
             h1 = "Huelgas que afectan a vuelos en España: calendario y tus derechos"
             lead = (f"Actualizado el {UPDATED['es']}. Estas son las huelgas convocadas que pueden afectar a vuelos con salida o llegada en España y a los destinos europeos más habituales. "
                     "Si te cancelan el vuelo con menos de 14 días de aviso, lo que decide si cobras 250–600 € es <strong>quién hace la huelga</strong>.")
@@ -190,7 +190,7 @@ def build(ctx):
 <li><strong>Huelga de aeropuerto, handling o huelga general</strong>: <strong>depende</strong> de si la aerolínea podía haber evitado la cancelación. Pídele la causa por escrito.</li>
 <li><strong>Siempre</strong>, sea cual sea la huelga: reembolso completo en 7 días o vuelo alternativo, y comida, bebida y hotel mientras esperas.</li>
 <li><strong>Si te avisan con 14 días o más</strong>, no hay compensación fija por la cancelación. Por ejemplo, para la huelga general del 11 de noviembre, una cancelación avisada el 28 de octubre o antes no daría compensación.</li></ul>
-<p>Guías: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a> · <a href="/huelga-easyjet-portugal-diciembre/">huelga de easyJet en Portugal del 19 al 23 de diciembre</a> · <a href="/huelgas-vuelos-navidad/">huelgas en Navidad</a> · <a href="/huelga-vueling/">¿hay huelga de Vueling?</a> · <a href="/huelga-ryanair/">¿y de Ryanair?</a> · <a href="/huelga-iberia/">¿y de Iberia?</a>.</p>"""
+<p>Guías: <a href="/huelga-general-11-noviembre-vuelos/">huelga general del 11 de noviembre y tu vuelo</a> · <a href="/huelga-easyjet-portugal-diciembre/">huelga de easyJet en Portugal del 19 al 23 de diciembre (desconvocada)</a> · <a href="/huelgas-vuelos-navidad/">huelgas en Navidad</a> · <a href="/huelga-vueling/">¿hay huelga de Vueling?</a> · <a href="/huelga-ryanair/">¿y de Ryanair?</a> · <a href="/huelga-iberia/">¿y de Iberia?</a>.</p>"""
             checker = """<h2>¿Tengo derecho a algo? Compruébalo</h2>
 <form id="sk-form" class="sk"><label>Fecha del vuelo <input type="date" id="sk-flight" required></label>
 <label>Fecha en que te avisaron de la cancelación <input type="date" id="sk-notice" required></label>
@@ -203,7 +203,7 @@ def build(ctx):
                    ("¿Y si la huelga es de los pilotos o tripulantes de la aerolínea?", "Entonces normalmente sí: el Tribunal de Justicia de la UE considera que la huelga de la propia plantilla no es extraordinaria, así que te corresponden 250, 400 o 600 € si te avisan con menos de 14 días.")]
         else:
             title = "Spain flight strikes Nov–Dec 2026: dates and your rights"
-            desc = "Spain's 11 Nov general strike, easyJet Portugal cabin crew on 19–23 Dec, Italian ATC strikes: calendar with sources and when you're owed €250–600."
+            desc = "Flight strikes in Spain, Italy and Portugal (the easyJet 19–23 Dec strike has been called off): calendar with official sources and when you're owed €250–600."
             h1 = "Strikes affecting flights to and from Spain: calendar and your rights"
             lead = (f"Updated {UPDATED['en']}. These are the strikes called that may affect flights to and from Spain and the most common European connections. "
                     "If your flight is cancelled with less than 14 days' notice, what decides whether you get €250–€600 is <strong>who is on strike</strong>.")
@@ -214,7 +214,7 @@ def build(ctx):
 <li><strong>Airport, ground handling or general strike</strong>: <strong>it depends</strong> on whether the airline could have avoided the cancellation. Ask it for the cause in writing.</li>
 <li><strong>Always</strong>, whatever the strike: a full refund within 7 days or a new flight, plus meals, drinks and a hotel while you wait.</li>
 <li><strong>Told 14 days or more in advance</strong>: no fixed compensation for the cancellation. For the 11 November general strike, a cancellation notified on or before 28 October would not carry compensation.</li></ul>
-<p>Guides: <a href="/en/spain-general-strike-11-november-flights/">Spain general strike on 11 November and your flight</a> · <a href="/en/easyjet-portugal-strike-december/">easyJet Portugal cabin crew strike, 19–23 December</a> · <a href="/en/christmas-flight-strikes/">Christmas strikes</a> · <a href="/en/vueling-strike/">is there a Vueling strike?</a> · <a href="/en/ryanair-strike/">Ryanair?</a> · <a href="/en/iberia-strike/">Iberia?</a>.</p>"""
+<p>Guides: <a href="/en/spain-general-strike-11-november-flights/">Spain general strike on 11 November and your flight</a> · <a href="/en/easyjet-portugal-strike-december/">easyJet Portugal cabin crew strike, 19–23 December (called off)</a> · <a href="/en/christmas-flight-strikes/">Christmas strikes</a> · <a href="/en/vueling-strike/">is there a Vueling strike?</a> · <a href="/en/ryanair-strike/">Ryanair?</a> · <a href="/en/iberia-strike/">Iberia?</a>.</p>"""
             checker = """<h2>Am I owed anything? Check it</h2>
 <form id="sk-form" class="sk"><label>Flight date <input type="date" id="sk-flight" required></label>
 <label>Date you were told about the cancellation <input type="date" id="sk-notice" required></label>
