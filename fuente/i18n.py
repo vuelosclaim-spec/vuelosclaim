@@ -267,7 +267,7 @@ def _reference_pt(faq_html):
 <li>Se não responder em 6 semanas ou a resposta não for satisfatória, e o voo partiu de Portugal, reclame gratuitamente à <a href="{ANAC_URL}" rel="noopener">ANAC</a>. Tem até 3 anos a contar da data do voo.</li>
 <li>Se preferir não o fazer sozinho, uma empresa de reclamações trata do processo sem custos adiantados e fica com uma percentagem se ganhar.</li>
 </ol>
-<p>Greves previstas em Portugal, Espanha e Itália: <a href="{STRIKES['pt']}">calendário de greves nos voos</a>. Greve da easyJet em dezembro: <a href="/pt/greve-easyjet-portugal-dezembro/">datas e direitos</a>.</p></div></section>
+<p>Greves previstas em Portugal, Espanha e Itália: <a href="{STRIKES['pt']}">calendário de greves nos voos</a>. Greve da easyJet de 19 a 23 de dezembro: <a href="/pt/greve-easyjet-portugal-dezembro/">desconvocada a 18 de novembro</a>.</p></div></section>
 <section class="ref" id="preguntas"><div class="wrap"><h2>Perguntas frequentes</h2>{faq_html}</div></section>"""
 
 

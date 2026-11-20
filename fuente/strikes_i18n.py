@@ -52,9 +52,9 @@ ROWS = {
         "de": ("16. Dez., 11:00–15:00", "Reinigungspersonal des Flughafens Bologna", "Angekündigt"),
         "pt": ("16 dez, 11:00–15:00", "Pessoal de limpeza do aeroporto de Bolonha", "Convocada")},
     ("2026-12-19", "easyJet cabin crew based in Portugal (SNPVAC)"): {
-        "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Proclamato; servizi minimi fissati dal governo portoghese"),
-        "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Angekündigt; Mindestdienste von der portugiesischen Regierung festgelegt"),
-        "pt": ("19–23 dez", "Tripulantes de cabine da easyJet com base em Portugal (SNPVAC)", "Convocada; serviços mínimos fixados pelo Governo português")},
+        "it": ("19–23 dic", "Assistenti di volo di easyJet con base in Portogallo (SNPVAC)", "Revocato dal sindacato il 18 nov; possibili nuove azioni"),
+        "de": ("19.–23. Dez.", "Kabinenpersonal von easyJet mit Basis in Portugal (SNPVAC)", "Von der Gewerkschaft am 18. Nov. abgesagt; neue Aktionen möglich"),
+        "pt": ("19–23 dez", "Tripulantes de cabine da easyJet com base em Portugal (SNPVAC)", "Desconvocada pelo sindicato a 18 nov; pode haver novas ações")},
     ("2027-01-15", "Italian air traffic control (ENAV), national strike (UILT-UIL)"): {
         "it": ("15 gen 2027, 24 h", "Controllo del traffico aereo (ENAV), sciopero nazionale (UILT-UIL)", "Proclamato"),
         "de": ("15. Jan. 2027, 24 Std.", "Italienische Flugsicherung (ENAV), landesweiter Streik (UILT-UIL)", "Angekündigt"),
@@ -176,7 +176,7 @@ PAGE = {
              ("Und wenn Piloten oder Kabinenpersonal der Fluggesellschaft streiken?", "Dann in der Regel ja: Der Gerichtshof der EU sieht einen Streik des eigenen Personals nicht als außergewöhnlich an, also stehen Ihnen 250, 400 oder 600 € zu, wenn die Mitteilung weniger als 14 Tage vorher kam.")]),
     "pt": dict(
         title="Greves nos voos novembro–dezembro 2026: calendário e direitos",
-        desc="Greve da easyJet em Portugal de 19 a 23 de dezembro, controlo aéreo em Itália e greve geral em Espanha: calendário com fontes oficiais e quando recebe 250–600 €.",
+        desc="Greves nos voos em Portugal, Espanha e Itália (a da easyJet de 19 a 23 de dezembro foi desconvocada): calendário com fontes oficiais e quando recebe 250–600 €.",
         h1="Greves que afetam os voos: calendário e os seus direitos",
         lead="Atualizado a {u}. Estas são as greves convocadas que podem afetar voos de e para Portugal, Espanha e Itália. Se o voo for cancelado com menos de 14 dias de aviso, o que decide se recebe 250–600 € é <strong>quem faz greve</strong>.",
         th="<th>Quando</th><th>O quê e onde</th><th>Tipo</th><th>Indemnização?</th><th>Estado</th>",
@@ -186,7 +186,7 @@ PAGE = {
 <li><strong>Greve no aeroporto, na assistência em escala ou greve geral</strong>: <strong>depende</strong> de a companhia ter podido evitar o cancelamento. Peça-lhe a causa por escrito.</li>
 <li><strong>Sempre</strong>, seja qual for a greve: reembolso total no prazo de 7 dias ou voo alternativo, e refeições, bebidas e hotel durante a espera.</li>
 <li><strong>Se for avisado com 14 dias ou mais</strong> de antecedência, não há indemnização fixa pelo cancelamento.</li></ul>
-<p>A greve da easyJet de 19 a 23 de dezembro é do pessoal da própria companhia: veja <a href="/pt/greve-easyjet-portugal-dezembro/">datas, serviços mínimos e o que pode reclamar</a>.</p>""",
+<p>A greve da easyJet de 19 a 23 de dezembro foi desconvocada pelo SNPVAC a 18 de novembro: veja <a href="/pt/greve-easyjet-portugal-dezembro/">o que mudou e o que pode reclamar se o voo for cancelado na mesma</a>.</p>""",
         checker="""<h2>Tenho direito a alguma coisa? Verifique</h2>
 <form id="sk-form" class="sk"><label>Data do voo <input type="date" id="sk-flight" required></label>
 <label>Data em que foi avisado do cancelamento <input type="date" id="sk-notice" required></label>
@@ -201,4 +201,4 @@ PAGE = {
              ("Recebo indemnização se os controladores aéreos fizerem greve?", "Em regra, não: as greves do controlo aéreo são consideradas circunstâncias extraordinárias. Mantém o direito ao reembolso ou a um voo alternativo e à assistência."),
              ("E se fizerem greve os pilotos ou os tripulantes da companhia?", "Então, em regra, sim: o Tribunal de Justiça da UE considera que a greve do pessoal da própria companhia não é extraordinária, por isso tem direito a 250, 400 ou 600 € se for avisado com menos de 14 dias.")]),
 }
-UPDATED = {"it": "15 novembre 2026", "de": "15. November 2026", "pt": "15 de novembro de 2026"}
+UPDATED = {"it": "20 novembre 2026", "de": "20. November 2026", "pt": "20 de novembro de 2026"}
