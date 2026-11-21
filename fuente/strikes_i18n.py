@@ -47,6 +47,10 @@ ROWS = {
         "it": ("14 dic, 24 h", "Handling di Aviation Services (FAST-CONFSAL)", "Proclamato"),
         "de": ("14. Dez., 24 Std.", "Bodenabfertigung von Aviation Services (FAST-CONFSAL)", "Angekündigt"),
         "pt": ("14 dez, 24 h", "Assistência em escala da Aviation Services (FAST-CONFSAL)", "Convocada")},
+    ("2026-11-26", "SATA Group ground handling (SATA Handling), strike by SITAVA and SINTAC"): {
+        "it": ("26–29 nov, tutto il giorno", "Handling del Gruppo SATA (SATA Handling), sciopero di SITAVA e SINTAC", "Proclamato; servizi minimi pubblicati da Azores Airlines; cambio di prenotazione gratuito al 22–25 nov o 30 nov–8 dic"),
+        "de": ("26.–29. Nov., ganztägig", "Bodenabfertigung der SATA-Gruppe (SATA Handling), Streik von SITAVA und SINTAC", "Angekündigt; Mindestdienste von Azores Airlines veröffentlicht; kostenlose Umbuchung auf 22.–25. Nov. oder 30. Nov.–8. Dez."),
+        "pt": ("26–29 nov, todo o dia", "Handling do Grupo SATA (SATA Handling), greve do SITAVA e do SINTAC", "Convocada; serviços mínimos publicados pela Azores Airlines; alteração de reserva sem custos para 22–25 nov ou 30 nov–8 dez")},
     ("2026-12-15", "Air traffic control (ENAV) at Bologna (UILT-UIL)"): {
         "it": ("15 dic, 24 h", "Controllo del traffico aereo (ENAV) a Bologna (UILT-UIL)", "Proclamato"),
         "de": ("15. Dez., 24 Std.", "Flugsicherung (ENAV) in Bologna (UILT-UIL)", "Angekündigt"),
@@ -80,7 +84,7 @@ WHERE = {
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Regno Unito)", "Bari (Italia)": "Bari", "Toda Italia": "Tutta Italia",
            "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia", "Pisa y Florencia (Italia)": "Pisa e Firenze",
            "Roma-Fiumicino (Italia)": "Roma Fiumicino", "Bolonia (Italia)": "Bologna", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Napoli, Bari, Milano Linate e Padova",
-           "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)",
+           "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)", "Azores (Portugal)": "Azzorre (Portogallo)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Tutta la Spagna: possibile impatto a terra e sui trasporti per l'aeroporto"},
     "de": {"Bilbao": "Bilbao (Spanien)", "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -88,7 +92,7 @@ WHERE = {
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Vereinigtes Königreich)", "Bari (Italia)": "Bari (Italien)", "Toda Italia": "Ganz Italien",
            "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)", "Pisa y Florencia (Italia)": "Pisa und Florenz (Italien)",
            "Roma-Fiumicino (Italia)": "Rom-Fiumicino (Italien)", "Bolonia (Italia)": "Bologna (Italien)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Neapel, Bari, Mailand-Linate und Padua (Italien)",
-           "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)",
+           "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)", "Azores (Portugal)": "Azoren (Portugal)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Ganz Spanien: mögliche Auswirkungen am Boden und auf die Anreise zum Flughafen"},
     "pt": {"Bilbao": "Bilbao (Espanha)", "Barcelona-El Prat": "Barcelona-El Prat (Espanha)", "Madrid-Barajas": "Madrid-Barajas (Espanha)",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -96,7 +100,7 @@ WHERE = {
            "Leeds Bradford (Reino Unido)": "Leeds Bradford (Reino Unido)", "Bari (Italia)": "Bari (Itália)", "Toda Italia": "Toda a Itália",
            "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)", "Pisa y Florencia (Italia)": "Pisa e Florença (Itália)",
            "Roma-Fiumicino (Italia)": "Roma-Fiumicino (Itália)", "Bolonia (Italia)": "Bolonha (Itália)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Nápoles, Bari, Milão-Linate e Pádua (Itália)",
-           "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro",
+           "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro", "Azores (Portugal)": "Açores",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Toda a Espanha: possível impacto em terra e no transporte para o aeroporto"},
 }
 

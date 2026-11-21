@@ -13,6 +13,7 @@ SRC_IT = "https://www.mit.gov.it/come-fare-per/trasporti/calendario-scioperi-tra
 SRC_GEN = "https://huelga.ccoo.es/"
 # December: Portugal's labour ministry (DGERT) minimum-services order for the easyJet cabin crew strike.
 SRC_DGERT = "https://www.dgert.gov.pt/despacho-sm-n-o-51-25-09-easyjet_snpvac-greve-de-3-a-6-de-outubro-e-de-19-a-23-dezembro"
+SRC_SATA = "https://www.azoresairlines.pt/en/handling-strike-called-by-sintac-and-sitava"
 SRC_LBA = "https://www.unitetheunion.org/news-events/news/2026/october/leeds-bradford-airport-strikes-suspended-for-talks"
 
 # date_sort, ES when, EN when, ES what, EN what, where, kind(airline|atc|airport|general), status ES, status EN, source[, (guide ES, guide EN)]
@@ -35,6 +36,8 @@ STRIKES = [
      "Venecia (Italia)", "airport", "Desconvocada (revocación publicada el 19 nov)", "Called off (revocation published 19 Nov)", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
      "Pisa y Florencia (Italia)", "airport", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
+    ("2026-11-26", "26–29 nov, toda la jornada", "26–29 Nov, all day", "Handling del Grupo SATA (SATA Handling), huelga de SITAVA y SINTAC", "SATA Group ground handling (SATA Handling), strike by SITAVA and SINTAC",
+     "Azores (Portugal)", "airport", "Convocada; servicios mínimos publicados por Azores Airlines; cambio de reserva sin coste al 22–25 nov o 30 nov–8 dic", "Scheduled; minimum services published by Azores Airlines; free rebooking to 22–25 Nov or 30 Nov–8 Dec", SRC_SATA),
     ("2026-12-04", "4 dic, toda la jornada", "4 Dec, all day", "Huelga general en Italia (CUB, SGB, SI-COBAS y otros sindicatos de base), incluye el transporte aéreo", "General strike in Italy (CUB, SGB, SI-COBAS and other grassroots unions), air transport included",
      "Toda Italia", "general", "Convocada; horario del sector aéreo aún no comunicado; vuelos garantizados de 7:00 a 10:00 y de 18:00 a 21:00", "Called; hours for aviation not yet announced; flights guaranteed 07:00–10:00 and 18:00–21:00", SRC_IT),
     ("2026-12-14", "14 dic, 24 h", "14 Dec, 24 h", "Handling de Aviation Services (FAST-CONFSAL)", "Aviation Services ground handling (FAST-CONFSAL)",
@@ -64,7 +67,7 @@ WHERE_EN = {
     "Milán-Malpensa (Italia)": "Milan Malpensa (Italy)", "Venecia (Italia)": "Venice (Italy)", "Pisa y Florencia (Italia)": "Pisa and Florence (Italy)",
     "Roma-Fiumicino (Italia)": "Rome Fiumicino (Italy)", "Bolonia (Italia)": "Bologna (Italy)",
     "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Naples, Bari, Milan Linate and Padua (Italy)",
-    "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)",
+    "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)", "Azores (Portugal)": "Azores (Portugal)",
     "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
 }
 
