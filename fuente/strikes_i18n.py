@@ -39,6 +39,10 @@ ROWS = {
         "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
         "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
         "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada segundo os sindicatos; o calendário oficial do MIT ainda a inclui")},
+    ("2026-12-04", "General strike in Italy (CUB, SGB, SI-COBAS and other grassroots unions), air transport included"): {
+        "it": ("4 dic, intera giornata", "Sciopero generale in Italia (CUB, SGB, SI-COBAS e altri sindacati di base), compreso il trasporto aereo", "Proclamato; modalità per il settore aereo non ancora comunicate; voli garantiti dalle 7 alle 10 e dalle 18 alle 21"),
+        "de": ("4. Dez., ganztägig", "Generalstreik in Italien (CUB, SGB, SI-COBAS und andere Basisgewerkschaften), einschließlich Luftverkehr", "Angekündigt; Zeiten für den Luftverkehr noch nicht bekannt; Flüge 07:00–10:00 und 18:00–21:00 garantiert"),
+        "pt": ("4 dez, todo o dia", "Greve geral em Itália (CUB, SGB, SI-COBAS e outros sindicatos de base), inclui o transporte aéreo", "Convocada; horário do setor aéreo ainda não comunicado; voos garantidos das 7:00 às 10:00 e das 18:00 às 21:00")},
     ("2026-12-14", "Aviation Services ground handling (FAST-CONFSAL)"): {
         "it": ("14 dic, 24 h", "Handling di Aviation Services (FAST-CONFSAL)", "Proclamato"),
         "de": ("14. Dez., 24 Std.", "Bodenabfertigung von Aviation Services (FAST-CONFSAL)", "Angekündigt"),

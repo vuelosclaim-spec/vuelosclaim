@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "20 de noviembre de 2026", "en": "20 November 2026", "iso": "2026-11-20"}
+UPDATED = {"es": "21 de noviembre de 2026", "en": "21 November 2026", "iso": "2026-11-21"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -35,6 +35,8 @@ STRIKES = [
      "Venecia (Italia)", "airport", "Desconvocada (revocación publicada el 19 nov)", "Called off (revocation published 19 Nov)", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
      "Pisa y Florencia (Italia)", "airport", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
+    ("2026-12-04", "4 dic, toda la jornada", "4 Dec, all day", "Huelga general en Italia (CUB, SGB, SI-COBAS y otros sindicatos de base), incluye el transporte aéreo", "General strike in Italy (CUB, SGB, SI-COBAS and other grassroots unions), air transport included",
+     "Toda Italia", "general", "Convocada; horario del sector aéreo aún no comunicado; vuelos garantizados de 7:00 a 10:00 y de 18:00 a 21:00", "Called; hours for aviation not yet announced; flights guaranteed 07:00–10:00 and 18:00–21:00", SRC_IT),
     ("2026-12-14", "14 dic, 24 h", "14 Dec, 24 h", "Handling de Aviation Services (FAST-CONFSAL)", "Aviation Services ground handling (FAST-CONFSAL)",
      "Roma-Fiumicino (Italia)", "airport", "Convocada", "Scheduled", SRC_IT),
     ("2026-12-15", "15 dic, 24 h", "15 Dec, 24 h", "Control aéreo (ENAV) en Bolonia (UILT-UIL)", "Air traffic control (ENAV) at Bologna (UILT-UIL)",
