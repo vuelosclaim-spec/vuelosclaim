@@ -8,6 +8,7 @@ EP_TEXT = {"es": "https://data.europarl.europa.eu/distribution/doc/TA-10-2026-02
            "en": "https://data.europarl.europa.eu/distribution/doc/TA-10-2026-0238_en.pdf"}
 R261 = {"es": "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32004R0261",
         "en": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32004R0261"}
+DOT_REFUND = "https://www.transportation.gov/briefing-room/what-airline-passengers-need-know-about-dots-automatic-refund-rule"
 CURIA_2021 = "https://curia.europa.eu/juris/liste.jsf?num=C-146/20"
 
 # Equipaje de mano, comprobado el 16-11-2026 en la web oficial de cada aerolínea.
@@ -231,6 +232,68 @@ NAVIDAD2 = [
     ("Am I compensated if my flight is brought forward?", "If it's more than an hour earlier, the CJEU treats it as a cancellation. If you were told less than 14 days before and the new times fall outside the Article 5(1)(c) margins, you may be owed €250–600 per passenger."),
     ("Can I get a refund if the schedule changes?", "If the change amounts to a cancellation, yes: you can choose a refund within 7 days or an alternative flight."),
     ("What evidence do I need?", "The airline's email or text with the change and its date, and your original booking confirmation showing the original times."),
+   ],
+  },
+ },
+ {"paths": {"es": "/vuelo-cancelado-estados-unidos/", "en": "/en/us-flight-cancelled-eu261-compensation/"},
+  "es": {
+   "title": "Vuelo cancelado en Estados Unidos: qué te corresponde (UE y EE. UU.)",
+   "desc": "Vuelo a o desde Nueva York u otra ciudad de EE. UU. cancelado o retrasado: cuándo se aplica el reglamento europeo (hasta 600 €) y cuándo solo el reembolso.",
+   "h1": "Vuelo cancelado o retrasado en Estados Unidos: qué te corresponde",
+   "lead": "Las cancelaciones masivas en Estados Unidos también dejan en tierra a pasajeros que vuelan desde o hacia España. Lo que te corresponde depende de dos cosas: desde dónde sale el vuelo y qué aerolínea lo opera.",
+   "body": f"""<h2>¿Se aplica el reglamento europeo a tu vuelo?</h2>
+{TSTYLE}<div class="tbl"><table class="bg-t"><tr><th>Tu vuelo</th><th>¿Reglamento 261/2004?</th></tr>
+<tr><td>Sale de España o de otro país de la UE hacia EE. UU. (cualquier aerolínea)</td><td>Sí</td></tr>
+<tr><td>Sale de EE. UU. hacia la UE con una aerolínea europea (Iberia, Air Europa, Level, Air France, Lufthansa…)</td><td>Sí</td></tr>
+<tr><td>Sale de EE. UU. hacia la UE con una aerolínea no europea (American, Delta, United…)</td><td>No: se aplican las normas de EE. UU.</td></tr>
+<tr><td>Vuelo interno dentro de EE. UU.</td><td>No, aunque lo hayas comprado en España</td></tr></table></div>
+<p>Fuente: art. 3.1 del <a href="{R261["es"]}" rel="noopener">Reglamento (CE) 261/2004</a>. Si el vuelo cancelado forma parte de una misma reserva con salida en la UE, cuenta el viaje entero hasta el destino final.</p>
+<h2>Si se aplica el reglamento europeo</h2>
+<ul><li><strong>Siempre</strong>: puedes elegir entre el reembolso del billete en 7 días o otro vuelo lo antes posible (art. 8), y la aerolínea te debe comida, bebida y hotel si tienes que esperar (art. 9).</li>
+<li><strong>Compensación</strong>: en un vuelo de más de 3.500 km, como Madrid–Nueva York, pueden corresponderte <strong>600 €</strong> por pasajero si te cancelan con menos de 14 días de aviso o llegas con más de 3 horas de retraso (300 € si te recolocan y llegas con menos de 4 horas de retraso, art. 7.2).</li>
+<li><strong>Excepción</strong>: si la causa es una tormenta, una nevada o un cierre ordenado por el control aéreo de EE. UU. (la FAA), normalmente es una <a href="/circunstancias-extraordinarias-vuelo/">circunstancia extraordinaria</a> y no hay compensación. El reembolso o el vuelo alternativo y la asistencia te los deben igualmente.</li></ul>
+<h2>Si se aplican solo las normas de EE. UU.</h2>
+<p>El Departamento de Transporte de EE. UU. obliga a las aerolíneas a <a href="{DOT_REFUND}" rel="noopener">devolver automáticamente el dinero</a> si cancelan el vuelo o lo cambian de forma importante (más de 3 horas en vuelos internos o más de 6 en internacionales) y no aceptas la alternativa que te ofrecen. La devolución es a tu forma de pago original. Lo que no existe en EE. UU. es una compensación fija como la europea: comidas u hotel dependen de la política de cada aerolínea.</p>
+<h2>Ejemplo</h2>
+<p>Caso hipotético: vuelas Nueva York–Madrid con Iberia y te cancelan el vuelo el mismo día por una avería del avión. Se aplica el reglamento europeo porque Iberia es una aerolínea de la UE: tienes derecho a otro vuelo o al reembolso, a hotel y comida mientras esperas, y normalmente a 600 €. Si el mismo vuelo fuese con una aerolínea estadounidense, te correspondería el reembolso, pero no los 600 €.</p>
+<h2>Qué hacer</h2>
+<ol><li>Guarda la tarjeta de embarque, el aviso de cancelación y los tickets de lo que pagues.</li>
+<li>Pide por escrito el motivo de la cancelación.</li>
+<li>Si tu vuelo entra en el reglamento europeo, <a href="/">calcula gratis cuánto te corresponde</a> y genera la carta para reclamar tú mismo.</li></ol>""",
+   "faq": [
+    ("¿Me compensan si me cancelan un vuelo Nueva York–Madrid?", "Si lo opera una aerolínea europea, se aplica el reglamento 261/2004 y pueden corresponderte 600 € por pasajero, salvo circunstancias extraordinarias como una tormenta o un cierre del control aéreo. Si lo opera una aerolínea de EE. UU., solo tienes derecho al reembolso según las normas de EE. UU."),
+    ("¿Y si el vuelo sale de Madrid hacia Nueva York?", "Se aplica siempre el reglamento europeo, sea cual sea la aerolínea, porque el vuelo sale de la UE."),
+    ("¿Un cierre de la FAA da derecho a compensación?", "Normalmente no: un cierre decidido por el control aéreo es una circunstancia extraordinaria. Pero si tu vuelo entra en el reglamento europeo, te siguen debiendo el reembolso o un vuelo alternativo y la asistencia mientras esperas."),
+   ],
+  },
+  "en": {
+   "title": "US flight cancelled: what you're owed (EU261 and US rules)",
+   "desc": "Flight to or from New York or another US city cancelled or delayed: when EU261 applies (up to €600) and when you only get a refund under US rules.",
+   "h1": "Flight cancelled or delayed in the US: what you're owed",
+   "lead": "Mass cancellations in the US also strand passengers flying to and from Europe. What you're owed depends on two things: where the flight departs from and which airline operates it.",
+   "body": f"""<h2>Does EU261 apply to your flight?</h2>
+{TSTYLE}<div class="tbl"><table class="bg-t"><tr><th>Your flight</th><th>EU Regulation 261/2004?</th></tr>
+<tr><td>Departs Spain or another EU country to the US (any airline)</td><td>Yes</td></tr>
+<tr><td>Departs the US to the EU on a European airline (Iberia, Air Europa, Level, Air France, Lufthansa…)</td><td>Yes</td></tr>
+<tr><td>Departs the US to the EU on a non-EU airline (American, Delta, United…)</td><td>No: US rules apply</td></tr>
+<tr><td>Domestic flight within the US</td><td>No, even if you booked it in Europe</td></tr></table></div>
+<p>Source: Article 3(1) of <a href="{R261["en"]}" rel="noopener">Regulation (EC) 261/2004</a>. If the cancelled flight is part of a single booking departing the EU, the whole journey to the final destination counts.</p>
+<h2>If EU261 applies</h2>
+<ul><li><strong>Always</strong>: you can choose a refund within 7 days or another flight as soon as possible (Art. 8), and the airline owes you meals, drinks and a hotel if you have to wait (Art. 9).</li>
+<li><strong>Compensation</strong>: on a flight over 3,500 km, such as Madrid–New York, you may be owed <strong>€600</strong> per passenger if it's cancelled with less than 14 days' notice or you arrive more than 3 hours late (€300 if you're rerouted and arrive less than 4 hours late, Art. 7(2)).</li>
+<li><strong>Exception</strong>: storms, snow or a ground stop ordered by US air traffic control (the FAA) are normally <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstances</a>, so no compensation. The refund or rerouting and the care are still owed.</li></ul>
+<h2>If only US rules apply</h2>
+<p>The US Department of Transportation requires airlines to <a href="{DOT_REFUND}" rel="noopener">refund you automatically</a> if they cancel your flight or change it significantly (more than 3 hours on domestic flights or more than 6 on international ones) and you don't accept the alternative offered. The refund goes back to your original form of payment. What US rules don't have is fixed compensation like the EU's: meals or hotels depend on each airline's policy.</p>
+<h2>Example</h2>
+<p>Hypothetical case: you fly New York–Madrid with Iberia and the flight is cancelled on the day because of a technical fault. EU261 applies because Iberia is an EU airline: you're entitled to another flight or a refund, a hotel and meals while you wait, and normally €600. If the same flight were with a US airline, you'd get a refund but not the €600.</p>
+<h2>What to do</h2>
+<ol><li>Keep your boarding pass, the cancellation notice and receipts for anything you pay for.</li>
+<li>Ask the airline in writing for the reason for the cancellation.</li>
+<li>If your flight is covered by EU261, <a href="/en/">check for free what you're owed</a> and generate a letter to claim yourself.</li></ol>""",
+   "faq": [
+    ("Am I compensated if my New York–Madrid flight is cancelled?", "If a European airline operates it, EU261 applies and you may be owed €600 per passenger, unless there are extraordinary circumstances such as a storm or an air traffic control ground stop. If a US airline operates it, you're only entitled to a refund under US rules."),
+    ("What if the flight departs Madrid for New York?", "EU261 always applies, whatever the airline, because the flight departs the EU."),
+    ("Does an FAA ground stop mean compensation?", "Normally not: a stop ordered by air traffic control is an extraordinary circumstance. But if your flight is covered by EU261, you're still owed a refund or rerouting and care while you wait."),
    ],
   },
  },
