@@ -111,11 +111,11 @@ const SC={
  const look=lt<3?-1:1;person(540,1500,1.3,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',flip:look>0,mouth:'smile',aR:-1.1,seed:1});suitcase(700,1500,1,'#4F8A8B');
  T('Art. 8 · Reglamento (CE) 261/2004',W/2,1640,'700 30px Inter','rgba(30,42,51,.75)',{a:eo((lt-1)/0.4)});headline('ARTÍCULO 8','TÚ ELIGES',lt)},
 5:(lt,t)=>{wall(0,1060,'#EADFCB');garland(445,t);floor(1060,'#C2B59B','#8F826A');
- const night=eo((lt-3.4)/0.6);table(140,1180,420);sandwich(260,1180);cup(450,1180,t);
- person(330,1480,1.2,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',mouth:lt<3.4?'smile':'flat',seed:1});
+ const night=eo((lt-4.0)/0.6);table(140,1180,420);sandwich(260,1180);cup(450,1180,t);
+ person(330,1480,1.2,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',mouth:lt<4.0?'smile':'flat',seed:1});
  if(night>0){x.fillStyle=`rgba(20,30,60,${0.35*night})`;x.fillRect(0,0,W,1060);x.fillStyle=`rgba(255,240,180,${night})`;x.beginPath();x.arc(900,560,50,0,7);x.fill()}
  bed(790,1300,night);T('Art. 9 · a cargo de la aerolínea',W/2,1640,'700 30px Inter','rgba(30,42,51,.8)',{a:eo((lt-1)/0.4)});
- headline('ARTÍCULO 9',lt<3.4?'COMIDA Y BEBIDA':'Y HOTEL',lt<3.4?lt:lt-3.4)},
+ headline('ARTÍCULO 9',lt<4.0?'COMIDA Y BEBIDA':'Y HOTEL',lt<4.0?lt:lt-4.0)},
 6:(lt,t)=>{wall(0,1080,'#DCE6DA');garland(445,t);floor(1080,'#B4BFC3','#7B8A92');
  const rain=lt>7.4;person(540,1500,1.4,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',mouth:rain?'smile':'flat',eyes:rain?'wide':'',jump:rain&&lt<9.9,aL:rain?2.5:0.18,aR:rain?-2.5:-0.18,seed:1});
  if(rain)for(let i=0;i<22;i++){const st=7.4+R(i)*2.2;if(lt>st)coin(80+R(i+11)*920,lerp(380,1500,Math.pow(cl((lt-st)/1.4),1.6)),34,lt*7+i,1-cl((lt-st-1.2)/0.3))}

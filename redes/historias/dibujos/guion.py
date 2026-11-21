@@ -2,7 +2,7 @@
 import json, subprocess, os
 from kokoro_onnx import Kokoro
 import soundfile as sf
-K = Kokoro('/tmp/claude-0/kk/kokoro-v1.0.onnx', '/tmp/claude-0/kk/voices-v1.0.bin')
+
 os.chdir('/tmp/claude-0/v2')
 G = [
  (0, "¿Te cancelan el vuelo en Navidad?", "¿Te cancelan el vuelo en Navidad?"),
@@ -31,12 +31,14 @@ GAP = 0.18; SCENE_GAP = 0.45; LEAD = 0.25
 t = LEAD; segs = []; prev = None
 for i, (sc, tts, sub) in enumerate(G):
     f = f'p_{i:02d}.wav'
-    a, sr = K.create(tts, voice='em_alex', speed=1.05, lang='es'); sf.write(f, a, sr)
+    from gtts import gTTS
+    gTTS(tts, lang='es', tld='es').save('tmp.mp3')
+    subprocess.run(['ffmpeg','-v','error','-y','-i','tmp.mp3','-af','silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo=1.18','-ar','44100',f],check=True)
     d = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
     if prev is not None and sc != prev: t += SCENE_GAP
     words = sub.split(); w = [len(x) + 2 for x in words]; tot = sum(w)
     # piper adds ~0.2s silence at end; spread words over d-0.25
-    span = max(0.3, d - 0.1); acc = 0; wt = []
+    span = max(0.3, d - 0.05); acc = 0; wt = []
     for x, ww in zip(words, w):
         wt.append([x, round(t + span * acc / tot, 3)]); acc += ww
     segs.append({'sc': sc, 'f': f, 'start': round(t, 3), 'end': round(t + d, 3), 'words': wt})
