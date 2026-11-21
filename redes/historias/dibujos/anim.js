@@ -117,12 +117,12 @@ const SC={
  bed(790,1300,night);T('Art. 9 · a cargo de la aerolínea',W/2,1640,'700 30px Inter','rgba(30,42,51,.8)',{a:eo((lt-1)/0.4)});
  headline('ARTÍCULO 9',lt<3.4?'COMIDA Y BEBIDA':'Y HOTEL',lt<3.4?lt:lt-3.4)},
 6:(lt,t)=>{wall(0,1080,'#DCE6DA');garland(445,t);floor(1080,'#B4BFC3','#7B8A92');
- const rain=lt>5.0;person(540,1500,1.4,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',mouth:rain?'smile':'flat',eyes:rain?'wide':'',jump:rain&&lt<7.5,aL:rain?2.5:0.18,aR:rain?-2.5:-0.18,seed:1});
- if(rain)for(let i=0;i<22;i++){const st=5.0+R(i)*2.2;if(lt>st)coin(80+R(i+11)*920,lerp(380,1500,Math.pow(cl((lt-st)/1.4),1.6)),34,lt*7+i,1-cl((lt-st-1.2)/0.3))}
- const tv=Math.round(250*eo((lt-5.0)/0.9));if(lt>5){x.save();x.translate(W/2,620);const s=eb((lt-5)/0.4);x.scale(s,s);T(tv+' €',0,0,'900 230px Inter','#2E9E5B',{st:14,stc:'#fff'});x.restore();
-  T('por persona · vuelos de hasta 1.500 km',W/2,780,'800 34px Inter',OL,{a:eo((lt-6)/0.4)});T('Arts. 5 y 7 del Reglamento 261/2004',W/2,830,'700 28px Inter','rgba(30,42,51,.7)',{a:eo((lt-6.3)/0.4)})}
+ const rain=lt>7.4;person(540,1500,1.4,{t,c:'#C8453C',hair:'long',scarf:'#F2EDE4',mouth:rain?'smile':'flat',eyes:rain?'wide':'',jump:rain&&lt<9.9,aL:rain?2.5:0.18,aR:rain?-2.5:-0.18,seed:1});
+ if(rain)for(let i=0;i<22;i++){const st=7.4+R(i)*2.2;if(lt>st)coin(80+R(i+11)*920,lerp(380,1500,Math.pow(cl((lt-st)/1.4),1.6)),34,lt*7+i,1-cl((lt-st-1.2)/0.3))}
+ const tv=Math.round(250*eo((lt-7.4)/0.9));if(lt>7.4){x.save();x.translate(W/2,620);const s=eb((lt-7.4)/0.4);x.scale(s,s);T(tv+' €',0,0,'900 230px Inter','#2E9E5B',{st:14,stc:'#fff'});x.restore();
+  T('por persona · vuelos de hasta 1.500 km',W/2,780,'800 34px Inter',OL,{a:eo((lt-8.4)/0.4)});T('Arts. 5 y 7 del Reglamento 261/2004',W/2,830,'700 28px Inter','rgba(30,42,51,.7)',{a:eo((lt-8.7)/0.4)})}
  else{T('AVISO: MENOS DE 14 DÍAS',W/2,620,'900 56px Inter',RED,{a:eo((lt-0.4)/0.4)})}
- headline(lt<5?'SIN CIRCUNSTANCIAS EXTRAORDINARIAS':'NORMALMENTE',lt<5?'¿COMPENSACIÓN?':'EN DINERO',lt<5?lt:lt-5)},
+ headline(lt<7.4?'SIN CIRCUNSTANCIAS EXTRAORDINARIAS':'NORMALMENTE',lt<7.4?'¿COMPENSACIÓN?':'EN DINERO',lt<7.4?lt:lt-7.4)},
 7:(lt,t)=>{wall(0,1060,'#5B3B3B');x.fillStyle='#4A2E2E';for(let i=0;i<8;i++)x.fillRect(i*140,430,70,630);garland(445,t);windowSky(640,520,340,280,t,false);
  x.fillStyle='rgba(10,20,50,.55)';x.fillRect(640,520,340,280);floor(1060,'#8C6A4A','#5E452F');tree(160,1080,0.85,t);
  person(330,1330,1.0,{t,c:'#3E6FA0',hair:'short',hc:'#888',mouth:'smile',seed:5});person(820,1330,1.0,{t,c:'#7A5C99',hair:'long',hc:'#6b4b3a',mouth:'smile',seed:6});
