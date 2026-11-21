@@ -39,6 +39,10 @@ ROWS = {
         "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
         "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
         "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada segundo os sindicatos; o calendário oficial do MIT ainda a inclui")},
+    ("2026-11-26", "SATA ground handling at Azores airports (SITAVA and SINTAC)"): {
+        "it": ("26–29 nov, intera giornata", "Handling di SATA negli aeroporti delle Azzorre (SITAVA e SINTAC)", "Proclamato; SATA consente di cambiare il volo senza costi"),
+        "de": ("26.–29. Nov., ganztägig", "Bodenabfertigung von SATA an den Flughäfen der Azoren (SITAVA und SINTAC)", "Angekündigt; SATA erlaubt kostenlose Umbuchung"),
+        "pt": ("26–29 nov, todo o dia", "Handling da SATA nos aeroportos dos Açores (SITAVA e SINTAC)", "Convocada; a SATA permite alterar o voo sem custos")},
     ("2026-12-04", "General strike in Italy (CUB, SGB, SI-COBAS and other grassroots unions), air transport included"): {
         "it": ("4 dic, intera giornata", "Sciopero generale in Italia (CUB, SGB, SI-COBAS e altri sindacati di base), compreso il trasporto aereo", "Proclamato; modalità per il settore aereo non ancora comunicate; voli garantiti dalle 7 alle 10 e dalle 18 alle 21"),
         "de": ("4. Dez., ganztägig", "Generalstreik in Italien (CUB, SGB, SI-COBAS und andere Basisgewerkschaften), einschließlich Luftverkehr", "Angekündigt; Zeiten für den Luftverkehr noch nicht bekannt; Flüge 07:00–10:00 und 18:00–21:00 garantiert"),
@@ -81,6 +85,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia", "Pisa y Florencia (Italia)": "Pisa e Firenze",
            "Roma-Fiumicino (Italia)": "Roma Fiumicino", "Bolonia (Italia)": "Bologna", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Napoli, Bari, Milano Linate e Padova",
            "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)",
+           "Azores (Portugal)": "Azzorre (Portogallo)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Tutta la Spagna: possibile impatto a terra e sui trasporti per l'aeroporto"},
     "de": {"Bilbao": "Bilbao (Spanien)", "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -89,6 +94,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)", "Pisa y Florencia (Italia)": "Pisa und Florenz (Italien)",
            "Roma-Fiumicino (Italia)": "Rom-Fiumicino (Italien)", "Bolonia (Italia)": "Bologna (Italien)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Neapel, Bari, Mailand-Linate und Padua (Italien)",
            "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)",
+           "Azores (Portugal)": "Azoren (Portugal)",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Ganz Spanien: mögliche Auswirkungen am Boden und auf die Anreise zum Flughafen"},
     "pt": {"Bilbao": "Bilbao (Espanha)", "Barcelona-El Prat": "Barcelona-El Prat (Espanha)", "Madrid-Barajas": "Madrid-Barajas (Espanha)",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -97,6 +103,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)", "Pisa y Florencia (Italia)": "Pisa e Florença (Itália)",
            "Roma-Fiumicino (Italia)": "Roma-Fiumicino (Itália)", "Bolonia (Italia)": "Bolonha (Itália)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Nápoles, Bari, Milão-Linate e Pádua (Itália)",
            "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro",
+           "Azores (Portugal)": "Açores",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Toda a Espanha: possível impacto em terra e no transporte para o aeroporto"},
 }
 
