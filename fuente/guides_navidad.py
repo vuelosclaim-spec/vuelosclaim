@@ -264,6 +264,7 @@ NAVIDAD2 = [
     ("¿Me compensan si me cancelan un vuelo Nueva York–Madrid?", "Si lo opera una aerolínea europea, se aplica el reglamento 261/2004 y pueden corresponderte 600 € por pasajero, salvo circunstancias extraordinarias como una tormenta o un cierre del control aéreo. Si lo opera una aerolínea de EE. UU., solo tienes derecho al reembolso según las normas de EE. UU."),
     ("¿Y si el vuelo sale de Madrid hacia Nueva York?", "Se aplica siempre el reglamento europeo, sea cual sea la aerolínea, porque el vuelo sale de la UE."),
     ("¿Un cierre de la FAA da derecho a compensación?", "Normalmente no: un cierre decidido por el control aéreo es una circunstancia extraordinaria. Pero si tu vuelo entra en el reglamento europeo, te siguen debiendo el reembolso o un vuelo alternativo y la asistencia mientras esperas."),
+    ("¿Y si el retraso o la cancelación se debe a una caída informática de la aerolínea?", "Si tu vuelo entra en el reglamento europeo, un fallo de los propios sistemas informáticos de la aerolínea forma parte de su actividad normal y no suele considerarse una circunstancia extraordinaria: si llegas con 3 horas o más de retraso o te cancelan con menos de 14 días de aviso, normalmente te corresponde la compensación. Distinto es si el fallo es del control aéreo (la FAA), que normalmente sí lo es."),
    ],
   },
   "en": {
@@ -294,6 +295,7 @@ NAVIDAD2 = [
     ("Am I compensated if my New York–Madrid flight is cancelled?", "If a European airline operates it, EU261 applies and you may be owed €600 per passenger, unless there are extraordinary circumstances such as a storm or an air traffic control ground stop. If a US airline operates it, you're only entitled to a refund under US rules."),
     ("What if the flight departs Madrid for New York?", "EU261 always applies, whatever the airline, because the flight departs the EU."),
     ("Does an FAA ground stop mean compensation?", "Normally not: a stop ordered by air traffic control is an extraordinary circumstance. But if your flight is covered by EU261, you're still owed a refund or rerouting and care while you wait."),
+    ("What if the delay or cancellation is caused by an airline IT outage?", "If your flight is covered by EU261, a failure of the airline's own IT systems is part of its normal operations and is rarely treated as an extraordinary circumstance: if you arrive 3 hours or more late, or the flight is cancelled with less than 14 days' notice, compensation is normally due. It's different if the failure is in air traffic control (the FAA), which normally is extraordinary."),
    ],
   },
  },
