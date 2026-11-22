@@ -297,4 +297,56 @@ NAVIDAD2 = [
    ],
   },
  },
+ {"paths": {"es": "/aerolinea-deja-de-volar-quiebra/", "en": "/en/airline-stops-flying-bankruptcy/"},
+  "es": {
+   "title": "Aerolínea que deja de volar o en quiebra: qué te corresponde",
+   "desc": "Tu aerolínea cancela todos sus vuelos o entra en concurso de acreedores, como Plus Ultra: reembolso, otro vuelo, compensación y cómo reclamar paso a paso.",
+   "h1": "Tu aerolínea deja de volar o entra en quiebra: qué te corresponde",
+   "lead": "Cuando una aerolínea suspende sus vuelos por problemas económicos, como ha ocurrido con Plus Ultra en noviembre de 2026, miles de pasajeros se quedan con un billete que no se va a volar. Tus derechos no desaparecen: un vuelo que no se opera es una cancelación, y el Reglamento 261/2004 sigue aplicándose. Lo que cambia es lo difícil que puede ser cobrar.",
+   "body": f"""<h2>Qué te corresponde</h2>
+<ul><li><strong>Reembolso u otro vuelo</strong>: si tu vuelo sale de la UE, o llega a la UE con una aerolínea europea (como Plus Ultra), tienes derecho a elegir entre el reembolso del billete en 7 días o un transporte alternativo hasta tu destino lo antes posible (arts. 5 y 8 del <a href="{R261["es"]}" rel="noopener">Reglamento (CE) 261/2004</a>).</li>
+<li><strong>Asistencia</strong>: si estás esperando un vuelo alternativo, la aerolínea te debe comida, bebida y, si hace falta, hotel y traslados (art. 9).</li>
+<li><strong>Compensación</strong>: si te avisan con menos de 14 días de antelación, pueden corresponderte 250, 400 o 600 € por pasajero según la distancia (art. 7), salvo que la aerolínea demuestre circunstancias extraordinarias.</li></ul>
+<h2>El problema: cobrar a una aerolínea en crisis</h2>
+<p>Si la aerolínea no paga, tu reembolso o tu compensación pasa a ser una deuda más de la empresa. Si se declara el concurso de acreedores, se publica en el BOE: vigila ese anuncio, porque abre el plazo para comunicar tu crédito a la administración concursal. Cuanto antes reclames por escrito, mejor documentado estará.</p>
+<h2>Qué hacer, paso a paso</h2>
+<ol><li><strong>Guarda todo</strong>: reserva, billete, tarjeta de embarque, el aviso de cancelación y los tickets de lo que pagues (hotel, comida, otro billete).</li>
+<li><strong>Reclama por escrito a la aerolínea</strong> el reembolso o el vuelo alternativo, y la compensación si te avisaron con menos de 14 días. <a href="/">Calcula gratis cuánto te corresponde</a> y genera la carta.</li>
+<li><strong>Si compraste en una agencia o en un paquete</strong> (vuelo más hotel), reclama también a la agencia u organizador del viaje.</li>
+<li><strong>Si pagaste con tarjeta</strong>, pregunta a tu banco si puede retroceder el cargo de un servicio que no se ha prestado.</li>
+<li><strong>Si en un mes no te responden</strong> o no estás de acuerdo, puedes reclamar gratis ante la <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">Agencia Estatal de Seguridad Aérea (AESA)</a>.</li></ol>
+<h2>Ejemplo</h2>
+<p>Caso hipotético: tienes un Madrid–Lima para dentro de una semana y la aerolínea anuncia que deja de volar. Tienes derecho a elegir entre el reembolso o que te lleven a Lima lo antes posible, a asistencia mientras esperas y, como te avisan con menos de 14 días y el vuelo supera los 3.500 km, a reclamar 600 € por pasajero. Si compras otro billete por tu cuenta, guarda el justificante: puedes reclamar su coste.</p>""",
+   "faq": [
+    ("¿Me devuelven el dinero si mi aerolínea deja de volar?", "Tienes derecho al reembolso en 7 días o a un vuelo alternativo según el Reglamento 261/2004. Si la aerolínea no paga, reclama por escrito, pregunta a tu banco por el contracargo si pagaste con tarjeta y, si se declara el concurso de acreedores, comunica tu crédito a la administración concursal."),
+    ("¿También me corresponde compensación?", "Si te avisan con menos de 14 días y no hay circunstancias extraordinarias, pueden corresponderte 250, 400 o 600 € por pasajero según la distancia. Cobrarla depende de la situación de la aerolínea."),
+    ("¿Y si el billete lo compré en una agencia?", "Reclama también a la agencia. Si era un viaje combinado (vuelo más hotel, por ejemplo), el organizador del viaje responde de que se preste."),
+   ],
+  },
+  "en": {
+   "title": "Airline stops flying or goes bust: what you're owed",
+   "desc": "Your airline cancels all its flights or enters insolvency, like Plus Ultra: refund, rerouting, compensation and how to claim, step by step.",
+   "h1": "Your airline stops flying or goes bust: what you're owed",
+   "lead": "When an airline suspends its flights because of financial trouble, as Plus Ultra did in November 2026, thousands of passengers are left with tickets that won't be flown. Your rights don't disappear: a flight that isn't operated is a cancellation, and Regulation 261/2004 still applies. What changes is how hard it can be to get paid.",
+   "body": f"""<h2>What you're owed</h2>
+<ul><li><strong>Refund or another flight</strong>: if your flight departs the EU, or arrives in the EU on a European airline (such as Plus Ultra), you can choose between a refund within 7 days or rerouting to your destination as soon as possible (Arts. 5 and 8 of <a href="{R261["en"]}" rel="noopener">Regulation (EC) 261/2004</a>).</li>
+<li><strong>Care</strong>: while you wait for an alternative flight, the airline owes you meals, drinks and, if needed, a hotel and transfers (Art. 9).</li>
+<li><strong>Compensation</strong>: if you're told less than 14 days in advance, you may be owed €250, €400 or €600 per passenger depending on distance (Art. 7), unless the airline proves extraordinary circumstances.</li></ul>
+<h2>The problem: getting paid by an airline in crisis</h2>
+<p>If the airline doesn't pay, your refund or compensation becomes one more of the company's debts. If insolvency proceedings are opened in Spain, they are published in the BOE (the Official State Gazette): watch for that notice, because it starts the deadline to submit your claim to the insolvency administrator. The sooner you claim in writing, the better documented it will be.</p>
+<h2>What to do, step by step</h2>
+<ol><li><strong>Keep everything</strong>: booking, ticket, boarding pass, the cancellation notice and receipts for anything you pay for (hotel, meals, a new ticket).</li>
+<li><strong>Claim in writing from the airline</strong> for the refund or rerouting, and compensation if you were told less than 14 days ahead. <a href="/en/">Check for free what you're owed</a> and generate the letter.</li>
+<li><strong>If you booked through an agency or as a package</strong> (flight plus hotel), claim from the agency or tour organiser too.</li>
+<li><strong>If you paid by card</strong>, ask your bank whether it can reverse the charge for a service that wasn't provided.</li>
+<li><strong>If there's no reply within a month</strong> or you disagree, you can complain free of charge to Spain's <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">aviation safety agency (AESA)</a>.</li></ol>
+<h2>Example</h2>
+<p>Hypothetical case: you're booked Madrid–Lima next week and the airline announces it is stopping flights. You can choose a refund or to be taken to Lima as soon as possible, you're owed care while you wait and, because you were told less than 14 days ahead and the flight is over 3,500 km, you can claim €600 per passenger. If you buy another ticket yourself, keep the receipt: you can claim its cost.</p>""",
+   "faq": [
+    ("Will I get my money back if my airline stops flying?", "You're entitled to a refund within 7 days or an alternative flight under Regulation 261/2004. If the airline doesn't pay, claim in writing, ask your bank about a chargeback if you paid by card and, if insolvency proceedings are opened, submit your claim to the insolvency administrator."),
+    ("Am I also owed compensation?", "If you're told less than 14 days ahead and there are no extraordinary circumstances, you may be owed €250, €400 or €600 per passenger depending on distance. Getting paid depends on the airline's situation."),
+    ("What if I booked through an agency?", "Claim from the agency too. If it was a package (flight plus hotel, for example), the tour organiser is responsible for the trip being provided."),
+   ],
+  },
+ },
 ]
