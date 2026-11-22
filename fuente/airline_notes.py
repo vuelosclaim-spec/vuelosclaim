@@ -99,6 +99,28 @@ NOTES["tui"] = {
 }
 
 
+# Plus Ultra stopped flying in November 2026 (press: OKDIARIO 16-17 Nov, Reportur 22 Nov). Only official rules are cited.
+META = {
+    "plus-ultra": {
+        "es": ("Plus Ultra deja de volar: cómo recuperar tu dinero", "Plus Ultra ha dejado de volar en noviembre de 2026. Qué te corresponde si tenías billete: reembolso u otro vuelo, asistencia y hasta 600 € por pasajero.", "Plus Ultra ha dejado de volar: qué te corresponde"),
+        "en": ("Plus Ultra stops flying: how to get your money back", "Plus Ultra stopped flying in November 2026. What you're owed if you held a ticket: refund or rerouting, care and up to €600 per passenger.", "Plus Ultra has stopped flying: what you're owed"),
+    },
+}
+NOTES["plus-ultra"] = {
+    "es": """<h2>Plus Ultra ha dejado de volar (noviembre de 2026)</h2>
+<p>Según la prensa, Plus Ultra suspendió el 17 de noviembre de 2026 todas sus rutas salvo las de Venezuela, y el 21 de noviembre dejó también la ruta Madrid–Caracas. Si tenías un billete, tu vuelo cuenta como <strong>cancelado</strong> y el Reglamento 261/2004 sigue aplicándose:</p>
+<ul><li><strong>Reembolso en 7 días u otro vuelo</strong> hasta tu destino lo antes posible: eliges tú (arts. 5 y 8).</li>
+<li><strong>Compensación</strong>: si te avisaron con menos de 14 días, en un Madrid–Caracas o Madrid–Lima (más de 3.500 km) pueden corresponderte <strong>600 € por pasajero</strong> (art. 7).</li>
+<li><strong>Si no paga</strong>: reclama por escrito y guarda la respuesta, reclama también a tu agencia si compraste con ella, pregunta a tu banco por la devolución del cargo si pagaste con tarjeta y vigila en el BOE si se declara el concurso de acreedores.</li></ul>
+<p>Lo explicamos paso a paso en <a href="/aerolinea-deja-de-volar-quiebra/">qué hacer si tu aerolínea deja de volar o entra en quiebra</a>.</p>""",
+    "en": """<h2>Plus Ultra has stopped flying (November 2026)</h2>
+<p>According to press reports, Plus Ultra suspended all its routes except Venezuela on 17 November 2026, and on 21 November it also dropped Madrid–Caracas. If you held a ticket, your flight counts as <strong>cancelled</strong> and Regulation 261/2004 still applies:</p>
+<ul><li><strong>Refund within 7 days or another flight</strong> to your destination as soon as possible: your choice (Arts. 5 and 8).</li>
+<li><strong>Compensation</strong>: if you were told less than 14 days before, on Madrid–Caracas or Madrid–Lima (over 3,500 km) you may be owed <strong>€600 per passenger</strong> (Art. 7).</li>
+<li><strong>If it doesn't pay</strong>: claim in writing and keep the reply, also claim from your travel agent if you booked through one, ask your bank about a chargeback if you paid by card, and watch Spain's official gazette (BOE) for insolvency proceedings.</li></ul>
+<p>Step by step in <a href="/en/airline-stops-flying-bankruptcy/">what to do if your airline stops flying or goes bankrupt</a>.</p>""",
+}
+
 def section(l, slug):
     n = NOTES.get(slug)
     if not n:

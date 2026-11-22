@@ -1088,6 +1088,8 @@ def build():
                 m = uk_deep.META[a["slug"]]
                 title, desc, h1 = m["title"], m["desc"], e(m["h1"])
                 deep = uk_deep.section(a, AIRPORTS, km, NAMES["en"], AESA_URL, CAA_URL)
+            if a["slug"] in airline_notes.META:
+                title, desc, h1 = airline_notes.META[a["slug"]][l]
             body = hero(l, h1, lede, a["slug"], dep, arr) + airline_notes.section(l, a["slug"]) + deep + airline_section(l, a) + airline_facts(l, a) + compact_refs(l, airline=a["slug"])
             emit(l, alts[l], page(l, title, desc, alts[l], body, alts, alts[other]))
 
