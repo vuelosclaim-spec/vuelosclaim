@@ -258,3 +258,6 @@ main:focus { outline: none; }
   .why-us ul { grid-template-columns: 1fr; }
   main section.ref { padding-block: 40px; }
 }
+.calc .hint { color: var(--muted); font-size: 0.88rem; line-height: 1.45; margin: 10px 0 0; }
+.calc #grp-viaap, .calc #grp-airline2 { margin-top: 12px; }
+.care .conn-link { margin: 8px 0 0; }

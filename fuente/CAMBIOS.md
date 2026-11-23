@@ -1,5 +1,13 @@
 # Cambios
 
+## 2026-11-23 — Calculadora: escalas y conexión perdida
+- Reservas separadas: ya no se calcula sobre el viaje entero (antes VLC-LIS-GRU con el 1.er vuelo 1 h tarde daba 600 €). Se piden el aeropuerto de la escala y qué vuelo falló, y solo cuenta ese vuelo (su distancia y su retraso al llegar a su propio destino). Sin esos datos: «información insuficiente» y sin importe.
+- Una reserva con aerolíneas distintas: se pregunta qué vuelo falló y la aerolínea del otro vuelo. La aerolínea principal pasa a ser «la que operó el vuelo que falló».
+- Llegadas a Europa con escala en aerolíneas distintas: ya no es un callejón sin salida. Con las dos aerolíneas europeas se cubre; con ninguna, no; con una de cada, se explica que no hay jurisprudencia, sin decir a la vez «no cubierto» y «hasta X €».
+- Nota C-502/18: si el viaje sale de la UE con una sola reserva y falla el 2.º vuelo (aerolínea no europea), también se puede reclamar a la aerolínea europea del 1.º.
+- Bloque «Si perdiste la conexión» en el resultado (5 idiomas): una sola compensación, a quién reclamar, reubicación y asistencia, reservas separadas y garantía de conexión, hotel o apartamento perdido (Convenio de Montreal, art. 19, hasta 6.303 DEG) y viajes combinados. Guía de conexión perdida ampliada (ES/EN).
+- Pruebas: 10 casos nuevos del motor y 15 comprobaciones nuevas en navegador (móvil y escritorio).
+
 ## 2026-10-22 — Consentimiento publicitario (AdSense)
 
 Detalle e instrucciones manuales en [CONSENTIMIENTO_ADSENSE.md](CONSENTIMIENTO_ADSENSE.md).

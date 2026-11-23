@@ -136,6 +136,7 @@ S = {
   calc_h="Calcula tu compensación", from_="Origen", to="Destino final", ph="Ciudad o código", airline="Aerolínea",
   al_unknown="No lo sé / no aparece", al_eu="Otra aerolínea europea", al_noneu="Otra aerolínea no europea",
   via="¿Hiciste escala?", v=[("direct", "No, vuelo directo"), ("same", "Sí, una reserva y la misma aerolínea"), ("mixed", "Sí, una reserva y aerolíneas distintas"), ("separate", "Sí, con reservas separadas")],
+  leg='¿Qué vuelo falló?', lg=[('first', 'El primero'), ('last', 'El segundo o el último'), ('unknown', 'No lo sé')], viaap='Aeropuerto de la escala', sep_hint='Con reservas separadas solo cuenta el vuelo que falló: dinos dónde hiciste la escala y cuál de los dos vuelos falló.', airline_fail='Aerolínea que operó el vuelo que falló', airline2='Aerolínea del otro vuelo', al2_none='No lo sé', delay_leg='Retraso con el que llegó ese vuelo a su destino (no al destino final)',
   fare="El billete", fa=[("public", "Lo pagué (también con puntos o en un paquete)"), ("staff", "Gratis o con tarifa no pública (p. ej., de empleado)")],
   what="¿Qué le pasó a tu vuelo?", w=[("delay", "Retraso"), ("cancel", "Cancelación"), ("denied", "Overbooking")],
   delay="Retraso al llegar al destino final", d=[("lt3", "Menos de 3 h"), ("3to4", "De 3 h justas a 4 h"), ("gt4", "Más de 4 h"), ("unknown", "No lo sé")],
@@ -169,6 +170,7 @@ S = {
   calc_h="Check your compensation", from_="From", to="Final destination", ph="City or airport code", airline="Airline",
   al_unknown="Not sure / not listed", al_eu="Another European airline", al_noneu="Another non-European airline",
   via="Did you have a connection?", v=[("direct", "No, direct flight"), ("same", "Yes, one booking, same airline"), ("mixed", "Yes, one booking, different airlines"), ("separate", "Yes, separate bookings")],
+  leg='Which flight went wrong?', lg=[('first', 'The first one'), ('last', 'The second or last one'), ('unknown', 'Not sure')], viaap='Connecting airport', sep_hint='With separate bookings only the flight that went wrong counts: tell us where you connected and which of the two flights went wrong.', airline_fail='Airline that operated the flight that went wrong', airline2='Airline of the other flight', al2_none='Not sure', delay_leg='Delay when that flight reached its own destination (not your final destination)',
   fare="Your ticket", fa=[("public", "I paid for it (points or package holidays too)"), ("staff", "Free or a non-public fare (e.g. staff ticket)")],
   what="What happened to your flight?", w=[("delay", "Delay"), ("cancel", "Cancellation"), ("denied", "Overbooking")],
   delay="Delay at your final destination", d=[("lt3", "Under 3 h"), ("3to4", "Exactly 3 h to 4 h"), ("gt4", "Over 4 h"), ("unknown", "Not sure")],
@@ -276,6 +278,8 @@ def calculator(l, airline_slug, dep, arr):
     opts = [f'<option value="">{s["al_unknown"]}</option>'] + [
         f'<option value="{a["slug"]}"{" selected" if a["slug"] == airline_slug else ""}>{e(a["name"])}</option>' for a in AIRLINES
     ] + [f'<option value="otra-ue">{s["al_eu"]}</option>', f'<option value="otra-no-ue">{s["al_noneu"]}</option>']
+    opts2 = [f'<option value="">{s["al2_none"]}</option>'] + [f'<option value="{a["slug"]}">{e(a["name"])}</option>' for a in AIRLINES] + [
+        f'<option value="otra-ue">{s["al_eu"]}</option>', f'<option value="otra-no-ue">{s["al_noneu"]}</option>']
     return f"""<form class="calc" id="calc" novalidate>
 <h2>{s["calc_h"]}</h2>
 <fieldset class="what" data-step="1"><legend>{s["what"]}</legend><div class="chips chips-what">{chips("what", s["w"], "delay")}</div></fieldset>
@@ -285,9 +289,12 @@ def calculator(l, airline_slug, dep, arr):
  <div class="field"><label for="to">{s["to"]}</label><input type="text" id="to" data-code="{arr}" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="{s["ph"]}"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
 <fieldset id="grp-via"><legend>{s["via"]}</legend><div class="chips chips-wide">{chips("via", s["v"], "direct")}</div></fieldset>
+<p class="hint" id="sep-hint" hidden>{e(s["sep_hint"])}</p>
+<div class="field" id="grp-viaap" hidden><label for="viaap">{s["viaap"]}</label><input type="text" id="viaap" data-code="" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="viaap-list" placeholder="{s["ph"]}"><ul class="ac" id="viaap-list" role="listbox" hidden></ul></div>
+<fieldset id="grp-leg" hidden><legend>{s["leg"]}</legend><div class="chips chips-wide">{chips("leg", s["lg"], "unknown")}</div></fieldset>
 </div>
 <div class="step" data-step="3">
-<fieldset id="grp-delay"><legend>{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
+<fieldset id="grp-delay"><legend data-alt="{e(s["delay_leg"])}">{s["delay"]}</legend><div class="chips">{chips("delay", s["d"], "gt4")}</div></fieldset>
 <fieldset id="grp-notice" hidden><legend>{s["notice"]}</legend><div class="chips">{chips("notice", s["n"], "unknown")}</div></fieldset>
 <fieldset id="grp-reroute" hidden><legend>{s["reroute"]}</legend><div class="chips">{chips("reroute", s["rr"], "unknown")}</div></fieldset>
 <fieldset id="grp-rdep" hidden><legend>{s["rdep"]}</legend><div class="chips chips-wide">{chips("rdep", s["rd"], "unknown")}</div></fieldset>
@@ -298,7 +305,8 @@ def calculator(l, airline_slug, dep, arr):
 <fieldset id="grp-dreason" hidden><legend>{s["dreason"]}</legend><div class="chips chips-wide">{chips("dreason", s["dr"], "unknown")}</div></fieldset>
 </div>
 <div class="step" data-step="4">
-<div class="field"><label for="airline">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
+<div class="field"><label for="airline" data-alt="{e(s["airline_fail"])}">{s["airline"]}</label><select id="airline" name="airline">{"".join(opts)}</select></div>
+<div class="field" id="grp-airline2" hidden><label for="airline2">{s["airline2"]}</label><select id="airline2" name="airline2">{"".join(opts2)}</select></div>
 <fieldset id="grp-fare"><legend>{s["fare"]}</legend><div class="chips chips-wide">{chips("fare", s["fa"], "public")}</div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">{s["cause"]}</label><select id="cause" name="cause">{"".join(f'<option value="{v}">{e(t)}</option>' for v, t in s["c"])}</select></div>
 </div>
@@ -335,6 +343,7 @@ def calculator(l, airline_slug, dep, arr):
  </div>
  <div class="care" data-care hidden></div>
  <div class="care" data-where hidden></div>
+ <div class="care" data-conn hidden></div>
 </div>
 </form>"""
 

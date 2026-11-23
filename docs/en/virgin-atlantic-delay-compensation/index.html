@@ -275,6 +275,9 @@ main:focus { outline: none; }
   .why-us ul { grid-template-columns: 1fr; }
   main section.ref { padding-block: 40px; }
 }
+.calc .hint { color: var(--muted); font-size: 0.88rem; line-height: 1.45; margin: 10px 0 0; }
+.calc #grp-viaap, .calc #grp-airline2 { margin-top: 12px; }
+.care .conn-link { margin: 8px 0 0; }
 </style>
 <header class="top"><div class="wrap"><a class="brand" href="/en/"><span class="brand-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16l20-6-20-6 4 6-4 6z"/></svg></span>VuelosClaim</a><nav aria-label="Main"><a href="/en/#cuanto">Amounts</a><a href="/en/#aerolineas">Airlines</a><a href="/en/#preguntas">FAQ</a><a class="lang" href="/compensacion-retraso-virgin-atlantic/" hreflang="es" aria-label="ES – Español">ES</a></nav></div></header>
 <main id="main" tabindex="-1"><section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">EU261 and UK261</span><h1>Virgin Atlantic flight delayed or cancelled? Check what you're owed</h1><p class="lede">Virgin Atlantic is an airline from United Kingdom. Its flights departing Spain or the rest of the EU are covered by EU261, and its flights departing the UK by UK261. On a Virgin Atlantic flight from the UK to Spain, you claim in pounds under UK261; on the flight back from Spain, in euros under EU261. Enter your flight and we'll work out the amount.</p><ul class="facts facts-wide"><li><b>€250 / £220</b><span>flights up to 1,500 km</span></li><li><b>€400 / £350</b><span>1,500 to 3,500 km, or over 1,500 km within the EU</span></li><li><b>€600 / £520</b><span>over 3,500 km</span></li></ul></div><form class="calc" id="calc" novalidate>
@@ -286,9 +289,12 @@ main:focus { outline: none; }
  <div class="field"><label for="to">Final destination</label><input type="text" id="to" data-code="BER" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="to-list" placeholder="City or airport code"><ul class="ac" id="to-list" role="listbox" hidden></ul></div>
 </div>
 <fieldset id="grp-via"><legend>Did you have a connection?</legend><div class="chips chips-wide"><label><input type="radio" name="via" value="direct" checked><span>No, direct flight</span></label><label><input type="radio" name="via" value="same"><span>Yes, one booking, same airline</span></label><label><input type="radio" name="via" value="mixed"><span>Yes, one booking, different airlines</span></label><label><input type="radio" name="via" value="separate"><span>Yes, separate bookings</span></label></div></fieldset>
+<p class="hint" id="sep-hint" hidden>With separate bookings only the flight that went wrong counts: tell us where you connected and which of the two flights went wrong.</p>
+<div class="field" id="grp-viaap" hidden><label for="viaap">Connecting airport</label><input type="text" id="viaap" data-code="" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="viaap-list" placeholder="City or airport code"><ul class="ac" id="viaap-list" role="listbox" hidden></ul></div>
+<fieldset id="grp-leg" hidden><legend>Which flight went wrong?</legend><div class="chips chips-wide"><label><input type="radio" name="leg" value="first"><span>The first one</span></label><label><input type="radio" name="leg" value="last"><span>The second or last one</span></label><label><input type="radio" name="leg" value="unknown" checked><span>Not sure</span></label></div></fieldset>
 </div>
 <div class="step" data-step="3">
-<fieldset id="grp-delay"><legend>Delay at your final destination</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Under 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>Exactly 3&nbsp;h to 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Over 4&nbsp;h</span></label><label><input type="radio" name="delay" value="unknown"><span>Not sure</span></label></div></fieldset>
+<fieldset id="grp-delay"><legend data-alt="Delay when that flight reached its own destination (not your final destination)">Delay at your final destination</legend><div class="chips"><label><input type="radio" name="delay" value="lt3"><span>Under 3&nbsp;h</span></label><label><input type="radio" name="delay" value="3to4"><span>Exactly 3&nbsp;h to 4&nbsp;h</span></label><label><input type="radio" name="delay" value="gt4" checked><span>Over 4&nbsp;h</span></label><label><input type="radio" name="delay" value="unknown"><span>Not sure</span></label></div></fieldset>
 <fieldset id="grp-notice" hidden><legend>You were told about the cancellation</legend><div class="chips"><label><input type="radio" name="notice" value="gt14"><span>14 days or more ahead</span></label><label><input type="radio" name="notice" value="7to14"><span>7 to 13 days ahead</span></label><label><input type="radio" name="notice" value="lt7"><span>Under 7 days ahead</span></label><label><input type="radio" name="notice" value="unknown" checked><span>Not sure</span></label></div></fieldset>
 <fieldset id="grp-reroute" hidden><legend>Were you offered an alternative flight?</legend><div class="chips"><label><input type="radio" name="reroute" value="yes"><span>Yes</span></label><label><input type="radio" name="reroute" value="no"><span>No</span></label><label><input type="radio" name="reroute" value="unknown" checked><span>Not sure</span></label></div></fieldset>
 <fieldset id="grp-rdep" hidden><legend>Compared with the original, the alternative left…</legend><div class="chips chips-wide"><label><input type="radio" name="rdep" value="le1"><span>Up to 1&nbsp;h earlier, or later</span></label><label><input type="radio" name="rdep" value="1to2"><span>1 to 2&nbsp;h earlier</span></label><label><input type="radio" name="rdep" value="gt2"><span>Over 2&nbsp;h earlier</span></label><label><input type="radio" name="rdep" value="unknown" checked><span>Not sure</span></label></div></fieldset>
@@ -299,7 +305,8 @@ main:focus { outline: none; }
 <fieldset id="grp-dreason" hidden><legend>Reason for refusing you</legend><div class="chips chips-wide"><label><input type="radio" name="dreason" value="overbooking"><span>Overbooking or another airline reason</span></label><label><input type="radio" name="dreason" value="reasonable"><span>Health, safety or documents</span></label><label><input type="radio" name="dreason" value="unknown" checked><span>Not explained</span></label></div></fieldset>
 </div>
 <div class="step" data-step="4">
-<div class="field"><label for="airline">Airline</label><select id="airline" name="airline"><option value="">Not sure / not listed</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic" selected>Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Another European airline</option><option value="otra-no-ue">Another non-European airline</option></select></div>
+<div class="field"><label for="airline" data-alt="Airline that operated the flight that went wrong">Airline</label><select id="airline" name="airline"><option value="">Not sure / not listed</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic" selected>Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Another European airline</option><option value="otra-no-ue">Another non-European airline</option></select></div>
+<div class="field" id="grp-airline2" hidden><label for="airline2">Airline of the other flight</label><select id="airline2" name="airline2"><option value="">Not sure</option><option value="ryanair">Ryanair</option><option value="vueling">Vueling</option><option value="iberia">Iberia</option><option value="iberia-express">Iberia Express</option><option value="air-europa">Air Europa</option><option value="volotea">Volotea</option><option value="binter">Binter</option><option value="air-nostrum">Air Nostrum</option><option value="easyjet">easyJet</option><option value="tui">TUI</option><option value="wizz-air">Wizz Air</option><option value="transavia">Transavia</option><option value="lufthansa">Lufthansa</option><option value="air-france">Air France</option><option value="klm">KLM</option><option value="tap">TAP Air Portugal</option><option value="ita-airways">ITA Airways</option><option value="norwegian">Norwegian</option><option value="british-airways">British Airways</option><option value="jet2">Jet2</option><option value="turkish-airlines">Turkish Airlines</option><option value="emirates">Emirates</option><option value="canaryfly">Canaryfly</option><option value="iberojet">Iberojet</option><option value="plus-ultra">Plus Ultra</option><option value="eurowings">Eurowings</option><option value="condor">Condor</option><option value="aer-lingus">Aer Lingus</option><option value="sas">SAS</option><option value="swiss">SWISS</option><option value="brussels-airlines">Brussels Airlines</option><option value="aegean">Aegean</option><option value="azores-airlines">Azores Airlines</option><option value="level">LEVEL</option><option value="wamos-air">Wamos Air</option><option value="world2fly">World2fly</option><option value="virgin-atlantic">Virgin Atlantic</option><option value="loganair">Loganair</option><option value="austrian">Austrian Airlines</option><option value="lot">LOT Polish Airlines</option><option value="finnair">Finnair</option><option value="airbaltic">airBaltic</option><option value="icelandair">Icelandair</option><option value="pegasus">Pegasus</option><option value="otra-ue">Another European airline</option><option value="otra-no-ue">Another non-European airline</option></select></div>
 <fieldset id="grp-fare"><legend>Your ticket</legend><div class="chips chips-wide"><label><input type="radio" name="fare" value="public" checked><span>I paid for it (points or package&nbsp;holidays too)</span></label><label><input type="radio" name="fare" value="staff"><span>Free or a non-public fare (e.g. staff ticket)</span></label></div></fieldset>
 <div class="field" id="grp-cause"><label for="cause">Reason the airline gave</label><select id="cause" name="cause"><option value="unknown">None given</option><option value="tech">Technical fault</option><option value="crew">Crew shortage or illness</option><option value="strike_own">Airline staff strike</option><option value="strike_ext">Air traffic control or airport strike</option><option value="strike_sub">Strike at a company working for the airline (ground handling, catering…)</option><option value="atc">Air traffic control restriction</option><option value="weather">Bad weather</option><option value="security">Security (threat, airspace closure)</option><option value="bird">Bird strike or object on the runway</option><option value="knock">Earlier flight by the same aircraft was late</option></select></div>
 </div>
@@ -336,6 +343,7 @@ main:focus { outline: none; }
  </div>
  <div class="care" data-care hidden></div>
  <div class="care" data-where hidden></div>
+ <div class="care" data-conn hidden></div>
 </div>
 </form></div></section><section class="ref"><div class="wrap"><h2>What Virgin Atlantic pays: examples with real distances</h2><p class="lead">The amount depends on the flight distance, not the ticket price. Here are example Virgin Atlantic routes with the distance worked out the way the regulation requires (EU261 amounts):</p><div class="board"><table><thead><tr><th>Route</th><th>Distance</th><th>Compensation per passenger</th></tr></thead><tbody><tr><td>London Heathrow → New York JFK</td><td>5,540 km</td><td>£260 for 3–4 h late; £520 from 4 h</td></tr><tr><td>Manchester → Orlando</td><td>6,804 km</td><td>£260 for 3–4 h late; £520 from 4 h</td></tr><tr><td>London Heathrow → Los Angeles</td><td>8,760 km</td><td>£260 for 3–4 h late; £520 from 4 h</td></tr></tbody></table></div><h2 style="margin-top:32px">How to claim from Virgin Atlantic</h2><p>Claim from Virgin Atlantic in writing first, through the claims form on its website, with your booking reference and boarding pass. Ask explicitly for compensation under EU261 (or UK261) as well as any refund or expenses.</p></div></section><section class="ref"><div class="wrap"><h2>How to claim from Virgin Atlantic: key facts</h2><p><strong>Official channel:</strong> <a href="https://help.virginatlantic.com/us/en/Cancelled-delayed-or-disrupted-flights.html" rel="nofollow noopener" target="_blank">Virgin Atlantic claims page</a>.</p><h3>Which rules cover Virgin Atlantic flights</h3><div class="board board-text"><table><thead><tr><th>Flight</th><th>Rules that apply</th></tr></thead><tbody><tr><td>Departs Spain, the EU, the EEA or Switzerland</td><td>EU261, in euros, whatever the airline.</td></tr><tr><td>Arrives in the EU from outside Europe</td><td>Not EU261, but UK261 (in pounds) applies because it is a UK airline.</td></tr><tr><td>Departs the UK</td><td>UK261, in pounds, whatever the airline.</td></tr><tr><td>Arrives in the UK from outside Europe</td><td>UK261, in pounds.</td></tr></tbody></table></div><p class="lead">What counts is the airline that <em>operated</em> the flight, not the one that sold the ticket. Sources: Article 3 of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32004R0261" rel="noopener">Regulation (EC) 261/2004</a> and the <a href="https://www.caa.co.uk/air-passengers/travel-problems-and-rights/flight-delays-and-cancellations/" rel="noopener">CAA</a> for UK261.</p><h3>If Virgin Atlantic won’t pay</h3><ul><li><strong>Flight departing the UK</strong>: after 8 weeks, the airline’s ADR scheme or, if it has none, the CAA.</li><li><strong>Flight departing Spain</strong>, or arriving in Spain from outside the EU with an EU airline: if Virgin Atlantic refuses or hasn’t replied within a month, <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">claim for free with AESA</a> within a year of your claim to the airline; its decision binds the airline.</li><li><strong>Flight departing another EU country</strong>: that country’s national enforcement body.</li></ul><h3>Documents to keep</h3><ul><li>Boarding pass and booking confirmation.</li><li>Emails, texts or notices from Virgin Atlantic about the delay or cancellation, with their dates.</li><li>The reason you were given, ideally in writing.</li><li>Receipts for food, transport or hotels you paid for.</li></ul><h3>Time limits</h3><ul><li>England and Wales: 6 years through the courts (Dawson v Thomson, 2014).</li><li>Spain: 5 years to claim from the airline, according to <a href="https://www.seguridadaerea.gob.es/es/ambitos/derechos-de-los-pasajeros" rel="noopener">AESA</a>.</li><li>Elsewhere, national law decides (Court of Justice of the EU, Case C-139/11).</li></ul><h3>Virgin Atlantic: frequently asked questions</h3><details><summary>Does Virgin Atlantic count as a European airline for EU261?</summary><p>No. Virgin Atlantic is an airline from United Kingdom. EU261 only covers its flights departing the EU, the EEA or Switzerland.</p></details><details><summary>Where do I claim from Virgin Atlantic?</summary><p>Through its official claims channel (link above), in writing, keeping proof that you sent it.</p></details><details><summary>What about a Virgin Atlantic flight into the UK from outside Europe?</summary><p>UK261 applies.</p></details></div></section><section class="ref" id="aerolineas"><div class="wrap"><h2>Claim guides</h2><p><a href="/en/flight-cancelled-what-to-do/">Flight cancelled: what to do</a> · <a href="/en/denied-boarding-overbooking-compensation/">Overbooking</a> · <a href="/en/extraordinary-circumstances-flight-delay/">Extraordinary circumstances</a> · <a href="/en/us-flight-cancelled-eu261-compensation/">US flight cancelled</a> · <a href="/en/airline-stops-flying-bankruptcy/">Airline gone bust</a> · <a href="/en/flight-strikes-spain-europe/">Strikes</a> · <a href="/en/spain-general-strike-11-november-flights/">Spain general strike 11 November</a> · <a href="/en/easyjet-portugal-strike-december/">easyJet Portugal strike December</a> · <a href="/en/flight-delay-compensation-how-to-claim/">Claim a delay</a> · <a href="/en/missed-connecting-flight-compensation/">Missed connection</a> · <a href="/en/lost-delayed-baggage-compensation/">Lost baggage</a> · <a href="/en/vueling-strike/">Vueling strike</a> · <a href="/en/ryanair-strike/">Ryanair strike</a> · <a href="/en/iberia-strike/">Iberia strike</a> · <a href="/en/christmas-flight-strikes/">Christmas strikes</a> · <a href="/en/new-eu-air-passenger-rules-2027/">New EU rules 2027</a> · <a href="/en/cabin-bag-size-by-airline/">Cabin bag sizes</a> · <a href="/en/flight-rescheduled-brought-forward-compensation/">Flight brought forward</a> · <a href="/en/flight-compensation-companies-compared/">Claim yourself or use a company</a> · <a href="/en/uk-airports-to-spain-flight-delay-compensation/">UK airports to Spain</a> · <a href="/en/#preguntas">FAQ</a></p><h2 style="margin-top:32px">Compensation by airline</h2><ul class="airlines"><li><a href="/en/ryanair-delay-compensation/">Ryanair</a></li><li><a href="/en/vueling-delay-compensation/">Vueling</a></li><li><a href="/en/iberia-delay-compensation/">Iberia</a></li><li><a href="/en/air-europa-delay-compensation/">Air Europa</a></li><li><a href="/en/easyjet-delay-compensation/">easyJet</a></li><li><a href="/en/binter-delay-compensation/">Binter</a></li><li><a href="/en/volotea-delay-compensation/">Volotea</a></li><li><a href="/en/iberia-express-delay-compensation/">Iberia Express</a></li><li><a href="/en/air-nostrum-delay-compensation/">Air Nostrum</a></li><li><a href="/en/jet2-delay-compensation/">Jet2</a></li><li><a href="/en/tui-delay-compensation/">TUI</a></li><li><a href="/en/wizz-air-delay-compensation/">Wizz Air</a></li></ul><h2 style="margin-top:32px">Busiest Spanish airports</h2><ul class="airlines"><li><a href="/en/madrid-barajas-airport-flight-delay/">Madrid-Barajas</a></li><li><a href="/en/barcelona-el-prat-airport-flight-delay/">Barcelona-El Prat</a></li><li><a href="/en/palma-de-mallorca-airport-flight-delay/">Palma de Mallorca</a></li><li><a href="/en/malaga-airport-flight-delay/">Malaga</a></li><li><a href="/en/alicante-airport-flight-delay/">Alicante</a></li><li><a href="/en/gran-canaria-airport-flight-delay/">Gran Canaria</a></li><li><a href="/en/tenerife-south-airport-flight-delay/">Tenerife South</a></li><li><a href="/en/tenerife-north-airport-flight-delay/">Tenerife North</a></li><li><a href="/en/valencia-airport-flight-delay/">Valencia</a></li><li><a href="/en/ibiza-airport-flight-delay/">Ibiza</a></li></ul><p><a href="/en/#aerolineas">All airlines and airports</a> · <a href="/en/uk-airports-to-spain-flight-delay-compensation/">UK airports to Spain</a></p></div></section></main>
 <footer class="foot"><div class="wrap"><p>VuelosClaim is an indicative calculator based on <a href="https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm" rel="noopener">Regulation (EC) 261/2004</a> and its UK version (UK261). It is not legal advice.</p><p>Some links are affiliate links: if you use a service through them, we earn a commission at no cost to you. This never changes the calculator's result.</p><p>Amounts and rules last reviewed: 7 October 2026.</p><nav><a href="/en/flight-strikes-spain-europe/">Flight strikes</a><a href="/en/flight-compensation-companies-compared/">AirHelp vs Flightright</a><a href="/en/flight-cancelled-what-to-do/">Flight cancelled</a><a href="/en/denied-boarding-overbooking-compensation/">Overbooking</a><a href="/en/extraordinary-circumstances-flight-delay/">Extraordinary circumstances</a><a href="/en/uk-airports-to-spain-flight-delay-compensation/">UK airports to Spain</a><a href="/en/about/">About us and sources</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/privacy/">Privacy</a><a href="/en/privacy/#cookies" data-consent-open>Analytics cookies</a><a href="/en/privacy/#publicidad" data-ads-consent>Ad privacy settings</a></nav></div></footer>
@@ -432,9 +440,15 @@ main:focus { outline: none; }
       ukcommUnknown: "El vuelo llega al Reino Unido desde fuera: UK261 solo lo cubre si la aerolínea tiene licencia británica o de un país de la UE, y esta aerolínea tiene filiales con licencia de fuera de la UE.",
       mLicence: "qué filial de la aerolínea operó el vuelo y qué país le dio la licencia",
       viaMixed: "El viaje llega a Europa desde fuera con escalas en aerolíneas distintas: ningún tribunal ha aclarado qué aerolínea decide la cobertura en ese caso.",
-      mViaMixed: "qué aerolínea operó cada tramo del viaje",
+      mViaMixed: "qué aerolínea operó el otro vuelo (elígela en «Aerolínea del otro vuelo»)",
+      mViaAp: "en qué aeropuerto hiciste la escala",
+      mLeg: "qué vuelo falló: el primero o el segundo",
+      mSplit: "si la aerolínea europea del viaje acepta que está cubierto (reclámale primero a ella)",
+      viaMixedSplit: "Una de las aerolíneas es europea y la otra no: ningún tribunal ha aclarado cuál decide la cobertura en un viaje que llega a Europa con escala. Tienes más opciones si el vuelo que falló lo operó la aerolínea europea.",
+      c502: "El viaje salió de la UE con una sola reserva y el primer vuelo lo operó una aerolínea europea: aunque el retraso fuera en el segundo vuelo, también puedes reclamar a la aerolínea del primero (TJUE, C-502/18).",
+      conn: {"h": "Si perdiste la conexión", "single": ["Es una sola compensación por pasajero, no una por cada aerolínea: reclama a la aerolínea que operó el vuelo que falló.", "Aunque el primer vuelo se retrasara poco, si por eso perdiste la conexión y llegaste al destino final con 3 horas o más de retraso, te corresponde (TJUE, C-11/11).", "En la escala, esa aerolínea tiene que llevarte gratis en el siguiente vuelo disponible y darte comida y bebida y, si hace falta, hotel y traslados."], "sep": ["Con reservas separadas, la aerolínea del segundo vuelo no tiene que recolocarte ni compensarte: el billete nuevo corre de tu cuenta.", "Mira si la agencia o la web donde compraste ofrece garantía de conexión: algunas cubren el vuelo perdido."], "mont": "Hotel o apartamento perdido en el destino, billete nuevo y otros gastos causados por el retraso: el reglamento no los cubre, pero puedes reclamarlos como daños a la aerolínea del vuelo retrasado (Convenio de Montreal, art. 19), con facturas y hasta 6.303 DEG por pasajero (más de 7.000 €). Pueden descontar la compensación que ya te hayan pagado. Con reservas separadas es más difícil de conseguir.", "pkg": "Si lo compraste como viaje combinado (por ejemplo, vuelo y hotel juntos), el organizador o la agencia también responde de los servicios que no se prestaron.", "guide": "Guía de la conexión perdida", "url": "/conexion-perdida-vuelo/"},
       viaSingle: "Con escalas en una sola reserva, el viaje cuenta entero: el retraso se mide al llegar al destino final y la distancia es la línea recta entre el origen y el destino final (TJUE, C-11/11, C-559/16 y C-451/20).",
-      viaSeparate: "Con reservas separadas, cada vuelo se reclama por separado: pon el origen y el destino del vuelo que se retrasó o se canceló.",
+      viaSeparate: "Con reservas separadas, cada vuelo es un contrato distinto: solo cuenta el vuelo que falló, con su propia distancia y el retraso con el que llegó a su propio destino, no al destino final.",
       fareStaff: "Los billetes gratuitos o con una tarifa reducida que no está al alcance del público (por ejemplo, de empleado) quedan fuera del reglamento (art. 3.3). Los billetes de puntos o de paquete vacacional sí están cubiertos.",
       mStrikeSub: "quién contrató a la empresa en huelga y si la aerolínea pudo evitar el retraso (pídelo por escrito a la aerolínea)",
       exact3: "3 horas justas cuentan: el reglamento exige «tres horas o más», medidas al abrirse las puertas en el destino final (TJUE, C-402/07 y C-452/13). Con 2 h 59 min no hay compensación.",
@@ -533,9 +547,15 @@ main:focus { outline: none; }
       ukcommUnknown: "The flight arrives in the UK from outside. UK261 only covers it if the airline holds a UK or EU licence, and this airline has companies licensed outside the EU.",
       mLicence: "which company of the airline group operated the flight and which country licensed it",
       viaMixed: "The journey arrives in Europe from outside with connections on different airlines. No court has settled which airline decides coverage in that case.",
-      mViaMixed: "which airline operated each leg of the journey",
+      mViaMixed: "which airline operated the other flight (choose it under «Airline of the other flight»)",
+      mViaAp: "which airport you connected at",
+      mLeg: "which flight went wrong: the first or the second",
+      mSplit: "whether the European airline on your journey accepts it is covered (claim from it first)",
+      viaMixedSplit: "One airline is European and the other isn't: no court has settled which one decides coverage for a connecting journey into Europe. You have better chances if the flight that went wrong was operated by the European airline.",
+      c502: "Your journey left the EU on one booking and a European airline operated the first flight: even though the delay happened on the second flight, you can also claim from the first airline (CJEU, C-502/18).",
+      conn: {"h": "If you missed your connection", "single": ["It's one compensation per passenger, not one per airline: claim from the airline that operated the flight that went wrong.", "Even if your first flight was only a little late, if that made you miss the connection and you reached your final destination 3 hours or more late, you're owed it (CJEU, C-11/11).", "At the connecting airport, that airline must put you on the next available flight for free and give you meals and drinks and, if needed, a hotel and transfers."], "sep": ["With separate bookings, the second airline doesn't have to rebook or compensate you: the new ticket is at your own cost.", "Check whether the agency or website you booked with offers a connection guarantee: some cover the missed flight."], "mont": "A lost hotel or apartment at your destination, a new ticket and other costs caused by the delay: the rules on compensation don't cover them, but you can claim them as damages from the airline of the delayed flight (Montreal Convention, Art. 19), with receipts, up to 6,303 SDR per passenger (over €7,000). They may deduct any compensation already paid. With separate bookings it's harder to win.", "pkg": "If you bought it as a package holiday (for example, flight and hotel together), the organiser or agency is also liable for the services you didn't get.", "guide": "Missed connection guide", "url": "/en/missed-connecting-flight-compensation/"},
       viaSingle: "Connections on a single booking count as one journey: the delay is measured at your final destination and the distance is the straight line from origin to final destination (CJEU, C-11/11, C-559/16 and C-451/20).",
-      viaSeparate: "With separate bookings, each flight is claimed separately: enter the origin and destination of the flight that was delayed or cancelled.",
+      viaSeparate: "With separate bookings, each flight is its own contract: only the flight that went wrong counts, with its own distance and its delay at its own destination, not at your final destination.",
       fareStaff: "Free tickets, or reduced fares not available to the public (staff tickets, for example), are outside the rules (Art. 3(3)). Frequent-flyer and package holiday tickets are covered.",
       mStrikeSub: "who hired the company on strike and whether the airline could have avoided the delay (ask the airline in writing)",
       exact3: "Exactly 3 hours counts: the rules require 'three hours or more', measured when the doors open at your final destination (CJEU, C-402/07 and C-452/13). At 2 h 59 min there is no compensation.",
@@ -634,9 +654,15 @@ main:focus { outline: none; }
       ukcommUnknown: "Il volo arriva nel Regno Unito da fuori: UK261 lo copre solo se la compagnia ha una licenza britannica o di un paese UE, e questa compagnia ha società con licenza extra-UE.",
       mLicence: "quale società del gruppo ha operato il volo e quale paese le ha rilasciato la licenza",
       viaMixed: "Il viaggio arriva in Europa da fuori con scali su compagnie diverse: nessun tribunale ha chiarito quale compagnia determina la copertura in questo caso.",
-      mViaMixed: "quale compagnia ha operato ciascuna tratta del viaggio",
+      mViaMixed: "quale compagnia ha operato l'altro volo (sceglila in «Compagnia dell'altro volo»)",
+      mViaAp: "in quale aeroporto hai fatto scalo",
+      mLeg: "quale volo ha avuto il problema: il primo o il secondo",
+      mSplit: "se la compagnia europea del viaggio accetta che è coperto (reclama prima a lei)",
+      viaMixedSplit: "Una delle compagnie è europea e l'altra no: nessun tribunale ha chiarito quale determina la copertura in un viaggio con scalo che arriva in Europa. Hai più possibilità se il volo con il problema era operato dalla compagnia europea.",
+      c502: "Il viaggio è partito dall'UE con un'unica prenotazione e il primo volo era operato da una compagnia europea: anche se il ritardo è avvenuto sul secondo volo, puoi reclamare anche alla compagnia del primo (CGUE, C-502/18).",
+      conn: {"h": "Se hai perso la coincidenza", "single": ["È una sola compensazione per passeggero, non una per ogni compagnia: reclama alla compagnia che ha operato il volo con il problema.", "Anche se il primo volo ha avuto solo un piccolo ritardo, se per questo hai perso la coincidenza e sei arrivato alla destinazione finale con 3 ore o più di ritardo, ti spetta (CGUE, C-11/11).", "Nello scalo, quella compagnia deve imbarcarti gratis sul primo volo disponibile e darti pasti e bevande e, se serve, albergo e trasferimenti."], "sep": ["Con prenotazioni separate, la compagnia del secondo volo non deve riproteggerti né compensarti: il nuovo biglietto è a tuo carico.", "Verifica se l'agenzia o il sito dove hai prenotato offre una garanzia di coincidenza: alcuni coprono il volo perso."], "mont": "Albergo o appartamento perso a destinazione, nuovo biglietto e altre spese causate dal ritardo: il regolamento non li copre, ma puoi chiederli come danni alla compagnia del volo in ritardo (Convenzione di Montreal, art. 19), con le ricevute, fino a 6.303 DSP per passeggero (oltre 7.000 €). Possono detrarre la compensazione già pagata. Con prenotazioni separate è più difficile ottenerli.", "pkg": "Se l'hai acquistato come pacchetto turistico (per esempio volo e albergo insieme), anche l'organizzatore o l'agenzia risponde dei servizi non prestati.", "guide": "", "url": ""},
       viaSingle: "Con scali su un'unica prenotazione, il viaggio conta per intero: il ritardo si misura all'arrivo alla destinazione finale e la distanza è la linea retta tra origine e destinazione finale (CGUE, C-11/11, C-559/16 e C-451/20).",
-      viaSeparate: "Con prenotazioni separate, ogni volo si reclama a parte: inserisci l'origine e la destinazione del volo in ritardo o cancellato.",
+      viaSeparate: "Con prenotazioni separate, ogni volo è un contratto a sé: conta solo il volo che ha avuto il problema, con la sua distanza e il ritardo all'arrivo alla sua destinazione, non alla destinazione finale.",
       fareStaff: "I biglietti gratuiti o a tariffa ridotta non accessibile al pubblico (per esempio, da dipendente) sono esclusi dal regolamento (art. 3.3). I biglietti con punti o in un pacchetto vacanza sono coperti.",
       mStrikeSub: "chi ha incaricato l'impresa in sciopero e se la compagnia poteva evitare il ritardo (chiedilo per iscritto alla compagnia)",
       exact3: "3 ore esatte contano: il regolamento richiede «tre ore o più», misurate all'apertura delle porte alla destinazione finale (CGUE, C-402/07 e C-452/13). Con 2 h 59 min non c'è compensazione.",
@@ -735,9 +761,15 @@ main:focus { outline: none; }
       ukcommUnknown: "O voo chega ao Reino Unido vindo de fora: o UK261 só o abrange se a companhia tiver licença britânica ou de um país da UE, e esta companhia tem empresas licenciadas fora da UE.",
       mLicence: "que empresa do grupo operou o voo e que país lhe emitiu a licença",
       viaMixed: "A viagem chega à Europa vinda de fora com escalas em companhias diferentes: nenhum tribunal esclareceu qual a companhia que determina a cobertura neste caso.",
-      mViaMixed: "que companhia operou cada troço da viagem",
+      mViaMixed: "que companhia operou o outro voo (escolha-a em «Companhia do outro voo»)",
+      mViaAp: "em que aeroporto fez escala",
+      mLeg: "que voo teve o problema: o primeiro ou o segundo",
+      mSplit: "se a companhia europeia da viagem aceita que está coberto (reclame primeiro a ela)",
+      viaMixedSplit: "Uma das companhias é europeia e a outra não: nenhum tribunal esclareceu qual determina a cobertura numa viagem com escala que chega à Europa. Tem mais hipóteses se o voo com o problema foi operado pela companhia europeia.",
+      c502: "A viagem partiu da UE com uma única reserva e o primeiro voo foi operado por uma companhia europeia: mesmo que o atraso tenha ocorrido no segundo voo, também pode reclamar à companhia do primeiro (TJUE, C-502/18).",
+      conn: {"h": "Se perdeu a ligação", "single": ["É uma só indemnização por passageiro, não uma por cada companhia: reclame à companhia que operou o voo que teve o problema.", "Mesmo que o primeiro voo se tenha atrasado pouco, se por isso perdeu a ligação e chegou ao destino final com 3 horas ou mais de atraso, tem direito (TJUE, C-11/11).", "No aeroporto de escala, essa companhia tem de o levar gratuitamente no próximo voo disponível e dar-lhe refeições e bebidas e, se necessário, hotel e transporte."], "sep": ["Com reservas separadas, a companhia do segundo voo não tem de o reencaminhar nem indemnizar: o novo bilhete fica a seu cargo.", "Veja se a agência ou o site onde comprou oferece garantia de ligação: alguns cobrem o voo perdido."], "mont": "Hotel ou apartamento perdido no destino, novo bilhete e outras despesas causadas pelo atraso: o regulamento não os cobre, mas pode pedi-los como danos à companhia do voo atrasado (Convenção de Montreal, art. 19.º), com faturas, até 6303 DSE por passageiro (mais de 7000 €). Podem descontar a indemnização já paga. Com reservas separadas é mais difícil de conseguir.", "pkg": "Se o comprou como viagem organizada (por exemplo, voo e hotel juntos), o organizador ou a agência também responde pelos serviços não prestados.", "guide": "", "url": ""},
       viaSingle: "Com escalas numa única reserva, a viagem conta como um todo: o atraso mede-se à chegada ao destino final e a distância é a linha reta entre a origem e o destino final (TJUE, C-11/11, C-559/16 e C-451/20).",
-      viaSeparate: "Com reservas separadas, cada voo reclama-se à parte: indique a origem e o destino do voo atrasado ou cancelado.",
+      viaSeparate: "Com reservas separadas, cada voo é um contrato distinto: só conta o voo que teve o problema, com a sua própria distância e o atraso à chegada ao seu próprio destino, não ao destino final.",
       fareStaff: "Os bilhetes gratuitos ou com tarifa reduzida não acessível ao público (por exemplo, de funcionário) estão excluídos do regulamento (art. 3.º, n.º 3). Os bilhetes com pontos ou integrados numa viagem organizada estão abrangidos.",
       mStrikeSub: "quem contratou a empresa em greve e se a companhia podia ter evitado o atraso (pergunte por escrito à companhia)",
       exact3: "3 horas exatas contam: o regulamento exige «três horas ou mais», medidas na abertura das portas no destino final (TJUE, C-402/07 e C-452/13). Com 2 h 59 min não há indemnização.",
@@ -836,9 +868,15 @@ main:focus { outline: none; }
       ukcommUnknown: "Der Flug kommt von außerhalb ins Vereinigte Königreich: UK261 gilt nur, wenn die Fluggesellschaft eine britische oder EU-Lizenz hat, und diese Fluggesellschaft hat Gesellschaften mit Lizenz außerhalb der EU.",
       mLicence: "welche Gesellschaft der Gruppe den Flug durchgeführt hat und welches Land ihr die Lizenz erteilt hat",
       viaMixed: "Die Reise kommt von außerhalb mit Umstiegen bei verschiedenen Fluggesellschaften nach Europa: Kein Gericht hat geklärt, welche Fluggesellschaft in diesem Fall über die Anwendbarkeit entscheidet.",
-      mViaMixed: "welche Fluggesellschaft jeden Abschnitt der Reise durchgeführt hat",
+      mViaMixed: "welche Fluggesellschaft den anderen Flug durchgeführt hat (wählen Sie sie unter «Fluggesellschaft des anderen Flugs»)",
+      mViaAp: "an welchem Flughafen Sie umgestiegen sind",
+      mLeg: "welcher Flug das Problem hatte: der erste oder der zweite",
+      mSplit: "ob die europäische Fluggesellschaft Ihrer Reise die Anwendbarkeit anerkennt (wenden Sie sich zuerst an sie)",
+      viaMixedSplit: "Eine Fluggesellschaft ist europäisch, die andere nicht: Kein Gericht hat geklärt, welche bei einer Umsteigeverbindung nach Europa über die Anwendbarkeit entscheidet. Ihre Chancen sind besser, wenn die europäische Fluggesellschaft den Flug mit dem Problem durchgeführt hat.",
+      c502: "Die Reise begann in der EU mit einer einzigen Buchung und den ersten Flug führte eine europäische Fluggesellschaft durch: Auch wenn die Verspätung beim zweiten Flug entstand, können Sie sich auch an die Fluggesellschaft des ersten Flugs wenden (EuGH, C-502/18).",
+      conn: {"h": "Wenn Sie den Anschluss verpasst haben", "single": ["Es gibt eine Entschädigung pro Fluggast, nicht eine pro Fluggesellschaft: Wenden Sie sich an die Fluggesellschaft, die den Flug mit dem Problem durchgeführt hat.", "Auch wenn der erste Flug nur wenig verspätet war: Haben Sie deshalb den Anschluss verpasst und Ihr Endziel 3 Stunden oder mehr zu spät erreicht, steht sie Ihnen zu (EuGH, C-11/11).", "Am Umsteigeflughafen muss Sie diese Fluggesellschaft kostenlos auf den nächsten verfügbaren Flug umbuchen und Ihnen Mahlzeiten und Getränke sowie bei Bedarf Hotel und Transfer stellen."], "sep": ["Bei getrennten Buchungen muss die Fluggesellschaft des zweiten Flugs Sie weder umbuchen noch entschädigen: Das neue Ticket zahlen Sie selbst.", "Prüfen Sie, ob das Reisebüro oder die Website, bei der Sie gebucht haben, eine Anschlussgarantie bietet: Manche übernehmen den verpassten Flug."], "mont": "Verlorenes Hotel oder Ferienwohnung am Ziel, ein neues Ticket und andere Kosten durch die Verspätung: Die Verordnung deckt sie nicht ab, aber Sie können sie als Schaden bei der Fluggesellschaft des verspäteten Flugs geltend machen (Montrealer Übereinkommen, Art. 19), mit Belegen, bis zu 6.303 SZR pro Fluggast (über 7.000 €). Eine bereits gezahlte Entschädigung kann angerechnet werden. Bei getrennten Buchungen ist das schwieriger durchzusetzen.", "pkg": "Haben Sie eine Pauschalreise gebucht (zum Beispiel Flug und Hotel zusammen), haftet auch der Reiseveranstalter oder das Reisebüro für nicht erbrachte Leistungen.", "guide": "", "url": ""},
       viaSingle: "Bei Umstiegen mit einer einzigen Buchung zählt die ganze Reise: Die Verspätung wird am Endziel gemessen, und die Entfernung ist die Luftlinie zwischen Start und Endziel (EuGH, C-11/11, C-559/16 und C-451/20).",
-      viaSeparate: "Bei getrennten Buchungen wird jeder Flug einzeln geltend gemacht: Geben Sie Start und Ziel des verspäteten oder annullierten Flugs ein.",
+      viaSeparate: "Bei getrennten Buchungen ist jeder Flug ein eigener Vertrag: Es zählt nur der Flug mit dem Problem, mit seiner eigenen Entfernung und seiner Verspätung am eigenen Ziel, nicht am Endziel.",
       fareStaff: "Kostenlose Tickets oder ermäßigte Tarife, die der Öffentlichkeit nicht zugänglich sind (zum Beispiel für Mitarbeitende), sind von der Verordnung ausgenommen (Art. 3 Abs. 3). Bonusmeilen-Tickets und Pauschalreisen sind abgedeckt.",
       mStrikeSub: "wer das bestreikte Unternehmen beauftragt hat und ob die Fluggesellschaft die Verspätung hätte vermeiden können (fragen Sie die Fluggesellschaft schriftlich)",
       exact3: "Genau 3 Stunden zählen: Die Verordnung verlangt «drei Stunden oder mehr», gemessen beim Öffnen der Türen am Endziel (EuGH, C-402/07 und C-452/13). Bei 2 Std. 59 Min. gibt es keine Entschädigung.",
@@ -967,6 +1005,14 @@ main:focus { outline: none; }
   function inEU(a) { return a[6] === 1 && !OUTSIDE[a[0]]; }
   // Where a "not covered" result may hide local rules or carriers we cannot verify, we answer "insufficient", never "no".
   function unsure(a) { return !!(CROWN[a[3]] || a[0] === "LYR"); }
+  // Would this airline bring an inbound flight under the rules? true / false / null (unknown). toEU: arriving in the EU, else in the UK.
+  function covIn(a, toEU) {
+    var eu = (a && a.eu) || "unknown";
+    if (toEU) return (eu === "yes" || eu === "mixed" || a.uk) ? true : eu === "no" ? false : null;
+    if (a.uk) return true;
+    if (eu === "yes" || eu === "mixed") return a.ukcomm === false ? false : a.ukcomm === "unknown" ? null : true;
+    return eu === "no" ? false : null;
+  }
 
   // ---------- Rule engine: EU261 (Regulation (EC) 261/2004) and UK261 ----------
   // Three results: "posible" (possible right to compensation), "no" (does not appear to be due),
@@ -987,6 +1033,21 @@ main:focus { outline: none; }
     function worse(s) { if (RANK[s] > RANK[st]) st = s; }
     function miss(m) { if (r.missing.indexOf(m) < 0) r.missing.push(m); }
     var dep = o.dep, arr = o.arr;
+    var via = o.via || "direct", leg = o.leg || "unknown";
+    // Separate bookings: each flight is its own contract, so only the flight that went wrong counts
+    // (its own route and its own arrival delay), never the whole trip.
+    if (via === "separate") {
+      var vap = o.viaAp;
+      if (!vap || vap === dep || vap === arr || leg === "unknown") {
+        r.lines.push(t.viaSeparate);
+        if (!vap || vap === dep || vap === arr) miss(t.mViaAp);
+        if (leg === "unknown") miss(t.mLeg);
+        r.verdict = "insuficiente"; r.noAmount = true; r.dist = km(dep, arr);
+        return r;
+      }
+      if (leg === "first") arr = vap; else dep = vap;
+    }
+    r.legDep = dep; r.legArr = arr;
     r.dist = typeof o.distKm === "number" ? o.distKm : km(dep, arr);
 
     // 1. Territorial scope (the operating carrier, not the airline's nationality, decides inbound flights only)
@@ -1018,13 +1079,24 @@ main:focus { outline: none; }
       r.notes.push(t.operating);
     } else { r.lines.push(t.not3); out = true; }
     var uns = unsure(dep) || unsure(arr);
-    var via = o.via || "direct";
-    // Inbound journey with connections on different airlines: no case law says which leg's carrier decides (art. 3(1)(b))
-    var mixedIn = via === "mixed" && !dEU && !dUK && (aEU || aUK);
+    // Inbound journey with connections on different airlines: no case law says which leg's carrier decides (art. 3(1)(b)).
+    // With both airlines known: both covered or both not covered settles it; one of each stays open, without asking for more data.
+    var mixedIn = via === "mixed" && !dEU && !dUK && (aEU || aUK), mixedSplit = false;
+    if (mixedIn && o.airline2) {
+      var c1 = covIn(al, aEU), c2 = covIn(o.airline2, aEU);
+      if (c1 !== null && c1 === c2) mixedIn = false;
+      else if (c1 !== null && c2 !== null) mixedSplit = true;
+    }
+    if (mixedIn) {
+      // The line above only spoke about the airline of one leg: replace it, so the result never says «not covered» and «up to X €» at once
+      r.lines = []; out = false; r.regime = aEU ? "EU" : "UK"; r.covered = null;
+      r.missing = r.missing.filter(function (m) { return m !== t.mCarrier && m !== t.mLicence; });
+    }
     if (out && !uns && !mixedIn) { r.verdict = "no"; return r; }
     if (out) { r.regime = (CROWN[dep[3]] || CROWN[arr[3]] || dUK || aUK) ? "UK" : "EU"; r.covered = null; }
     if (out && uns) { r.lines.push(t.special); miss(t.mSpecial); worse("insuficiente"); }
-    if (mixedIn) { r.lines.push(t.viaMixed); miss(t.mViaMixed); worse("insuficiente"); }
+    if (mixedIn && mixedSplit) { r.lines.push(t.viaMixedSplit); miss(t.mSplit); worse("insuficiente"); }
+    else if (mixedIn) { r.lines.push(t.viaMixed); miss(t.mViaMixed); worse("insuficiente"); }
     if (CROWN[dep[3]] || CROWN[arr[3]]) r.notes.push(t.crown);
     if (dep[3] === "GI" || arr[3] === "GI") r.notes.push(t.gib);
     if (dep[0] === "LYR" || arr[0] === "LYR") r.notes.push(t.lyr);
@@ -1032,6 +1104,8 @@ main:focus { outline: none; }
     // Connections on a single booking count as one journey (CJEU C-451/20; UK261 art. 3(1A))
     if (via === "separate") r.notes.push(t.viaSeparate);
     else if (via !== "direct") r.notes.push(t.viaSingle);
+    // CJEU C-502/18: single booking from the EU, delay on the 2nd flight run by a non-EU carrier → the EU carrier of the 1st flight also owes it
+    if (via === "mixed" && dEU && leg === "last" && o.airline2 && (o.airline2.eu === "yes" || o.airline2.eu === "mixed") && al.eu !== "yes" && al.eu !== "mixed") r.notes.push(t.c502);
     // Art. 3(3): free or non-public reduced fares are excluded; frequent-flyer and package tickets are covered
     if (o.fare === "staff") { r.lines.push(t.fareStaff); r.verdict = "no"; return r; }
     if (r.regime === "UK") r.cur = "GBP";
@@ -1240,11 +1314,26 @@ main:focus { outline: none; }
     show("grp-checkin", what === "denied" && denied !== "vol");
     show("grp-dreason", what === "denied" && denied !== "vol");
     show("grp-cause", what !== "denied");
+    // Connections: separate bookings need the connecting airport and the failed flight; different airlines need the other airline
+    var via = val("via");
+    show("sep-hint", via === "separate"); show("grp-viaap", via === "separate");
+    show("grp-leg", via === "separate" || via === "mixed"); show("grp-airline2", via === "mixed");
+    swapAlt(form.querySelector('label[for="airline"]'), via === "separate" || via === "mixed");
+    swapAlt(form.querySelector("#grp-delay legend"), via === "separate");
+  }
+  // Swap a label for its alternative wording (data-alt) and back
+  function swapAlt(el, on) {
+    if (!el || !el.dataset.alt) return;
+    if (el.dataset.orig === undefined) el.dataset.orig = el.textContent;
+    el.textContent = on ? el.dataset.alt : el.dataset.orig;
+  }
+  function alOf(slug) {
+    return AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
   }
   function inputs() {
     return { what: val("what"), delay: val("delay"), notice: val("notice"), reroute: val("reroute"), rdep: val("rdep"),
       rarr: val("rarr"), accepted: val("accepted"), denied: val("denied"), checkin: val("checkin"), dreason: val("dreason"), cause: val("cause"),
-      via: val("via") || "direct", fare: val("fare") || "public" };
+      via: val("via") || "direct", fare: val("fare") || "public", leg: val("leg") || "unknown" };
   }
   var touched = false, started = false, resTimer = null, lastSig = "";
   function resultParams(r, o) {
@@ -1279,14 +1368,18 @@ main:focus { outline: none; }
       out.dataset.state = "empty"; var cb = out.querySelector("[data-care]"); if (cb) cb.hidden = true; var wb = out.querySelector("[data-where]"); if (wb) wb.hidden = true; return;
     }
     var slug = val("airline");
-    var al = AIRLINES.filter(function (x) { return x.slug === slug; })[0] || { eu: slug === "otra-ue" ? "yes" : slug === "otra-no-ue" ? "no" : "unknown" };
+    var al = alOf(slug);
     var o = inputs(); o.dep = dep; o.arr = arr; o.airline = al;
+    var vapEl = form.querySelector("#viaap"), slug2 = val("airline2");
+    if (o.via === "separate" && vapEl) o.viaAp = byCode[vapEl.dataset.code];
+    if (o.via === "mixed" && slug2) o.airline2 = alOf(slug2);
     var r = compute(o);
+    var ld = r.legDep || dep, la = r.legArr || arr; // separate bookings: the flight that went wrong
     out.dataset.state = r.verdict;
-    out.querySelector("[data-route]").textContent = dep[0] + " → " + arr[0];
+    out.querySelector("[data-route]").textContent = ld[0] + " → " + la[0];
     var ex = out.querySelector("[data-example]"); if (ex) ex.hidden = dep[0] + "-" + arr[0] !== seedRoute; // only the preloaded route is an example
     out.querySelector("[data-km]").textContent = fmt(r.dist || 0) + " km";
-    out.querySelector("[data-amount]").textContent = money(r.amount || 0, r.cur);
+    out.querySelector("[data-amount]").textContent = r.noAmount ? "—" : money(r.amount || 0, r.cur);
     out.querySelector("[data-headline]").textContent =
       r.verdict === "posible" ? T.hPos(money(r.amount, r.cur)) : r.verdict === "insuficiente" ? T.hIns : T.hNo;
     var ul = out.querySelector("[data-lines]"); ul.innerHTML = "";
@@ -1296,13 +1389,14 @@ main:focus { outline: none; }
     r.notes.forEach(function (t) { li(t, "note"); });
     if (r.verdict === "insuficiente") li(T.letterLater, "note");
     care(r, o.what);
-    where(al, r, dep, arr);
+    where(al, r, ld, la);
+    conn(r, o);
     // The claims-company link is shown whenever money could be owed, including when the airline must still prove an exemption.
     out.querySelector("[data-cta]").hidden = !(r.amount || r.potential);
     var lo = document.getElementById("letter-open"); if (lo) lo.hidden = r.verdict !== "posible";
     if (r.verdict !== "posible") { var lp = document.getElementById("letter"); if (lp) { lp.hidden = true; if (lo) lo.setAttribute("aria-expanded", "false"); } }
     var alName = (form.querySelector("#airline").selectedOptions[0] || {}).textContent || "";
-    last = { r: r, dep: dep, arr: arr, o: o, airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
+    last = { r: r, dep: ld, arr: la, o: o, airline: (slug && slug.indexOf("otra") !== 0) ? alName : "" };
     letter();
     if (touched) reportResult(r, o);
   }
@@ -1350,6 +1444,24 @@ main:focus { outline: none; }
     box.querySelector("h3").textContent = head;
     items.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; box.querySelector("ul").appendChild(li); });
     box.querySelector(".tip").textContent = tip;
+    box.hidden = false;
+  }
+
+  // ---------- Missed connection: who to claim from, rebooking, separate bookings, losses at the destination ----------
+  function conn(r, o) {
+    var box = out.querySelector("[data-conn]"); if (!box) return;
+    if (!o.via || o.via === "direct" || !T.conn) { box.hidden = true; return; }
+    var X = T.conn, items = o.via === "separate" ? X.sep.slice() : (r.covered === false && !r.regime ? [] : X.single.slice());
+    items.push(X.mont, X.pkg);
+    box.innerHTML = "<h3></h3><ul></ul>";
+    box.querySelector("h3").textContent = X.h;
+    items.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; box.querySelector("ul").appendChild(li); });
+    if (X.url) {
+      var p = document.createElement("p"), a = document.createElement("a");
+      p.className = "conn-link"; a.href = X.url; a.textContent = X.guide + " →";
+      if (PARTNER || /\/widget\//.test(location.pathname)) { a.target = "_blank"; a.rel = "noopener"; a.href = "https://vuelosclaim.eu" + X.url; }
+      p.appendChild(a); box.appendChild(p);
+    }
     box.hidden = false;
   }
 
@@ -1927,7 +2039,7 @@ main:focus { outline: none; }
         }
       }
     } catch (err) { /* invalid parameter: keep the default link */ }
-    ["from", "to"].forEach(function (id) { attach(document.getElementById(id)); });
+    ["from", "to", "viaap"].forEach(function (id) { var el = document.getElementById(id); if (el) attach(el); });
     var retry = document.getElementById("ac-retry");
     if (retry) retry.addEventListener("click", function () { loadAirports(0); });
     window.addEventListener("online", function () { if (loadState === "error") loadAirports(0); });
@@ -1940,7 +2052,7 @@ main:focus { outline: none; }
     run();
     var started_ = false;
     function startLoad() { if (started_) return; started_ = true; loadAirports(0); }
-    ["from", "to"].forEach(function (id) { var el = document.getElementById(id); el.addEventListener("focus", startLoad); el.addEventListener("pointerdown", startLoad); });
+    ["from", "to", "viaap"].forEach(function (id) { var el = document.getElementById(id); if (el) { el.addEventListener("focus", startLoad); el.addEventListener("pointerdown", startLoad); } });
     if (document.readyState === "complete") setTimeout(startLoad, 1200);
     else window.addEventListener("load", function () { setTimeout(startLoad, 1200); });
   }
@@ -1958,8 +2070,9 @@ main:focus { outline: none; }
       if (!Array.isArray(d) || d.length < 100 || !Array.isArray(d[0]) || d[0].length < 7) throw new Error("formato");
       airports = d; byCode = {}; d.forEach(function (a) { byCode[a[0]] = a; });
       loadState = "ready"; emptyMsg(null);
-      ["from", "to"].forEach(function (id) {
-        var el = document.getElementById(id), a = byCode[el.dataset.code];
+      ["from", "to", "viaap"].forEach(function (id) {
+        var el = document.getElementById(id); if (!el) return;
+        var a = byCode[el.dataset.code];
         if (a) el.value = label(a);
         else if (el.value.trim() && document.activeElement === el && el._render) el._render(); // typed while loading
       });

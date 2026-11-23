@@ -623,11 +623,19 @@ EVERGREEN = [
 <li>Pide comida y bebida y, si tienes que dormir allí, hotel y traslado.</li>
 <li>Guarda las tarjetas de embarque de todos los vuelos y anota la hora real de llegada al destino final.</li>
 <li>Reclama a la aerolínea que operaba el vuelo retrasado y, si no responde en un mes, a <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">AESA</a>.</li></ol>
+<h2>Si los vuelos eran de aerolíneas distintas</h2>
+<p>Con una sola reserva sigue siendo una sola compensación por pasajero, no una por cada aerolínea. Se reclama a la aerolínea que operaba el vuelo que falló. Si el viaje salió de la UE y el primer vuelo lo operó una aerolínea europea, también puedes reclamar a esa aerolínea aunque el retraso fuera en el segundo vuelo, operado por una aerolínea de fuera de la UE (asunto C-502/18).</p>
+<h2>Si compraste los vuelos por separado</h2>
+<p>Cada reserva es un contrato distinto. La aerolínea del segundo vuelo no tiene que recolocarte ni compensarte, y el billete nuevo corre de tu cuenta, salvo que la agencia o la web donde compraste ofrezca una garantía de conexión. Del primer vuelo solo puedes pedir compensación si él mismo llegó a su destino con 3 horas o más de retraso; en la <a href="/">calculadora</a> elige «Sí, con reservas separadas» e indica la escala y qué vuelo falló.</p>
+<h2>Hotel o apartamento perdido en el destino</h2>
+<p>El Reglamento 261/2004 no cubre las noches de hotel o apartamento que pierdes en el destino, ni otros gastos causados por el retraso. Puedes reclamarlos como daños a la aerolínea del vuelo retrasado según el Convenio de Montreal (art. 19), con facturas, hasta 6.303 DEG por pasajero (más de 7.000 €). La aerolínea puede descontar la compensación que ya te haya pagado. Con reservas separadas es más difícil de conseguir.</p>
+<p>Si lo compraste como viaje combinado (por ejemplo, vuelo y hotel juntos en una agencia), el organizador o la agencia también responde de los servicios que no se prestaron.</p>
 <p>Más detalles en la guía de <a href="/retraso-vuelo-reclamar/">cómo reclamar un retraso</a>.</p>""",
    "faq": [
     ("¿Me compensan si compré los vuelos por separado?", "Normalmente no por la conexión perdida: cada vuelo cuenta por separado. Solo podrías reclamar el primer vuelo si él mismo llegó con 3 horas o más de retraso."),
     ("¿Qué distancia se usa para calcular la compensación?", "La línea recta entre el aeropuerto de origen y el destino final, sin sumar las escalas (Tribunal de Justicia de la UE, asunto C-559/16)."),
-    ("¿A qué aerolínea reclamo?", "A la que operaba el vuelo que se retrasó y te hizo perder la conexión."),
+    ("¿A qué aerolínea reclamo?", "A la que operaba el vuelo que se retrasó y te hizo perder la conexión. No a las dos: es una sola compensación por pasajero."),
+    ("¿Me pagan el hotel o apartamento que perdí en el destino?", "El Reglamento 261/2004 no lo cubre, pero puedes reclamarlo como daño a la aerolínea del vuelo retrasado (Convenio de Montreal, art. 19), con facturas, hasta 6.303 DEG por pasajero."),
    ]},
   "en": {
    "title": "Missed connection due to a delay: compensation and what to do",
@@ -648,11 +656,19 @@ EVERGREEN = [
 <li>Ask for meals and drinks and, if you have to stay overnight, a hotel and transfers.</li>
 <li>Keep the boarding passes for every flight and note the actual arrival time at your final destination.</li>
 <li>Claim from the airline that operated the delayed flight and, if they don't reply within a month, escalate to the national enforcement body (AESA in Spain, the CAA or an approved ADR scheme in the UK).</li></ol>
+<h2>If the flights were on different airlines</h2>
+<p>On one booking it's still one compensation per passenger, not one per airline. You claim from the airline that operated the flight that went wrong. If the journey left the EU and a European airline operated the first flight, you can also claim from that airline even if the delay happened on the second flight, operated by a non-EU airline (case C-502/18).</p>
+<h2>If you bought the flights separately</h2>
+<p>Each booking is a separate contract. The second airline doesn't have to rebook or compensate you, and the new ticket is at your own cost, unless the agency or website you booked with offers a connection guarantee. You can only claim for the first flight if it was itself 3 hours or more late at its own destination; in the <a href="/en/">calculator</a> choose «Yes, separate bookings» and enter the connecting airport and which flight went wrong.</p>
+<h2>Hotel or apartment lost at your destination</h2>
+<p>Regulation 261/2004 doesn't cover hotel or apartment nights you lose at your destination, or other costs caused by the delay. You can claim them as damages from the airline of the delayed flight under the Montreal Convention (Art. 19), with receipts, up to 6,303 SDR per passenger (over €7,000). The airline may deduct any compensation already paid. With separate bookings it's harder to win.</p>
+<p>If you bought a package holiday (for example, flight and hotel together from an agency), the organiser or agency is also liable for the services you didn't get.</p>
 <p>More in the guide on <a href="/en/flight-delay-compensation-how-to-claim/">how to claim for a delay</a>.</p>""",
    "faq": [
     ("Am I compensated if I bought the flights separately?", "Usually not for the missed connection: each flight counts separately. You could only claim for the first flight if it was itself 3 hours or more late."),
     ("What distance is used to work out compensation?", "The straight line between your origin and final destination, without adding the stops (EU Court of Justice, case C-559/16)."),
-    ("Which airline do I claim from?", "The one that operated the flight that was delayed and made you miss your connection."),
+    ("Which airline do I claim from?", "The one that operated the flight that was delayed and made you miss your connection. Not both: it's one compensation per passenger."),
+    ("Will I get back the hotel or apartment I lost at my destination?", "Regulation 261/2004 doesn't cover it, but you can claim it as damages from the airline of the delayed flight (Montreal Convention, Art. 19), with receipts, up to 6,303 SDR per passenger."),
    ]}},
  {"paths": {"es": "/equipaje-perdido-retrasado/", "en": "/en/lost-delayed-baggage-compensation/"},
   "es": {
