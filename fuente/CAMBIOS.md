@@ -7,6 +7,7 @@
 - Nota C-502/18: si el viaje sale de la UE con una sola reserva y falla el 2.º vuelo (aerolínea no europea), también se puede reclamar a la aerolínea europea del 1.º.
 - Bloque «Si perdiste la conexión» en el resultado (5 idiomas): una sola compensación, a quién reclamar, reubicación y asistencia, reservas separadas y garantía de conexión, hotel o apartamento perdido (Convenio de Montreal, art. 19, hasta 6.303 DEG) y viajes combinados. Guía de conexión perdida ampliada (ES/EN).
 - Pruebas: 10 casos nuevos del motor y 15 comprobaciones nuevas en navegador (móvil y escritorio).
+- Revisión de abogado del diablo: la nota C-502/18 exige código compartido y escala fuera de la UE (antes generalizaba); sin compensación, el bloque de conexión ya no dice «te corresponde» y mantiene reubicación y asistencia; aviso para más de una escala; la carta de reclamación con conexión en una reserva cita C-11/11 (5 idiomas); el widget de agencias socias no enlaza fuera de su web; el aviso de viaje combinado invita a contactar con la agencia.
 
 ## 2026-10-22 — Consentimiento publicitario (AdSense)
 

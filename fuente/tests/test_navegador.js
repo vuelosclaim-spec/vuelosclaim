@@ -212,6 +212,14 @@ async function pickAirport(p, device, id, text, code) {
     await p.selectOption("#airline", "tap"); await p.selectOption("#airline2", "iberia");
     await wiz(p, 3); await choose(p, "delay", "gt4"); await wiz(p, 5);
     check(T("una reserva con escala: se calcula el viaje entero (600 €) y explica a quién reclamar"), (await state(p)) === "posible" && /600/.test(await p.textContent("[data-amount]")) && /una sola compensación por pasajero/.test(await p.textContent("[data-conn]")));
+    await tapOrClick(p, device, "#letter-open"); await p.waitForTimeout(200);
+    check(T("carta con escala en una reserva: cita la conexión perdida (C-11/11)"), /C-11\/11/.test(await p.inputValue("#letter-text")));
+    await wiz(p, 4); await p.selectOption("#cause", "weather").catch(() => {});
+    await wiz(p, 5);
+    if ((await state(p)) === "no") {
+      const cx = await p.textContent("[data-conn]");
+      check(T("sin compensación: el bloque no dice «te corresponde» pero mantiene reubicación y comida"), !/una sola compensación por pasajero/.test(cx) && !/destino final, aunque/.test(cx) && /siguiente vuelo disponible/.test(cx), cx.slice(0, 200));
+    } else check(T("causa meteorológica → no corresponde"), false, await state(p));
     await wiz(p, 2); await choose(p, "via", "direct");
     check(T("vuelo directo: sin campos ni bloque de escalas"), !(await p.isVisible("#grp-leg")) && !(await p.isVisible("#grp-airline2")) && (await p.getAttribute("[data-conn]", "hidden")) !== null);
     check(T("escalas: sin errores de JavaScript"), p.errors.length === 0, p.errors.join(" | "));

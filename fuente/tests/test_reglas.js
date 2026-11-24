@@ -90,6 +90,7 @@ const CASES = [
     (r, t) => r.missing.includes(t.mSplit) && !r.missing.includes(t.mViaMixed) && !r.lines.includes(t.notIn) && r.lines.includes(t.viaMixedSplit)],
   ["Llega a la UE con escala: la otra aerolínea es desconocida → pide esa aerolínea", { r: "BKK-MAD", a: "iberia", airline2: { eu: "unknown" }, via: "mixed", ...D }, "insuficiente", 600, "EUR", (r, t) => r.missing.includes(t.mViaMixed)],
   ["Sale de la UE, falla el 2.º vuelo (no europea) y el 1.º lo operó una europea → también se reclama a la del 1.º (C-502/18)", { r: "MAD-BKK", a: "emirates", airline2: al("iberia"), via: "mixed", leg: "last", ...D }, "posible", 600, "EUR", has("c502")],
+  ["Sale de la UE, misma aerolínea europea en los dos vuelos → sin la nota C-502/18", { r: "MAD-BKK", a: "iberia", airline2: al("iberia"), via: "mixed", leg: "last", ...D }, "posible", 600, "EUR", (r, t) => !r.notes.includes(t.c502)],
   ["Sale de la UE, falla el 1.er vuelo → sin la nota C-502/18", { r: "MAD-BKK", a: "iberia", airline2: al("emirates"), via: "mixed", leg: "first", ...D }, "posible", 600, "EUR", (r, t) => !r.notes.includes(t.c502)],
   // ---- Billetes no disponibles al público (art. 3.3) ----
   ["Billete de empleado o gratuito: excluido", { r: "MAD-BCN", a: "vueling", fare: "staff", ...D }, "no", 0, null, has("fareStaff")],
