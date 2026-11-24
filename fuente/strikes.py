@@ -5,7 +5,7 @@ import json
 import strikes_i18n as X
 from html import escape as e
 
-UPDATED = {"es": "21 de noviembre de 2026", "en": "21 November 2026", "iso": "2026-11-21"}
+UPDATED = {"es": "24 de noviembre de 2026", "en": "24 November 2026", "iso": "2026-11-24"}
 SRC_MIN = "https://www.transportes.gob.es/aviacion-civil/informacion-util-al-pasajero/huelga-servicios-minimos"
 # Official sources only: Spain's Transport Ministry, Italy's Transport Ministry strike calendar (Osservatorio sui conflitti
 # sindacali), the union that called the strike (CCOO for 11-N, Unite for Leeds Bradford).
@@ -36,6 +36,10 @@ STRIKES = [
      "Venecia (Italia)", "airport", "Desconvocada (revocación publicada el 19 nov)", "Called off (revocation published 19 Nov)", SRC_IT),
     ("2026-11-22", "22 nov, 24 h", "22 Nov, 24 h", "Handling y personal de Toscana Aeroporti, GH Toscana y Consulta (USB)", "Toscana Aeroporti, GH Toscana and Consulta ground staff (USB)",
      "Pisa y Florencia (Italia)", "airport", "Desconvocada según los sindicatos; el calendario oficial del MIT aún la recoge", "Called off according to the unions; Italy's official MIT calendar still lists it", SRC_IT),
+    ("2026-11-25", "25 nov, 00:00–23:59", "25 Nov, 00:00–23:59", "Personal de Aviación Civil de Grecia (OSYPA), dentro de la huelga general de 24 h de ADEDY",
+     "Greek Civil Aviation Authority staff (OSYPA), joining the ADEDY 24-hour general strike",
+     "Toda Grecia", "general", "Convocada; el sindicato garantiza un tercio del servicio; sin lista de vuelos cancelados",
+     "Called; the union guarantees one third of normal service; no list of cancelled flights", "https://osypa.gr/enimerosi/anakoinoseis/item/1152-%CE%B7-%CE%BF%CF%83%CF%85%CF%80%CE%B1-%CF%83%CF%84%CE%B7%CE%BD-24%CF%89%CF%81%CE%B7-%CE%B1%CF%80%CE%B5%CF%81%CE%B3%CE%B9%CE%B1-%CF%84%CE%B7%CF%83-%CE%B1%CE%B4%CE%B5%CE%B4%CF%85-%CF%84%CE%B5%CF%84%CE%B1%CF%81%CF%84%CE%B7-25-%CE%BD%CE%BF%CE%B5%CE%BC%CE%B2%CF%81%CE%B9%CE%BF%CF%85-2026"),
     ("2026-11-26", "26–29 nov, toda la jornada", "26–29 Nov, all day", "Handling de SATA en los aeropuertos de Azores (SITAVA y SINTAC)", "SATA ground handling at Azores airports (SITAVA and SINTAC)",
      "Azores (Portugal)", "airport", "Convocada; SATA permite cambiar el vuelo sin coste", "Called; SATA allows free rebooking", SRC_SATA),
     ("2026-12-04", "4 dic, toda la jornada", "4 Dec, all day", "Huelga general en Italia (CUB, SGB, SI-COBAS y otros sindicatos de base), incluye el transporte aéreo", "General strike in Italy (CUB, SGB, SI-COBAS and other grassroots unions), air transport included",
@@ -69,6 +73,7 @@ WHERE_EN = {
     "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Naples, Bari, Milan Linate and Padua (Italy)",
     "Lisboa, Oporto y Faro (Portugal)": "Lisbon, Porto and Faro (Portugal)",
     "Azores (Portugal)": "Azores (Portugal)",
+    "Toda Grecia": "All of Greece",
     "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "All of Spain: possible impact on ground services and transport to the airport",
 }
 
