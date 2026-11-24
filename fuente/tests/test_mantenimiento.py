@@ -9,7 +9,7 @@ import strikes
 
 OFFICIAL = ("transportes.gob.es", "mitma.gob.es", "boe.es", "aena.es", "enaire.es", "mit.gov.it", "enav.it", "enac.gov.it",
             "ccoo.es", "ugt.es", "usca.es", "unitetheunion.org", "gmb.org.uk", "caa.co.uk", "gov.uk", "dgac.fr", "ecologie.gouv.fr",
-            "dgert.gov.pt", "anac.pt", "azoresairlines.pt")
+            "dgert.gov.pt", "anac.pt", "azoresairlines.pt", "osypa.gr")
 errors = []
 warnings = []
 seen = set()

@@ -39,6 +39,10 @@ ROWS = {
         "it": ("22 nov, 24 h", "Personale di terra di Toscana Aeroporti, GH Toscana e Consulta (USB)", "Revocato secondo i sindacati; il calendario ufficiale del MIT lo riporta ancora"),
         "de": ("22. Nov., 24 Std.", "Bodenpersonal von Toscana Aeroporti, GH Toscana und Consulta (USB)", "Laut Gewerkschaften abgesagt; der offizielle MIT-Kalender führt ihn noch"),
         "pt": ("22 nov, 24 h", "Pessoal de terra da Toscana Aeroporti, GH Toscana e Consulta (USB)", "Desconvocada segundo os sindicatos; o calendário oficial do MIT ainda a inclui")},
+    ("2026-11-25", "Greek Civil Aviation Authority staff (OSYPA), joining the ADEDY 24-hour general strike"): {
+        "it": ("25 nov, 00:00–23:59", "Personale dell'Aviazione civile greca (OSYPA), nello sciopero generale di 24 ore dell'ADEDY", "Proclamato; il sindacato garantisce un terzo del servizio; nessun elenco di voli cancellati"),
+        "de": ("25. Nov., 00:00–23:59", "Personal der griechischen Zivilluftfahrtbehörde (OSYPA), im Rahmen des 24-stündigen Generalstreiks der ADEDY", "Angekündigt; die Gewerkschaft garantiert ein Drittel des Betriebs; keine Liste gestrichener Flüge"),
+        "pt": ("25 nov, 00:00–23:59", "Pessoal da Aviação Civil da Grécia (OSYPA), na greve geral de 24 h da ADEDY", "Convocada; o sindicato garante um terço do serviço; sem lista de voos cancelados")},
     ("2026-11-26", "SATA ground handling at Azores airports (SITAVA and SINTAC)"): {
         "it": ("26–29 nov, intera giornata", "Handling di SATA negli aeroporti delle Azzorre (SITAVA e SINTAC)", "Proclamato; SATA consente di cambiare il volo senza costi"),
         "de": ("26.–29. Nov., ganztägig", "Bodenabfertigung von SATA an den Flughäfen der Azoren (SITAVA und SINTAC)", "Angekündigt; SATA erlaubt kostenlose Umbuchung"),
@@ -85,7 +89,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Milano Malpensa", "Venecia (Italia)": "Venezia", "Pisa y Florencia (Italia)": "Pisa e Firenze",
            "Roma-Fiumicino (Italia)": "Roma Fiumicino", "Bolonia (Italia)": "Bologna", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Napoli, Bari, Milano Linate e Padova",
            "Lisboa, Oporto y Faro (Portugal)": "Lisbona, Porto e Faro (Portogallo)",
-           "Azores (Portugal)": "Azzorre (Portogallo)",
+           "Azores (Portugal)": "Azzorre (Portogallo)", "Toda Grecia": "Tutta la Grecia",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Tutta la Spagna: possibile impatto a terra e sui trasporti per l'aeroporto"},
     "de": {"Bilbao": "Bilbao (Spanien)", "Barcelona-El Prat": "Barcelona-El Prat", "Madrid-Barajas": "Madrid-Barajas",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -94,7 +98,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Mailand-Malpensa (Italien)", "Venecia (Italia)": "Venedig (Italien)", "Pisa y Florencia (Italia)": "Pisa und Florenz (Italien)",
            "Roma-Fiumicino (Italia)": "Rom-Fiumicino (Italien)", "Bolonia (Italia)": "Bologna (Italien)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Neapel, Bari, Mailand-Linate und Padua (Italien)",
            "Lisboa, Oporto y Faro (Portugal)": "Lissabon, Porto und Faro (Portugal)",
-           "Azores (Portugal)": "Azoren (Portugal)",
+           "Azores (Portugal)": "Azoren (Portugal)", "Toda Grecia": "Ganz Griechenland",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Ganz Spanien: mögliche Auswirkungen am Boden und auf die Anreise zum Flughafen"},
     "pt": {"Bilbao": "Bilbao (Espanha)", "Barcelona-El Prat": "Barcelona-El Prat (Espanha)", "Madrid-Barajas": "Madrid-Barajas (Espanha)",
            "Jerez, A Coruña, Sevilla, Vigo, Fuerteventura, Lanzarote, La Palma, El Hierro, Madrid-Cuatro Vientos":
@@ -103,7 +107,7 @@ WHERE = {
            "Milán-Malpensa (Italia)": "Milão-Malpensa (Itália)", "Venecia (Italia)": "Veneza (Itália)", "Pisa y Florencia (Italia)": "Pisa e Florença (Itália)",
            "Roma-Fiumicino (Italia)": "Roma-Fiumicino (Itália)", "Bolonia (Italia)": "Bolonha (Itália)", "Nápoles, Bari, Milán-Linate y Padua (Italia)": "Nápoles, Bari, Milão-Linate e Pádua (Itália)",
            "Lisboa, Oporto y Faro (Portugal)": "Lisboa, Porto e Faro",
-           "Azores (Portugal)": "Açores",
+           "Azores (Portugal)": "Açores", "Toda Grecia": "Toda a Grécia",
            "Toda España: posible impacto en tierra y en el transporte al aeropuerto": "Toda a Espanha: possível impacto em terra e no transporte para o aeroporto"},
 }
 
