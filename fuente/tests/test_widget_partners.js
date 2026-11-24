@@ -97,6 +97,22 @@ const HOST_HTML = `<!doctype html><html lang="es"><head><meta charset="utf-8"><m
     const p = await ctx.newPage();
     await p.goto(BASE + "/widget/");
     check("widget estándar sin marca de socio", !(await p.$(".embed-brand")));
+    // Escalas en el widget de un socio: el bloque de conexión perdida no saca al cliente de la web de la agencia
+    for (const [path, link] of [["/widget/p/demo/", false], ["/widget/", true]]) {
+      await p.goto(BASE + path);
+      await p.evaluate(() => { const c = document.getElementById("ck"); if (c) c.remove(); });
+      await p.click("label:has(input[name=what][value=delay])");
+      for (const [id, q, code] of [["from", "madrid", "MAD"], ["to", "lisboa", "LIS"]]) {
+        await p.fill("#" + id, ""); await p.type("#" + id, q, { delay: 20 });
+        await p.waitForSelector(`#${id}-list li[role=option]`);
+        const items = await p.$$eval(`#${id}-list li[role=option] .opt-code`, (els) => els.map((e) => e.textContent));
+        await p.click(`#${id}-opt-${items.indexOf(code)}`);
+      }
+      await p.click("label:has(input[name=via][value=same])");
+      await p.waitForTimeout(200);
+      const has = await p.evaluate(() => !!document.querySelector("[data-conn] a"));
+      check(`${path}: enlace a la guía de conexión ${link ? "presente" : "ausente (socio)"}`, has === link);
+    }
     await ctx.close();
   } finally { await browser.close(); srv.close(); }
   console.log(`Widget de socios: ${ok} comprobaciones correctas, ${fail} fallos`);
