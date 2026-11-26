@@ -323,6 +323,7 @@ NAVIDAD2 = [
     ("¿Me devuelven el dinero si mi aerolínea deja de volar?", "Tienes derecho al reembolso en 7 días o a un vuelo alternativo según el Reglamento 261/2004. Si la aerolínea no paga, reclama por escrito, pregunta a tu banco por el contracargo si pagaste con tarjeta y, si se declara el concurso de acreedores, comunica tu crédito a la administración concursal."),
     ("¿También me corresponde compensación?", "Si te avisan con menos de 14 días y no hay circunstancias extraordinarias, pueden corresponderte 250, 400 o 600 € por pasajero según la distancia. Cobrarla depende de la situación de la aerolínea."),
     ("¿Y si el billete lo compré en una agencia?", "Reclama también a la agencia. Si era un viaje combinado (vuelo más hotel, por ejemplo), el organizador del viaje responde de que se preste."),
+    ("¿Qué pasa con mis vuelos de Norse Atlantic?", "Según la prensa, Norse Atlantic suspendió sus vuelos el 25 de noviembre de 2026 por falta de financiación, sin fecha de vuelta. Es una aerolínea noruega y Noruega aplica el Reglamento 261/2004 por el Acuerdo EEE: si tu vuelo sale de la UE, de Noruega o del Reino Unido (allí rige la norma británica equivalente), o llega a la UE o a Noruega con Norse, tienes derecho a elegir entre el reembolso en 7 días o un vuelo alternativo y, si te avisan con menos de 14 días, puede corresponderte compensación. Reclama por escrito y guarda todo."),
    ],
   },
   "en": {
@@ -348,6 +349,7 @@ NAVIDAD2 = [
     ("Will I get my money back if my airline stops flying?", "You're entitled to a refund within 7 days or an alternative flight under Regulation 261/2004. If the airline doesn't pay, claim in writing, ask your bank about a chargeback if you paid by card and, if insolvency proceedings are opened, submit your claim to the insolvency administrator."),
     ("Am I also owed compensation?", "If you're told less than 14 days ahead and there are no extraordinary circumstances, you may be owed €250, €400 or €600 per passenger depending on distance. Getting paid depends on the airline's situation."),
     ("What if I booked through an agency?", "Claim from the agency too. If it was a package (flight plus hotel, for example), the tour organiser is responsible for the trip being provided."),
+    ("What about my Norse Atlantic flights?", "According to press reports, Norse Atlantic suspended its flights on 25 November 2026 for lack of funding, with no restart date. It is a Norwegian airline, and Norway applies Regulation 261/2004 under the EEA Agreement: if your flight departs the EU, Norway or the UK (where the equivalent UK rules apply), or arrives in the EU or Norway on Norse, you can choose between a refund within 7 days or an alternative flight and, if you were told less than 14 days ahead, you may be owed compensation. Claim in writing and keep everything."),
    ],
   },
  },
