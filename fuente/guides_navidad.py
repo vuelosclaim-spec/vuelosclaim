@@ -351,4 +351,64 @@ NAVIDAD2 = [
    ],
   },
  },
+ {"paths": {"es": "/vuelo-cancelado-conflicto-cierre-espacio-aereo/", "en": "/en/flight-cancelled-conflict-airspace-closure/"},
+  "es": {
+   "title": "Vuelo cancelado por un conflicto o cierre del espacio aéreo",
+   "desc": "Tu vuelo se cancela por un conflicto armado, ataques o cierre del espacio aéreo, como en el Golfo: reembolso, otro vuelo, asistencia y cuándo hay compensación.",
+   "h1": "Vuelo cancelado por un conflicto o un cierre del espacio aéreo: qué te corresponde",
+   "lead": "En noviembre de 2026, los ataques en Arabia Saudí y en el Golfo han llevado a varias aerolíneas, también europeas, a suspender rutas a la región durante semanas. Si tu vuelo se cancela por un conflicto armado, por riesgos de seguridad o porque se cierra el espacio aéreo, la aerolínea normalmente no te debe compensación, pero sí el reembolso o un vuelo alternativo y, mientras esperas, asistencia.",
+   "body": f"""<h2>Qué te corresponde</h2>
+<ul><li><strong>Reembolso u otro vuelo</strong>: si tu vuelo sale de la UE, o llega a la UE con una aerolínea europea, tienes derecho a elegir entre el reembolso del billete en 7 días o un transporte alternativo hasta tu destino lo antes posible, en condiciones de transporte comparables (arts. 5 y 8 del <a href="{R261["es"]}" rel="noopener">Reglamento (CE) 261/2004</a>). Este derecho no depende de la causa de la cancelación.</li>
+<li><strong>Asistencia</strong>: si te quedas esperando un vuelo alternativo, la aerolínea te debe comida, bebida y, si hace falta, hotel y traslados (art. 9). Tampoco depende de la causa.</li>
+<li><strong>Compensación (250, 400 o 600 €)</strong>: normalmente <strong>no</strong>. El reglamento cita la inestabilidad política y los riesgos de seguridad entre las circunstancias extraordinarias (considerando 14), y la aerolínea queda exenta si demuestra que la cancelación se debe a ellas y que no podía evitarla con medidas razonables (art. 5.3).</li></ul>
+<h2>Cuándo sí puede corresponderte compensación</h2>
+<ul><li>Si la aerolínea cancela tu vuelo por motivos comerciales (pocas reservas, cambio de programación) aunque el espacio aéreo esté abierto, y te avisa con menos de 14 días de antelación (art. 5.1.c).</li>
+<li>Si tu vuelo no pasaba por la zona afectada y la aerolínea lo cancela para recolocar aviones o tripulaciones: debe demostrar que la causa extraordinaria afectó a ese vuelo concreto.</li></ul>
+<h2>Si estás fuera de la UE</h2>
+<p>El reglamento no protege un vuelo que sale de fuera de la UE con una aerolínea no europea (por ejemplo, una aerolínea del Golfo que vuela hacia España). En ese caso, mira las condiciones de tu billete y las normas del país de salida, y pide a la aerolínea el reembolso o el cambio de vuelo por escrito.</p>
+<h2>Qué hacer, paso a paso</h2>
+<ol><li><strong>Guarda todo</strong>: reserva, el aviso de cancelación (con su fecha) y los tickets de lo que pagues (hotel, comida, otro billete).</li>
+<li><strong>Elige por escrito</strong> entre reembolso y vuelo alternativo. Si la aerolínea no te ofrece alternativa y compras otro billete, reclama después lo que pagaste.</li>
+<li><strong>Si te avisaron con menos de 14 días</strong> y crees que la causa no fue el conflicto, <a href="/">calcula gratis cuánto te corresponde</a> y genera la carta.</li>
+<li><strong>Si compraste un paquete</strong> (vuelo más hotel), reclama también al organizador del viaje.</li>
+<li><strong>Si en un mes no te responden</strong> o no estás de acuerdo, puedes reclamar gratis ante la <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">Agencia Estatal de Seguridad Aérea (AESA)</a>.</li></ol>
+<h2>Ejemplo</h2>
+<p>Caso hipotético: tienes un vuelo de una aerolínea europea de Fráncfort a Riad y la aerolínea lo cancela por los ataques en la zona. Tienes derecho a elegir entre el reembolso en 7 días o que te lleven a tu destino lo antes posible, y a asistencia mientras esperas. La compensación, en principio, no te corresponde, porque la cancelación se debe a un riesgo de seguridad que la aerolínea no controla.</p>
+<p>Consulta también qué son las <a href="/circunstancias-extraordinarias-vuelo/">circunstancias extraordinarias</a> y <a href="/vuelo-cancelado-que-hacer/">qué hacer si te cancelan un vuelo</a>.</p>""",
+   "faq": [
+    ("¿Me devuelven el dinero si cancelan mi vuelo por una guerra o un cierre del espacio aéreo?", "Sí. Si el vuelo está protegido por el Reglamento 261/2004, tienes derecho a elegir entre el reembolso en 7 días o un vuelo alternativo, sea cual sea la causa de la cancelación."),
+    ("¿Tengo derecho a compensación?", "Normalmente no: la inestabilidad política y los riesgos de seguridad son circunstancias extraordinarias. Puede corresponderte si la aerolínea cancela por motivos comerciales y te avisa con menos de 14 días."),
+    ("¿Y si la aerolínea desvía el vuelo y llega tarde?", "Un desvío por un espacio aéreo cerrado también suele ser una circunstancia extraordinaria, así que no da derecho a compensación por retraso, aunque sí a asistencia mientras esperas."),
+   ],
+  },
+  "en": {
+   "title": "Flight cancelled due to conflict or airspace closure",
+   "desc": "Your flight is cancelled because of armed conflict, attacks or an airspace closure, as in the Gulf: refund, rerouting, care and when compensation applies.",
+   "h1": "Flight cancelled due to conflict or an airspace closure: what you're owed",
+   "lead": "In November 2026, attacks in Saudi Arabia and the Gulf led several airlines, European ones included, to suspend routes to the region for weeks. If your flight is cancelled because of armed conflict, security risks or a closed airspace, the airline usually doesn't owe you compensation, but it does owe you a refund or an alternative flight and, while you wait, care.",
+   "body": f"""<h2>What you're owed</h2>
+<ul><li><strong>Refund or another flight</strong>: if your flight departs the EU, or arrives in the EU on a European airline, you can choose between a refund within 7 days or rerouting to your destination as soon as possible, under comparable transport conditions (Arts. 5 and 8 of <a href="{R261["en"]}" rel="noopener">Regulation (EC) 261/2004</a>). This right doesn't depend on why the flight was cancelled.</li>
+<li><strong>Care</strong>: if you're left waiting for an alternative flight, the airline owes you meals, drinks and, if needed, a hotel and transfers (Art. 9). This doesn't depend on the cause either.</li>
+<li><strong>Compensation (€250, €400 or €600)</strong>: usually <strong>not</strong>. The regulation lists political instability and security risks among extraordinary circumstances (recital 14), and the airline is exempt if it proves the cancellation was caused by them and couldn't have been avoided with reasonable measures (Art. 5(3)).</li></ul>
+<h2>When you may still be owed compensation</h2>
+<ul><li>If the airline cancels your flight for commercial reasons (low bookings, schedule changes) even though the airspace is open, and tells you less than 14 days in advance (Art. 5(1)(c)).</li>
+<li>If your flight didn't cross the affected area and the airline cancels it to reposition aircraft or crews: it has to prove that the extraordinary circumstance affected that specific flight.</li></ul>
+<h2>If you're outside the EU</h2>
+<p>The regulation doesn't cover a flight departing from outside the EU on a non-European airline (for example, a Gulf airline flying to Spain). In that case, check your ticket conditions and the rules of the departure country, and ask the airline in writing for a refund or rebooking.</p>
+<h2>What to do, step by step</h2>
+<ol><li><strong>Keep everything</strong>: booking, the cancellation notice (with its date) and receipts for anything you pay for (hotel, meals, a new ticket).</li>
+<li><strong>Choose in writing</strong> between a refund and an alternative flight. If the airline offers no alternative and you buy another ticket, claim back what you paid afterwards.</li>
+<li><strong>If you were told less than 14 days ahead</strong> and you think the conflict wasn't the cause, <a href="/en/">check for free what you're owed</a> and generate the letter.</li>
+<li><strong>If you booked a package</strong> (flight plus hotel), claim from the tour organiser too.</li>
+<li><strong>If there's no reply within a month</strong> or you disagree, you can complain free of charge to Spain's <a href="https://www.seguridadaerea.gob.es/index.php/es/ambitos/derechos-de-los-pasajeros/inicia-tu-reclamacion-con-aesa" rel="noopener">aviation safety agency (AESA)</a> or the national enforcement body of the country you departed from.</li></ol>
+<h2>Example</h2>
+<p>Hypothetical case: you're booked on a European airline from Frankfurt to Riyadh and the airline cancels it because of the attacks in the area. You can choose a refund within 7 days or to be taken to your destination as soon as possible, and you're owed care while you wait. Compensation is in principle not owed, because the cancellation is due to a security risk outside the airline's control.</p>
+<p>See also what counts as <a href="/en/extraordinary-circumstances-flight-delay/">extraordinary circumstances</a> and <a href="/en/flight-cancelled-what-to-do/">what to do if your flight is cancelled</a>.</p>""",
+   "faq": [
+    ("Will I get my money back if my flight is cancelled because of a war or an airspace closure?", "Yes. If the flight is covered by Regulation 261/2004, you can choose between a refund within 7 days or an alternative flight, whatever the cause of the cancellation."),
+    ("Am I owed compensation?", "Usually not: political instability and security risks are extraordinary circumstances. You may be owed it if the airline cancels for commercial reasons and tells you less than 14 days ahead."),
+    ("What if the airline diverts the flight and I arrive late?", "A diversion around closed airspace is usually an extraordinary circumstance too, so it doesn't give a right to delay compensation, though you're still owed care while you wait."),
+   ],
+  },
+ },
 ]
